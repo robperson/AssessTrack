@@ -1,0 +1,60 @@
+﻿body.qb-body .page
+    {
+    	padding-left:320px;
+    	width:auto;
+    }
+    
+    body.qb-body .delete-item { float: right; }
+    body.qb-body .toolbox .delete-item { display:none; }
+    body.qb-body .toolbox .question, body.qb-body .toolbox .question-data-item 
+	{
+		 border:1px solid #876;
+		 padding:0px;
+		 margin:5px; 
+		 
+		 }
+	body.qb-body .question { border:2px solid #4fb5d2;padding:0px;margin:0 0 10px 0;}
+	body.qb-body .question-data-item { border:1px solid #EC5F35;padding:0px;margin:0;}
+	body.qb-body .question {background: #eee;}
+	body.qb-body .question-data-item { background:#f5f5f5;}
+	body.qb-body #questions .question h2{ background:#dffcff;border-bottom:1px solid #4fb5d2; margin:0;color:#4fb5d2; font-size:2em;}
+	body.qb-body #questions .question-data-item h3{ background:#EC5F35 ;border-bottom:1px solid #FFF3EF; margin:0; color:#FFF3EF; font-size:1.5em;}
+	body.qb-body #sidebar h3 { background:#EC5F35 ;border-bottom:1px solid #FFF3EF; margin:0; color:#FFF3EF; font-size:1.1em;}
+	body.qb-body .toolbox .question-data-item h3 {color:#EC5F35}
+	body.qb-body .toolbox h2,body.qb-body .toolbox h3 {background:#ccc;border-bottom:1px solid #888; margin:0;}
+	body.qb-body #quiz-builder-menu
+	{
+		position:fixed;
+		padding:5px;
+		height:100%;
+		width:290px;
+		background-color:#ccc;
+		top:0px;
+		left:0px;
+	}
+	/*.tool-box-item { height:20px; }*/
+	body.qb-body ul,body.qb-body li { list-style-type:none; margin:0; padding:0;}
+	body.qb-body .question-data { margin:0;padding:10px;}
+	body.qb-body .question-data-item { margin:0 0 5px 0; display:block}
+	body.qb-body #questions 
+	{
+		 padding: 10px;
+		 border:1px dotted #999;
+		  background:#eee;
+		  height:100%;
+		  overflow:auto;
+		  
+	}
+	body.qb-body .question-data-item div { border-bottom:1px solid #EC5F35; padding:0px;}
+	body.qb-body .tool-box-item .question-data li, .tool-box-item.question-data-item div, .tool-box-item div {display:none;}
+	
+	
+	
+	body.qb-body ,html,#dfrm
+	{
+		height:100%;
+	}
+	.qb-body #output { display:none;}
+	
+	body.qb-body textarea { display:block;}
+	body.qb-body .deletelnk { display:block;}

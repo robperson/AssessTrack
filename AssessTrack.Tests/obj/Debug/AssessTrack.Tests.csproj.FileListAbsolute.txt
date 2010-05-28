@@ -1,0 +1,16 @@
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll.config
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.pdb
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.dll
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.pdb
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\obj\Debug\AssessTrack.Tests.dll
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\obj\Debug\AssessTrack.Tests.pdb
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll.config
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.pdb
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack.Tests\bin\Debug\AssessTrack.dll
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack.Tests\bin\Debug\AssessTrack.pdb
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack.Tests\obj\Debug\AssessTrack.Tests.dll
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack.Tests\obj\Debug\AssessTrack.Tests.pdb

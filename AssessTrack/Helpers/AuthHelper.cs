@@ -1,0 +1,182 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Xml.Linq;
+using AssessTrack.Models;
+using System.Security.Principal;
+using AssessTrack.Filters;
+using System.Web.Routing;
+using System.Web.Mvc;
+using System.Reflection;
+
+namespace AssessTrack.Helpers
+{
+    public static class AuthHelper
+    {
+        public static bool CheckAuthorization(HttpContext httpContext, Site site, CourseTerm courseTerm, AuthScope scope, int minLevel, int maxLevel)
+        {
+            AssessTrackDataRepository data = new AssessTrackDataRepository();
+            if (httpContext == null)
+            {
+                throw new ArgumentNullException("httpContext");
+            }
+            IPrincipal user = httpContext.User;
+            if (!user.Identity.IsAuthenticated)
+            {
+                return false;
+            }
+            //Get the user's profile and see if they have
+            //the required access level
+            Profile profile = data.GetLoggedInProfile();
+            switch (scope)
+            {
+                case AuthScope.Application:
+                    {
+                        if (profile.AccessLevel < minLevel || profile.AccessLevel > maxLevel)
+                            return false;
+                        break;
+                    }
+                case AuthScope.Site:
+                    {
+                        SiteMember member = (from siteMember in site.SiteMembers
+                                             where siteMember.Profile.MembershipID == profile.MembershipID
+                                             select siteMember).SingleOrDefault();
+                        if (member == null ||
+                            (member.AccessLevel < minLevel || member.AccessLevel > maxLevel))
+                            return false;
+                    }
+                    break;
+                case AuthScope.CourseTerm:
+                    {
+                        CourseTermMember member = (from ctm in courseTerm.CourseTermMembers
+                                                   where ctm.Profile.MembershipID == profile.MembershipID
+                                                   select ctm).SingleOrDefault();
+                        if (member == null ||
+                            (member.AccessLevel < minLevel || member.AccessLevel > maxLevel))
+                            return false;
+                    }
+                    break;
+                default:
+                    //TODO Do some logging here maybe?
+                    return false;
+            }
+            return true;
+        }
+
+        //Will return false if routeData points to non-existant site or courseterm
+        public static bool CheckAuthorization(AuthScope scope, int minLevel, int maxLevel, RouteValueDictionary routeData)
+        {
+            //RouteData routeData = RouteTable.Routes.GetRouteData(new HttpContextWrapper(HttpContext.Current));
+
+            AssessTrackDataRepository data = new AssessTrackDataRepository();
+            string siteShortName;
+            Site site = null;
+            string courseTermShortName;
+            CourseTerm courseTerm = null;
+            //HttpContext.Current.
+
+            if (scope != AuthScope.Application)
+            {
+                //Try to get the site by shortName
+                if (routeData["siteShortName"] != null)
+                {
+                    siteShortName = routeData["siteShortName"].ToString();
+                    site = data.GetSiteByShortName(siteShortName);
+                }
+                //if scope is Site, then {id} should refer to SiteID
+                else if (scope != AuthScope.CourseTerm && routeData["id"] != null)
+                {
+                    try
+                    {
+
+                        Guid siteID = new Guid(routeData["id"].ToString());
+                        site = data.GetSiteByID(siteID);
+                    }
+                    catch
+                    {
+                        //Do nothing here
+                        //if this fails, site will be null and the following code will 
+                        //return SiteNotFound
+                    }
+                }
+
+
+                if (site == null)
+                {
+                    return false;
+                }
+                if (scope == AuthScope.CourseTerm)
+                {
+                    //Try to get the site by shortName
+                    if (routeData["courseTermShortName"] != null)
+                    {
+                        courseTermShortName = routeData["courseTermShortName"].ToString();
+                        courseTerm = data.GetCourseTermByShortName(site, courseTermShortName);
+                    }
+                    //if scope is CourseTerm, then {id} should refer to CourseTermID
+                    else if (routeData["id"].ToString() != null)
+                    {
+                        try
+                        {
+
+                            Guid courseTermID = new Guid(routeData["id"].ToString());
+                            courseTerm = data.GetCourseTermByID(site, courseTermID);
+                        }
+                        catch
+                        {
+                            //Do nothing here
+                            //if this fails, courseTerm will be null and the following code will 
+                            //return CourseTermNotFound
+                        }
+                    }
+                    if (courseTerm == null)
+                    {
+                        
+                        return false;
+                    }
+                }
+            }
+            //Set up is complete, now check if the user is authorized
+            if (CheckAuthorization(HttpContext.Current, site, courseTerm, scope, minLevel, maxLevel))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+
+            }
+        }
+
+        public static string ATAuthLink(this HtmlHelper html, string linkText, object routeValues, AuthScope scope, int minLevel, int maxLevel)
+        {
+            RouteValueDictionary routeValuesDict = new RouteValueDictionary(html.ViewContext.RouteData.Values);
+            //routeValuesDict
+
+            foreach (PropertyInfo prop in routeValues.GetType().GetProperties())
+            {
+                string name = prop.Name;
+                string val = prop.GetValue(routeValues, null).ToString();
+                routeValuesDict[name] = val;
+                //html.ViewContext.RouteData.Values.Add(name,val);
+            }
+            if (CheckAuthorization(scope, minLevel, maxLevel, routeValuesDict))
+            {
+                RouteValueDictionary newValues = new RouteValueDictionary(routeValues);
+                if (newValues["controller"] == null)
+                {
+                    newValues["controller"] = routeValuesDict["controller"];
+                }
+                return HtmlHelper.GenerateRouteLink(html.ViewContext.RequestContext,html.RouteCollection,linkText,null,newValues,null);
+            }
+            return "";
+        }
+    }
+}

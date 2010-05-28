@@ -1,0 +1,5 @@
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack\obj\Debug\AssessTrack.dll
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack\bin\AssessTrack.dll
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack\bin\AssessTrack.pdb
+C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack\obj\Debug\AssessTrack.pdb

@@ -7,15 +7,19 @@ using AssessTrack.Models;
 
 namespace AssessTrack.Backup
 {
-    interface IBackupItem
+    public interface IBackupItem
     {
-        public XElement Serialize();
-        public void Deserialize(XElement source);
-        public void LinkRelationships(SiteBackup sitebackup);
+        XElement Serialize();
+        void Deserialize(XElement source);
+        void LinkRelationships(SiteBackup sitebackup);
 
         //The items ID as found in the backup file.
-        public Guid objectID;
-        public void Insert(AssessTrackModelClassesDataContext dc);
-        public void OnPostInsert();
+        Guid objectID
+        {
+            get;
+            set;
+        }
+        void Insert(AssessTrackModelClassesDataContext dc);
+        void OnPostInsert();
     }
 }

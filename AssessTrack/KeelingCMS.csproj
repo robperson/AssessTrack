@@ -59,6 +59,9 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Backup\BackupItemFactory.cs" />
+    <Compile Include="Backup\IBackupItem.cs" />
+    <Compile Include="Backup\SiteBackup.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AssessmentController.cs" />
     <Compile Include="Controllers\AssessmentTypeController.cs" />

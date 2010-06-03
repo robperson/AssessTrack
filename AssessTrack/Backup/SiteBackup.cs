@@ -10,7 +10,7 @@ namespace AssessTrack.Backup
 {
     public class SiteBackup
     {
-        private List<IBackupItem> items;
+        private List<IBackupItem> items = new List<IBackupItem>();
 
         public void AddItem(IBackupItem item)
         {

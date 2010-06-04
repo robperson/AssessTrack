@@ -9,17 +9,15 @@ namespace AssessTrack.Backup
 {
     public interface IBackupItem
     {
-        XElement Serialize();
-        void Deserialize(XElement source);
-        void LinkRelationships(SiteBackup sitebackup);
-
         //The items ID as found in the backup file.
         Guid objectID
         {
             get;
             set;
         }
+
+        XElement Serialize();
+        void Deserialize(XElement source);
         void Insert(AssessTrackModelClassesDataContext dc);
-        void OnPostInsert();
     }
 }

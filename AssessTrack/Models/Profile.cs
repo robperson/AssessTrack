@@ -14,11 +14,12 @@ using System.Collections.Generic;
 using System.Data.Linq;
 using System.Text.RegularExpressions;
 using AssessTrack.Helpers;
+using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
     [Bind(Include = "FirstName,LastName,SchoolIDNumber")]
-    public partial class Profile
+    public partial class Profile : IBackupItem
     {
         public bool IsValid
         {
@@ -46,5 +47,56 @@ namespace AssessTrack.Models
             if (!IsValid)
                 throw new RuleViolationException("Rule violations prevent saving");
         }
+
+        #region IBackupItem Members
+
+        private Guid _objectID;
+        public Guid objectID
+        {
+            get
+            {
+                return _objectID;
+            }
+            set
+            {
+                _objectID = value;
+            }
+        }
+
+        public XElement Serialize()
+        {
+            XElement profile =
+                new XElement("profile",
+                    new XElement("membershipid", MembershipID),
+                    new XElement("schoolidnumber", SchoolIDNumber),
+                    new XElement("firstname", FirstName),
+                    new XElement("lastname", LastName),
+                    new XElement("accesslevel", AccessLevel.ToString()));
+            return profile;
+        }
+
+        public void Deserialize(XElement source)
+        {
+            try
+            {
+                MembershipID = new Guid(source.Element("membershipid").Value);
+                SchoolIDNumber = source.Element("schoolidnumber").Value;
+                FirstName = source.Element("firstname").Value;
+                LastName = source.Element("lastname").Value;
+                AccessLevel = (byte)Int16.Parse(source.Element("accesslevel").Value);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Failed to deserialize Profile entity");
+            }
+        }
+
+        public void Insert(AssessTrackModelClassesDataContext dc)
+        {
+            dc.Profiles.InsertOnSubmit(this);
+        }
+
+
+        #endregion
     }
 }

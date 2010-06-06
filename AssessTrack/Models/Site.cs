@@ -14,11 +14,12 @@ using System.Data.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using AssessTrack.Helpers;
+using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
     [Bind(Include="Title,Description,ShortName")]
-    public partial class Site
+    public partial class Site : IBackupItem
     {
         public bool IsValid
         {
@@ -45,5 +46,52 @@ namespace AssessTrack.Models
             if (!IsValid)
                 throw new RuleViolationException("Rule violations prevent saving");
         }
+
+        #region IBackupItem Members
+
+        public Guid objectID
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public XElement Serialize()
+        {
+            XElement site =
+                new XElement("site",
+                    new XElement("siteid", SiteID.ToString()),
+                    new XElement("title", Title),
+                    new XElement("shortname", ShortName),
+                    new XElement("description", Description));
+            return site;
+        }
+
+        public void Deserialize(XElement source)
+        {
+            try
+            {
+                SiteID = new Guid(source.Element("siteid").Value);
+                Title = source.Element("title").Value;
+                ShortName = source.Element("shortname").Value;
+                Description = source.Element("description").Value;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Failed to deserialize Site entity.");
+            }
+        }
+
+        public void Insert(AssessTrackModelClassesDataContext dc)
+        {
+            dc.Sites.InsertOnSubmit(this);
+        }
+
+        #endregion
     }
 }

@@ -14,11 +14,12 @@ using System.Collections.Generic;
 using System.Data.Linq;
 using System.Text.RegularExpressions;
 using AssessTrack.Helpers;
+using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
     [Bind(Include="StartDate,EndDate,Name")]
-    public partial class Term
+    public partial class Term : IBackupItem
     {
         public bool IsValid
         {
@@ -64,5 +65,54 @@ namespace AssessTrack.Models
             if (!IsValid)
                 throw new RuleViolationException("Rule violations prevent saving");
         }
+
+        #region IBackupItem Members
+
+        public Guid objectID
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public XElement Serialize()
+        {
+            XElement term =
+                new XElement("term",
+                    new XElement("termid", TermID.ToString()),
+                    new XElement("startdate", StartDate.ToString()),
+                    new XElement("enddate", EndDate.ToString()),
+                    new XElement("name", Name),
+                    new XElement("siteid", SiteID.ToString()));
+            return term;
+        }
+
+        public void Deserialize(XElement source)
+        {
+            try
+            {
+                TermID = new Guid(source.Element("termid").Value);
+                StartDate = DateTime.Parse(source.Element("startdate").Value);
+                EndDate = DateTime.Parse(source.Element("enddate").Value);
+                Name = source.Element("name").Value;
+                SiteID = new Guid(source.Element("siteid").Value);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Failed to deserialize Term entity.");
+            }
+        }
+
+        public void Insert(AssessTrackModelClassesDataContext dc)
+        {
+            dc.Terms.InsertOnSubmit(this);
+        }
+
+        #endregion
     }
 }

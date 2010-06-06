@@ -13,11 +13,12 @@ using System.Web.Mvc;
 using System.Collections.Generic;
 using System.Data.Linq;
 using AssessTrack.Helpers;
+using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
     [Bind(Include="Name,Weight,IsExtraCredit")]
-    public partial class AssessmentType
+    public partial class AssessmentType: IBackupItem
     {
         public bool IsValid
         {
@@ -51,5 +52,55 @@ namespace AssessTrack.Models
             if (!IsValid)
                 throw new RuleViolationException("Rule violations prevent saving");
         }
+
+        #region IBackupItem Members
+
+        public XElement Serialize()
+        {
+            XElement assessmentType =
+                new XElement("assessmenttype",
+                    new XElement("assessmenttypeid", AssessmentTypeID.ToString()),
+                    new XElement("name", Name),
+                    new XElement("weight", Weight.ToString()),
+                    new XElement("isextracredit", IsExtraCredit.ToString()),
+                    new XElement("coursetermid", CourseTermID.ToString()));
+            return assessmentType;
+        }
+
+        public void Deserialize(XElement source)
+        {
+            try
+            {
+                AssessmentTypeID = new Guid(source.Element("assessmenttypeid").Value);
+                Name = source.Element("name").Value;
+                Weight = Convert.ToDouble(source.Element("weight").Value);
+                IsExtraCredit = bool.Parse(source.Element("isextracredit").Value);
+                CourseTermID = new Guid(source.Element("coursetermid").Value);
+            }
+            catch
+            {
+                throw new Exception("Failed to deserialize AssessmentType entity.");
+            }
+        }
+
+        private Guid _objectID;
+        public Guid objectID
+        {
+            get
+            {
+                return _objectID;
+            }
+            set
+            {
+                _objectID = value;
+            }
+        }
+
+        public void Insert(AssessTrackModelClassesDataContext dc)
+        {
+            dc.AssessmentTypes.InsertOnSubmit(this);
+        }
+
+        #endregion
     }
 }

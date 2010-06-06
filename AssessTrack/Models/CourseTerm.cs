@@ -14,11 +14,12 @@ using System.Data.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using AssessTrack.Helpers;
+using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
     [Bind(Include = "Name,Information,ShortName")]
-    public partial class CourseTerm
+    public partial class CourseTerm : IBackupItem
     {
         public bool IsValid
         {
@@ -51,5 +52,62 @@ namespace AssessTrack.Models
                         && ctm.AccessLevel <= maxLevel
                         select ctm).ToList();
         }
+
+        #region IBackupItem Members
+
+        private Guid _objectID;
+        public Guid objectID
+        {
+            get
+            {
+                return _objectID;
+            }
+            set
+            {
+                _objectID = value;
+            }
+        }
+
+        public XElement Serialize()
+        {
+            XElement courseTerm =
+                new XElement("courseterm",
+                    new XElement("coursetermid", CourseTermID.ToString()),
+                    new XElement("name", Name),
+                    new XElement("shortname", ShortName),
+                    new XElement("information", Information),
+                    new XElement("instructor", Instructor.ToString()),
+                    new XElement("courseid", CourseID.ToString()),
+                    new XElement("termid", TermID.ToString()),
+                    new XElement("siteid", SiteID.ToString()));
+            return courseTerm;
+        }
+
+        public void Deserialize(XElement source)
+        {
+            try
+            {
+                CourseTermID = new Guid(source.Element("coursetermid").Value);
+                Name = source.Element("name").Value;
+                ShortName = source.Element("shortname").Value;
+                Information = source.Element("information").Value;
+                Instructor = new Guid(source.Element("instructor").Value);
+                CourseID = new Guid(source.Element("courseid").Value);
+                TermID = new Guid(source.Element("termid").Value);
+                SiteID = new Guid(source.Element("siteid").Value);
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Failed to deserialize CourseTerm entity.");
+            }
+        }
+
+        public void Insert(AssessTrackModelClassesDataContext dc)
+        {
+            dc.CourseTerms.InsertOnSubmit(this);
+        }
+
+        #endregion
     }
 }

@@ -40,28 +40,16 @@ namespace AssessTrack.Backup
         public void LoadBackup(AssessTrackModelClassesDataContext dataContext, string filename)
         {
             XElement root = XElement.Load(filename);
-            //Deserialize the backup items
+            //Deserialize and insert the backup items
             foreach (XElement item in root.Elements())
             {
                 IBackupItem importedItem = BackupItemFactory.CreateBackupItem(item.Name.ToString());
                 importedItem.Deserialize(item);
+                importedItem.Insert(dataContext);
                 items.Add(importedItem);
             }
 
-            //Link relationships and insert to tables
-            foreach (IBackupItem backupItem in items)
-            {
-                backupItem.LinkRelationships(this);
-                backupItem.Insert(dataContext);
-            }
-
             dataContext.SubmitChanges();
-
-            //Notify items that they have been inserted
-            foreach (IBackupItem backupItem in items)
-            {
-                backupItem.OnPostInsert();
-            }
         }
     }
 }

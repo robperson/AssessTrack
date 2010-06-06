@@ -12,10 +12,11 @@ using System.Xml.Linq;
 using System.Data.Linq;
 using System.Collections.Generic;
 using AssessTrack.Helpers;
+using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
-    public partial class SubmissionRecord
+    public partial class SubmissionRecord : IBackupItem
     {
         public bool IsValid
         {
@@ -39,5 +40,64 @@ namespace AssessTrack.Models
         {
             get { return Responses.Sum(r => (r.Score ?? 0.0)); }
         }
+
+        #region IBackupItem Members
+
+        public Guid objectID
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public XElement Serialize()
+        {
+            XElement submissionRecord =
+                new XElement("submissionrecord",
+                    new XElement("submissionrecordid", SubmissionRecordID.ToString()),
+                    new XElement("studentid", StudentID.ToString()),
+                    new XElement("assessmentid", AssessmentID.ToString()),
+                    new XElement("submissiondate", SubmissionDate.ToString()),
+                    new XElement("gradedon", GradedOn.ToString()),
+                    new XElement("gradedby", GradedBy.ToString()),
+                    new XElement("comments", Comments));
+            return submissionRecord;
+        }
+
+        public void Deserialize(XElement source)
+        {
+            try
+            {
+                SubmissionRecordID = new Guid(source.Element("submissionrecordid").Value);
+                StudentID = new Guid(source.Element("studentid").Value);
+                AssessmentID = new Guid(source.Element("assessmentid").Value);
+                SubmissionDate = DateTime.Parse(source.Element("submissiondate").Value);
+                if (!string.IsNullOrEmpty(source.Element("gradedon").Value))
+                {
+                    GradedOn = DateTime.Parse(source.Element("gradedon").Value);
+                }
+                if (!string.IsNullOrEmpty(source.Element("gradedby").Value))
+                {
+                    GradedBy = new Guid(source.Element("gradedby").Value);
+                }
+                Comments = source.Element("comments").Value;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Failed to deserialize SubmissionRecord entity.");
+            }
+        }
+
+        public void Insert(AssessTrackModelClassesDataContext dc)
+        {
+            dc.SubmissionRecords.InsertOnSubmit(this);
+        }
+
+        #endregion
     }
 }

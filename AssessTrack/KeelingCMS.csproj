@@ -95,8 +95,11 @@
     <Compile Include="Helpers\RuleViolationException.cs" />
     <Compile Include="Helpers\SubmissionFormHelpers.cs" />
     <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\AnswerKey.cs" />
+    <Compile Include="Models\AnswerTag.cs" />
     <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\AssessmentManager.cs" />
+    <Compile Include="Models\AssessmentTag.cs" />
     <Compile Include="Models\AssessmentType.cs" />
     <Compile Include="Models\AssessmentTypeManager.cs" />
     <Compile Include="Models\AssessTrackModelClasses.cs">
@@ -113,11 +116,14 @@
     <Compile Include="Models\DBManager.cs" />
     <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\GradeSection.cs" />
+    <Compile Include="Models\QuestionTag.cs" />
+    <Compile Include="Models\Response.cs" />
     <Compile Include="Models\Site.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\ProfileManager.cs" />
     <Compile Include="Models\SiteManager.cs" />
+    <Compile Include="Models\SiteMember.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TagManager.cs" />
     <Compile Include="Models\Course.cs" />

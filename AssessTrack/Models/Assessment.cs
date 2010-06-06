@@ -16,11 +16,12 @@ using AssessTrack.Helpers;
 using System.Xml.Xsl;
 using System.Xml;
 using System.IO;
+using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
     [Bind(Include="AllowMultipleSubmissions,Name,DueDate,IsExtraCredit,AssessmentTypeID,Data,CreatedDate,IsVisible,IsOpen,IsGradable")]
-    public partial class Assessment
+    public partial class Assessment: IBackupItem
     {
         public bool IsValid
         {
@@ -79,5 +80,69 @@ namespace AssessTrack.Models
             get { return !IsExtraCredit ? Questions.Sum(q => q.Weight) : 0; }
             
         }
+
+        #region IBackupItem Members
+
+        public XElement Serialize()
+        {
+            XElement assessment =
+                new XElement("assessment",
+                    new XElement("assessmentid", AssessmentID.ToString()),
+                    new XElement("name", Name),
+                    new XElement("duedate", DueDate.ToString()),
+                    new XElement("isextracredit", IsExtraCredit.ToString()),
+                    new XElement("assessmenttypeid", AssessmentTypeID.ToString()),
+                    new XElement("data", Data),
+                    new XElement("createddate", CreatedDate.ToString()),
+                    new XElement("isvisible", IsVisible.ToString()),
+                    new XElement("isopen", IsOpen.ToString()),
+                    new XElement("isgradable", IsGradable.ToString()),
+                    new XElement("allowmultiplesubmissions", AllowMultipleSubmissions.ToString()),
+                    new XElement("coursetermid", CourseTermID.ToString()));
+            return assessment;
+        }
+
+        public void Deserialize(XElement source)
+        {
+            try
+            {
+                AssessmentID = new Guid(source.Element("assessmentid").Value);
+                Name = source.Element("name").Value;
+                DueDate = DateTime.Parse(source.Element("duedate").Value);
+                IsExtraCredit = bool.Parse(source.Element("isextracredit").Value);
+                AssessmentTypeID = new Guid(source.Element("assessmenttypeid").Value);
+                Data = source.Element("data").Value;
+                CreatedDate = DateTime.Parse(source.Element("createddate").Value);
+                IsVisible = bool.Parse(source.Element("isvisible").Value);
+                IsOpen = bool.Parse(source.Element("isopen").Value);
+                IsGradable = bool.Parse(source.Element("isgradable").Value);
+                AllowMultipleSubmissions = bool.Parse(source.Element("allowmultiplesubmissions").Value);
+                CourseTermID = new Guid(source.Element("coursetermid").Value);
+            }
+            catch
+            {
+                throw new Exception("Failed to deserialize Assessment entity.");
+            }
+        }
+
+        private Guid _objectID;
+        public Guid objectID
+        {
+            get
+            {
+                return _objectID;
+            }
+            set
+            {
+                _objectID = value;
+            }
+        }
+
+        public void Insert(AssessTrackModelClassesDataContext dc)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

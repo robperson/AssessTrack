@@ -116,6 +116,7 @@
     <Compile Include="Models\DBManager.cs" />
     <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\GradeSection.cs" />
+    <Compile Include="Models\MembershipInfo.cs" />
     <Compile Include="Models\QuestionTag.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\Site.cs" />

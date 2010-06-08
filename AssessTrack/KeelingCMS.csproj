@@ -113,6 +113,7 @@
     <Compile Include="Helpers\UserHelpers.cs" />
     <Compile Include="Models\CourseTerm.cs" />
     <Compile Include="Models\CourseTermManager.cs" />
+    <Compile Include="Models\CourseTermMember.cs" />
     <Compile Include="Models\DBManager.cs" />
     <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\GradeSection.cs" />

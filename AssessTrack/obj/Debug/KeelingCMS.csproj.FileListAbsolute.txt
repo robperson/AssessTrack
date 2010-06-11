@@ -3,3 +3,8 @@ C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack\
 C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack\bin\AssessTrack.dll
 C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack\bin\AssessTrack.pdb
 C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack\obj\Debug\AssessTrack.pdb
+C:\inetpub\wwwroot\HNK\KeelingCMS\AssessTrack\bin\AssessTrack.dll
+C:\inetpub\wwwroot\HNK\KeelingCMS\AssessTrack\bin\AssessTrack.pdb
+C:\inetpub\wwwroot\HNK\KeelingCMS\AssessTrack\obj\Debug\ResolveAssemblyReference.cache
+C:\inetpub\wwwroot\HNK\KeelingCMS\AssessTrack\obj\Debug\AssessTrack.dll
+C:\inetpub\wwwroot\HNK\KeelingCMS\AssessTrack\obj\Debug\AssessTrack.pdb

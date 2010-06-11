@@ -65,7 +65,7 @@ namespace AssessTrack.Models
                     new XElement("submissiondate", SubmissionDate.ToString()),
                     new XElement("gradedon", GradedOn.ToString()),
                     new XElement("gradedby", GradedBy.ToString()),
-                    new XElement("comments", Comments));
+                    new XElement("comments", HttpContext.Current.Server.HtmlEncode(Comments)));
             return submissionRecord;
         }
 
@@ -85,7 +85,7 @@ namespace AssessTrack.Models
                 {
                     GradedBy = new Guid(source.Element("gradedby").Value);
                 }
-                Comments = source.Element("comments").Value;
+                Comments = HttpContext.Current.Server.HtmlDecode(source.Element("comments").Value);
             }
             catch (Exception)
             {

@@ -33,7 +33,9 @@ namespace AssessTrack.Backup
             foreach (IBackupItem item in items)
             {
                 root.Add(item.Serialize());
+                
             }
+            string xml = root.ToString();
             root.Save(filename);
         }
 

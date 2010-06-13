@@ -5,6 +5,10 @@ using System.Web;
 using AssessTrack.Models;
 using System.Data.Linq;
 using System.Xml.Linq;
+using System.Transactions;
+using AssessTrack.Helpers;
+using System.Data.SqlClient;
+using System.IO;
 
 namespace AssessTrack.Backup
 {
@@ -41,17 +45,33 @@ namespace AssessTrack.Backup
 
         public void LoadBackup(AssessTrackModelClassesDataContext dataContext, string filename)
         {
-            XElement root = XElement.Load(filename);
-            //Deserialize and insert the backup items
-            foreach (XElement item in root.Elements())
+            using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.Required,TimeSpan.MaxValue))
             {
-                IBackupItem importedItem = BackupItemFactory.CreateBackupItem(item.Name.ToString());
-                importedItem.Deserialize(item);
-                importedItem.Insert(dataContext);
-                items.Add(importedItem);
-            }
+                try
+                {
+                    XElement root = XElement.Load(filename);
+                    //Deserialize and insert the backup items
+                    dataContext.Log = new StreamWriter(@"C:\inetpub\wwwroot\HNK\linqlog.txt");
+                    foreach (XElement item in root.Elements())
+                    {
+                        IBackupItem importedItem = BackupItemFactory.CreateBackupItem(item.Name.ToString());
+                        importedItem.Deserialize(item);
+                        importedItem.Insert(dataContext);
+                        items.Add(importedItem);
+                    }
 
-            dataContext.SubmitChanges();
+                    dataContext.SubmitChanges();
+                    transaction.Complete();
+                }
+                catch (RuleViolationException rve)
+                {
+                    throw;
+                }
+                catch (SqlException sqlEx)
+                {
+                    throw;
+                }
+            }
         }
     }
 }

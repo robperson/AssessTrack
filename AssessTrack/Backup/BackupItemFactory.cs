@@ -26,7 +26,8 @@ namespace AssessTrack.Backup
             {"answer", typeof(AssessTrack.Models.Answer)},
             {"answerkey", typeof(AssessTrack.Models.AnswerKey)},
             {"submissionrecord", typeof(AssessTrack.Models.SubmissionRecord)},
-            {"response", typeof(AssessTrack.Models.Response)}
+            {"response", typeof(AssessTrack.Models.Response)},
+            {"membershipinfo", typeof(AssessTrack.Models.MembershipInfo)}
         };
 
         public static IBackupItem CreateBackupItem(string typename)

@@ -140,7 +140,7 @@ namespace AssessTrack.Models
 
         public void Insert(AssessTrackModelClassesDataContext dc)
         {
-            throw new NotImplementedException();
+            dc.Assessments.InsertOnSubmit(this);
         }
 
         #endregion

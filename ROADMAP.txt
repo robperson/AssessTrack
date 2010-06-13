@@ -1,0 +1,22 @@
+AssessTrack Version Roadmap
+-v0.6 [6/18/10]
+	+ Allow graders to comment on individual responses
+	+ Manage CourseTermMembers
+		- set accesslevel for members
+		- remove members from courseterm
+	+ Student Performance report links to SubmissionRecord details
+		- for admins: grade submission record
+		- for students: view submission details
+	+ Rebrand as AssessTrack (not KeelingCMS codename)
+	+ Seperate open/not open assessments in Assessment list
+-v0.7 [7/2/10]
+	+ Return to last viewed page on sign in
+	+ send messages to users (admins only)
+	+ allow exceptions for late submissions
+	+ Admin can enable option to require code for joining site/courseterm
+	+ view Final Grades report
+-v0.8
+	+ Enable Students to view all of their SubmissionRecords
+	+ Show overall grade on Student Performance page
+-v1.0
+	+ Complete Front-end redesign

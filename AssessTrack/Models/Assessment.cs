@@ -92,7 +92,7 @@ namespace AssessTrack.Models
                     new XElement("duedate", DueDate.ToString()),
                     new XElement("isextracredit", IsExtraCredit.ToString()),
                     new XElement("assessmenttypeid", AssessmentTypeID.ToString()),
-                    new XElement("data", Data),
+                    new XElement("data", HttpContext.Current.Server.HtmlEncode(Data)),
                     new XElement("createddate", CreatedDate.ToString()),
                     new XElement("isvisible", IsVisible.ToString()),
                     new XElement("isopen", IsOpen.ToString()),
@@ -111,7 +111,7 @@ namespace AssessTrack.Models
                 DueDate = DateTime.Parse(source.Element("duedate").Value);
                 IsExtraCredit = bool.Parse(source.Element("isextracredit").Value);
                 AssessmentTypeID = new Guid(source.Element("assessmenttypeid").Value);
-                Data = source.Element("data").Value;
+                Data = HttpContext.Current.Server.HtmlDecode(source.Element("data").Value);
                 CreatedDate = DateTime.Parse(source.Element("createddate").Value);
                 IsVisible = bool.Parse(source.Element("isvisible").Value);
                 IsOpen = bool.Parse(source.Element("isopen").Value);
@@ -140,7 +140,7 @@ namespace AssessTrack.Models
 
         public void Insert(AssessTrackModelClassesDataContext dc)
         {
-            throw new NotImplementedException();
+            dc.Assessments.InsertOnSubmit(this);
         }
 
         #endregion

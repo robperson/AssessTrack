@@ -58,7 +58,12 @@ namespace AssessTrack.Models
         public void Insert(AssessTrackModelClassesDataContext dc)
         {
             MembershipCreateStatus status;
-            Membership.CreateUser(Username, Password, Email, string.Empty, string.Empty, true, MembershipID, out status);
+            Membership.CreateUser(Username, Password, Email, "question", "answer", true, MembershipID, out status);
+            if (status == MembershipCreateStatus.DuplicateUserName)
+            {
+                Username = Username + "-old";
+                Membership.CreateUser(Username, Password, Email, "question", "answer", true, MembershipID, out status);
+            }
             if (status != MembershipCreateStatus.Success)
                 throw new Exception("Failed to create user " + Username + ".");
         }

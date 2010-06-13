@@ -39,7 +39,7 @@ namespace AssessTrack.Models
                     new XElement("weight", Weight),
                     new XElement("questionid", QuestionID.ToString()),
                     new XElement("assessmentid", AssessmentID.ToString()),
-                    new XElement("answerkeytext", AnswerKeyText),
+                    new XElement("answerkeytext", HttpContext.Current.Server.HtmlEncode(AnswerKeyText)),
                     new XElement("type", this.Type));
             return answer;
         }
@@ -52,7 +52,7 @@ namespace AssessTrack.Models
                 Weight = Convert.ToDouble(source.Element("weight").Value);
                 QuestionID = new Guid(source.Element("questionid").Value);
                 AssessmentID = new Guid(source.Element("assessmentid").Value);
-                AnswerKeyText = source.Element("answerkeytext").Value;
+                AnswerKeyText = HttpContext.Current.Server.HtmlDecode(source.Element("answerkeytext").Value);
                 this.Type = source.Element("type").Value;
             }
             catch

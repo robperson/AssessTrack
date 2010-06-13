@@ -30,7 +30,7 @@ namespace AssessTrack.Models
                     new XElement("responseid", ResponseID.ToString()),
                     new XElement("submissionrecordid", SubmissionRecordID.ToString()),
                     new XElement("answerid", AnswerID.ToString()),
-                    new XElement("responsetext", ResponseText),
+                    new XElement("responsetext", HttpContext.Current.Server.HtmlEncode(ResponseText)),
                     new XElement("score", Score.ToString()));
             return response;
         }
@@ -42,7 +42,7 @@ namespace AssessTrack.Models
                 ResponseID = new Guid(source.Element("responseid").Value);
                 SubmissionRecordID = new Guid(source.Element("submissionrecordid").Value);
                 AnswerID = new Guid(source.Element("answerid").Value);
-                ResponseText = source.Element("responsetext").Value;
+                ResponseText = HttpContext.Current.Server.HtmlDecode(source.Element("responsetext").Value);
                 Score = double.Parse(source.Element("score").Value);
             }
             catch (Exception)

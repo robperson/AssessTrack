@@ -30,7 +30,7 @@ namespace AssessTrack.Models
                     new XElement("answerkeyid", AnswerKeyID.ToString()),
                     new XElement("answerid", AnswerID.ToString()),
                     new XElement("weight", Weight.ToString()),
-                    new XElement("value", Value));
+                    new XElement("value", HttpContext.Current.Server.HtmlEncode(Value)));
             return answerkey;
         }
 
@@ -41,7 +41,7 @@ namespace AssessTrack.Models
                 AnswerKeyID = new Guid(source.Element("answerkeyid").Value);
                 AnswerID = new Guid(source.Element("answerid").Value);
                 Weight = double.Parse(source.Element("weight").Value);
-                Value = source.Element("value").Value;
+                Value = HttpContext.Current.Server.HtmlDecode(source.Element("value").Value);
             }
             catch (Exception)
             {

@@ -59,6 +59,9 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Backup\BackupItemFactory.cs" />
+    <Compile Include="Backup\IBackupItem.cs" />
+    <Compile Include="Backup\SiteBackup.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AssessmentController.cs" />
     <Compile Include="Controllers\AssessmentTypeController.cs" />
@@ -68,6 +71,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CourseTermController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SubmissionRecordController.cs" />
@@ -86,12 +90,16 @@
     <Compile Include="Helpers\AuthHelper.cs" />
     <Compile Include="Helpers\CodeCompiler.cs" />
     <Compile Include="Helpers\ControllerHelpers.cs" />
+    <Compile Include="Helpers\DesignerHelper.cs" />
     <Compile Include="Helpers\NavigationHelper.cs" />
     <Compile Include="Helpers\RuleViolationException.cs" />
     <Compile Include="Helpers\SubmissionFormHelpers.cs" />
     <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\AnswerKey.cs" />
+    <Compile Include="Models\AnswerTag.cs" />
     <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\AssessmentManager.cs" />
+    <Compile Include="Models\AssessmentTag.cs" />
     <Compile Include="Models\AssessmentType.cs" />
     <Compile Include="Models\AssessmentTypeManager.cs" />
     <Compile Include="Models\AssessTrackModelClasses.cs">
@@ -105,12 +113,19 @@
     <Compile Include="Helpers\UserHelpers.cs" />
     <Compile Include="Models\CourseTerm.cs" />
     <Compile Include="Models\CourseTermManager.cs" />
+    <Compile Include="Models\CourseTermMember.cs" />
     <Compile Include="Models\DBManager.cs" />
+    <Compile Include="Models\Grade.cs" />
+    <Compile Include="Models\GradeSection.cs" />
+    <Compile Include="Models\MembershipInfo.cs" />
+    <Compile Include="Models\QuestionTag.cs" />
+    <Compile Include="Models\Response.cs" />
     <Compile Include="Models\Site.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\ProfileManager.cs" />
     <Compile Include="Models\SiteManager.cs" />
+    <Compile Include="Models\SiteMember.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TagManager.cs" />
     <Compile Include="Models\Course.cs" />
@@ -216,6 +231,15 @@
     <None Include="Models\AssessTrackModelClasses.dbml.layout">
       <DependentUpon>AssessTrackModelClasses.dbml</DependentUpon>
     </None>
+    <Content Include="Content\QuizBuilder.css" />
+    <Content Include="Scripts\jquery-ui-1.7.2.custom.min.js" />
+    <Content Include="Scripts\QuizBuilder.js" />
+    <Content Include="Scripts\String.js" />
+    <Content Include="Views\CourseTerm\Students.aspx" />
+    <Content Include="Views\Reports\Index.aspx" />
+    <Content Include="Views\Reports\StudentPerformance.aspx" />
+    <Content Include="Views\Shared\ProfileNotFound.aspx" />
+    <Content Include="Views\Shared\QuizBuilder.Master" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -235,7 +259,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>65350</DevelopmentServerPort>
+          <DevelopmentServerPort>9619</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

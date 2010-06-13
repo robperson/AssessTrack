@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CA6737E6-FFC6-4F48-8873-3168EE102CBF}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -51,12 +51,6 @@
   <ItemGroup>
     <Content Include="AuthoringTests.txt" />
     <Content Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AssessTrack\AssessTrack.csproj">
-      <Project>{D27B1B7D-A6E3-4AB3-8B01-10D8AB198B5A}</Project>
-      <Name>AssessTrack</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

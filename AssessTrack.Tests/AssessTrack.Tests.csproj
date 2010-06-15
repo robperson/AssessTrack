@@ -52,6 +52,12 @@
     <Content Include="AuthoringTests.txt" />
     <Content Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AssessTrack\AssessTrack.csproj">
+      <Project>{D27B1B7D-A6E3-4AB3-8B01-10D8AB198B5A}</Project>
+      <Name>AssessTrack</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

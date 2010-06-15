@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Database Name="AssessTrackData" Class="AssessTrackModelClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=ROBPERSON-PC;Initial Catalog=AssessTrackData;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="AssessTrackDataConnectionString" Provider="System.Data.SqlClient" />
+<Database Name="CMSData" Class="AssessTrackModelClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=CMSData;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="AssessTrackDataConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.AnswerKeys" Member="AnswerKeys">
     <Type Name="AnswerKey">
       <Column Name="AnswerKeyID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="AnswerID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="Weight" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="Value" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Association Name="Answer_AnswerKey" Member="Answer" ThisKey="AnswerID" Type="Answer" IsForeignKey="true" />
+      <Association Name="Answer_AnswerKey" Member="Answer" ThisKey="AnswerID" OtherKey="AnswerID" Type="Answer" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Answers" Member="Answers">
@@ -18,19 +18,19 @@
       <Column Name="AssessmentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="AnswerKeyText" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="Type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="Answer_AnswerKey" Member="AnswerKeys" OtherKey="AnswerID" Type="AnswerKey" />
-      <Association Name="Answer_AnswerTag" Member="AnswerTags" OtherKey="AnswerID" Type="AnswerTag" />
-      <Association Name="Answer_Response" Member="Responses" OtherKey="AnswerID" Type="Response" />
-      <Association Name="Assessment_Answer" Member="Assessment" ThisKey="AssessmentID" Type="Assessment" IsForeignKey="true" />
-      <Association Name="Question_Answer" Member="Question" ThisKey="QuestionID" Type="Question" IsForeignKey="true" />
+      <Association Name="Answer_AnswerKey" Member="AnswerKeys" ThisKey="AnswerID" OtherKey="AnswerID" Type="AnswerKey" />
+      <Association Name="Answer_AnswerTag" Member="AnswerTags" ThisKey="AnswerID" OtherKey="AnswerID" Type="AnswerTag" />
+      <Association Name="Answer_Response" Member="Responses" ThisKey="AnswerID" OtherKey="AnswerID" Type="Response" />
+      <Association Name="Assessment_Answer" Member="Assessment" ThisKey="AssessmentID" OtherKey="AssessmentID" Type="Assessment" IsForeignKey="true" />
+      <Association Name="Question_Answer" Member="Question" ThisKey="QuestionID" OtherKey="QuestionID" Type="Question" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.AnswerTags" Member="AnswerTags">
     <Type Name="AnswerTag">
       <Column Name="TagID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="AnswerID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Association Name="Answer_AnswerTag" Member="Answer" ThisKey="AnswerID" Type="Answer" IsForeignKey="true" />
-      <Association Name="Tag_AnswerTag" Member="Tag" ThisKey="TagID" Type="Tag" IsForeignKey="true" />
+      <Association Name="Answer_AnswerTag" Member="Answer" ThisKey="AnswerID" OtherKey="AnswerID" Type="Answer" IsForeignKey="true" />
+      <Association Name="Tag_AnswerTag" Member="Tag" ThisKey="TagID" OtherKey="TagID" Type="Tag" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Assessments" Member="Assessments">
@@ -47,20 +47,20 @@
       <Column Name="IsGradable" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="AllowMultipleSubmissions" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="CourseTermID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Association Name="Assessment_Answer" Member="Answers" OtherKey="AssessmentID" Type="Answer" />
-      <Association Name="Assessment_AssessmentTag" Member="AssessmentTags" OtherKey="AssessmentID" Type="AssessmentTag" />
-      <Association Name="Assessment_Question" Member="Questions" OtherKey="AssessmentID" Type="Question" />
-      <Association Name="Assessment_SubmissionRecord" Member="SubmissionRecords" OtherKey="AssessmentID" Type="SubmissionRecord" />
-      <Association Name="AssessmentType_Assessment" Member="AssessmentType" ThisKey="AssessmentTypeID" Type="AssessmentType" IsForeignKey="true" />
-      <Association Name="CourseTerm_Assessment" Member="CourseTerm" ThisKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />
+      <Association Name="Assessment_Answer" Member="Answers" ThisKey="AssessmentID" OtherKey="AssessmentID" Type="Answer" />
+      <Association Name="Assessment_AssessmentTag" Member="AssessmentTags" ThisKey="AssessmentID" OtherKey="AssessmentID" Type="AssessmentTag" />
+      <Association Name="Assessment_Question" Member="Questions" ThisKey="AssessmentID" OtherKey="AssessmentID" Type="Question" />
+      <Association Name="Assessment_SubmissionRecord" Member="SubmissionRecords" ThisKey="AssessmentID" OtherKey="AssessmentID" Type="SubmissionRecord" />
+      <Association Name="AssessmentType_Assessment" Member="AssessmentType" ThisKey="AssessmentTypeID" OtherKey="AssessmentTypeID" Type="AssessmentType" IsForeignKey="true" />
+      <Association Name="CourseTerm_Assessment" Member="CourseTerm" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.AssessmentTags" Member="AssessmentTags">
     <Type Name="AssessmentTag">
       <Column Name="TagID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="AssessmentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Association Name="Assessment_AssessmentTag" Member="Assessment" ThisKey="AssessmentID" Type="Assessment" IsForeignKey="true" />
-      <Association Name="Tag_AssessmentTag" Member="Tag" ThisKey="TagID" Type="Tag" IsForeignKey="true" />
+      <Association Name="Assessment_AssessmentTag" Member="Assessment" ThisKey="AssessmentID" OtherKey="AssessmentID" Type="Assessment" IsForeignKey="true" />
+      <Association Name="Tag_AssessmentTag" Member="Tag" ThisKey="TagID" OtherKey="TagID" Type="Tag" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.AssessmentTypes" Member="AssessmentTypes">
@@ -70,8 +70,8 @@
       <Column Name="Weight" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="IsExtraCredit" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="CourseTermID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Association Name="AssessmentType_Assessment" Member="Assessments" OtherKey="AssessmentTypeID" Type="Assessment" />
-      <Association Name="CourseTerm_AssessmentType" Member="CourseTerm" ThisKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />
+      <Association Name="AssessmentType_Assessment" Member="Assessments" ThisKey="AssessmentTypeID" OtherKey="AssessmentTypeID" Type="Assessment" />
+      <Association Name="CourseTerm_AssessmentType" Member="CourseTerm" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Courses" Member="Courses">
@@ -81,8 +81,8 @@
       <Column Name="Description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="ShortName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Association Name="Course_CourseTerm" Member="CourseTerms" OtherKey="CourseID" Type="CourseTerm" />
-      <Association Name="Site_Course" Member="Site" ThisKey="SiteID" Type="Site" IsForeignKey="true" />
+      <Association Name="Course_CourseTerm" Member="CourseTerms" ThisKey="CourseID" OtherKey="CourseID" Type="CourseTerm" />
+      <Association Name="Site_Course" Member="Site" ThisKey="SiteID" OtherKey="SiteID" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Questions" Member="Questions">
@@ -91,28 +91,17 @@
       <Column Name="Weight" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="AssessmentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="Data" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Association Name="Question_Answer" Member="Answers" OtherKey="QuestionID" Type="Answer" />
-      <Association Name="Question_QuestionTag" Member="QuestionTags" OtherKey="QuestionID" Type="QuestionTag" />
-      <Association Name="Assessment_Question" Member="Assessment" ThisKey="AssessmentID" Type="Assessment" IsForeignKey="true" />
+      <Association Name="Question_Answer" Member="Answers" ThisKey="QuestionID" OtherKey="QuestionID" Type="Answer" />
+      <Association Name="Question_QuestionTag" Member="QuestionTags" ThisKey="QuestionID" OtherKey="QuestionID" Type="QuestionTag" />
+      <Association Name="Assessment_Question" Member="Assessment" ThisKey="AssessmentID" OtherKey="AssessmentID" Type="Assessment" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.QuestionTags" Member="QuestionTags">
     <Type Name="QuestionTag">
       <Column Name="TagID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="QuestionID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Association Name="Question_QuestionTag" Member="Question" ThisKey="QuestionID" Type="Question" IsForeignKey="true" />
-      <Association Name="Tag_QuestionTag" Member="Tag" ThisKey="TagID" Type="Tag" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Responses" Member="Responses">
-    <Type Name="Response">
-      <Column Name="ResponseID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="SubmissionRecordID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="AnswerID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="ResponseText" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="Score" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="Answer_Response" Member="Answer" ThisKey="AnswerID" Type="Answer" IsForeignKey="true" />
-      <Association Name="SubmissionRecord_Response" Member="SubmissionRecord" ThisKey="SubmissionRecordID" Type="SubmissionRecord" IsForeignKey="true" />
+      <Association Name="Question_QuestionTag" Member="Question" ThisKey="QuestionID" OtherKey="QuestionID" Type="Question" IsForeignKey="true" />
+      <Association Name="Tag_QuestionTag" Member="Tag" ThisKey="TagID" OtherKey="TagID" Type="Tag" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Sites" Member="Sites">
@@ -121,10 +110,10 @@
       <Column Name="Title" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="ShortName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Association Name="Site_Course" Member="Courses" OtherKey="SiteID" Type="Course" />
-      <Association Name="Site_Term" Member="Terms" OtherKey="SiteID" Type="Term" />
-      <Association Name="Site_CourseTerm" Member="CourseTerms" OtherKey="SiteID" Type="CourseTerm" />
-      <Association Name="Site_SiteMember" Member="SiteMembers" OtherKey="SiteID" Type="SiteMember" />
+      <Association Name="Site_Course" Member="Courses" ThisKey="SiteID" OtherKey="SiteID" Type="Course" />
+      <Association Name="Site_Term" Member="Terms" ThisKey="SiteID" OtherKey="SiteID" Type="Term" />
+      <Association Name="Site_CourseTerm" Member="CourseTerms" ThisKey="SiteID" OtherKey="SiteID" Type="CourseTerm" />
+      <Association Name="Site_SiteMember" Member="SiteMembers" ThisKey="SiteID" OtherKey="SiteID" Type="SiteMember" />
     </Type>
   </Table>
   <Table Name="dbo.SubmissionRecords" Member="SubmissionRecords">
@@ -136,8 +125,8 @@
       <Column Name="GradedOn" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="GradedBy" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="Comments" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="SubmissionRecord_Response" Member="Responses" OtherKey="SubmissionRecordID" Type="Response" />
-      <Association Name="Assessment_SubmissionRecord" Member="Assessment" ThisKey="AssessmentID" Type="Assessment" IsForeignKey="true" />
+      <Association Name="SubmissionRecord_Response" Member="Responses" ThisKey="SubmissionRecordID" OtherKey="SubmissionRecordID" Type="Response" />
+      <Association Name="Assessment_SubmissionRecord" Member="Assessment" ThisKey="AssessmentID" OtherKey="AssessmentID" Type="Assessment" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Tags" Member="Tags">
@@ -147,11 +136,11 @@
       <Column Name="Description" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="CreatedBy" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="CourseTermID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Association Name="Tag_AnswerTag" Member="AnswerTags" OtherKey="TagID" Type="AnswerTag" />
-      <Association Name="Tag_AssessmentTag" Member="AssessmentTags" OtherKey="TagID" Type="AssessmentTag" />
-      <Association Name="Tag_QuestionTag" Member="QuestionTags" OtherKey="TagID" Type="QuestionTag" />
-      <Association Name="CourseTerm_Tag" Member="CourseTerm" ThisKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />
-      <Association Name="Profile_Tag" Member="Profile" ThisKey="CreatedBy" Type="Profile" IsForeignKey="true" />
+      <Association Name="Tag_AnswerTag" Member="AnswerTags" ThisKey="TagID" OtherKey="TagID" Type="AnswerTag" />
+      <Association Name="Tag_AssessmentTag" Member="AssessmentTags" ThisKey="TagID" OtherKey="TagID" Type="AssessmentTag" />
+      <Association Name="Tag_QuestionTag" Member="QuestionTags" ThisKey="TagID" OtherKey="TagID" Type="QuestionTag" />
+      <Association Name="CourseTerm_Tag" Member="CourseTerm" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />
+      <Association Name="Profile_Tag" Member="Profile" ThisKey="CreatedBy" OtherKey="MembershipID" Type="Profile" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Terms" Member="Terms">
@@ -161,8 +150,8 @@
       <Column Name="EndDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Association Name="Term_CourseTerm" Member="CourseTerms" OtherKey="TermID" Type="CourseTerm" />
-      <Association Name="Site_Term" Member="Site" ThisKey="SiteID" Type="Site" IsForeignKey="true" />
+      <Association Name="Term_CourseTerm" Member="CourseTerms" ThisKey="TermID" OtherKey="TermID" Type="CourseTerm" />
+      <Association Name="Site_Term" Member="Site" ThisKey="SiteID" OtherKey="SiteID" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CourseTerms" Member="CourseTerms">
@@ -175,13 +164,13 @@
       <Column Name="CourseID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="TermID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Association Name="CourseTerm_Assessment" Member="Assessments" OtherKey="CourseTermID" Type="Assessment" />
-      <Association Name="CourseTerm_AssessmentType" Member="AssessmentTypes" OtherKey="CourseTermID" Type="AssessmentType" />
-      <Association Name="CourseTerm_Tag" Member="Tags" OtherKey="CourseTermID" Type="Tag" />
-      <Association Name="CourseTerm_CourseTermMember" Member="CourseTermMembers" OtherKey="CourseTermID" Type="CourseTermMember" />
-      <Association Name="Course_CourseTerm" Member="Course" ThisKey="CourseID" Type="Course" IsForeignKey="true" />
-      <Association Name="Site_CourseTerm" Member="Site" ThisKey="SiteID" Type="Site" IsForeignKey="true" />
-      <Association Name="Term_CourseTerm" Member="Term" ThisKey="TermID" Type="Term" IsForeignKey="true" />
+      <Association Name="CourseTerm_Assessment" Member="Assessments" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="Assessment" />
+      <Association Name="CourseTerm_AssessmentType" Member="AssessmentTypes" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="AssessmentType" />
+      <Association Name="CourseTerm_Tag" Member="Tags" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="Tag" />
+      <Association Name="CourseTerm_CourseTermMember" Member="CourseTermMembers" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTermMember" />
+      <Association Name="Course_CourseTerm" Member="Course" ThisKey="CourseID" OtherKey="CourseID" Type="Course" IsForeignKey="true" />
+      <Association Name="Site_CourseTerm" Member="Site" ThisKey="SiteID" OtherKey="SiteID" Type="Site" IsForeignKey="true" />
+      <Association Name="Term_CourseTerm" Member="Term" ThisKey="TermID" OtherKey="TermID" Type="Term" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Profiles" Member="Profiles">
@@ -191,9 +180,9 @@
       <Column Name="FirstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="LastName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="AccessLevel" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Association Name="Profile_Tag" Member="Tags" OtherKey="CreatedBy" Type="Tag" />
-      <Association Name="Profile_CourseTermMember" Member="CourseTermMembers" OtherKey="MembershipID" Type="CourseTermMember" />
-      <Association Name="Profile_SiteMember" Member="SiteMembers" OtherKey="MembershipID" Type="SiteMember" />
+      <Association Name="Profile_Tag" Member="Tags" ThisKey="MembershipID" OtherKey="CreatedBy" Type="Tag" />
+      <Association Name="Profile_CourseTermMember" Member="CourseTermMembers" ThisKey="MembershipID" OtherKey="MembershipID" Type="CourseTermMember" />
+      <Association Name="Profile_SiteMember" Member="SiteMembers" ThisKey="MembershipID" OtherKey="MembershipID" Type="SiteMember" />
     </Type>
   </Table>
   <Table Name="dbo.CourseTermMembers" Member="CourseTermMembers">
@@ -202,8 +191,8 @@
       <Column Name="CourseTermID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="MembershipID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="AccessLevel" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Association Name="CourseTerm_CourseTermMember" Member="CourseTerm" ThisKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />
-      <Association Name="Profile_CourseTermMember" Member="Profile" ThisKey="MembershipID" Type="Profile" IsForeignKey="true" />
+      <Association Name="CourseTerm_CourseTermMember" Member="CourseTerm" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />
+      <Association Name="Profile_CourseTermMember" Member="Profile" ThisKey="MembershipID" OtherKey="MembershipID" Type="Profile" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.SiteMembers" Member="SiteMembers">
@@ -212,8 +201,20 @@
       <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="MembershipID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="AccessLevel" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Association Name="Profile_SiteMember" Member="Profile" ThisKey="MembershipID" Type="Profile" IsForeignKey="true" />
-      <Association Name="Site_SiteMember" Member="Site" ThisKey="SiteID" Type="Site" IsForeignKey="true" />
+      <Association Name="Profile_SiteMember" Member="Profile" ThisKey="MembershipID" OtherKey="MembershipID" Type="Profile" IsForeignKey="true" />
+      <Association Name="Site_SiteMember" Member="Site" ThisKey="SiteID" OtherKey="SiteID" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Responses" Member="Responses">
+    <Type Name="Response">
+      <Column Name="ResponseID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SubmissionRecordID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="AnswerID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ResponseText" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Score" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Comment" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Association Name="Answer_Response" Member="Answer" ThisKey="AnswerID" OtherKey="AnswerID" Type="Answer" IsForeignKey="true" />
+      <Association Name="SubmissionRecord_Response" Member="SubmissionRecord" ThisKey="SubmissionRecordID" OtherKey="SubmissionRecordID" Type="SubmissionRecord" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.sp_AddAssessmentTag" Method="sp_AddAssessmentTag">

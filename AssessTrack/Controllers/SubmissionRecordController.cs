@@ -102,7 +102,8 @@ namespace AssessTrack.Controllers
                     submission.Comments = input["Comments"];
                     foreach (Models.Response response in submission.Responses)
                     {
-                        response.Score = Convert.ToDouble(input[response.AnswerID.ToString()]);
+                        response.Score = Convert.ToDouble(input["score-" + response.AnswerID.ToString()]);
+                        response.Comment = input["comment-" + response.AnswerID.ToString()];
                     }
                     dataRepository.Save();
                     return RedirectToAction("Index", new { id = submission.AssessmentID });

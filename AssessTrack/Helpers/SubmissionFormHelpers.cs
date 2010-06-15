@@ -19,25 +19,55 @@ namespace AssessTrack.Helpers
                 answers.Add(response.AnswerID.ToString(), response.ResponseText);
             }
 
-            NameValueCollection scores;
+            NameValueCollection scores = new NameValueCollection();
             if (helper.ViewContext.HttpContext.Request.Form.Count > 0)
             {
-                scores = helper.ViewContext.HttpContext.Request.Form;
+                foreach (string key in helper.ViewContext.HttpContext.Request.Form.AllKeys)
+                {
+                    if (key.StartsWith("score-"))
+                    {
+                        scores.Add(key, helper.ViewContext.HttpContext.Request.Form[key]);
+                    }
+                }
             }
             else
             {
                 scores = new NameValueCollection();
                 foreach (Response response in submission.Responses)
                 {
-                    scores.Add(response.AnswerID.ToString(), (response.Score ?? 0.0).ToString());
+                    scores.Add("score-" + response.AnswerID.ToString(), (response.Score ?? 0.0).ToString());
                 }
             }
 
-            return helper.RenderAssessmentForm(submission.Assessment, "~/Content/grade.xsl", answers, scores);
+            NameValueCollection comments = new NameValueCollection();
+            if (helper.ViewContext.HttpContext.Request.Form.Count > 0)
+            {
+                foreach (string key in helper.ViewContext.HttpContext.Request.Form.AllKeys)
+                {
+                    if (key.StartsWith("comment-"))
+                    {
+                        comments.Add(key, helper.ViewContext.HttpContext.Request.Form[key]);
+                    }
+                }
+            }
+            else
+            {
+                foreach (Response response in submission.Responses)
+                {
+                    comments.Add("comment-" + response.AnswerID.ToString(), response.Comment ?? "");
+                }
+            }
+
+            return helper.RenderAssessmentForm(submission.Assessment, "~/Content/grade.xsl", answers, scores, comments);
 
         }
 
         public static string RenderAssessmentForm(this HtmlHelper helper, Assessment assessment, string stylesheet, NameValueCollection answers, NameValueCollection inputs)
+        {
+            return RenderAssessmentForm(helper, assessment, stylesheet, answers, inputs, null);
+        }
+
+        public static string RenderAssessmentForm(this HtmlHelper helper, Assessment assessment, string stylesheet, NameValueCollection answers, NameValueCollection inputs, NameValueCollection comments)
         {
             
             XslCompiledTransform xslt = new XslCompiledTransform();
@@ -103,6 +133,18 @@ namespace AssessTrack.Helpers
                     inputNode.Attributes.Append(value);
                 }
             }
+            if (comments != null && comments.Count > 0)
+            {
+                XmlElement commentNode;
+                foreach (string id in comments.AllKeys)
+                {
+                    //This assumes all inputs are "input" elements with type="text"
+                    string nodePath = string.Format("//node()[@name='{0}']", id);
+                    commentNode = (XmlElement)transformedData.SelectSingleNode(nodePath);
+                    commentNode.InnerText = comments[id];
+                }
+            }
+
 
             
             return transformedData.DocumentElement.OuterXml;

@@ -22,7 +22,7 @@ namespace AssessTrack.Models
 	using System;
 	
 	
-	[System.Data.Linq.Mapping.DatabaseAttribute(Name="AssessTrackData")]
+	[System.Data.Linq.Mapping.DatabaseAttribute(Name="CMSData")]
 	public partial class AssessTrackModelClassesDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -48,9 +48,6 @@ namespace AssessTrack.Models
     partial void InsertQuestion(Question instance);
     partial void UpdateQuestion(Question instance);
     partial void DeleteQuestion(Question instance);
-    partial void InsertResponse(Response instance);
-    partial void UpdateResponse(Response instance);
-    partial void DeleteResponse(Response instance);
     partial void InsertSite(Site instance);
     partial void UpdateSite(Site instance);
     partial void DeleteSite(Site instance);
@@ -75,6 +72,9 @@ namespace AssessTrack.Models
     partial void InsertSiteMember(SiteMember instance);
     partial void UpdateSiteMember(SiteMember instance);
     partial void DeleteSiteMember(SiteMember instance);
+    partial void InsertResponse(Response instance);
+    partial void UpdateResponse(Response instance);
+    partial void DeleteResponse(Response instance);
     #endregion
 		
 		public AssessTrackModelClassesDataContext() : 
@@ -179,14 +179,6 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Response> Responses
-		{
-			get
-			{
-				return this.GetTable<Response>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Site> Sites
 		{
 			get
@@ -248,6 +240,14 @@ namespace AssessTrack.Models
 			get
 			{
 				return this.GetTable<SiteMember>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Response> Responses
+		{
+			get
+			{
+				return this.GetTable<Response>();
 			}
 		}
 		
@@ -414,7 +414,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Answer_AnswerKey", Storage="_Answer", ThisKey="AnswerID", IsForeignKey=true)]
+		[Association(Name="Answer_AnswerKey", Storage="_Answer", ThisKey="AnswerID", OtherKey="AnswerID", IsForeignKey=true)]
 		public Answer Answer
 		{
 			get
@@ -650,7 +650,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Answer_AnswerKey", Storage="_AnswerKeys", OtherKey="AnswerID")]
+		[Association(Name="Answer_AnswerKey", Storage="_AnswerKeys", ThisKey="AnswerID", OtherKey="AnswerID")]
 		public EntitySet<AnswerKey> AnswerKeys
 		{
 			get
@@ -663,7 +663,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Answer_Response", Storage="_Responses", OtherKey="AnswerID")]
+		[Association(Name="Answer_Response", Storage="_Responses", ThisKey="AnswerID", OtherKey="AnswerID")]
 		public EntitySet<Response> Responses
 		{
 			get
@@ -676,7 +676,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Assessment_Answer", Storage="_Assessment", ThisKey="AssessmentID", IsForeignKey=true)]
+		[Association(Name="Assessment_Answer", Storage="_Assessment", ThisKey="AssessmentID", OtherKey="AssessmentID", IsForeignKey=true)]
 		public Assessment Assessment
 		{
 			get
@@ -710,7 +710,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Question_Answer", Storage="_Question", ThisKey="QuestionID", IsForeignKey=true)]
+		[Association(Name="Question_Answer", Storage="_Question", ThisKey="QuestionID", OtherKey="QuestionID", IsForeignKey=true)]
 		public Question Question
 		{
 			get
@@ -1162,7 +1162,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Assessment_Answer", Storage="_Answers", OtherKey="AssessmentID")]
+		[Association(Name="Assessment_Answer", Storage="_Answers", ThisKey="AssessmentID", OtherKey="AssessmentID")]
 		public EntitySet<Answer> Answers
 		{
 			get
@@ -1175,7 +1175,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Assessment_Question", Storage="_Questions", OtherKey="AssessmentID")]
+		[Association(Name="Assessment_Question", Storage="_Questions", ThisKey="AssessmentID", OtherKey="AssessmentID")]
 		public EntitySet<Question> Questions
 		{
 			get
@@ -1188,7 +1188,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Assessment_SubmissionRecord", Storage="_SubmissionRecords", OtherKey="AssessmentID")]
+		[Association(Name="Assessment_SubmissionRecord", Storage="_SubmissionRecords", ThisKey="AssessmentID", OtherKey="AssessmentID")]
 		public EntitySet<SubmissionRecord> SubmissionRecords
 		{
 			get
@@ -1201,7 +1201,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="AssessmentType_Assessment", Storage="_AssessmentType", ThisKey="AssessmentTypeID", IsForeignKey=true)]
+		[Association(Name="AssessmentType_Assessment", Storage="_AssessmentType", ThisKey="AssessmentTypeID", OtherKey="AssessmentTypeID", IsForeignKey=true)]
 		public AssessmentType AssessmentType
 		{
 			get
@@ -1235,7 +1235,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="CourseTerm_Assessment", Storage="_CourseTerm", ThisKey="CourseTermID", IsForeignKey=true)]
+		[Association(Name="CourseTerm_Assessment", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
 		public CourseTerm CourseTerm
 		{
 			get
@@ -1518,7 +1518,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="AssessmentType_Assessment", Storage="_Assessments", OtherKey="AssessmentTypeID")]
+		[Association(Name="AssessmentType_Assessment", Storage="_Assessments", ThisKey="AssessmentTypeID", OtherKey="AssessmentTypeID")]
 		public EntitySet<Assessment> Assessments
 		{
 			get
@@ -1531,7 +1531,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="CourseTerm_AssessmentType", Storage="_CourseTerm", ThisKey="CourseTermID", IsForeignKey=true)]
+		[Association(Name="CourseTerm_AssessmentType", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
 		public CourseTerm CourseTerm
 		{
 			get
@@ -1745,7 +1745,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Course_CourseTerm", Storage="_CourseTerms", OtherKey="CourseID")]
+		[Association(Name="Course_CourseTerm", Storage="_CourseTerms", ThisKey="CourseID", OtherKey="CourseID")]
 		public EntitySet<CourseTerm> CourseTerms
 		{
 			get
@@ -1758,7 +1758,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Site_Course", Storage="_Site", ThisKey="SiteID", IsForeignKey=true)]
+		[Association(Name="Site_Course", Storage="_Site", ThisKey="SiteID", OtherKey="SiteID", IsForeignKey=true)]
 		public Site Site
 		{
 			get
@@ -1948,7 +1948,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Question_Answer", Storage="_Answers", OtherKey="QuestionID")]
+		[Association(Name="Question_Answer", Storage="_Answers", ThisKey="QuestionID", OtherKey="QuestionID")]
 		public EntitySet<Answer> Answers
 		{
 			get
@@ -1961,7 +1961,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Assessment_Question", Storage="_Assessment", ThisKey="AssessmentID", IsForeignKey=true)]
+		[Association(Name="Assessment_Question", Storage="_Assessment", ThisKey="AssessmentID", OtherKey="AssessmentID", IsForeignKey=true)]
 		public Assessment Assessment
 		{
 			get
@@ -2069,246 +2069,6 @@ namespace AssessTrack.Models
 				{
 					this._QuestionID = value;
 				}
-			}
-		}
-	}
-	
-	[Table(Name="dbo.Responses")]
-	public partial class Response : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _ResponseID;
-		
-		private System.Guid _SubmissionRecordID;
-		
-		private System.Guid _AnswerID;
-		
-		private string _ResponseText;
-		
-		private System.Nullable<double> _Score;
-		
-		private EntityRef<Answer> _Answer;
-		
-		private EntityRef<SubmissionRecord> _SubmissionRecord;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnResponseIDChanging(System.Guid value);
-    partial void OnResponseIDChanged();
-    partial void OnSubmissionRecordIDChanging(System.Guid value);
-    partial void OnSubmissionRecordIDChanged();
-    partial void OnAnswerIDChanging(System.Guid value);
-    partial void OnAnswerIDChanged();
-    partial void OnResponseTextChanging(string value);
-    partial void OnResponseTextChanged();
-    partial void OnScoreChanging(System.Nullable<double> value);
-    partial void OnScoreChanged();
-    #endregion
-		
-		public Response()
-		{
-			this._Answer = default(EntityRef<Answer>);
-			this._SubmissionRecord = default(EntityRef<SubmissionRecord>);
-			OnCreated();
-		}
-		
-		[Column(Storage="_ResponseID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
-		public System.Guid ResponseID
-		{
-			get
-			{
-				return this._ResponseID;
-			}
-			set
-			{
-				if ((this._ResponseID != value))
-				{
-					this.OnResponseIDChanging(value);
-					this.SendPropertyChanging();
-					this._ResponseID = value;
-					this.SendPropertyChanged("ResponseID");
-					this.OnResponseIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_SubmissionRecordID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SubmissionRecordID
-		{
-			get
-			{
-				return this._SubmissionRecordID;
-			}
-			set
-			{
-				if ((this._SubmissionRecordID != value))
-				{
-					if (this._SubmissionRecord.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnSubmissionRecordIDChanging(value);
-					this.SendPropertyChanging();
-					this._SubmissionRecordID = value;
-					this.SendPropertyChanged("SubmissionRecordID");
-					this.OnSubmissionRecordIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_AnswerID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid AnswerID
-		{
-			get
-			{
-				return this._AnswerID;
-			}
-			set
-			{
-				if ((this._AnswerID != value))
-				{
-					if (this._Answer.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAnswerIDChanging(value);
-					this.SendPropertyChanging();
-					this._AnswerID = value;
-					this.SendPropertyChanged("AnswerID");
-					this.OnAnswerIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_ResponseText", DbType="Text NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
-		public string ResponseText
-		{
-			get
-			{
-				return this._ResponseText;
-			}
-			set
-			{
-				if ((this._ResponseText != value))
-				{
-					this.OnResponseTextChanging(value);
-					this.SendPropertyChanging();
-					this._ResponseText = value;
-					this.SendPropertyChanged("ResponseText");
-					this.OnResponseTextChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Score", DbType="Float")]
-		public System.Nullable<double> Score
-		{
-			get
-			{
-				return this._Score;
-			}
-			set
-			{
-				if ((this._Score != value))
-				{
-					this.OnScoreChanging(value);
-					this.SendPropertyChanging();
-					this._Score = value;
-					this.SendPropertyChanged("Score");
-					this.OnScoreChanged();
-				}
-			}
-		}
-		
-		[Association(Name="Answer_Response", Storage="_Answer", ThisKey="AnswerID", IsForeignKey=true)]
-		public Answer Answer
-		{
-			get
-			{
-				return this._Answer.Entity;
-			}
-			set
-			{
-				Answer previousValue = this._Answer.Entity;
-				if (((previousValue != value) 
-							|| (this._Answer.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Answer.Entity = null;
-						previousValue.Responses.Remove(this);
-					}
-					this._Answer.Entity = value;
-					if ((value != null))
-					{
-						value.Responses.Add(this);
-						this._AnswerID = value.AnswerID;
-					}
-					else
-					{
-						this._AnswerID = default(System.Guid);
-					}
-					this.SendPropertyChanged("Answer");
-				}
-			}
-		}
-		
-		[Association(Name="SubmissionRecord_Response", Storage="_SubmissionRecord", ThisKey="SubmissionRecordID", IsForeignKey=true)]
-		public SubmissionRecord SubmissionRecord
-		{
-			get
-			{
-				return this._SubmissionRecord.Entity;
-			}
-			set
-			{
-				SubmissionRecord previousValue = this._SubmissionRecord.Entity;
-				if (((previousValue != value) 
-							|| (this._SubmissionRecord.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._SubmissionRecord.Entity = null;
-						previousValue.Responses.Remove(this);
-					}
-					this._SubmissionRecord.Entity = value;
-					if ((value != null))
-					{
-						value.Responses.Add(this);
-						this._SubmissionRecordID = value.SubmissionRecordID;
-					}
-					else
-					{
-						this._SubmissionRecordID = default(System.Guid);
-					}
-					this.SendPropertyChanged("SubmissionRecord");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -2438,7 +2198,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Site_Course", Storage="_Courses", OtherKey="SiteID")]
+		[Association(Name="Site_Course", Storage="_Courses", ThisKey="SiteID", OtherKey="SiteID")]
 		public EntitySet<Course> Courses
 		{
 			get
@@ -2451,7 +2211,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Site_Term", Storage="_Terms", OtherKey="SiteID")]
+		[Association(Name="Site_Term", Storage="_Terms", ThisKey="SiteID", OtherKey="SiteID")]
 		public EntitySet<Term> Terms
 		{
 			get
@@ -2464,7 +2224,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Site_CourseTerm", Storage="_CourseTerms", OtherKey="SiteID")]
+		[Association(Name="Site_CourseTerm", Storage="_CourseTerms", ThisKey="SiteID", OtherKey="SiteID")]
 		public EntitySet<CourseTerm> CourseTerms
 		{
 			get
@@ -2477,7 +2237,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Site_SiteMember", Storage="_SiteMembers", OtherKey="SiteID")]
+		[Association(Name="Site_SiteMember", Storage="_SiteMembers", ThisKey="SiteID", OtherKey="SiteID")]
 		public EntitySet<SiteMember> SiteMembers
 		{
 			get
@@ -2754,7 +2514,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="SubmissionRecord_Response", Storage="_Responses", OtherKey="SubmissionRecordID")]
+		[Association(Name="SubmissionRecord_Response", Storage="_Responses", ThisKey="SubmissionRecordID", OtherKey="SubmissionRecordID")]
 		public EntitySet<Response> Responses
 		{
 			get
@@ -2767,7 +2527,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Assessment_SubmissionRecord", Storage="_Assessment", ThisKey="AssessmentID", IsForeignKey=true)]
+		[Association(Name="Assessment_SubmissionRecord", Storage="_Assessment", ThisKey="AssessmentID", OtherKey="AssessmentID", IsForeignKey=true)]
 		public Assessment Assessment
 		{
 			get
@@ -2985,7 +2745,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="CourseTerm_Tag", Storage="_CourseTerm", ThisKey="CourseTermID", IsForeignKey=true)]
+		[Association(Name="CourseTerm_Tag", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
 		public CourseTerm CourseTerm
 		{
 			get
@@ -3019,7 +2779,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Profile_Tag", Storage="_Profile", ThisKey="CreatedBy", IsForeignKey=true)]
+		[Association(Name="Profile_Tag", Storage="_Profile", ThisKey="CreatedBy", OtherKey="MembershipID", IsForeignKey=true)]
 		public Profile Profile
 		{
 			get
@@ -3221,7 +2981,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Term_CourseTerm", Storage="_CourseTerms", OtherKey="TermID")]
+		[Association(Name="Term_CourseTerm", Storage="_CourseTerms", ThisKey="TermID", OtherKey="TermID")]
 		public EntitySet<CourseTerm> CourseTerms
 		{
 			get
@@ -3234,7 +2994,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Site_Term", Storage="_Site", ThisKey="SiteID", IsForeignKey=true)]
+		[Association(Name="Site_Term", Storage="_Site", ThisKey="SiteID", OtherKey="SiteID", IsForeignKey=true)]
 		public Site Site
 		{
 			get
@@ -3543,7 +3303,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="CourseTerm_Assessment", Storage="_Assessments", OtherKey="CourseTermID")]
+		[Association(Name="CourseTerm_Assessment", Storage="_Assessments", ThisKey="CourseTermID", OtherKey="CourseTermID")]
 		public EntitySet<Assessment> Assessments
 		{
 			get
@@ -3556,7 +3316,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="CourseTerm_AssessmentType", Storage="_AssessmentTypes", OtherKey="CourseTermID")]
+		[Association(Name="CourseTerm_AssessmentType", Storage="_AssessmentTypes", ThisKey="CourseTermID", OtherKey="CourseTermID")]
 		public EntitySet<AssessmentType> AssessmentTypes
 		{
 			get
@@ -3569,7 +3329,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="CourseTerm_Tag", Storage="_Tags", OtherKey="CourseTermID")]
+		[Association(Name="CourseTerm_Tag", Storage="_Tags", ThisKey="CourseTermID", OtherKey="CourseTermID")]
 		public EntitySet<Tag> Tags
 		{
 			get
@@ -3582,7 +3342,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="CourseTerm_CourseTermMember", Storage="_CourseTermMembers", OtherKey="CourseTermID")]
+		[Association(Name="CourseTerm_CourseTermMember", Storage="_CourseTermMembers", ThisKey="CourseTermID", OtherKey="CourseTermID")]
 		public EntitySet<CourseTermMember> CourseTermMembers
 		{
 			get
@@ -3595,7 +3355,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Course_CourseTerm", Storage="_Course", ThisKey="CourseID", IsForeignKey=true)]
+		[Association(Name="Course_CourseTerm", Storage="_Course", ThisKey="CourseID", OtherKey="CourseID", IsForeignKey=true)]
 		public Course Course
 		{
 			get
@@ -3629,7 +3389,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Site_CourseTerm", Storage="_Site", ThisKey="SiteID", IsForeignKey=true)]
+		[Association(Name="Site_CourseTerm", Storage="_Site", ThisKey="SiteID", OtherKey="SiteID", IsForeignKey=true)]
 		public Site Site
 		{
 			get
@@ -3663,7 +3423,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Term_CourseTerm", Storage="_Term", ThisKey="TermID", IsForeignKey=true)]
+		[Association(Name="Term_CourseTerm", Storage="_Term", ThisKey="TermID", OtherKey="TermID", IsForeignKey=true)]
 		public Term Term
 		{
 			get
@@ -3912,7 +3672,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Profile_Tag", Storage="_Tags", OtherKey="CreatedBy")]
+		[Association(Name="Profile_Tag", Storage="_Tags", ThisKey="MembershipID", OtherKey="CreatedBy")]
 		public EntitySet<Tag> Tags
 		{
 			get
@@ -3925,7 +3685,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Profile_CourseTermMember", Storage="_CourseTermMembers", OtherKey="MembershipID")]
+		[Association(Name="Profile_CourseTermMember", Storage="_CourseTermMembers", ThisKey="MembershipID", OtherKey="MembershipID")]
 		public EntitySet<CourseTermMember> CourseTermMembers
 		{
 			get
@@ -3938,7 +3698,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Profile_SiteMember", Storage="_SiteMembers", OtherKey="MembershipID")]
+		[Association(Name="Profile_SiteMember", Storage="_SiteMembers", ThisKey="MembershipID", OtherKey="MembershipID")]
 		public EntitySet<SiteMember> SiteMembers
 		{
 			get
@@ -4135,7 +3895,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="CourseTerm_CourseTermMember", Storage="_CourseTerm", ThisKey="CourseTermID", IsForeignKey=true)]
+		[Association(Name="CourseTerm_CourseTermMember", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
 		public CourseTerm CourseTerm
 		{
 			get
@@ -4169,7 +3929,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Profile_CourseTermMember", Storage="_Profile", ThisKey="MembershipID", IsForeignKey=true)]
+		[Association(Name="Profile_CourseTermMember", Storage="_Profile", ThisKey="MembershipID", OtherKey="MembershipID", IsForeignKey=true)]
 		public Profile Profile
 		{
 			get
@@ -4351,7 +4111,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Profile_SiteMember", Storage="_Profile", ThisKey="MembershipID", IsForeignKey=true)]
+		[Association(Name="Profile_SiteMember", Storage="_Profile", ThisKey="MembershipID", OtherKey="MembershipID", IsForeignKey=true)]
 		public Profile Profile
 		{
 			get
@@ -4385,7 +4145,7 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Site_SiteMember", Storage="_Site", ThisKey="SiteID", IsForeignKey=true)]
+		[Association(Name="Site_SiteMember", Storage="_Site", ThisKey="SiteID", OtherKey="SiteID", IsForeignKey=true)]
 		public Site Site
 		{
 			get
@@ -4415,6 +4175,270 @@ namespace AssessTrack.Models
 						this._SiteID = default(System.Guid);
 					}
 					this.SendPropertyChanged("Site");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="dbo.Responses")]
+	public partial class Response : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _ResponseID;
+		
+		private System.Guid _SubmissionRecordID;
+		
+		private System.Guid _AnswerID;
+		
+		private string _ResponseText;
+		
+		private System.Nullable<double> _Score;
+		
+		private string _Comment;
+		
+		private EntityRef<Answer> _Answer;
+		
+		private EntityRef<SubmissionRecord> _SubmissionRecord;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnResponseIDChanging(System.Guid value);
+    partial void OnResponseIDChanged();
+    partial void OnSubmissionRecordIDChanging(System.Guid value);
+    partial void OnSubmissionRecordIDChanged();
+    partial void OnAnswerIDChanging(System.Guid value);
+    partial void OnAnswerIDChanged();
+    partial void OnResponseTextChanging(string value);
+    partial void OnResponseTextChanged();
+    partial void OnScoreChanging(System.Nullable<double> value);
+    partial void OnScoreChanged();
+    partial void OnCommentChanging(string value);
+    partial void OnCommentChanged();
+    #endregion
+		
+		public Response()
+		{
+			this._Answer = default(EntityRef<Answer>);
+			this._SubmissionRecord = default(EntityRef<SubmissionRecord>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ResponseID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
+		public System.Guid ResponseID
+		{
+			get
+			{
+				return this._ResponseID;
+			}
+			set
+			{
+				if ((this._ResponseID != value))
+				{
+					this.OnResponseIDChanging(value);
+					this.SendPropertyChanging();
+					this._ResponseID = value;
+					this.SendPropertyChanged("ResponseID");
+					this.OnResponseIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_SubmissionRecordID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SubmissionRecordID
+		{
+			get
+			{
+				return this._SubmissionRecordID;
+			}
+			set
+			{
+				if ((this._SubmissionRecordID != value))
+				{
+					if (this._SubmissionRecord.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSubmissionRecordIDChanging(value);
+					this.SendPropertyChanging();
+					this._SubmissionRecordID = value;
+					this.SendPropertyChanged("SubmissionRecordID");
+					this.OnSubmissionRecordIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_AnswerID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid AnswerID
+		{
+			get
+			{
+				return this._AnswerID;
+			}
+			set
+			{
+				if ((this._AnswerID != value))
+				{
+					if (this._Answer.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAnswerIDChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerID = value;
+					this.SendPropertyChanged("AnswerID");
+					this.OnAnswerIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_ResponseText", DbType="Text NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public string ResponseText
+		{
+			get
+			{
+				return this._ResponseText;
+			}
+			set
+			{
+				if ((this._ResponseText != value))
+				{
+					this.OnResponseTextChanging(value);
+					this.SendPropertyChanging();
+					this._ResponseText = value;
+					this.SendPropertyChanged("ResponseText");
+					this.OnResponseTextChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Score", DbType="Float")]
+		public System.Nullable<double> Score
+		{
+			get
+			{
+				return this._Score;
+			}
+			set
+			{
+				if ((this._Score != value))
+				{
+					this.OnScoreChanging(value);
+					this.SendPropertyChanging();
+					this._Score = value;
+					this.SendPropertyChanged("Score");
+					this.OnScoreChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Comment", DbType="VarChar(256)")]
+		public string Comment
+		{
+			get
+			{
+				return this._Comment;
+			}
+			set
+			{
+				if ((this._Comment != value))
+				{
+					this.OnCommentChanging(value);
+					this.SendPropertyChanging();
+					this._Comment = value;
+					this.SendPropertyChanged("Comment");
+					this.OnCommentChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Answer_Response", Storage="_Answer", ThisKey="AnswerID", OtherKey="AnswerID", IsForeignKey=true)]
+		public Answer Answer
+		{
+			get
+			{
+				return this._Answer.Entity;
+			}
+			set
+			{
+				Answer previousValue = this._Answer.Entity;
+				if (((previousValue != value) 
+							|| (this._Answer.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Answer.Entity = null;
+						previousValue.Responses.Remove(this);
+					}
+					this._Answer.Entity = value;
+					if ((value != null))
+					{
+						value.Responses.Add(this);
+						this._AnswerID = value.AnswerID;
+					}
+					else
+					{
+						this._AnswerID = default(System.Guid);
+					}
+					this.SendPropertyChanged("Answer");
+				}
+			}
+		}
+		
+		[Association(Name="SubmissionRecord_Response", Storage="_SubmissionRecord", ThisKey="SubmissionRecordID", OtherKey="SubmissionRecordID", IsForeignKey=true)]
+		public SubmissionRecord SubmissionRecord
+		{
+			get
+			{
+				return this._SubmissionRecord.Entity;
+			}
+			set
+			{
+				SubmissionRecord previousValue = this._SubmissionRecord.Entity;
+				if (((previousValue != value) 
+							|| (this._SubmissionRecord.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._SubmissionRecord.Entity = null;
+						previousValue.Responses.Remove(this);
+					}
+					this._SubmissionRecord.Entity = value;
+					if ((value != null))
+					{
+						value.Responses.Add(this);
+						this._SubmissionRecordID = value.SubmissionRecordID;
+					}
+					else
+					{
+						this._SubmissionRecordID = default(System.Guid);
+					}
+					this.SendPropertyChanged("SubmissionRecord");
 				}
 			}
 		}

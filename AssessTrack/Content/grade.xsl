@@ -91,9 +91,29 @@
             <xsl:value-of select="@id"/>
           </xsl:attribute>
           <xsl:attribute name="name">
+            <xsl:text>score-</xsl:text>
             <xsl:value-of select="@id"/>
           </xsl:attribute>
         </input>
+      </div>
+      <div class="comment-div">
+        <label>
+          <xsl:attribute name="for">
+            <xsl:text>comment-</xsl:text>
+            <xsl:value-of select="@id"/>
+          </xsl:attribute>
+          Comment:
+        </label>
+        <textarea class="response-comment">
+          <xsl:attribute name="id">
+            <xsl:text>comment-</xsl:text>
+            <xsl:value-of select="@id"/>
+          </xsl:attribute>
+          <xsl:attribute name="name">
+            <xsl:text>comment-</xsl:text>
+            <xsl:value-of select="@id"/>
+          </xsl:attribute>Enter Comment
+        </textarea>
       </div>
     </div>
   </xsl:template>

@@ -26,6 +26,23 @@ namespace AssessTrack.Controllers
         }
         public string DesignerData;
     }
+
+    public class AssessmentListViewModel
+    {
+        public List<Assessment> OpenAssessments;
+        public List<Assessment> ClosedAssessments;
+
+        public AssessmentListViewModel(List<Assessment> assessments)
+        {
+            OpenAssessments = (from open in assessments
+                               where open.IsOpen == true
+                               select open).ToList();
+            ClosedAssessments = (from open in assessments
+                                 where open.IsOpen == false
+                                 select open).ToList();
+        }
+    }
+
     [ValidateInput(false)]
     public class AssessmentController : ATController
     {
@@ -40,7 +57,7 @@ namespace AssessTrack.Controllers
             CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site,courseTermShortName);
             if (courseTerm == null)
                 return View("CourseTermNotFound");
-            return View(courseTerm.Assessments.ToList());
+            return View(new AssessmentListViewModel(courseTerm.Assessments.ToList()));
         }
 
         //

@@ -231,15 +231,19 @@
     <None Include="Models\AssessTrackModelClasses.dbml.layout">
       <DependentUpon>AssessTrackModelClasses.dbml</DependentUpon>
     </None>
+    <Content Include="Content\view.xsl" />
     <Content Include="Content\QuizBuilder.css" />
     <Content Include="Scripts\jquery-ui-1.7.2.custom.min.js" />
     <Content Include="Scripts\QuizBuilder.js" />
     <Content Include="Scripts\String.js" />
     <Content Include="Views\CourseTerm\Students.aspx" />
+    <Content Include="Views\Reports\GradeInfo.ascx" />
+    <Content Include="Views\Reports\GradeLink.ascx" />
     <Content Include="Views\Reports\Index.aspx" />
     <Content Include="Views\Reports\StudentPerformance.aspx" />
     <Content Include="Views\Shared\ProfileNotFound.aspx" />
     <Content Include="Views\Shared\QuizBuilder.Master" />
+    <Content Include="Views\SubmissionRecord\View.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

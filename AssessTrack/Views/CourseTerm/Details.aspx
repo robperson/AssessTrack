@@ -27,8 +27,8 @@
     <p>
         <%= Html.ATAuthLink("Manage Tags", new { controller = "Tag", action = "Index" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%><br />
         <%= Html.ATAuthLink("Manage Assessment Types", new { controller = "AssessmentType", action = "Index" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%><br />
-        <%= Html.RouteLink("View Assessments", new { controller = "Assessment" , action = "Index"}) %><br />
-        <%= Html.ATAuthLink("Grade Submissions", new { controller = "SubmissionRecord", action = "Index" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+        <%= Html.RouteLink("Manage Assessments", new { controller = "Assessment" , action = "Index"}) %><br />
+        <%= Html.ATAuthLink("Manage Submissions", new { controller = "SubmissionRecord", action = "Index" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
         <%= Html.RouteLink("Students", "CourseTermDetails", new { action = "Students", controller = "CourseTerm" })%>
     </p>
     

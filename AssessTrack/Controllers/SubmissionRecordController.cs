@@ -31,7 +31,7 @@ namespace AssessTrack.Controllers
         }
     }
 
-    [ATAuth(AuthScope = AuthScope.Site, MinLevel = 3, MaxLevel = 10)]
+    [ATAuth(AuthScope = AuthScope.Site, MinLevel = 1, MaxLevel = 10)]
     public class SubmissionRecordController : ATController
     {
         //
@@ -114,6 +114,21 @@ namespace AssessTrack.Controllers
                 }
 
             }
+            return View(submission);
+        }
+
+        public ActionResult View(string siteShortName, string courseTermShortName, Guid id)
+        {
+            Site site = dataRepository.GetSiteByShortName(siteShortName);
+            if (site == null)
+                return View("SiteNotFound");
+            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
+            if (courseTerm == null)
+                return View("CourseTermNotFound");
+            SubmissionRecord submission = dataRepository.GetSubmissionRecordByID(id);
+            if (submission == null)
+                return View("SubmissionNotFound");
+            //TODO ensure user has permission to view this
             return View(submission);
         }
 

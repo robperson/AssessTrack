@@ -8,12 +8,14 @@ namespace AssessTrack.Models
     public class Grade
     {
         public Assessment Assessment;
+        public SubmissionRecord SubmissionRecord;
         public double Points;
         public double Percentage;
-
+        public Profile Student;
         public Grade(Assessment assessment, Profile profile)
         {
             Assessment = assessment;
+            Student = profile;
             SubmissionRecord record = (from s in assessment.SubmissionRecords 
                                            where s.StudentID == profile.MembershipID
                                            orderby s.SubmissionDate descending
@@ -22,11 +24,13 @@ namespace AssessTrack.Models
             {
                 Points = 0;
                 Percentage = 0;
+                SubmissionRecord = null;
             }
             else
             {
                 Points = record.Score;
                 Percentage = (record.Score / assessment.Weight) * 100;
+                SubmissionRecord = record;
             }
         }
     }

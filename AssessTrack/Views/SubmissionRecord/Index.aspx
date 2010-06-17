@@ -43,6 +43,8 @@
         <tr>
             <td>
                 <%= Html.ActionLink("Grade", "Grade", new { id=item.SubmissionRecordID }) %>
+                |
+                <%= Html.ActionLink("View", "View", new { id=item.SubmissionRecordID }) %>
             </td>
             <td>
                 <%= Html.Encode(UserHelpers.GetUsernameForID(item.StudentID)) %>

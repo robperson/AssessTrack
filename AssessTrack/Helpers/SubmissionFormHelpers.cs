@@ -32,7 +32,6 @@ namespace AssessTrack.Helpers
             }
             else
             {
-                scores = new NameValueCollection();
                 foreach (Response response in submission.Responses)
                 {
                     scores.Add("score-" + response.AnswerID.ToString(), (response.Score ?? 0.0).ToString());
@@ -59,6 +58,22 @@ namespace AssessTrack.Helpers
             }
 
             return helper.RenderAssessmentForm(submission.Assessment, "~/Content/grade.xsl", answers, scores, comments);
+
+        }
+
+        public static string RenderAssessmentViewForm(this HtmlHelper helper, SubmissionRecord submission)
+        {
+            NameValueCollection answers = new NameValueCollection();
+            NameValueCollection scores = new NameValueCollection();
+            NameValueCollection comments = new NameValueCollection();
+            foreach (Response response in submission.Responses)
+            {
+                answers.Add(response.AnswerID.ToString(), response.ResponseText);
+                scores.Add("score-" + response.AnswerID.ToString(), (response.Score ?? 0.0).ToString());
+                comments.Add("comment-" + response.AnswerID.ToString(), response.Comment ?? "");
+            }
+
+            return helper.RenderAssessmentForm(submission.Assessment, "~/Content/view.xsl", answers, scores, comments);
 
         }
 
@@ -112,9 +127,12 @@ namespace AssessTrack.Helpers
                     else if (answer.Type == "multichoice")
                     {
                         answerNode = transformedData.SelectSingleNode(String.Format("//input[starts-with(@id,'{0}')][@value='{1}']", answer.AnswerID.ToString(), answers[answer.AnswerID.ToString()]));
-                        XmlAttribute checkedAttr = transformedData.CreateAttribute("checked");
-                        checkedAttr.Value = "true";
-                        answerNode.Attributes.Append(checkedAttr);
+                        if (answerNode != null)
+                        {
+                            XmlAttribute checkedAttr = transformedData.CreateAttribute("checked");
+                            checkedAttr.Value = "true";
+                            answerNode.Attributes.Append(checkedAttr);
+                        }
                     }
                 }
             }

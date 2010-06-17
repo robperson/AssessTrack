@@ -183,7 +183,7 @@ namespace AssessTrack.Controllers
             string data = DesignerHelper.LoadAssessment(assessment.Data);
             return View(new AssessmentFormViewModel(assessment, dataRepository.GetAssessmentTypesSelectList(courseTerm, assessment.AssessmentTypeID), data));
         }
-        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 0, MaxLevel = 0)]
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 0, MaxLevel = 1)]
         public ActionResult Submit(string courseTermShortName, string siteShortName, Guid id)
         {
             Site site = dataRepository.GetSiteByShortName(siteShortName);

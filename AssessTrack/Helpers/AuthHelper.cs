@@ -15,6 +15,9 @@ using AssessTrack.Filters;
 using System.Web.Routing;
 using System.Web.Mvc;
 using System.Reflection;
+using System.Text;
+using System.IO;
+using System.Web.Mvc.Html;
 
 namespace AssessTrack.Helpers
 {
@@ -177,6 +180,40 @@ namespace AssessTrack.Helpers
                 return HtmlHelper.GenerateRouteLink(html.ViewContext.RequestContext,html.RouteCollection,linkText,null,newValues,null);
             }
             return "";
+        }
+
+        public static string RenderPartialToString(this HtmlHelper html, string controlName, object model)
+        {
+            ViewDataDictionary vd = new ViewDataDictionary(html.ViewData);
+            vd.Model = model;
+            ViewPage vp = new ViewPage { ViewData = vd, ViewContext = html.ViewContext };
+            Control control = vp.LoadControl(controlName);
+            
+            vp.Controls.Add(control);
+
+            StringBuilder sb = new StringBuilder();
+            using (StringWriter sw = new StringWriter(sb))
+            {
+                using (HtmlTextWriter tw = new HtmlTextWriter(sw))
+                {
+                    vp.RenderControl(tw);
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        public static void ATAuthPartial(this HtmlHelper html, AuthScope scope, int minlevel, int maxlevel, string partialName)
+        {
+            if (CheckAuthorization(scope, minlevel, maxlevel, html.ViewContext.RouteData.Values))
+            {
+                html.RenderPartial(partialName);
+            }
+        }
+
+        public static bool CheckAuthorization(this HtmlHelper html, int minlevel, int maxlevel, AuthScope scope)
+        {
+            return CheckAuthorization(scope, minlevel, maxlevel, html.ViewContext.RouteData.Values);
         }
     }
 }

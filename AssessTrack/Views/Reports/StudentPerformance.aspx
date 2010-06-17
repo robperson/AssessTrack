@@ -15,11 +15,9 @@
            <%foreach (var grade in section.Grades)
              {
                  %>
-                 <li><a href="#">
-                    <span><%= Html.Encode(grade.Assessment.Name) %></span>
-                    <span>D: <%= Html.Encode(grade.Assessment.DueDate) %></span>
-                    <span><%= Html.Encode(grade.Points) %>/<%= Html.Encode(grade.Assessment.Weight) %> (<%= Html.Encode(grade.Percentage) %>%)</span>
-                 </a></li>
+                 <li>
+                    <% Html.RenderPartial("GradeLink", grade, ViewData); %>
+                 </li>
                  <%
              } %>
            </ul>

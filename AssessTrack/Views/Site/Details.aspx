@@ -22,7 +22,7 @@
     </p>
     <p>
 
-        <%=Html.ATAuthLink("Edit", new { id = Model.SiteID, action = "Edit" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%> |
+        <%=Html.ATAuthLink("Edit", new { siteShortName = Model.ShortName, action = "Edit" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%> <br />
         <%=Html.ActionLink("Back to List", "Index") %>
     </p>
 

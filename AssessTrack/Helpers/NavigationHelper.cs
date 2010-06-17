@@ -16,9 +16,18 @@ namespace AssessTrack.Helpers
             {
                 string siteShortName = html.ViewContext.RouteData.Values["siteShortName"].ToString();
                 Site site = data.GetSiteByShortName(siteShortName);
+                if (site == null)
+                {
+                    return string.Empty;
+                }
                 string sitelink = HtmlHelper.GenerateRouteLink(html.ViewContext.RequestContext,
                     html.RouteCollection, site.Title, null,
-                    new System.Web.Routing.RouteValueDictionary(new { action = "Details", controller = "Site" }), null);
+                    new System.Web.Routing.RouteValueDictionary(
+                        new { 
+                            action = "Details", 
+                            controller = "Site",
+                            siteShortName = siteShortName
+                        }), null);
 
                 if (site != null)
                 {
@@ -27,7 +36,7 @@ namespace AssessTrack.Helpers
                         
                 }
             }
-            return "";
+            return string.Empty;
         }
 
         public static string CurrentCourseTermLink(this HtmlHelper html, string before, string after)
@@ -45,15 +54,36 @@ namespace AssessTrack.Helpers
                     {
                         string courseTermShortName = html.ViewContext.RouteData.Values["courseTermShortName"].ToString();
                         CourseTerm ct = data.GetCourseTermByShortName(site,courseTermShortName);
+                        if (ct == null)
+                        {
+                            return string.Empty;
+                        }
                         string courseTermLink = HtmlHelper.GenerateRouteLink(html.ViewContext.RequestContext,
                             html.RouteCollection, ct.Name, null,
-                            new System.Web.Routing.RouteValueDictionary(new { action = "Details", controller = "CourseTerm" }), null);
+                            new System.Web.Routing.RouteValueDictionary(
+                                new 
+                                { 
+                                    action = "Details", 
+                                    controller = "CourseTerm",
+                                    siteShortName = siteShortName,
+                                    courseTermShortName = courseTermShortName
+                                }), null);
                         string finallink = before + courseTermLink + after;
                         return finallink;
                     }
                 }
             }
-            return "";
+            return string.Empty;
+        }
+
+        public static string CurrentSiteShortName(this HtmlHelper html)
+        {
+            return (string)html.ViewContext.RouteData.Values["siteShortName"] ?? "";
+        }
+
+        public static string CurrentCourseTermShortName(this HtmlHelper html)
+        {
+            return (string)html.ViewContext.RouteData.Values["courseTermShortName"] ?? "";
         }
     }
 }

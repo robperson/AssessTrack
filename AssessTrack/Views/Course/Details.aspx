@@ -1,5 +1,5 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<AssessTrack.Models.Course>" %>
-
+<%@ Import Namespace="AssessTrack.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Details
 </asp:Content>
@@ -25,8 +25,8 @@
     </fieldset>
     <p>
 
-        <%=Html.ActionLink("Edit", "Edit", new { id = Model.CourseID })%> |
-        <%=Html.ActionLink("Back to List", "Index") %>
+        <%=Html.ActionLink("Edit", "Edit", new { id = Model.CourseID, siteShortName = Html.CurrentSiteShortName() })%> |
+        <%=Html.ActionLink("Back to List", "Index", new { siteShortName = Html.CurrentSiteShortName() })%>
     </p>
 
 </asp:Content>

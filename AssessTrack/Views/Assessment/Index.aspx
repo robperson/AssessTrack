@@ -51,9 +51,9 @@
     
         <tr>
             <td>
-                <%= Html.ATAuthLink("Details", new { action = "Details", id = item.AssessmentID }, AssessTrack.Filters.AuthScope.Site, 5, 10)%> |
-                <%= Html.ActionLink("Submit", "Submit", new { id=item.AssessmentID })%> |
-                <%= Html.ATAuthLink("Edit", new { action="Edit", id = item.AssessmentID }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+                <%= Html.ATAuthLink("Details", new { action = "Details", id = item.AssessmentID ,siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%> |
+                <%= Html.ActionLink("Submit", "Submit", new { id=item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
+                <%= Html.ATAuthLink("Edit", new { action="Edit", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
             </td>
             <td>
                 <%= Html.Encode(item.Name) %>
@@ -138,9 +138,9 @@
     
         <tr>
             <td>
-                <%= Html.ATAuthLink("Details", new { action = "Details", id = item.AssessmentID }, AssessTrack.Filters.AuthScope.Site, 5, 10)%> |
-                <%= Html.ActionLink("Submit", "Submit", new { id=item.AssessmentID })%> |
-                <%= Html.ATAuthLink("Edit", new { action="Edit", id = item.AssessmentID }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+                <%= Html.ATAuthLink("Details", new { action = "Details", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%> |
+                <%= Html.ActionLink("Submit", "Submit", new { id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
+                <%= Html.ATAuthLink("Edit", new { action = "Edit", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
             </td>
             <td>
                 <%= Html.Encode(item.Name) %>
@@ -182,7 +182,7 @@
     </table>
 
     <p>
-        <%= Html.ATAuthLink("Create New", new { Action = "Create" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+        <%= Html.ATAuthLink("Create New", new { Action = "Create", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
     </p>
 
 </asp:Content>

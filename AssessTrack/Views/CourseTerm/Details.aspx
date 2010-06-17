@@ -25,16 +25,16 @@
     </fieldset>
     <h3>Options</h3>
     <p>
-        <%= Html.ATAuthLink("Manage Tags", new { controller = "Tag", action = "Index" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%><br />
-        <%= Html.ATAuthLink("Manage Assessment Types", new { controller = "AssessmentType", action = "Index" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%><br />
-        <%= Html.RouteLink("Manage Assessments", new { controller = "Assessment" , action = "Index"}) %><br />
-        <%= Html.ATAuthLink("Manage Submissions", new { controller = "SubmissionRecord", action = "Index" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
-        <%= Html.RouteLink("Students", "CourseTermDetails", new { action = "Students", controller = "CourseTerm" })%>
+        <%= Html.ATAuthLink("Manage Tags", new { controller = "Tag", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%><br />
+        <%= Html.ATAuthLink("Manage Assessment Types", new { controller = "AssessmentType", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%><br />
+        <%= Html.RouteLink("Manage Assessments", new { controller = "Assessment", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%><br />
+        <%= Html.ATAuthLink("Manage Submissions", new { controller = "SubmissionRecord", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+        <%= Html.RouteLink("Students", new { action = "Students", controller = "CourseTerm", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
     </p>
     
     <p>
 
-        <%=Html.ActionLink("Back to List", "Index") %>
+        <%=Html.ActionLink("Back to List", "Index", new { siteShortName = Html.CurrentSiteShortName() })%>
     </p>
 
 </asp:Content>

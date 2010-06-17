@@ -1,5 +1,5 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<AssessTrack.Models.Tag>>" %>
-
+<%@ Import Namespace="AssessTrack.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Index
 </asp:Content>
@@ -23,8 +23,8 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Edit", "Edit", new { id=item.TagID }) %> |
-                <%= Html.ActionLink("Details", "Details", new { id=item.TagID })%>
+                <%= Html.ActionLink("Edit", "Edit", new { id = item.TagID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
+                <%= Html.ActionLink("Details", "Details", new { id = item.TagID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
             </td>
             <td>
                 <%= Html.Encode(item.Name) %>
@@ -39,7 +39,7 @@
     </table>
 
     <p>
-        <%= Html.ActionLink("Create New", "Create") %>
+        <%= Html.ActionLink("Create New", "Create", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
     </p>
 
 </asp:Content>

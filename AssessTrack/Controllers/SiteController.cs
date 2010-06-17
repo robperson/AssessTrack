@@ -81,9 +81,9 @@ namespace AssessTrack.Controllers
         //
         // GET: /Site/Edit/5
         [ATAuth(AuthScope = AuthScope.Application, MinLevel = 9, MaxLevel = 10)]
-        public ActionResult Edit(Guid id)
+        public ActionResult Edit(string siteShortName)
         {
-            Site site = dataRepository.GetSiteByID(id);
+            Site site = dataRepository.GetSiteByShortName(siteShortName);
             if (site == null)
                 return View("SiteNotFound");
             return View(site);
@@ -93,9 +93,9 @@ namespace AssessTrack.Controllers
         // POST: /Site/Edit/5
         [ATAuth(AuthScope = AuthScope.Application, MinLevel = 9, MaxLevel = 10)]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(Guid id, FormCollection collection)
+        public ActionResult Edit(string siteShortName, FormCollection collection)
         {
-            Site site = dataRepository.GetSiteByID(id);
+            Site site = dataRepository.GetSiteByShortName(siteShortName);
             if (site == null)
                 return View("SiteNotFound");
             try
@@ -118,11 +118,11 @@ namespace AssessTrack.Controllers
 
         [ATAuth(AuthScope = AuthScope.Application, MinLevel = 0, MaxLevel = 10)]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Join(Guid id)
+        public ActionResult Join(string siteShortName)
         {
             try
             {
-                Site site = dataRepository.GetSiteByID(id);
+                Site site = dataRepository.GetSiteByShortName(siteShortName);
                 if (site == null)
                     return View("SiteNotFound");
                 if (dataRepository.JoinSite(site))

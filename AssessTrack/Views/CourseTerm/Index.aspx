@@ -27,7 +27,7 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink(item.Name, "Details", new { courseTermShortName = item.ShortName })%>
+                <%= Html.ActionLink(item.Name, "Details", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = item.ShortName})%>
             </td>
             <td>
             <%AssessTrack.Models.AssessTrackDataRepository dr = new AssessTrack.Models.AssessTrackDataRepository(); %>
@@ -49,8 +49,8 @@
     </table>
 
     <p>
-        <%= Html.ATAuthLink("Create New Course Offering", new { action = "Create" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
-        <%= Html.ActionLink("Enroll in a Course Offering", "Join") %>
+        <%= Html.ATAuthLink("Create New Course Offering", new { action = "Create", siteShortName = Html.CurrentSiteShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+        <%= Html.ActionLink("Enroll in a Course Offering", "Join", new { siteShortName = Html.CurrentSiteShortName() })%>
     </p>
 
 </asp:Content>

@@ -24,7 +24,7 @@
     
         <tr>
             <td>
-                <%= Html.ATAuthLink("Edit", new { id=item.SiteID, action="Edit" },AssessTrack.Filters.AuthScope.Site,5,10) %> |
+                <%= Html.ATAuthLink("Edit", new { siteShortName=item.ShortName, action="Edit" },AssessTrack.Filters.AuthScope.Site,5,10) %> |
             </td>
             <td>
                 <%= Html.ATAuthLink(item.Title , new { siteShortName = item.ShortName, action = "Details" }, AssessTrack.Filters.AuthScope.Site, 0, 10)%>

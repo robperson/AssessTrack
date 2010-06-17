@@ -42,9 +42,9 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Grade", "Grade", new { id=item.SubmissionRecordID }) %>
+                <%= Html.ActionLink("Grade", "Grade", new { id = item.SubmissionRecordID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
                 |
-                <%= Html.ActionLink("View", "View", new { id=item.SubmissionRecordID }) %>
+                <%= Html.ActionLink("View", "View", new { id = item.SubmissionRecordID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
             </td>
             <td>
                 <%= Html.Encode(UserHelpers.GetUsernameForID(item.StudentID)) %>

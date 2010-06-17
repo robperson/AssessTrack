@@ -70,14 +70,8 @@ namespace AssessTrack.Models
 
         public Guid objectID
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public XElement Serialize()

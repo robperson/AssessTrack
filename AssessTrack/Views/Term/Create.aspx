@@ -1,5 +1,5 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<AssessTrack.Models.Term>" %>
-
+<%@ Import Namespace="AssessTrack.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Create
 </asp:Content>
@@ -13,7 +13,7 @@
     <% Html.RenderPartial("TermForm"); %>
 
     <div>
-        <%=Html.ActionLink("Back to List", "Index") %>
+        <%=Html.ActionLink("Back to List", "Index", new { siteShortName = Html.CurrentSiteShortName()})%>
     </div>
 
 </asp:Content>

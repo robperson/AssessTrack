@@ -72,6 +72,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CourseTermController.cs" />
+    <Compile Include="Controllers\CourseTermMemberController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -237,6 +238,9 @@
     <Content Include="Scripts\jquery-ui-1.7.2.custom.min.js" />
     <Content Include="Scripts\QuizBuilder.js" />
     <Content Include="Scripts\String.js" />
+    <Content Include="Views\CourseTermMember\Details.aspx" />
+    <Content Include="Views\CourseTermMember\Edit.aspx" />
+    <Content Include="Views\CourseTermMember\Index.aspx" />
     <Content Include="Views\CourseTerm\Students.aspx" />
     <Content Include="Views\Reports\GradeInfo.ascx" />
     <Content Include="Views\Reports\GradeLink.ascx" />

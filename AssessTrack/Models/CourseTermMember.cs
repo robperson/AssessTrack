@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web;
 using AssessTrack.Backup;
 using System.Xml.Linq;
+using System.Web.Mvc;
 
 namespace AssessTrack.Models
 {
+    [Bind(Include="AccessLevel")]
     public partial class CourseTermMember : IBackupItem
     {
         #region IBackupItem Members

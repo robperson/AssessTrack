@@ -8,7 +8,7 @@
 
     <h2>Students in <%= Html.Encode(Model.Name) %></h2>
     <ul>
-    <% foreach (var student in Model.GetMembers(0,2))
+    <% foreach (var student in Model.GetMembers(1,1))
        {
            %>
            <li><%= Html.RouteLink(student.Profile.FirstName + " " + student.Profile.LastName, new { controller = "Reports", id = student.MembershipID, action = "StudentPerformance", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%></li>

@@ -47,7 +47,7 @@
                 <%= Html.ActionLink("View", "View", new { id = item.SubmissionRecordID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
             </td>
             <td>
-                <%= Html.Encode(UserHelpers.GetUsernameForID(item.StudentID)) %>
+                <%= Html.Encode(UserHelpers.GetFullNameForID(item.StudentID))%>
             </td>
             <td>
                 <%= Html.Encode(String.Format("{0:g}", item.SubmissionDate)) %>
@@ -59,7 +59,7 @@
                 <%= Html.Encode(String.Format("{0:g}", item.GradedOn)) %>
             </td>
             <td>
-                <%= Html.Encode(UserHelpers.GetUsernameForID(item.GradedBy)) %>
+                <%= Html.Encode(UserHelpers.GetFullNameForID(item.GradedBy))%>
             </td>
             <td>
                 <%= Html.Encode(item.Comments) %>

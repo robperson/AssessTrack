@@ -51,9 +51,11 @@
     
         <tr>
             <td>
-                <%= Html.ATAuthLink("Details", new { action = "Details", id = item.AssessmentID ,siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%> |
-                <%= Html.ActionLink("Submit", "Submit", new { id=item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
-                <%= Html.ATAuthLink("Edit", new { action="Edit", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+                <ul>
+                    <li><%= Html.ATAuthLink("Details", new { action = "Details", id = item.AssessmentID ,siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 4, 10)%> </li>
+                    <li><%= Html.ATAuthLink("Submit", new { action="Submit", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 1, 1)%></li>
+                    <li><%= Html.ATAuthLink("Edit", new { action="Edit", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 4, 10)%></li>
+                </ul>
             </td>
             <td>
                 <%= Html.Encode(item.Name) %>
@@ -138,9 +140,10 @@
     
         <tr>
             <td>
-                <%= Html.ATAuthLink("Details", new { action = "Details", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%> |
-                <%= Html.ActionLink("Submit", "Submit", new { id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
-                <%= Html.ATAuthLink("Edit", new { action = "Edit", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+                <ul>
+                    <li><%= Html.ATAuthLink("Details", new { action = "Details", id = item.AssessmentID ,siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 4, 10)%> </li>
+                    <li><%= Html.ATAuthLink("Edit", new { action="Edit", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 4, 10)%></li>
+                </ul>    
             </td>
             <td>
                 <%= Html.Encode(item.Name) %>

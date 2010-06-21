@@ -79,7 +79,7 @@ namespace AssessTrack.Controllers
                 {
                     courseTerm.AssessmentTypes.Add(newType);
                     dataRepository.Save();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
                 }
                 catch (RuleViolationException)
                 {
@@ -133,7 +133,7 @@ namespace AssessTrack.Controllers
                 try
                 {
                     dataRepository.Save();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
                 }
                 catch (RuleViolationException)
                 {

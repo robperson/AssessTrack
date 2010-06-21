@@ -102,7 +102,7 @@ namespace AssessTrack.Controllers
                         newTag.Profile = dataRepository.GetLoggedInProfile();
                         courseTerm.Tags.Add(newTag);
                         dataRepository.Save();
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
                     }
                     catch (RuleViolationException)
                     {
@@ -156,7 +156,7 @@ namespace AssessTrack.Controllers
                 try
                 {
                     dataRepository.Save();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
                 }
                 catch (RuleViolationException)
                 {

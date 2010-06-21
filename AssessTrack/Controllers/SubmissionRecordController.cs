@@ -106,7 +106,7 @@ namespace AssessTrack.Controllers
                         response.Comment = input["comment-" + response.AnswerID.ToString()];
                     }
                     dataRepository.Save();
-                    return RedirectToAction("Index", new { id = submission.AssessmentID });
+                    return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName, id = submission.AssessmentID });
                 }
                 catch
                 {

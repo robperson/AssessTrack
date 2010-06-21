@@ -13,6 +13,8 @@ namespace AssessTrack.Controllers
     {
         public List<GradeSection> GradeSections;
         public Profile Profile;
+        public double FinalGrade;
+        public string FinalLetterGrade;
         public PerformanceReportModel(List<GradeSection> sections, Profile profile)
         {
             GradeSections = sections;
@@ -49,7 +51,28 @@ namespace AssessTrack.Controllers
                 sections.Add(section);
             }
             PerformanceReportModel model = new PerformanceReportModel(sections, profile);
+
+            CourseTermMember member = (from ctm in courseTerm.CourseTermMembers
+                                       where ctm.MembershipID == id
+                                       select ctm).SingleOrDefault();
+            model.FinalGrade = member.GetFinalGrade();
+            model.FinalLetterGrade = member.GetFinalLetterGrade();
             return View(model);
+
+        }
+
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 0, MaxLevel = 10)]
+        public ActionResult FinalGrades(string courseTermShortName, string siteShortName)
+        {
+            Site site = dataRepository.GetSiteByShortName(siteShortName);
+            if (site == null)
+                return View("SiteNotFound");
+            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
+            if (courseTerm == null)
+                return View("CourseTermNotFound");
+
+            
+            return View(courseTerm.GetMembers(1,1));
 
         }
 

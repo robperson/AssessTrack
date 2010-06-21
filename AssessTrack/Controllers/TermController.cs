@@ -84,7 +84,7 @@ namespace AssessTrack.Controllers
                     {
                         term.Site = site;
                         dataRepository.CreateTerm(term);
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", new { siteShortName = siteShortName });
                     }
                     catch (RuleViolationException)
                     {
@@ -146,7 +146,7 @@ namespace AssessTrack.Controllers
                         {
                             dataRepository.Save();
 
-                            return RedirectToAction("Details", new { id = term.TermID });
+                            return RedirectToAction("Details", new { siteShortName = siteShortName, id = term.TermID });
                         }
                         catch (RuleViolationException)
                         {

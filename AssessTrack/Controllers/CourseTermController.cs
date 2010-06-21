@@ -119,7 +119,7 @@ namespace AssessTrack.Controllers
                         courseTerm.TermID = TermID;
                         courseTerm.Site = site;
                         dataRepository.CreateCourseTerm(courseTerm);
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", new { siteShortName = siteShortName });
                     }
                     catch (RuleViolationException)
                     {
@@ -157,7 +157,7 @@ namespace AssessTrack.Controllers
                 if (courseTerm == null)
                     return View("CourseTermNotFound");
                 if (dataRepository.JoinCourseTerm(courseTerm))
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { siteShortName = siteShortName });
                 else
                     return View("AlreadyCourseTermMember");
                 

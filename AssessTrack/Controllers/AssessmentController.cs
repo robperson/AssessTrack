@@ -111,7 +111,7 @@ namespace AssessTrack.Controllers
                 {
                     newAssessment.CourseTerm = courseTerm;
                     dataRepository.SaveAssessment(newAssessment);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
                 }
                 catch (RuleViolationException)
                 {
@@ -169,7 +169,7 @@ namespace AssessTrack.Controllers
                 if (ModelState.IsValid)
                 {
                     dataRepository.SaveAssessment(assessment, false);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
                 }
             }
             catch (RuleViolationException)
@@ -250,7 +250,7 @@ namespace AssessTrack.Controllers
                     record.Responses.Add(response);
                 }
                 dataRepository.SaveSubmissionRecord(record);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
             }
             catch
             {

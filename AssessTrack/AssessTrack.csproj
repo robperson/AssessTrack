@@ -242,6 +242,7 @@
     <Content Include="Views\CourseTermMember\Edit.aspx" />
     <Content Include="Views\CourseTermMember\Index.aspx" />
     <Content Include="Views\CourseTerm\Students.aspx" />
+    <Content Include="Views\Reports\FinalGrades.aspx" />
     <Content Include="Views\Reports\GradeInfo.ascx" />
     <Content Include="Views\Reports\GradeLink.ascx" />
     <Content Include="Views\Reports\Index.aspx" />

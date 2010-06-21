@@ -1,12 +1,13 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<AssessTrack.Controllers.PerformanceReportModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	StudentPerformance
+	Student Performance
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2><%= Html.Encode(Model.Profile.FirstName) %> <%= Html.Encode(Model.Profile.LastName) %>'s Performance</h2>
+    <h3>Final Grade: <%= Html.Encode(Model.FinalLetterGrade) %> (<%= Html.Encode(string.Format("{0:0.00}%",Model.FinalGrade)) %>)</h3>
     <% foreach (var section in Model.GradeSections)
        {
            %>

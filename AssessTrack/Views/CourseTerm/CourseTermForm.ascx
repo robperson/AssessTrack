@@ -27,6 +27,10 @@
                 <%= Html.DropDownList("TermID", Model.TermList) %>
             </p>
             <p>
+                <label for="Password">Password:</label>
+                <%= Html.TextBox("Password", Model.CourseTerm.Password) %>
+            </p>
+            <p>
                 <input type="submit" value="Save" />
             </p>
         </fieldset>

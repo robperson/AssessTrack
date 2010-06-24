@@ -46,9 +46,8 @@ namespace AssessTrack.Models
             double finalgrade = 0.0;
             double coursTermPoints = 0.0;
             double courseTermMaxPoints = 0.0;
-            foreach (AssessmentType asmtType in this.CourseTerm.AssessmentTypes)
+            foreach (AssessmentType asmtType in this.CourseTerm.AssessmentTypes.Where(type => !type.QuestionBank))
             {
-                //TODO - if (questionbank) continue;
                 double typePoints = 0.0; //total points scored by student
                 double typeMaxPoints = 0.0; //maximum points achievable
 

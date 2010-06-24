@@ -8,9 +8,19 @@
 
     <h2>Enroll in a Course Offering</h2>
     <% using (Html.BeginForm()) { %>
+    <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
+    
     <p>
+        <label for="id">Course Offering:</label>
         <%= Html.DropDownList("id",Model.CourseTermsList) %>
-        <input type="submit" value="Enroll!" />
+        
     </p>    
+    <p>
+        <label for="Password">Password:</label>
+        <%= Html.TextBox("Password") %>
+    </p>
+    <p>
+        <input type="submit" value="Enroll!" />
+    </p>
     <% } %>
 </asp:Content>

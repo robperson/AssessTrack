@@ -19,8 +19,8 @@
             <%= Html.Encode(String.Format("{0:F}", Model.Weight)) %>
         </p>
         <p>
-            Is Extra Credit:
-            <%= Html.Encode(Model.IsExtraCredit) %>
+            Is Question Bank:
+            <%= Html.Encode(Model.QuestionBank) %>
         </p>
         <p>
             Course:

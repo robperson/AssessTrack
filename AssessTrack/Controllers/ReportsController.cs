@@ -45,7 +45,7 @@ namespace AssessTrack.Controllers
             if (profile == null)
                 return View("ProfileNotFound");
             List<GradeSection> sections = new List<GradeSection>();
-            foreach (AssessmentType type in courseTerm.AssessmentTypes)
+            foreach (AssessmentType type in courseTerm.AssessmentTypes.Where(type => !type.QuestionBank))
             {
                 GradeSection section = new GradeSection(type, profile);
                 sections.Add(section);

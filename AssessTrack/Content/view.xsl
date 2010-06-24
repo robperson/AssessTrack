@@ -15,7 +15,7 @@
       </span>
       <xsl:apply-templates/>
     </div>
-
+    <hr/>
   </xsl:template>
   
   
@@ -96,6 +96,9 @@
           </xsl:attribute>
         </input>
       </div>
+      
+      <xsl:apply-templates select="./AnswerKeys/AnswerKey[1]"/>
+      
       <div class="comment-div">
         <label>
           <xsl:attribute name="for">
@@ -118,6 +121,15 @@
     </div>
   </xsl:template>
 
+  <xsl:template match="AnswerKey">
+    <div>
+      <em>The correct answer was:</em>
+      <div>
+        <xsl:value-of select="."/>
+      </div>
+    </div>
+  </xsl:template>
+  
   <xsl:template match="key">
   </xsl:template>
 

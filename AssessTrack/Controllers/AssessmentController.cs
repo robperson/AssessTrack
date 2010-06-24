@@ -57,7 +57,7 @@ namespace AssessTrack.Controllers
             CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site,courseTermShortName);
             if (courseTerm == null)
                 return View("CourseTermNotFound");
-            return View(new AssessmentListViewModel(courseTerm.Assessments.ToList()));
+            return View(new AssessmentListViewModel(courseTerm.Assessments.Where(asmt => !asmt.AssessmentType.QuestionBank).ToList()));
         }
 
         //

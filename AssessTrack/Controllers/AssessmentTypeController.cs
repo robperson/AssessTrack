@@ -56,7 +56,7 @@ namespace AssessTrack.Controllers
             if (courseTerm == null)
                 return View("CourseTermNotFound");
 
-            AssessmentType newType = new AssessmentType() { Weight = 0, IsExtraCredit = false, CourseTerm = courseTerm };
+            AssessmentType newType = new AssessmentType() { Weight = 0, QuestionBank = false, CourseTerm = courseTerm };
             return View(newType);
         } 
 

@@ -49,6 +49,9 @@
                 <%= Html.CheckBox("IsGradable", Model.Assessment.IsGradable)%>
                 <%= Html.ValidationMessage("IsGradable", "*") %>
             </p>
+            <p>
+                <input type="submit" value="Save" />
+            </p>
             <div class="designer" id="<%= Html.Encode((Model.Assessment.AssessmentID != Guid.Empty)? Model.Assessment.AssessmentID.ToString() : "") %>">	
 		    
 			    <h2>DRAG QUESTIONS ONTO THE FORM, THEN POPULATE THE QUESTIONS WITH DATA</h2>
@@ -63,9 +66,7 @@
                 <%= Html.TextArea("Data", Model.Assessment.Data, 5, 50, new { id = "Data" })%>
                 <%= Html.ValidationMessage("Data", "*") %>
             </p>
-            <p>
-                <input type="submit" value="Save" />
-            </p>
+           
        
 
     <% } %>

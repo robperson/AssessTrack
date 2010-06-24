@@ -118,13 +118,19 @@ namespace AssessTrack.Controllers
 
         [ATAuth(AuthScope = AuthScope.Application, MinLevel = 0, MaxLevel = 10)]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Join(string siteShortName)
+        public ActionResult Join(Guid id,string password)
         {
             try
             {
-                Site site = dataRepository.GetSiteByShortName(siteShortName);
+                Site site = dataRepository.GetSiteByID(id);
                 if (site == null)
                     return View("SiteNotFound");
+                if (!string.IsNullOrEmpty(site.Password) &&
+                    (site.Password != password))
+                {
+                    ModelState.AddModelError("_FORM", "Incorrect Password.");
+                    return View(new SiteViewModel(dataRepository.GetAllSites()));
+                }
                 if (dataRepository.JoinSite(site))
                     return RedirectToAction("Index");
                 else

@@ -14,9 +14,9 @@
                 <%= Html.ValidationMessage("Weight", "*") %>
             </p>
             <p>
-                <label for="IsExtraCredit">Is Extra Credit:</label>
-                <%= Html.CheckBox("IsExtraCredit", Model.IsExtraCredit) %>
-                <%= Html.ValidationMessage("IsExtraCredit", "*") %>
+                <label for="IsExtraCredit">Is Question Bank:</label>
+                <%= Html.CheckBox("QuestionBank", Model.QuestionBank) %>
+                <%= Html.ValidationMessage("QuestionBank", "*") %>
             </p>
             <p>
                 <label for="CourseID">Course:</label>

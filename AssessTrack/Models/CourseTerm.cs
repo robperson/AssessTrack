@@ -18,7 +18,7 @@ using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
-    [Bind(Include = "Name,Information,ShortName")]
+    [Bind(Include = "Name,Information,ShortName,Password")]
     public partial class CourseTerm : IBackupItem
     {
         public bool IsValid

@@ -39,7 +39,7 @@
                 <%= Html.Encode(String.Format("{0:F}", item.Weight)) %>
             </td>
             <td>
-                <%= Html.Encode(item.IsExtraCredit.ToString()) %>
+                <%= Html.Encode(item.QuestionBank.ToString()) %>
             </td>
             <td>
                 <%= Html.Encode(item.CourseTerm.Name) %>

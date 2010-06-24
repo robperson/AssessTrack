@@ -146,7 +146,7 @@ namespace AssessTrack.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
         [ATAuth(AuthScope = AuthScope.Site, MinLevel = 0, MaxLevel = 10)]
-        public ActionResult Join(string siteShortName, Guid id)
+        public ActionResult Join(string siteShortName, Guid id, string password)
         {
             Site site = dataRepository.GetSiteByShortName(siteShortName);
             if (site == null)
@@ -156,6 +156,12 @@ namespace AssessTrack.Controllers
                 CourseTerm courseTerm = dataRepository.GetCourseTermByID(site,id);
                 if (courseTerm == null)
                     return View("CourseTermNotFound");
+                if (!string.IsNullOrEmpty(courseTerm.Password) &&
+                    (courseTerm.Password != password))
+                {
+                    ModelState.AddModelError("_FORM", "Incorrect Password.");
+                    return View(new CourseTermJoinModel(site.CourseTerms.AsEnumerable()));
+                }
                 if (dataRepository.JoinCourseTerm(courseTerm))
                     return RedirectToAction("Index", new { siteShortName = siteShortName });
                 else

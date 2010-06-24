@@ -17,7 +17,7 @@ using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
-    [Bind(Include="Name,Weight,IsExtraCredit")]
+    [Bind(Include="Name,Weight,QuestionBank")]
     public partial class AssessmentType: IBackupItem
     {
         public bool IsValid
@@ -62,7 +62,7 @@ namespace AssessTrack.Models
                     new XElement("assessmenttypeid", AssessmentTypeID.ToString()),
                     new XElement("name", Name),
                     new XElement("weight", Weight.ToString()),
-                    new XElement("isextracredit", IsExtraCredit.ToString()),
+                    new XElement("isextracredit", QuestionBank.ToString()),
                     new XElement("coursetermid", CourseTermID.ToString()));
             return assessmentType;
         }
@@ -74,7 +74,7 @@ namespace AssessTrack.Models
                 AssessmentTypeID = new Guid(source.Element("assessmenttypeid").Value);
                 Name = source.Element("name").Value;
                 Weight = Convert.ToDouble(source.Element("weight").Value);
-                IsExtraCredit = bool.Parse(source.Element("isextracredit").Value);
+                QuestionBank = bool.Parse(source.Element("isextracredit").Value);
                 CourseTermID = new Guid(source.Element("coursetermid").Value);
             }
             catch

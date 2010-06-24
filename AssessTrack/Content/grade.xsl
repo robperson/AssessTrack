@@ -96,6 +96,9 @@
           </xsl:attribute>
         </input>
       </div>
+      
+      <xsl:apply-templates select="./AnswerKeys/AnswerKey[1]"/>
+      
       <div class="comment-div">
         <label>
           <xsl:attribute name="for">
@@ -114,6 +117,15 @@
             <xsl:value-of select="@id"/>
           </xsl:attribute>Enter Comment
         </textarea>
+      </div>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="AnswerKey">
+    <div>
+      <em>The correct answer was:</em>
+      <div>
+        <xsl:value-of select="."/>
       </div>
     </div>
   </xsl:template>

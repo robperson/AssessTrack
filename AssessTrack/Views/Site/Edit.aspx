@@ -35,6 +35,11 @@
                 <%= Html.ValidationMessage("Description", "*") %>
             </p>
             <p>
+                <label for="Password">Password:</label>
+                <%= Html.TextBox("Password", Model.Password) %>
+                <%= Html.ValidationMessage("Password", "*") %>
+            </p>
+            <p>
                 <input type="submit" value="Save" />
             </p>
         </fieldset>

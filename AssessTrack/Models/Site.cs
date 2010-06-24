@@ -18,7 +18,7 @@ using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
-    [Bind(Include="Title,Description,ShortName")]
+    [Bind(Include="Title,Description,ShortName,Password")]
     public partial class Site : IBackupItem
     {
         public bool IsValid

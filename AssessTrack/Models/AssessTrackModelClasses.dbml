@@ -51,6 +51,7 @@
       <Association Name="Assessment_AssessmentTag" Member="AssessmentTags" ThisKey="AssessmentID" OtherKey="AssessmentID" Type="AssessmentTag" />
       <Association Name="Assessment_Question" Member="Questions" ThisKey="AssessmentID" OtherKey="AssessmentID" Type="Question" />
       <Association Name="Assessment_SubmissionRecord" Member="SubmissionRecords" ThisKey="AssessmentID" OtherKey="AssessmentID" Type="SubmissionRecord" />
+      <Association Name="Assessment_SubmissionException" Member="SubmissionExceptions" ThisKey="AssessmentID" OtherKey="AssessmentID" Type="SubmissionException" />
       <Association Name="AssessmentType_Assessment" Member="AssessmentType" ThisKey="AssessmentTypeID" OtherKey="AssessmentTypeID" Type="AssessmentType" IsForeignKey="true" />
       <Association Name="CourseTerm_Assessment" Member="CourseTerm" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />
     </Type>
@@ -141,6 +142,7 @@
       <Association Name="Profile_Tag" Member="Tags" ThisKey="MembershipID" OtherKey="CreatedBy" Type="Tag" />
       <Association Name="Profile_CourseTermMember" Member="CourseTermMembers" ThisKey="MembershipID" OtherKey="MembershipID" Type="CourseTermMember" />
       <Association Name="Profile_SiteMember" Member="SiteMembers" ThisKey="MembershipID" OtherKey="MembershipID" Type="SiteMember" />
+      <Association Name="Profile_SubmissionException" Member="SubmissionExceptions" ThisKey="MembershipID" OtherKey="StudentID" Type="SubmissionException" />
     </Type>
   </Table>
   <Table Name="dbo.CourseTermMembers" Member="CourseTermMembers">
@@ -214,9 +216,22 @@
       <Association Name="CourseTerm_Tag" Member="Tags" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="Tag" />
       <Association Name="CourseTerm_CourseTermMember" Member="CourseTermMembers" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTermMember" />
       <Association Name="CourseTerm_AssessmentType" Member="AssessmentTypes" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="AssessmentType" />
+      <Association Name="CourseTerm_SubmissionException" Member="SubmissionExceptions" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="SubmissionException" />
       <Association Name="Course_CourseTerm" Member="Course" ThisKey="CourseID" OtherKey="CourseID" Type="Course" IsForeignKey="true" />
       <Association Name="Site_CourseTerm" Member="Site" ThisKey="SiteID" OtherKey="SiteID" Type="Site" IsForeignKey="true" />
       <Association Name="Term_CourseTerm" Member="Term" ThisKey="TermID" OtherKey="TermID" Type="Term" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SubmissionExceptions" Member="SubmissionExceptions">
+    <Type Name="SubmissionException">
+      <Column Name="SubmissionExceptionID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AssessmentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="StudentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="DueDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CourseTermID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="Assessment_SubmissionException" Member="Assessment" ThisKey="AssessmentID" OtherKey="AssessmentID" Type="Assessment" IsForeignKey="true" />
+      <Association Name="CourseTerm_SubmissionException" Member="CourseTerm" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />
+      <Association Name="Profile_SubmissionException" Member="Profile" ThisKey="StudentID" OtherKey="MembershipID" Type="Profile" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.sp_AddAssessmentTag" Method="sp_AddAssessmentTag">

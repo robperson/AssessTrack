@@ -76,6 +76,7 @@
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SubmissionExceptionController.cs" />
     <Compile Include="Controllers\SubmissionRecordController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\TermController.cs">
@@ -89,6 +90,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AssessmentHelpers.cs" />
     <Compile Include="Helpers\AuthHelper.cs" />
     <Compile Include="Helpers\CodeCompiler.cs" />
     <Compile Include="Helpers\ControllerHelpers.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="Models\ProfileManager.cs" />
     <Compile Include="Models\SiteManager.cs" />
     <Compile Include="Models\SiteMember.cs" />
+    <Compile Include="Models\SubmissionException.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TagManager.cs" />
     <Compile Include="Models\Course.cs" />
@@ -249,6 +252,8 @@
     <Content Include="Views\Reports\StudentPerformance.aspx" />
     <Content Include="Views\Shared\ProfileNotFound.aspx" />
     <Content Include="Views\Shared\QuizBuilder.Master" />
+    <Content Include="Views\SubmissionException\Create.aspx" />
+    <Content Include="Views\SubmissionException\Index.aspx" />
     <Content Include="Views\SubmissionRecord\View.aspx" />
   </ItemGroup>
   <ItemGroup>

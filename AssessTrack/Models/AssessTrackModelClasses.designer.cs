@@ -75,6 +75,9 @@ namespace AssessTrack.Models
     partial void InsertCourseTerm(CourseTerm instance);
     partial void UpdateCourseTerm(CourseTerm instance);
     partial void DeleteCourseTerm(CourseTerm instance);
+    partial void InsertSubmissionException(SubmissionException instance);
+    partial void UpdateSubmissionException(SubmissionException instance);
+    partial void DeleteSubmissionException(SubmissionException instance);
     #endregion
 		
 		public AssessTrackModelClassesDataContext() : 
@@ -248,6 +251,14 @@ namespace AssessTrack.Models
 			get
 			{
 				return this.GetTable<CourseTerm>();
+			}
+		}
+		
+		public System.Data.Linq.Table<SubmissionException> SubmissionExceptions
+		{
+			get
+			{
+				return this.GetTable<SubmissionException>();
 			}
 		}
 		
@@ -870,6 +881,8 @@ namespace AssessTrack.Models
 		
 		private EntitySet<SubmissionRecord> _SubmissionRecords;
 		
+		private EntitySet<SubmissionException> _SubmissionExceptions;
+		
 		private EntityRef<AssessmentType> _AssessmentType;
 		
 		private EntityRef<CourseTerm> _CourseTerm;
@@ -909,6 +922,7 @@ namespace AssessTrack.Models
 			this._Answers = new EntitySet<Answer>(new Action<Answer>(this.attach_Answers), new Action<Answer>(this.detach_Answers));
 			this._Questions = new EntitySet<Question>(new Action<Question>(this.attach_Questions), new Action<Question>(this.detach_Questions));
 			this._SubmissionRecords = new EntitySet<SubmissionRecord>(new Action<SubmissionRecord>(this.attach_SubmissionRecords), new Action<SubmissionRecord>(this.detach_SubmissionRecords));
+			this._SubmissionExceptions = new EntitySet<SubmissionException>(new Action<SubmissionException>(this.attach_SubmissionExceptions), new Action<SubmissionException>(this.detach_SubmissionExceptions));
 			this._AssessmentType = default(EntityRef<AssessmentType>);
 			this._CourseTerm = default(EntityRef<CourseTerm>);
 			OnCreated();
@@ -1201,6 +1215,19 @@ namespace AssessTrack.Models
 			}
 		}
 		
+		[Association(Name="Assessment_SubmissionException", Storage="_SubmissionExceptions", ThisKey="AssessmentID", OtherKey="AssessmentID")]
+		public EntitySet<SubmissionException> SubmissionExceptions
+		{
+			get
+			{
+				return this._SubmissionExceptions;
+			}
+			set
+			{
+				this._SubmissionExceptions.Assign(value);
+			}
+		}
+		
 		[Association(Name="AssessmentType_Assessment", Storage="_AssessmentType", ThisKey="AssessmentTypeID", OtherKey="AssessmentTypeID", IsForeignKey=true)]
 		public AssessmentType AssessmentType
 		{
@@ -1320,6 +1347,18 @@ namespace AssessTrack.Models
 		}
 		
 		private void detach_SubmissionRecords(SubmissionRecord entity)
+		{
+			this.SendPropertyChanging();
+			entity.Assessment = null;
+		}
+		
+		private void attach_SubmissionExceptions(SubmissionException entity)
+		{
+			this.SendPropertyChanging();
+			entity.Assessment = this;
+		}
+		
+		private void detach_SubmissionExceptions(SubmissionException entity)
 		{
 			this.SendPropertyChanging();
 			entity.Assessment = null;
@@ -2610,6 +2649,8 @@ namespace AssessTrack.Models
 		
 		private EntitySet<SiteMember> _SiteMembers;
 		
+		private EntitySet<SubmissionException> _SubmissionExceptions;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2631,6 +2672,7 @@ namespace AssessTrack.Models
 			this._Tags = new EntitySet<Tag>(new Action<Tag>(this.attach_Tags), new Action<Tag>(this.detach_Tags));
 			this._CourseTermMembers = new EntitySet<CourseTermMember>(new Action<CourseTermMember>(this.attach_CourseTermMembers), new Action<CourseTermMember>(this.detach_CourseTermMembers));
 			this._SiteMembers = new EntitySet<SiteMember>(new Action<SiteMember>(this.attach_SiteMembers), new Action<SiteMember>(this.detach_SiteMembers));
+			this._SubmissionExceptions = new EntitySet<SubmissionException>(new Action<SubmissionException>(this.attach_SubmissionExceptions), new Action<SubmissionException>(this.detach_SubmissionExceptions));
 			OnCreated();
 		}
 		
@@ -2773,6 +2815,19 @@ namespace AssessTrack.Models
 			}
 		}
 		
+		[Association(Name="Profile_SubmissionException", Storage="_SubmissionExceptions", ThisKey="MembershipID", OtherKey="StudentID")]
+		public EntitySet<SubmissionException> SubmissionExceptions
+		{
+			get
+			{
+				return this._SubmissionExceptions;
+			}
+			set
+			{
+				this._SubmissionExceptions.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2824,6 +2879,18 @@ namespace AssessTrack.Models
 		}
 		
 		private void detach_SiteMembers(SiteMember entity)
+		{
+			this.SendPropertyChanging();
+			entity.Profile = null;
+		}
+		
+		private void attach_SubmissionExceptions(SubmissionException entity)
+		{
+			this.SendPropertyChanging();
+			entity.Profile = this;
+		}
+		
+		private void detach_SubmissionExceptions(SubmissionException entity)
 		{
 			this.SendPropertyChanging();
 			entity.Profile = null;
@@ -4055,6 +4122,8 @@ namespace AssessTrack.Models
 		
 		private EntitySet<AssessmentType> _AssessmentTypes;
 		
+		private EntitySet<SubmissionException> _SubmissionExceptions;
+		
 		private EntityRef<Course> _Course;
 		
 		private EntityRef<Site> _Site;
@@ -4091,6 +4160,7 @@ namespace AssessTrack.Models
 			this._Tags = new EntitySet<Tag>(new Action<Tag>(this.attach_Tags), new Action<Tag>(this.detach_Tags));
 			this._CourseTermMembers = new EntitySet<CourseTermMember>(new Action<CourseTermMember>(this.attach_CourseTermMembers), new Action<CourseTermMember>(this.detach_CourseTermMembers));
 			this._AssessmentTypes = new EntitySet<AssessmentType>(new Action<AssessmentType>(this.attach_AssessmentTypes), new Action<AssessmentType>(this.detach_AssessmentTypes));
+			this._SubmissionExceptions = new EntitySet<SubmissionException>(new Action<SubmissionException>(this.attach_SubmissionExceptions), new Action<SubmissionException>(this.detach_SubmissionExceptions));
 			this._Course = default(EntityRef<Course>);
 			this._Site = default(EntityRef<Site>);
 			this._Term = default(EntityRef<Term>);
@@ -4341,6 +4411,19 @@ namespace AssessTrack.Models
 			}
 		}
 		
+		[Association(Name="CourseTerm_SubmissionException", Storage="_SubmissionExceptions", ThisKey="CourseTermID", OtherKey="CourseTermID")]
+		public EntitySet<SubmissionException> SubmissionExceptions
+		{
+			get
+			{
+				return this._SubmissionExceptions;
+			}
+			set
+			{
+				this._SubmissionExceptions.Assign(value);
+			}
+		}
+		
 		[Association(Name="Course_CourseTerm", Storage="_Course", ThisKey="CourseID", OtherKey="CourseID", IsForeignKey=true)]
 		public Course Course
 		{
@@ -4509,6 +4592,299 @@ namespace AssessTrack.Models
 		{
 			this.SendPropertyChanging();
 			entity.CourseTerm = null;
+		}
+		
+		private void attach_SubmissionExceptions(SubmissionException entity)
+		{
+			this.SendPropertyChanging();
+			entity.CourseTerm = this;
+		}
+		
+		private void detach_SubmissionExceptions(SubmissionException entity)
+		{
+			this.SendPropertyChanging();
+			entity.CourseTerm = null;
+		}
+	}
+	
+	[Table(Name="dbo.SubmissionExceptions")]
+	public partial class SubmissionException : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _SubmissionExceptionID;
+		
+		private System.Guid _AssessmentID;
+		
+		private System.Guid _StudentID;
+		
+		private System.DateTime _DueDate;
+		
+		private System.Guid _CourseTermID;
+		
+		private EntityRef<Assessment> _Assessment;
+		
+		private EntityRef<CourseTerm> _CourseTerm;
+		
+		private EntityRef<Profile> _Profile;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnSubmissionExceptionIDChanging(System.Guid value);
+    partial void OnSubmissionExceptionIDChanged();
+    partial void OnAssessmentIDChanging(System.Guid value);
+    partial void OnAssessmentIDChanged();
+    partial void OnStudentIDChanging(System.Guid value);
+    partial void OnStudentIDChanged();
+    partial void OnDueDateChanging(System.DateTime value);
+    partial void OnDueDateChanged();
+    partial void OnCourseTermIDChanging(System.Guid value);
+    partial void OnCourseTermIDChanged();
+    #endregion
+		
+		public SubmissionException()
+		{
+			this._Assessment = default(EntityRef<Assessment>);
+			this._CourseTerm = default(EntityRef<CourseTerm>);
+			this._Profile = default(EntityRef<Profile>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_SubmissionExceptionID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
+		public System.Guid SubmissionExceptionID
+		{
+			get
+			{
+				return this._SubmissionExceptionID;
+			}
+			set
+			{
+				if ((this._SubmissionExceptionID != value))
+				{
+					this.OnSubmissionExceptionIDChanging(value);
+					this.SendPropertyChanging();
+					this._SubmissionExceptionID = value;
+					this.SendPropertyChanged("SubmissionExceptionID");
+					this.OnSubmissionExceptionIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_AssessmentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid AssessmentID
+		{
+			get
+			{
+				return this._AssessmentID;
+			}
+			set
+			{
+				if ((this._AssessmentID != value))
+				{
+					if (this._Assessment.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAssessmentIDChanging(value);
+					this.SendPropertyChanging();
+					this._AssessmentID = value;
+					this.SendPropertyChanged("AssessmentID");
+					this.OnAssessmentIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_StudentID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid StudentID
+		{
+			get
+			{
+				return this._StudentID;
+			}
+			set
+			{
+				if ((this._StudentID != value))
+				{
+					if (this._Profile.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnStudentIDChanging(value);
+					this.SendPropertyChanging();
+					this._StudentID = value;
+					this.SendPropertyChanged("StudentID");
+					this.OnStudentIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_DueDate", DbType="DateTime NOT NULL")]
+		public System.DateTime DueDate
+		{
+			get
+			{
+				return this._DueDate;
+			}
+			set
+			{
+				if ((this._DueDate != value))
+				{
+					this.OnDueDateChanging(value);
+					this.SendPropertyChanging();
+					this._DueDate = value;
+					this.SendPropertyChanged("DueDate");
+					this.OnDueDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CourseTermID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CourseTermID
+		{
+			get
+			{
+				return this._CourseTermID;
+			}
+			set
+			{
+				if ((this._CourseTermID != value))
+				{
+					if (this._CourseTerm.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCourseTermIDChanging(value);
+					this.SendPropertyChanging();
+					this._CourseTermID = value;
+					this.SendPropertyChanged("CourseTermID");
+					this.OnCourseTermIDChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Assessment_SubmissionException", Storage="_Assessment", ThisKey="AssessmentID", OtherKey="AssessmentID", IsForeignKey=true)]
+		public Assessment Assessment
+		{
+			get
+			{
+				return this._Assessment.Entity;
+			}
+			set
+			{
+				Assessment previousValue = this._Assessment.Entity;
+				if (((previousValue != value) 
+							|| (this._Assessment.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Assessment.Entity = null;
+						previousValue.SubmissionExceptions.Remove(this);
+					}
+					this._Assessment.Entity = value;
+					if ((value != null))
+					{
+						value.SubmissionExceptions.Add(this);
+						this._AssessmentID = value.AssessmentID;
+					}
+					else
+					{
+						this._AssessmentID = default(System.Guid);
+					}
+					this.SendPropertyChanged("Assessment");
+				}
+			}
+		}
+		
+		[Association(Name="CourseTerm_SubmissionException", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
+		public CourseTerm CourseTerm
+		{
+			get
+			{
+				return this._CourseTerm.Entity;
+			}
+			set
+			{
+				CourseTerm previousValue = this._CourseTerm.Entity;
+				if (((previousValue != value) 
+							|| (this._CourseTerm.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CourseTerm.Entity = null;
+						previousValue.SubmissionExceptions.Remove(this);
+					}
+					this._CourseTerm.Entity = value;
+					if ((value != null))
+					{
+						value.SubmissionExceptions.Add(this);
+						this._CourseTermID = value.CourseTermID;
+					}
+					else
+					{
+						this._CourseTermID = default(System.Guid);
+					}
+					this.SendPropertyChanged("CourseTerm");
+				}
+			}
+		}
+		
+		[Association(Name="Profile_SubmissionException", Storage="_Profile", ThisKey="StudentID", OtherKey="MembershipID", IsForeignKey=true)]
+		public Profile Profile
+		{
+			get
+			{
+				return this._Profile.Entity;
+			}
+			set
+			{
+				Profile previousValue = this._Profile.Entity;
+				if (((previousValue != value) 
+							|| (this._Profile.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Profile.Entity = null;
+						previousValue.SubmissionExceptions.Remove(this);
+					}
+					this._Profile.Entity = value;
+					if ((value != null))
+					{
+						value.SubmissionExceptions.Add(this);
+						this._StudentID = value.MembershipID;
+					}
+					else
+					{
+						this._StudentID = default(System.Guid);
+					}
+					this.SendPropertyChanged("Profile");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

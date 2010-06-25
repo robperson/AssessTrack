@@ -5,6 +5,7 @@ using System.Web;
 using AssessTrack.Backup;
 using System.Xml.Linq;
 using System.Web.Mvc;
+using AssessTrack.Helpers;
 
 namespace AssessTrack.Models
 {
@@ -87,6 +88,11 @@ namespace AssessTrack.Models
             }
             finalgrade = ((coursTermPoints / courseTermMaxPoints) * 100);
             return finalgrade;
+        }
+
+        public string FullName
+        {
+            get { return UserHelpers.GetFullNameForID(MembershipID); }
         }
 
         #region IBackupItem Members

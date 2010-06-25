@@ -201,7 +201,10 @@ namespace AssessTrack.Controllers
             }
             if (DateTime.Now.Subtract(assessment.DueDate).TotalSeconds > 0)
             {
-                return View("DueDatePassed");
+                if (!AssessmentHelpers.StudentHasExtension(assessment, UserHelpers.GetCurrentUserID()))
+                {
+                    return View("DueDatePassed");
+                }
             }
             if (!assessment.IsOpen)
             {

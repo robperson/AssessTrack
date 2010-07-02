@@ -8,7 +8,8 @@
 
     <h2>Reports</h2>
     <ul>
-        <li><%= Html.RouteLink("Final Grades", new { controller = "Reports", action = "FinalGrades", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, null)%></li>
-        <li><%= Html.RouteLink("Student Performance", new { action = "Students", controller = "CourseTerm", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%></li>
+        <li><%= Html.ATAuthLink("Final Grades", new { controller = "Reports", action = "FinalGrades", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%></li>
+        <li><%= Html.ATAuthLink("My Grades", new { controller = "Reports", action = "StudentPerformance", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName(), id = UserHelpers.GetCurrentUserID() }, AssessTrack.Filters.AuthScope.CourseTerm, 1, 1)%></li>
+        <li><%= Html.ATAuthLink("Student Performance", new { action = "Students", controller = "CourseTerm", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%></li>
     </ul>
 </asp:Content>

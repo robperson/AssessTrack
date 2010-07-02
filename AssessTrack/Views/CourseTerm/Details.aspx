@@ -30,8 +30,9 @@
         <%= Html.RouteLink("View Assessments", new { controller = "Assessment", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%><br />
         <%= Html.ATAuthLink("View Submissions", new { controller = "SubmissionRecord", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%><br />
         <%= Html.ATAuthLink("View Members", new { controller = "CourseTermMember", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%><br />
-        <%= Html.ATAuthLink("View Reports", new { controller = "Reports", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%><br />
+        <%= Html.ATAuthLink("View Reports", new { controller = "Reports", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 1, 10)%><br />
         <%= Html.ATAuthLink("View Submission Exceptions", new { controller = "SubmissionException", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
+        
         
     </p>
     

@@ -27,7 +27,19 @@ namespace AssessTrack.Controllers
         public SubmissionRecordViewModel(List<Assessment> assessments, Assessment selectedAssessment)
         {
             AssessmentList = new SelectList(assessments, "AssessmentID", "Name", selectedAssessment.AssessmentID);
-            Submissions = selectedAssessment.SubmissionRecords.ToList();
+            Submissions = selectedAssessment.SubmissionRecords.OrderBy(sub => sub.StudentID).ToList();
+        }
+    }
+
+    public class SingleSubmissionViewModel
+    {
+        public List<SubmissionRecord> OtherSubmissionRecords;
+        public SubmissionRecord SubmissionRecord;
+
+        public SingleSubmissionViewModel(SubmissionRecord record, List<SubmissionRecord> otherrecords)
+        {
+            OtherSubmissionRecords = otherrecords;
+            SubmissionRecord = record;
         }
     }
 
@@ -128,8 +140,11 @@ namespace AssessTrack.Controllers
             SubmissionRecord submission = dataRepository.GetSubmissionRecordByID(id);
             if (submission == null)
                 return View("SubmissionNotFound");
+            List<SubmissionRecord> othersubmissions = dataRepository.GetOtherSubmissionRecords(submission);
+            SingleSubmissionViewModel model = new SingleSubmissionViewModel(submission, othersubmissions);
+
             //TODO ensure user has permission to view this
-            return View(submission);
+            return View(model);
         }
 
     }

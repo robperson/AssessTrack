@@ -9,6 +9,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using System.Collections.Generic;
 
 namespace AssessTrack.Models
 {
@@ -31,6 +32,18 @@ namespace AssessTrack.Models
         public SubmissionRecord GetSubmissionRecordByID(Guid id)
         {
             return dc.SubmissionRecords.SingleOrDefault(s => s.SubmissionRecordID == id);
+        }
+
+        public List<SubmissionRecord> GetOtherSubmissionRecords(SubmissionRecord record)
+        {
+            var subs = from sub in dc.SubmissionRecords
+                       where sub.SubmissionRecordID != record.SubmissionRecordID
+                       && sub.AssessmentID == record.AssessmentID
+                       && sub.StudentID == record.StudentID
+                       orderby sub.SubmissionDate descending
+                       select sub;
+            return subs.ToList();
+
         }
     }
 }

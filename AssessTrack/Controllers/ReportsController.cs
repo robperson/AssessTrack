@@ -20,6 +20,9 @@ namespace AssessTrack.Controllers
             GradeSections = sections;
             Profile = profile;
         }
+
+        public Profile NextStudent;
+        public Profile PreviousStudent;
     }
 
     public class ReportsController : ATController
@@ -57,6 +60,26 @@ namespace AssessTrack.Controllers
                                        select ctm).SingleOrDefault();
             model.FinalGrade = member.GetFinalGrade();
             model.FinalLetterGrade = member.GetFinalLetterGrade();
+            List<CourseTermMember> students = courseTerm.GetMembers(1, 1);
+            int currentStudentIndex = students.IndexOf(member);
+            if (currentStudentIndex > 0)
+            {
+                model.PreviousStudent = students[currentStudentIndex - 1].Profile;
+            }
+            else if (currentStudentIndex == 0)
+            {
+                model.PreviousStudent = students[students.Count - 1].Profile;
+            }
+
+            if (currentStudentIndex < students.Count - 1)
+            {
+                model.NextStudent = students[currentStudentIndex + 1].Profile;
+            }
+            else if (currentStudentIndex == 0)
+            {
+                model.NextStudent = students[0].Profile;
+            }
+
             return View(model);
 
         }

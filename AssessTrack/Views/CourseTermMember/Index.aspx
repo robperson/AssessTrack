@@ -24,7 +24,8 @@
         <tr>
             <td>
                 <%= Html.ActionLink("Edit", "Edit", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
-                <%= Html.ActionLink("Details", "Details", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
+                <%= Html.ActionLink("Details", "Details", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
+                <a href="mailto:<%= item.Profile.EmailAddress %>" title="Send this member an email.">Send Email</a>
             </td>
             <td>
                 <%= Html.Encode(AssessTrack.Helpers.UserHelpers.GetFullNameForID(item.MembershipID))%>
@@ -55,7 +56,8 @@
         <tr>
             <td>
                 <%= Html.ActionLink("Edit", "Edit", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
-                <%= Html.ActionLink("Details", "Details", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
+                <%= Html.ActionLink("Details", "Details", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
+                <a href="mailto:<%= item.Profile.EmailAddress %>" title="Send this member an email.">Send Email</a>
             </td>
             <td>
                 <%= Html.Encode(AssessTrack.Helpers.UserHelpers.GetFullNameForID(item.MembershipID))%>
@@ -86,7 +88,8 @@
         <tr>
             <td>
                 <%= Html.ActionLink("Edit", "Edit", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
-                <%= Html.ActionLink("Details", "Details", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
+                <%= Html.ActionLink("Details", "Details", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
+                <a href="mailto:<%= item.Profile.EmailAddress %>" title="Send this member an email.">Send Email</a>
             </td>
             <td>
                 <%= Html.Encode(AssessTrack.Helpers.UserHelpers.GetFullNameForID(item.MembershipID))%>
@@ -117,7 +120,8 @@
         <tr>
             <td>
                 <%= Html.ActionLink("Edit", "Edit", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
-                <%= Html.ActionLink("Details", "Details", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
+                <%= Html.ActionLink("Details", "Details", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
+                <a href="mailto:<%= item.Profile.EmailAddress %>" title="Send this member an email.">Send Email</a>
             </td>
             <td>
                 <%= Html.Encode(AssessTrack.Helpers.UserHelpers.GetFullNameForID(item.MembershipID))%>
@@ -148,7 +152,8 @@
         <tr>
             <td>
                 <%= Html.ActionLink("Edit", "Edit", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
-                <%= Html.ActionLink("Details", "Details", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
+                <%= Html.ActionLink("Details", "Details", new { id = item.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
+                <a href="mailto:<%= item.Profile.EmailAddress %>" title="Send this member an email.">Send Email</a>
             </td>
             <td>
                 <%= Html.Encode(AssessTrack.Helpers.UserHelpers.GetFullNameForID(item.MembershipID))%>

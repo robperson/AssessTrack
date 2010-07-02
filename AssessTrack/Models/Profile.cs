@@ -48,6 +48,22 @@ namespace AssessTrack.Models
                 throw new RuleViolationException("Rule violations prevent saving");
         }
 
+        private string GetEmailAddress()
+        {
+            MembershipUser member = Membership.GetUser(MembershipID);
+            return member.Email;
+        }
+
+        public string EmailAddress
+        {
+            get { return GetEmailAddress(); }
+        }
+
+        public string FullName
+        {
+            get { return FirstName + " " + LastName; }
+        }
+
         #region IBackupItem Members
 
         private Guid _objectID;

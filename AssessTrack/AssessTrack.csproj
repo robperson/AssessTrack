@@ -115,6 +115,7 @@
       <DependentUpon>AssessTrackModelClasses.dbml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\UserHelpers.cs" />
+    <Compile Include="Models\CourseTermMemberManager.cs" />
     <Compile Include="Models\CourseTerm.cs" />
     <Compile Include="Models\CourseTermManager.cs" />
     <Compile Include="Models\CourseTermMember.cs" />
@@ -244,7 +245,7 @@
     <Content Include="Views\CourseTermMember\Details.aspx" />
     <Content Include="Views\CourseTermMember\Edit.aspx" />
     <Content Include="Views\CourseTermMember\Index.aspx" />
-    <Content Include="Views\CourseTerm\Students.aspx" />
+    <Content Include="Views\Reports\Students.aspx" />
     <Content Include="Views\Reports\FinalGrades.aspx" />
     <Content Include="Views\Reports\GradeInfo.ascx" />
     <Content Include="Views\Reports\GradeLink.ascx" />

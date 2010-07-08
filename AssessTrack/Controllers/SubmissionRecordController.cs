@@ -50,12 +50,6 @@ namespace AssessTrack.Controllers
         // GET: /SubmissionRecord/
         public ActionResult Index(string siteShortName, string courseTermShortName, Guid? id)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site,courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             if (id == null)
                 return View(new SubmissionRecordViewModel(courseTerm.Assessments.ToList()));
             Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, (Guid)id);
@@ -67,24 +61,12 @@ namespace AssessTrack.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Index(string siteShortName, string courseTermShortName, Guid id)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site,courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, id);
             return View(new SubmissionRecordViewModel(courseTerm.Assessments.ToList(),assessment));
         }
 
         public ActionResult Grade(string siteShortName, string courseTermShortName, Guid id)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site,courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             SubmissionRecord submission = dataRepository.GetSubmissionRecordByID(id);
             if (submission == null)
                 return View("SubmissionNotFound");
@@ -95,12 +77,6 @@ namespace AssessTrack.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Grade(string siteShortName, string courseTermShortName, Guid id, FormCollection input)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site,courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             SubmissionRecord submission = dataRepository.GetSubmissionRecordByID(id);
             if (submission == null)
                 return View("SubmissionNotFound");
@@ -131,12 +107,6 @@ namespace AssessTrack.Controllers
 
         public ActionResult View(string siteShortName, string courseTermShortName, Guid id)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             SubmissionRecord submission = dataRepository.GetSubmissionRecordByID(id);
             if (submission == null)
                 return View("SubmissionNotFound");

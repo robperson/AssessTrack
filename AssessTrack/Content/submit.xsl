@@ -18,6 +18,13 @@
 
   </xsl:template>
 
+  <xsl:template match="code">
+    <pre>
+      <xsl:value-of select="."/>
+    </pre>
+    
+  </xsl:template>
+
   <xsl:template match="answer">
     <div class="answer">
       <xsl:if test="@caption != ''">

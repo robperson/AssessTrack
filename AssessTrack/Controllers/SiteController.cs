@@ -34,9 +34,6 @@ namespace AssessTrack.Controllers
         [ATAuth(AuthScope = AuthScope.Application, MinLevel = 0, MaxLevel = 10)]
         public ActionResult Details(string siteShortName)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
             return View(site);
         }
 
@@ -95,12 +92,10 @@ namespace AssessTrack.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(string siteShortName, FormCollection collection)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
             try
             {
-                // TODO: Add update logic here
+                UpdateModel(site);
+                dataRepository.Save();
  
                 return RedirectToAction("Index");
             }

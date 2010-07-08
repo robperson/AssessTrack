@@ -37,12 +37,6 @@ namespace AssessTrack.Controllers
 
         public ActionResult Index(string siteShortName, string courseTermShortName)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site,courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             return View(courseTerm.Tags.ToList());
         }
 
@@ -51,12 +45,6 @@ namespace AssessTrack.Controllers
 
         public ActionResult Details(string siteShortName, string courseTermShortName, Guid id)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             Tag tag = dataRepository.GetTagByID(courseTerm, id);
             if (tag == null)
                 return View("TagNotFound");
@@ -72,13 +60,6 @@ namespace AssessTrack.Controllers
 
         public ActionResult Create(string courseTermShortName, string siteShortName)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
-
             Tag newTag = new Tag();
             return View(newTag);
         } 
@@ -89,12 +70,6 @@ namespace AssessTrack.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(string courseTermShortName, string siteShortName, Tag newTag)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             if (ModelState.IsValid)
             {
                     try
@@ -121,12 +96,6 @@ namespace AssessTrack.Controllers
  
         public ActionResult Edit(string courseTermShortName, string siteShortName, Guid id)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             Tag tag = dataRepository.GetTagByID(courseTerm, id);
             if (tag == null)
                 return View("TagNotFound");
@@ -140,12 +109,6 @@ namespace AssessTrack.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(string courseTermShortName, string siteShortName, Guid id, FormCollection collection)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             Tag tag = dataRepository.GetTagByID(courseTerm, id);
             if (tag == null)
                 return View("TagNotFound");

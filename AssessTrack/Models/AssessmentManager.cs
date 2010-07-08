@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Transactions;
+using System.Collections.Generic;
 
 namespace AssessTrack.Models
 {
@@ -221,5 +222,27 @@ namespace AssessTrack.Models
 
         }
 
+        public List<Assessment> GetUpcomingAssessments(CourseTerm courseTerm)
+        {
+            return (from asmt in courseTerm.Assessments
+                    where asmt.DueDate.CompareTo(DateTime.Now) >= 0
+                    && asmt.IsVisible
+                    && !asmt.AssessmentType.QuestionBank
+                    orderby asmt.DueDate descending
+                    select asmt).ToList();
+        }
+
+        public List<Assessment> GetPastDueAssessments(CourseTerm courseTerm)
+        {
+            return (from asmt in courseTerm.Assessments
+                    where asmt.DueDate.CompareTo(DateTime.Now) < 0
+                    && asmt.IsVisible
+                    && !asmt.AssessmentType.QuestionBank
+                    orderby asmt.DueDate descending
+                    select asmt).ToList();
+        }
+
+        
     }
+
 }

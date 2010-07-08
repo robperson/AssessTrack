@@ -46,45 +46,17 @@ namespace AssessTrack.Controllers
         [ATAuth(AuthScope = AuthScope.Site, MinLevel = 0, MaxLevel = 10)]
         public ActionResult Index(string siteShortName)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site != null)
-            {
-                return View(site.CourseTerms.ToList());
-            }
-            else
-            {
-                return View("SiteNotFound");
-            }
+            return View(site.CourseTerms.ToList());
         }
 
-        public ActionResult Students(string siteShortName, string courseTermShortName)
-        {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
-            return View(courseTerm);
-        }
+        
 
         //
         // GET: /CourseTerm/Details/5
         [ATAuth(AuthScope = AuthScope.Site, MinLevel = 0, MaxLevel = 10)]
         public ActionResult Details(string siteShortName, string courseTermShortName)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site != null)
-            {
-                CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site,courseTermShortName);
-                if (courseTerm != null)
-                {
-                    return View(courseTerm);
-                }
-                return View("CourseTermNotFound");
-            }
-            return View("SiteNotFound");
-
+            return View(courseTerm);
         }
 
         //
@@ -92,13 +64,8 @@ namespace AssessTrack.Controllers
         [ATAuth(AuthScope = AuthScope.Site, MinLevel = 10, MaxLevel = 10)]
         public ActionResult Create(string siteShortName)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site != null)
-            {
-                CourseTerm courseTerm = new CourseTerm();
-                return View(new CourseTermViewModel(site,courseTerm));
-            }
-            return View("SiteNotFound");
+            CourseTerm courseTerm = new CourseTerm();
+            return View(new CourseTermViewModel(site,courseTerm));
         } 
 
         //
@@ -108,39 +75,31 @@ namespace AssessTrack.Controllers
         [ATAuth(AuthScope = AuthScope.Site, MinLevel = 10, MaxLevel = 10)]
         public ActionResult Create(string siteShortName, Guid CourseID, Guid TermID, CourseTerm courseTerm)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site != null)
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
-                    try
-                    {
-                        courseTerm.CourseID = CourseID;
-                        courseTerm.TermID = TermID;
-                        courseTerm.Site = site;
-                        dataRepository.CreateCourseTerm(courseTerm);
-                        return RedirectToAction("Index", new { siteShortName = siteShortName });
-                    }
-                    catch (RuleViolationException)
-                    {
-                        ModelState.AddModelErrors(courseTerm.GetRuleViolations());
-                    }
-                    catch (Exception ex)
-                    {
-                        ModelState.AddModelError("_FORM", ex.Message);
-                    }
+                    courseTerm.CourseID = CourseID;
+                    courseTerm.TermID = TermID;
+                    courseTerm.Site = site;
+                    dataRepository.CreateCourseTerm(courseTerm);
+                    return RedirectToAction("Index", new { siteShortName = siteShortName });
                 }
-                return View(new CourseTermViewModel(site, courseTerm, CourseID, TermID));
+                catch (RuleViolationException)
+                {
+                    ModelState.AddModelErrors(courseTerm.GetRuleViolations());
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("_FORM", ex.Message);
+                }
             }
-            return View("SiteNotFound");
+            return View(new CourseTermViewModel(site, courseTerm, CourseID, TermID));
         }
 
         [ATAuth(AuthScope = AuthScope.Site, MinLevel = 0, MaxLevel = 10)]
         public ActionResult Join(string siteShortName)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
             return View(new CourseTermJoinModel(site.CourseTerms.AsEnumerable()));
         }
 
@@ -148,9 +107,6 @@ namespace AssessTrack.Controllers
         [ATAuth(AuthScope = AuthScope.Site, MinLevel = 0, MaxLevel = 10)]
         public ActionResult Join(string siteShortName, Guid id, string password)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
             try
             {
                 CourseTerm courseTerm = dataRepository.GetCourseTermByID(site,id);

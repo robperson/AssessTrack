@@ -17,7 +17,13 @@
     </div>
     <hr/>
   </xsl:template>
-  
+
+  <xsl:template match="code">
+    <pre>
+      <xsl:value-of select="."/>
+    </pre>
+
+  </xsl:template>
   
 
   <xsl:template match="answer">

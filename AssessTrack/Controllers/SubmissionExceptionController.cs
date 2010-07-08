@@ -36,12 +36,6 @@ namespace AssessTrack.Controllers
 
         public ActionResult Index(string siteShortName, string courseTermShortName)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             return View(courseTerm.SubmissionExceptions.ToList());
         }
 
@@ -58,12 +52,6 @@ namespace AssessTrack.Controllers
 
         public ActionResult Create(string siteShortName, string courseTermShortName)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             return View(new SubmissionExceptionFormModel(courseTerm));
         } 
 
@@ -73,12 +61,6 @@ namespace AssessTrack.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(string siteShortName, string courseTermShortName, FormCollection collection)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             SubmissionException subExc = new SubmissionException();
             try
             {

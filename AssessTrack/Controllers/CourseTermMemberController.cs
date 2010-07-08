@@ -8,6 +8,24 @@ using AssessTrack.Models;
 
 namespace AssessTrack.Controllers
 {
+    public class CourseTermMemberViewModel
+    {
+        public List<CourseTermMember> Excluded;
+        public List<CourseTermMember> Students;
+        public List<CourseTermMember> PowerUsers;
+        public List<CourseTermMember> SuperUsers;
+        public List<CourseTermMember> Owners;
+
+        public CourseTermMemberViewModel(CourseTerm courseTerm, AssessTrackDataRepository repo)
+        {
+            Excluded = repo.GetExcludedUsersInCourseTerm(courseTerm);
+            Students = repo.GetStudentsInCourseTerm(courseTerm);
+            PowerUsers = repo.GetPowerUsersInCourseTerm(courseTerm);
+            SuperUsers = repo.GetSuperUsersInCourseTerm(courseTerm);
+            Owners = repo.GetOwnersInCourseTerm(courseTerm);
+        }
+    }
+
     public class CourseTermMemberController : ATController
     {
         //
@@ -15,14 +33,7 @@ namespace AssessTrack.Controllers
 
         public ActionResult Index(string siteShortName, string courseTermShortName)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
-
-            return View(courseTerm);
+            return View(new CourseTermMemberViewModel(courseTerm,dataRepository));
         }
 
         //
@@ -30,16 +41,7 @@ namespace AssessTrack.Controllers
 
         public ActionResult Details(string siteShortName, string courseTermShortName, Guid id)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
-
-            CourseTermMember member = (from ctm in courseTerm.CourseTermMembers
-                                       where ctm.CourseTermMemberID == id
-                                       select ctm).Single();
+            CourseTermMember member = dataRepository.GetCourseTermMemberByID(courseTerm, id);
 
             return View(member);
         }
@@ -50,16 +52,7 @@ namespace AssessTrack.Controllers
  
         public ActionResult Edit(string siteShortName, string courseTermShortName, Guid id)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
-
-            CourseTermMember member = (from ctm in courseTerm.CourseTermMembers
-                                       where ctm.CourseTermMemberID == id
-                                       select ctm).Single();
+            CourseTermMember member = dataRepository.GetCourseTermMemberByID(courseTerm, id);
             return View(member);
         }
 
@@ -69,16 +62,7 @@ namespace AssessTrack.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(string siteShortName, string courseTermShortName, Guid id, FormCollection collection)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
-
-            CourseTermMember member = (from ctm in courseTerm.CourseTermMembers
-                                       where ctm.CourseTermMemberID == id
-                                       select ctm).Single();
+            CourseTermMember member = dataRepository.GetCourseTermMemberByID(courseTerm, id);
             
             try
             {

@@ -17,13 +17,6 @@ namespace AssessTrack.Controllers
         // GET: /AssessmentType/
         public ActionResult Index(string siteShortName, string courseTermShortName)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site,courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
-
             return View(courseTerm.AssessmentTypes.ToList());
         }
 
@@ -32,12 +25,6 @@ namespace AssessTrack.Controllers
 
         public ActionResult Details(string siteShortName, string courseTermShortName, Guid id)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             AssessmentType assessmentType = dataRepository.GetAssessmentTypeByID(courseTerm, id);
             if (assessmentType == null)
                 return View("AssessmentTypeNotFound");
@@ -49,13 +36,6 @@ namespace AssessTrack.Controllers
 
         public ActionResult Create(string courseTermShortName, string siteShortName)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
-
             AssessmentType newType = new AssessmentType() { Weight = 0, QuestionBank = false, CourseTerm = courseTerm };
             return View(newType);
         } 
@@ -66,13 +46,6 @@ namespace AssessTrack.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(string courseTermShortName, string siteShortName, AssessmentType newType)
         {
-             Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
-
             if (ModelState.IsValid)
             {
                 try
@@ -99,13 +72,6 @@ namespace AssessTrack.Controllers
 
         public ActionResult Edit(string courseTermShortName, string siteShortName, Guid id)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
-
             AssessmentType assessmentType = dataRepository.GetAssessmentTypeByID(courseTerm, id);
             if (assessmentType == null)
                 return View("AssessmentTypeNotFound");
@@ -118,12 +84,6 @@ namespace AssessTrack.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(string courseTermShortName, string siteShortName, Guid id, FormCollection collection)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             AssessmentType assessmentType = dataRepository.GetAssessmentTypeByID(courseTerm, id);
             if (assessmentType == null)
                 return View("AssessmentTypeNotFound");

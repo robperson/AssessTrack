@@ -7,7 +7,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Open Assessments</h2>
+    <h2>Current Assessments</h2>
 
     <table>
         <tr>
@@ -47,7 +47,7 @@
             </th>
         </tr>
 
-    <% foreach (var item in Model.OpenAssessments) { %>
+    <% foreach (var item in Model.CurrentAssessments) { %>
     
         <tr>
             <td>
@@ -96,7 +96,7 @@
 
     </table>
     
-    <h2>Closed Assessments</h2>
+    <h2>Past Due Assessments</h2>
 
     <table>
         <tr>
@@ -136,7 +136,7 @@
             </th>
         </tr>
 
-    <% foreach (var item in Model.ClosedAssessments) { %>
+    <% foreach (var item in Model.PastAssessments) { %>
     
         <tr>
             <td>

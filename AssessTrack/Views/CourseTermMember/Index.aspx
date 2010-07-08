@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<AssessTrack.Models.CourseTerm>" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<AssessTrack.Controllers.CourseTermMemberViewModel>" %>
 <%@ Import Namespace="AssessTrack.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Index
@@ -19,7 +19,7 @@
             </th>
         </tr>
 
-    <% foreach (var item in Model.GetMembers(1,1)) { %>
+    <% foreach (var item in Model.Students) { %>
     
         <tr>
             <td>
@@ -51,7 +51,7 @@
             </th>
         </tr>
 
-    <% foreach (var item in Model.GetMembers(2,5)) { %>
+    <% foreach (var item in Model.PowerUsers) { %>
     
         <tr>
             <td>
@@ -83,7 +83,7 @@
             </th>
         </tr>
 
-    <% foreach (var item in Model.GetMembers(6,9)) { %>
+    <% foreach (var item in Model.SuperUsers) { %>
     
         <tr>
             <td>
@@ -115,7 +115,7 @@
             </th>
         </tr>
 
-    <% foreach (var item in Model.GetMembers(10,10)) { %>
+    <% foreach (var item in Model.Owners) { %>
     
         <tr>
             <td>
@@ -147,7 +147,7 @@
             </th>
         </tr>
 
-    <% foreach (var item in Model.GetMembers(0,0)) { %>
+    <% foreach (var item in Model.Excluded) { %>
     
         <tr>
             <td>

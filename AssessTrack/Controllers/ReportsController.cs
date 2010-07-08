@@ -25,6 +25,18 @@ namespace AssessTrack.Controllers
         public Profile PreviousStudent;
     }
 
+    public class StudentsReportModel
+    {
+        public string CourseTermName;
+        public List<CourseTermMember> Students;
+
+        public StudentsReportModel(string name, List<CourseTermMember> students)
+        {
+            CourseTermName = name;
+            Students = students;
+        }
+    }
+
     public class ReportsController : ATController
     {
         //
@@ -35,15 +47,14 @@ namespace AssessTrack.Controllers
             return View();
         }
 
+        public ActionResult Students(string siteShortName, string courseTermShortName)
+        {
+            return View(new StudentsReportModel(courseTerm.Name,dataRepository.GetStudentsInCourseTerm(courseTerm)));
+        }
+
         [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 0, MaxLevel = 10)]
         public ActionResult StudentPerformance(string courseTermShortName, string siteShortName, Guid id /*ProfileID*/)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
             Profile profile = dataRepository.GetProfileByID(id);
             if (profile == null)
                 return View("ProfileNotFound");
@@ -55,12 +66,10 @@ namespace AssessTrack.Controllers
             }
             PerformanceReportModel model = new PerformanceReportModel(sections, profile);
 
-            CourseTermMember member = (from ctm in courseTerm.CourseTermMembers
-                                       where ctm.MembershipID == id
-                                       select ctm).SingleOrDefault();
+            CourseTermMember member = dataRepository.GetCourseTermMemberByID(courseTerm, id);
             model.FinalGrade = member.GetFinalGrade();
             model.FinalLetterGrade = member.GetFinalLetterGrade();
-            List<CourseTermMember> students = courseTerm.GetMembers(1, 1);
+            List<CourseTermMember> students = dataRepository.GetStudentsInCourseTerm(courseTerm);
             int currentStudentIndex = students.IndexOf(member);
             if (currentStudentIndex > 0)
             {
@@ -87,16 +96,7 @@ namespace AssessTrack.Controllers
         [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 0, MaxLevel = 10)]
         public ActionResult FinalGrades(string courseTermShortName, string siteShortName)
         {
-            Site site = dataRepository.GetSiteByShortName(siteShortName);
-            if (site == null)
-                return View("SiteNotFound");
-            CourseTerm courseTerm = dataRepository.GetCourseTermByShortName(site, courseTermShortName);
-            if (courseTerm == null)
-                return View("CourseTermNotFound");
-
-            
-            return View(courseTerm.GetMembers(1,1));
-
+            return View(dataRepository.GetStudentsInCourseTerm(courseTerm));
         }
 
     }

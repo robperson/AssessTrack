@@ -74,7 +74,31 @@ namespace AssessTrack.Models
             dc.SubmitChanges();
             return true;
         }
-        
+
+        public List<CourseTermMember> GetExcludedUsersInCourseTerm(CourseTerm courseTerm)
+        {
+            return courseTerm.GetMembers(0, 0);
+        }
+
+        public List<CourseTermMember> GetStudentsInCourseTerm(CourseTerm courseTerm)
+        {
+            return courseTerm.GetMembers(1, 1);
+        }
+
+        public List<CourseTermMember> GetPowerUsersInCourseTerm(CourseTerm courseTerm)
+        {
+            return courseTerm.GetMembers(2, 5);
+        }
+
+        public List<CourseTermMember> GetSuperUsersInCourseTerm(CourseTerm courseTerm)
+        {
+            return courseTerm.GetMembers(6, 9);
+        }
+
+        public List<CourseTermMember> GetOwnersInCourseTerm(CourseTerm courseTerm)
+        {
+            return courseTerm.GetMembers(10, 10);
+        }
     }
 
 

@@ -1,16 +1,15 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<AssessTrack.Models.Tag>>" %>
 <%@ Import Namespace="AssessTrack.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Index
+	Tags
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Index</h2>
+    <h2>Tags</h2>
 
     <table>
         <tr>
-            <th></th>
             <th>
                 Name
             </th>
@@ -23,11 +22,10 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Edit", "Edit", new { id = item.TagID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
-                <%= Html.ActionLink("Details", "Details", new { id = item.TagID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
-            </td>
-            <td>
-                <%= Html.Encode(item.Name) %>
+                <strong><%= Html.ActionLink(item.Name, "Details", new { id = item.TagID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%></strong>
+                <div class="row-actions">
+                    <%= Html.ActionLink("Edit", "Edit", new { id = item.TagID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>    
+                </div>
             </td>
             <td>
                 <%= Html.Encode(item.Description) %>
@@ -39,7 +37,7 @@
     </table>
 
     <p>
-        <%= Html.ActionLink("Create New", "Create", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
+        <%= Html.ActionLink("Create A New Tag", "Create", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
     </p>
 
 </asp:Content>

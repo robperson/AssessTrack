@@ -1,20 +1,14 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<AssessTrack.Controllers.TagDetailsModel>" %>
 <%@ Import Namespace="AssessTrack.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Details
+	Tag Details
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Details</h2>
+    <h2>Tag Details</h2>
 
-    <fieldset>
-        <legend>Fields</legend>
-        <p>
-            TagID:
-            <%= Html.Encode(Model.Tag.TagID) %>
-        </p>
-        <p>
+    <p>
             Name:
             <%= Html.Encode(Model.Tag.Name) %>
         </p>
@@ -23,7 +17,6 @@
             <%= Html.Encode(Model.Tag.Description) %>
         </p>
         
-    </fieldset>
     <h3>Tagged Assessments</h3>
     <table>
     <tr>

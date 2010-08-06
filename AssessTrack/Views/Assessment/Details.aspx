@@ -2,42 +2,30 @@
 <%@ Import Namespace="AssessTrack.Helpers" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Details
+	Assessment Details
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Details</h2>
+    <h2>Assessment Details</h2>
 
-    <fieldset>
-        <legend>Fields</legend>
+    <h3><%= Html.Encode(Model.Name) %></h3>
+            
         <p>
-            Name:
-            <%= Html.Encode(Model.Name) %>
-        </p>
-        <p>
-            DueDate:
+            Due Date:
             <%= Html.Encode(String.Format("{0:g}", Model.DueDate)) %>
         </p>
         <p>
-            IsExtraCredit:
+            Is Extra Credit:
             <%= Html.Encode(Model.IsExtraCredit) %>
         </p>
         <p>
             Assessment Type:
             <%= Html.Encode(Model.AssessmentType.Name) %>
         </p>
-        <div>
-            Data:
-            <pre><%= Html.Encode(Model.Data) %></pre>
-        </div>
         <p>
-            CreatedDate:
+            Created Date:
             <%= Html.Encode(String.Format("{0:g}", Model.CreatedDate.ToShortDateString())) %>
-        </p>
-        <p>
-            Course:
-            <%= Html.Encode(Model.CourseTerm.Name) %>
         </p>
         <p>
             Is Visible:
@@ -52,10 +40,10 @@
             <%= Html.Encode(Model.IsGradable) %>
         </p>
         
-    </fieldset>
+    
     <p>
 
-        <%=Html.ActionLink("Back to List", "Index", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
+        <%=Html.ActionLink("Back to Assessment list", "Index", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
     </p>
 
 </asp:Content>

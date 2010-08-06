@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AssessTrack.Helpers;
+using AssessTrack.Models.Home;
+using System.Web.Security;
 
 namespace AssessTrack.Controllers
 {
@@ -11,9 +14,14 @@ namespace AssessTrack.Controllers
     {
         public ActionResult Index()
         {
-            ViewData["Message"] = "Welcome to the new Course Management System!";
-
-            return View();
+            if (Request.IsAuthenticated)
+            {
+                return View(new HomePageViewModel());
+            }
+            else
+            {
+                return View("Home");
+            }
         }
 
         public ActionResult About()
@@ -32,5 +40,6 @@ namespace AssessTrack.Controllers
                 return View();
             }
         }
+                
     }
 }

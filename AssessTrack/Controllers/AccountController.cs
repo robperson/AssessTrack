@@ -9,6 +9,9 @@ using System.Web.Security;
 using System.Web.UI;
 using AssessTrack.Models;
 using AssessTrack.Helpers;
+using System.Configuration;
+using System.Net.Mail;
+using System.Net;
 
 namespace AssessTrack.Controllers
 {
@@ -74,6 +77,48 @@ namespace AssessTrack.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult ResetPassword(string username)
+        {
+            try
+            {
+                MembershipUser user = Membership.GetUser(username);
+                string newPassword = user.ResetPassword();
+
+                //email the user their new password
+                string server = ConfigurationManager.AppSettings["SmtpServer"];
+                string port = ConfigurationManager.AppSettings["SmtpPort"];
+                string smtpUsername = ConfigurationManager.AppSettings["SmtpUsername"];
+                string smtpPassword = ConfigurationManager.AppSettings["SmtpPassword"];
+
+                SmtpClient client = new SmtpClient(server, Convert.ToInt32(port));
+                client.EnableSsl = true;
+                client.Credentials = new NetworkCredential(smtpUsername, smtpPassword, "");
+
+                string subject = "Your AssessTrack.com password has been reset.";
+                string body = @"As you requested, your password has been reset. Your new password is: ""{0}"" (without the quotation marks).
+After you log on with your new password you can change it to something you will be able to remember.";
+
+                body = string.Format(body, newPassword);
+
+                MailMessage message = new MailMessage(smtpUsername, user.Email, subject, body);
+
+                client.Send(message);
+
+            }
+            catch
+            {
+                ModelState.AddModelError("_FORM", "An error occurred while resetting your password!");
+                return View();
+            }
+            return View("PasswordResetSuccess");
         }
 
         public ActionResult LogOff()
@@ -182,12 +227,40 @@ namespace AssessTrack.Controllers
             return View();
         }
 
+        [Authorize]
+        public ActionResult Profile()
+        {
+            Profile p = dataRepository.GetLoggedInProfile();
+            return View(p);
+        }
+
+        [Authorize]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Profile(FormCollection input)
+        {
+            Profile p = dataRepository.GetLoggedInProfile();
+            try
+            {
+                UpdateModel(p, new string[] { "FirstName", "LastName", "SchoolIDNumber" });
+                dataRepository.Save();
+                return View("ProfileUpdateSuccess");
+            }
+            catch
+            {
+                ModelState.AddModelError("_FORM", "An unexpected error occurred.");
+                return View(p);
+            }
+        }
+
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (filterContext.HttpContext.User.Identity is WindowsIdentity)
             {
                 throw new InvalidOperationException("Windows authentication is not supported.");
             }
+
+            base.OnActionExecuting(filterContext);
         }
 
         #region Validation Methods

@@ -34,4 +34,5 @@
             </fieldset>
         </div>
     <% } %>
+    <p>Forgot your passord? <%= Html.ActionLink("Click here to reset it", "ResetPassword") %>.</p>
 </asp:Content>

@@ -12,29 +12,14 @@ namespace AssessTrack.Models
     [Bind(Include="AccessLevel")]
     public partial class CourseTermMember : IBackupItem
     {
+        public string GetFormattedGrade()
+        {
+            return GradeHelpers.GetFormattedGrade(GetFinalGrade());
+        }
+
         public string GetFinalLetterGrade()
         {
-            double grade = GetFinalGrade();
-            if (grade >= 90.0)
-            {
-                return "A";
-            }
-            else if (grade < 90.0 && grade >= 80.0)
-            {
-                return "B";
-            }
-            else if (grade < 80.0 && grade >= 70.0)
-            {
-                return "C";
-            }
-            else if (grade < 70.0 && grade >= 65.0)
-            {
-                return "D";
-            }
-            else
-            {
-                return "F";
-            }
+            return GradeHelpers.GetFinalLetterGrade(GetFinalGrade());
         }
 
         public double GetFinalGrade()

@@ -1,59 +1,90 @@
-<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage<AssessTrack.Controllers.AssessmentFormViewModel>" MasterPageFile="~/Views/Shared/Site.Master"%>
 <%@ Import Namespace="AssessTrack.Helpers" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
-    <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
-    <link href="../../Content/QuizBuilder.css" rel="stylesheet" type="text/css" />
+<asp:Content ID="qbTitle" ContentPlaceHolderID="TitleContent" runat="server">
+    <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+</asp:Content>
 
-    <script src="/Scripts/jquery-1.3.2.js" type="text/javascript"></script>
-
+<asp:Content ID="qbHead" ContentPlaceHolderID="HeadContent" runat="server">
     <script src="/Scripts/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
-    <script src="/Scripts/String.js" type="text/javascript"></script>
+    <link href="/Content/QuizBuilder.css" rel="stylesheet" type="text/css" />
     <script src="/Scripts/QuizBuilder.js" type="text/javascript"></script>
-</head>
+</asp:Content>
 
-<body class="qb-body">
-    <div class="page">
+ <asp:Content ID="qbMain" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+</asp:Content>
 
-        <div id="header">
-            <div id="title">
-                <h1>Course Management System</h1>
-            </div>
-              
-            <div id="logindisplay">
-                <% Html.RenderPartial("LogOnUserControl"); %>
-            </div> 
-            
-            <div id="menucontainer">
-            
-                <ul id="menu">              
-                    <li><%= Html.ActionLink("Home", "Index", "Home")%></li>
-                    <li><%= Html.ActionLink("About", "About", "Home")%></li>
-                    <li><%= Html.RouteLink("Sites", new { controller = "Site", action = "Index"}) %></li>
-                    <%= Html.CurrentSiteLink("<li>","</li>") %>
-                    <%= Html.CurrentCourseTermLink("<li>","</li>") %>
-                </ul>
-            
-            </div>
-        </div>
-
-        <div id="main">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-
-            <div id="footer">
-            </div>
-        </div>
-    </div>
-    <div id="quiz-builder-menu">
+<asp:Content ID="qbExtra" ContentPlaceHolderID="ExtraContent" runat="server">
+    <div id="quiz-builder-menu" >
+        <span id="hide-qb-menu">[Hide/Show Toolbox]</span>
+        
 	        <ul class="toolbox">
 			   <%= Html.PrintQBMenu() %>
 		    </ul>
 	        <div class="clear"></div>
-	        
+	        <div class="assessment-attributes">
+	        <h3>Assessment Attributes</h3>
+	        <% using (Html.BeginForm()) {%>
+
+        
+            <p>
+                <label for="Name">Name:</label>
+                <%= Html.TextBox("Name", Model.Assessment.Name) %>
+                <%= Html.ValidationMessage("Name", "*") %>
+            </p>
+            <p>
+                <label for="DueDate">Due Date:</label>
+                <%= Html.TextBox("DueDate", String.Format("{0:g}", Model.Assessment.DueDate))%>
+                <%= Html.ValidationMessage("DueDate", "*") %>
+            </p>
+            <p>
+                <label for="IsExtraCredit">Is Extra Credit:</label>
+                <%= Html.CheckBox("IsExtraCredit", Model.Assessment.IsExtraCredit) %>
+                <%= Html.ValidationMessage("IsExtraCredit", "*") %>
+            </p>
+            <p>
+                <label for="AllowMultipleSubmissions">Allow Multiple Submissions:</label>
+                <%= Html.CheckBox("AllowMultipleSubmissions", Model.Assessment.AllowMultipleSubmissions) %>
+                <%= Html.ValidationMessage("AllowMultipleSubmissions", "*") %>
+            </p>
+            <p>
+                <label for="AssessmentTypeID">Assessment Type :</label>
+                <%= Html.DropDownList("AssessmentTypeID", Model.AssessmentTypes) %>
+                <%= Html.ValidationMessage("AssessmentTypeID", "*") %>
+            </p>
+            
+            <p>
+                <label for="CreatedDate">Created Date:</label>
+                <%= Html.TextBox("CreatedDate", String.Format("{0:g}", Model.Assessment.CreatedDate))%>
+                <%= Html.ValidationMessage("CreatedDate", "*") %>
+            </p>
+            <p>
+                <label for="IsVisible">Is Visible:</label>
+                <%= Html.CheckBox("IsVisible", Model.Assessment.IsVisible)%>
+                <%= Html.ValidationMessage("IsVisible", "*") %>
+            </p>
+            <p>
+                <label for="IsOpen">Is Open:</label>
+                <%= Html.CheckBox("IsOpen", Model.Assessment.IsOpen) %>
+                <%= Html.ValidationMessage("IsOpen", "*") %>
+            </p>
+            <p>
+                <label for="IsGradable">Is Gradable:</label>
+                <%= Html.CheckBox("IsGradable", Model.Assessment.IsGradable)%>
+                <%= Html.ValidationMessage("IsGradable", "*") %>
+            </p>
+            <p>
+                <input type="submit" value="Save" id="build-button"/>
+            </p>
+            <%= Html.TextArea("Data", Model.Assessment.Data, 5, 50, new { id = "Data" })%>           
+           </div>
+       
+
+    <% } %>
         
 	    </div>
     <div id="importquiz" style="display:none;" title="Question Importer"></div>
-</body>
-</html>
+    <script type="text/javascript">
+        $("body").addClass("qb-body");
+    </script>
+</asp:Content>

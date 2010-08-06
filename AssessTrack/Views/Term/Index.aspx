@@ -1,27 +1,21 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<List<AssessTrack.Models.Term>>" %>
 <%@ Import Namespace="AssessTrack.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Index
+	Terms (Semesters)
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Index</h2>
+    <h2>Terms (Semesters)</h2>
 
     <table>
         <tr>
-            <th></th>
+            <th>Name</th>
             <th>
-                StartDate
+                Start Date
             </th>
             <th>
-                EndDate
-            </th>
-            <th>
-                Site
-            </th>
-            <th>
-                Name
+                End Date
             </th>
         </tr>
 
@@ -29,20 +23,14 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Edit", "Edit", new { id = item.TermID, siteShortName = Html.CurrentSiteShortName()})%> |
-                <%= Html.ActionLink("Details", "Details", new { id = item.TermID, siteShortName = Html.CurrentSiteShortName() })%>
+                <strong><%= Html.ATAuthLink(item.Name, new { action = "Details", id = item.TermID, siteShortName = Html.CurrentSiteShortName() }, AssessTrack.Filters.AuthScope.Site, 1, 10)%></strong>
+                <div class="row-actions"><%= Html.ATAuthLink("Edit", new { action = "Edit", id = item.TermID, siteShortName = Html.CurrentSiteShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%></div>
             </td>
             <td>
                 <%= Html.Encode(String.Format("{0:g}", item.StartDate.ToShortDateString())) %>
             </td>
             <td>
                 <%= Html.Encode(String.Format("{0:g}", item.EndDate.ToShortDateString())) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.Site.Title) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.Name) %>
             </td>
         </tr>
     

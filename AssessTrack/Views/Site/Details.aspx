@@ -14,12 +14,8 @@
             <%= Html.Encode(Model.Description) %>
         </p>
        
-    
-    <p>
-        <%= Html.ATAuthLink("Manage Courses for this Site", new { controller = "Course", siteShortName = Model.ShortName, action = "" }, AssessTrack.Filters.AuthScope.Site, 3, 10)%> <br />
-        <%= Html.ATAuthLink("Manage Terms(Semesters) for this Site", new { controller = "Term", siteShortName = Model.ShortName, action = "" }, AssessTrack.Filters.AuthScope.Site, 3, 10)%> <br />
-        <%= Html.ATAuthLink("View Course Offerings", new { controller = "CourseTerm", siteShortName = Model.ShortName, action = "Index" }, AssessTrack.Filters.AuthScope.Site, 0, 10)%>
-    </p>
+    <h3>Links</h3>
+    <% Html.RenderPartial("SiteMenu"); %>
     <p>
 
         <%=Html.ATAuthLink("Edit", new { siteShortName = Model.ShortName, action = "Edit" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%> <br />

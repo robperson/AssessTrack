@@ -1,7 +1,7 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<AssessTrack.Models.CourseTerm>>" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<AssessTrack.Controllers.CourseTermIndexModel>>" %>
 <%@ Import Namespace="AssessTrack.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Index
+	Course Offerings
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -10,37 +10,32 @@
 
     <table>
         <tr>
-            <th></th>
-            <th>Enrolled?</th>
-           <th>
-                Information
-            </th>
-            <th>
-                Course
-            </th>
-            <th>
-                Term
-            </th>
+            <th>Name</th>
+           <th>Information</th>
+            <th>Term</th>
         </tr>
 
     <% foreach (var item in Model) { %>
     
         <tr>
             <td>
-                <%= Html.ActionLink(item.Name, "Details", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = item.ShortName})%>
+                <strong><%= Html.ActionLink(item.CourseTerm.Name, "Details", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = item.CourseTerm.ShortName})%></strong>
+                <div class="row-actions">
+                    <% if (item.UserEnrolled)
+                       { %>
+                    <span>You are enrolled in this Course Offering</span>
+                    <% }
+                       else
+                       { %>
+                       <%= Html.ActionLink("Enroll", "Join", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = item.CourseTerm.ShortName })%>
+                    <% } %>
+                </div>
             </td>
             <td>
-            <%AssessTrack.Models.AssessTrackDataRepository dr = new AssessTrack.Models.AssessTrackDataRepository(); %>
-            <%=  (dr.IsCourseTermMember(item,dr.GetLoggedInProfile()))? "Yes" : "No"%>
+                <%= Html.Encode(item.CourseTerm.Information) %>
             </td>
             <td>
-                <%= Html.Encode(item.Information) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.Course.Name) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.Term.Name) %>
+                <%= Html.Encode(item.CourseTerm.Term.Name) %>
             </td>
         </tr>
     

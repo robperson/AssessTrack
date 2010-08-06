@@ -29,6 +29,18 @@ namespace AssessTrack.Helpers
             }
         }
 
+        public static string GetFullNameForCurrentUser()
+        {
+            try
+            {
+                return GetFullNameForID(GetCurrentUserID());
+            }
+            catch
+            {
+                return "N/A";
+            }
+        }
+
         public static string GetFullNameForID(Guid? id)
         {
             try

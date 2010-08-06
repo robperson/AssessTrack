@@ -7,9 +7,5 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Reports</h2>
-    <ul>
-        <li><%= Html.ATAuthLink("Final Grades", new { controller = "Reports", action = "FinalGrades", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%></li>
-        <li><%= Html.ATAuthLink("My Grades", new { controller = "Reports", action = "StudentPerformance", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName(), id = UserHelpers.GetCurrentUserID() }, AssessTrack.Filters.AuthScope.CourseTerm, 1, 1)%></li>
-        <li><%= Html.ATAuthLink("Student Performance", new { action = "Students", controller = "Reports", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%></li>
-    </ul>
+    <% Html.RenderPartial("ReportsMenu"); %>
 </asp:Content>

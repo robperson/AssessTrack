@@ -10,19 +10,29 @@ namespace AssessTrack.Controllers
 {
     public class CourseTermMemberViewModel
     {
-        public List<CourseTermMember> Excluded;
-        public List<CourseTermMember> Students;
-        public List<CourseTermMember> PowerUsers;
-        public List<CourseTermMember> SuperUsers;
-        public List<CourseTermMember> Owners;
+        public List<CourseTermMemberTable> Tables;
+        public CourseTerm CourseTerm;
 
-        public CourseTermMemberViewModel(CourseTerm courseTerm, AssessTrackDataRepository repo)
+        public CourseTermMemberViewModel(List<CourseTermMemberTable> tables, CourseTerm courseTerm)
         {
-            Excluded = repo.GetExcludedUsersInCourseTerm(courseTerm);
-            Students = repo.GetStudentsInCourseTerm(courseTerm);
-            PowerUsers = repo.GetPowerUsersInCourseTerm(courseTerm);
-            SuperUsers = repo.GetSuperUsersInCourseTerm(courseTerm);
-            Owners = repo.GetOwnersInCourseTerm(courseTerm);
+            Tables = tables;
+            CourseTerm = courseTerm;
+        }
+    }
+
+    public class CourseTermMemberTable
+    {
+        public string Caption;
+        public List<CourseTermMember> Members;
+        public string EmailAllLink;
+
+        public CourseTermMemberTable(string cap, List<CourseTermMember> members)
+        {
+            Caption = cap;
+            Members = members;
+            string linkformat = "mailto:{0}";
+            string emails = string.Join(",", (from member in members select member.Profile.EmailAddress).ToArray());
+            EmailAllLink = string.Format(linkformat, emails);
         }
     }
 
@@ -33,7 +43,13 @@ namespace AssessTrack.Controllers
 
         public ActionResult Index(string siteShortName, string courseTermShortName)
         {
-            return View(new CourseTermMemberViewModel(courseTerm,dataRepository));
+            List<CourseTermMemberTable> Tables = new List<CourseTermMemberTable>();
+            Tables.Add(new CourseTermMemberTable("Students", dataRepository.GetStudentsInCourseTerm(courseTerm)));
+            Tables.Add(new CourseTermMemberTable("Power Users (TAs)", dataRepository.GetPowerUsersInCourseTerm(courseTerm)));
+            Tables.Add(new CourseTermMemberTable("Super Users (Instructors)", dataRepository.GetSuperUsersInCourseTerm(courseTerm)));
+            Tables.Add(new CourseTermMemberTable("Owners", dataRepository.GetOwnersInCourseTerm(courseTerm)));
+            Tables.Add(new CourseTermMemberTable("Excluded Users", dataRepository.GetExcludedUsersInCourseTerm(courseTerm)));
+            return View(new CourseTermMemberViewModel(Tables, courseTerm));
         }
 
         //
@@ -41,7 +57,7 @@ namespace AssessTrack.Controllers
 
         public ActionResult Details(string siteShortName, string courseTermShortName, Guid id)
         {
-            CourseTermMember member = dataRepository.GetCourseTermMemberByID(courseTerm, id);
+            CourseTermMember member = dataRepository.GetCourseTermMemberByID(id);
 
             return View(member);
         }
@@ -52,7 +68,7 @@ namespace AssessTrack.Controllers
  
         public ActionResult Edit(string siteShortName, string courseTermShortName, Guid id)
         {
-            CourseTermMember member = dataRepository.GetCourseTermMemberByID(courseTerm, id);
+            CourseTermMember member = dataRepository.GetCourseTermMemberByID(id);
             return View(member);
         }
 
@@ -62,7 +78,7 @@ namespace AssessTrack.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(string siteShortName, string courseTermShortName, Guid id, FormCollection collection)
         {
-            CourseTermMember member = dataRepository.GetCourseTermMemberByID(courseTerm, id);
+            CourseTermMember member = dataRepository.GetCourseTermMemberByID(id);
             
             try
             {

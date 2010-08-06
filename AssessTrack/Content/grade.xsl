@@ -10,9 +10,11 @@
 
   <xsl:template match="question">
     <div class="question">
-      <span class="questionnum">
-        <xsl:value-of select="count(preceding::question)+1"/>) [<xsl:value-of select="sum(./answer/@weight)"/> pts]
-      </span>
+      <div class="questionnum">
+        <strong>
+          <xsl:value-of select="count(preceding::question)+1"/>) [<xsl:value-of select="sum(./answer/@weight)"/> pts]
+        </strong>
+      </div>
       <xsl:apply-templates/>
     </div>
 
@@ -127,7 +129,7 @@
   </xsl:template>
 
   <xsl:template match="AnswerKey">
-    <div>
+    <div class="key-div">
       <em>The correct answer was:</em>
       <div>
         <xsl:value-of select="."/>

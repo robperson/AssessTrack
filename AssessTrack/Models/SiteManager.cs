@@ -11,17 +11,23 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
+using AssessTrack.Helpers;
 
 namespace AssessTrack.Models
 {
     public partial class AssessTrackDataRepository
     {
-        public IEnumerable<Site> GetUserSites(Guid userid)
+        public List<Site> GetUserSites()
         {
-            return from site in dc.Sites
+            return GetUserSites(UserHelpers.GetCurrentUserID());
+        }
+
+        public List<Site> GetUserSites(Guid userid)
+        {
+            return (from site in dc.Sites
                    join sitemember in dc.SiteMembers on site.SiteID equals sitemember.SiteID
                    where sitemember.MembershipID == userid
-                   select site;
+                   select site).ToList();
         }
         public IEnumerable<Site> GetAllSites()
         {
@@ -36,7 +42,7 @@ namespace AssessTrack.Models
             {
                 Site = site,
                 Profile = GetLoggedInProfile(),
-                AccessLevel = 0
+                AccessLevel = 1
             };
             dc.SiteMembers.InsertOnSubmit(siteMember);
             dc.SubmitChanges();

@@ -17,11 +17,36 @@ namespace AssessTrack.Models
 {
     public partial class AssessTrackDataRepository
     {
-        public CourseTermMember GetCourseTermMemberByID(CourseTerm courseTerm, Guid id)
+        public CourseTermMember GetCourseTermMemberByID(Guid id)
         {
-            return (from ctm in courseTerm.CourseTermMembers
+            return (from ctm in dc.CourseTermMembers
                     where ctm.CourseTermMemberID == id
-                    select ctm).Single();
+                    select ctm).SingleOrDefault();
+        }
+
+        public CourseTermMember GetCourseTermMemberByMembershipID(CourseTerm ct, Guid id)
+        {
+            return (from ctm in ct.CourseTermMembers
+                    where ctm.MembershipID == id
+                    select ctm).SingleOrDefault();
+        }
+
+        public bool IsUserCourseTermMember(CourseTerm ct, Guid id)
+        {
+            CourseTermMember m = GetCourseTermMemberByMembershipID(ct, id);
+            return (m != null);            
+        }
+
+        public bool IsCurrentUserCourseTermMember(CourseTerm ct)
+        {
+            try
+            {
+                return IsUserCourseTermMember(ct, UserHelpers.GetCurrentUserID());
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 

@@ -53,7 +53,13 @@ namespace AssessTrack.Helpers
                     <div class='caption meta'><span>Caption:</span><input type='text' value='{2}'/></div>
                     <div class='weight meta'><span>Weight:</span><input type='text' value='{3}'/></div>
                     <div class='tags meta'><span>Tags:</span><input type='text' value='{4}'/></div>
+                    <div class='keys meta'><span>Answer Keys</span><ul class=""answerkeys"">{9}</ul><span class='add-key'>[+]</span></div>
 			    </li>";
+        private static string answerKeyTemplate = @"<li class=""{2}""><span class=""delete-key"">[x]</span>
+                                        <div><span>Answer:</span>
+                                        <textarea class=""key-answer"">{0}</textarea></div>
+                                        <div><span>Point Value:</span><input type=""text"" class=""key-weight"" value=""{1}""/></div>
+                                                </li>";
         private static string multichoiceTemplate = @"<div>
 					    <span>Choices:</span><textarea rows=""5"" cols=""40"">{0}</textarea>
 				    </div>";
@@ -64,10 +70,19 @@ namespace AssessTrack.Helpers
 				    </ul>	
                     <div class='tags meta'><span>Tags:</span><input type='text' value='{3}'/></div>			
 			    </li>";
+        public static string GetAnswerKeyMarkup(string answer, string weight)
+        {
+            return string.Format(answerKeyTemplate, answer, weight, "answerkey");
+        }
+
+        private static string GetAnswerKeyMenuItem()
+        {
+            return string.Format(answerKeyTemplate, string.Empty, string.Empty, "tool-box-item answerkey-template");
+        }
 
         public static string GetTextMarkup(string text)
         {
-            return GetTextMarkup(text,string.Empty);
+            return GetTextMarkup(text, string.Empty);
         }
 
         public static string GetTextMarkup(string text, string extraClasses)
@@ -102,8 +117,13 @@ namespace AssessTrack.Helpers
 
         public static string GetShortAnswerMarkup(string caption, string weight, string tags, string id, string extraClasses)
         {
+            return GetShortAnswerMarkup(caption, weight, tags, id, extraClasses, string.Empty);
+        }
+
+        public static string GetShortAnswerMarkup(string caption, string weight, string tags, string id, string extraClasses, string keys)
+        {
             return string.Format(answerTemplate, "short-answer", "Short Answer",
-                caption, weight, tags, string.Empty, "short-answer", id, extraClasses);
+                caption, weight, tags, string.Empty, "short-answer", id, extraClasses, keys);
         }
 
         public static string GetLongAnswerMarkup(string caption, string weight, string tags, string id)
@@ -114,8 +134,15 @@ namespace AssessTrack.Helpers
         public static string GetLongAnswerMarkup(string caption, string weight, string tags, string id, string extraClasses)
         {
             return string.Format(answerTemplate, "long-answer", "Long Answer",
-                caption, weight, tags, string.Empty, "long-answer", id, extraClasses);
+                caption, weight, tags, string.Empty, "long-answer", id, extraClasses, string.Empty);
         }
+
+        public static string GetLongAnswerMarkup(string caption, string weight, string tags, string id, string extraClasses, string keys)
+        {
+            return string.Format(answerTemplate, "long-answer", "Long Answer",
+                caption, weight, tags, string.Empty, "long-answer", id, extraClasses, keys);
+        }
+
 
         public static string GetCodeAnswerMarkup(string caption, string weight, string tags, string id)
         {
@@ -125,7 +152,13 @@ namespace AssessTrack.Helpers
         public static string GetCodeAnswerMarkup(string caption, string weight, string tags, string id, string extraClasses)
         {
             return string.Format(answerTemplate, "code-answer", "Code Answer",
-                caption, weight, tags, string.Empty, "code-answer", id, extraClasses);
+                caption, weight, tags, string.Empty, "code-answer", id, extraClasses, string.Empty);
+        }
+
+        public static string GetCodeAnswerMarkup(string caption, string weight, string tags, string id, string extraClasses, string keys)
+        {
+            return string.Format(answerTemplate, "code-answer", "Code Answer",
+                caption, weight, tags, string.Empty, "code-answer", id, extraClasses, keys);
         }
 
         public static string GetMultichoiceMarkup(string caption, string weight, string tags, string id, string choices)
@@ -136,7 +169,13 @@ namespace AssessTrack.Helpers
         public static string GetMultichoiceMarkup(string caption, string weight, string tags, string id, string choices, string extraClasses)
         {
             return string.Format(answerTemplate, "multichoice", "Multi Choice",
-                caption, weight, tags, string.Format(multichoiceTemplate, choices), "multichoice", id, extraClasses);
+                caption, weight, tags, string.Format(multichoiceTemplate, choices), "multichoice", id, extraClasses, string.Empty);
+        }
+
+        public static string GetMultichoiceMarkup(string caption, string weight, string tags, string id, string choices, string extraClasses, string keys)
+        {
+            return string.Format(answerTemplate, "multichoice", "Multi Choice",
+                caption, weight, tags, string.Format(multichoiceTemplate, choices), "multichoice", id, extraClasses, keys);
         }
 
         public static string GetQuestionMarkup(string data, string id)
@@ -234,8 +273,8 @@ namespace AssessTrack.Helpers
         public static string GetQuestionMarkupFromXml(XElement question)
         {
             string questiondata = "";
-            XElement dataElement, answerElement;
-            string caption, weight, tags, choices, type, id;
+            XElement dataElement, keyElement;
+            string caption, weight, tags, choices, type, id, keys;
             string questionid = "";
             string questionTags = (question.Attribute("tags") != null) ? question.Attribute("tags").Value : "";
             XAttribute questionIDAttr = question.Attribute("id");
@@ -269,7 +308,7 @@ namespace AssessTrack.Helpers
                         //Get the weight attribute (required)
                         weight = dataElement.Attribute("weight").Value;
 
-                        id = (dataElement.Attribute("id") != null)? dataElement.Attribute("id").Value : "";
+                        id = (dataElement.Attribute("id") != null) ? dataElement.Attribute("id").Value : "";
 
                         //Get the objective and key (optional)
                         tags = (dataElement.Attribute("tags") != null) ? dataElement.Attribute("tags").Value : "";
@@ -277,20 +316,30 @@ namespace AssessTrack.Helpers
 
                         //Get the caption
                         caption = (dataElement.Attribute("caption") != null) ? dataElement.Attribute("caption").Value : "";
+                        //get the answer keys
+                        keys = "";
+                        keyElement = dataElement.Element("AnswerKeys");
+                        if (keyElement != null)
+                        {
+                            foreach (XElement anskey in keyElement.Elements("AnswerKey"))
+                            {
+                                keys += GetAnswerKeyMarkup(anskey.Value, anskey.Attribute("weight").Value);
+                            }
+                        }
 
                         //Get the answer type
                         type = dataElement.Attribute("type").Value;
                         if (type == "short-answer")
                         {
-                            questiondata += GetShortAnswerMarkup(caption, weight, tags, id);
+                            questiondata += GetShortAnswerMarkup(caption, weight, tags, id, string.Empty, keys);
                         }
                         else if (type == "long-answer")
                         {
-                            questiondata += GetLongAnswerMarkup(caption, weight, tags, id);
+                            questiondata += GetLongAnswerMarkup(caption, weight, tags, id, string.Empty, keys);
                         }
                         else if (type == "code-answer")
                         {
-                            questiondata += GetCodeAnswerMarkup(caption, weight, tags, id);
+                            questiondata += GetCodeAnswerMarkup(caption, weight, tags, id, string.Empty, keys);
                         }
                         else if (type == "multichoice")
                         {
@@ -299,7 +348,7 @@ namespace AssessTrack.Helpers
                             {
                                 choices += choice.Value + "\n";
                             }
-                            questiondata += GetMultichoiceMarkup(caption, weight, tags, id, choices);
+                            questiondata += GetMultichoiceMarkup(caption, weight, tags, id, choices, string.Empty, keys);
                         }
 
                     }
@@ -338,7 +387,8 @@ namespace AssessTrack.Helpers
                     GetCodeAnswerMarkup(string.Empty, "0", string.Empty, string.Empty, "tool-box-item") +
                     GetLongAnswerMarkup(string.Empty, "0", string.Empty, string.Empty, "tool-box-item") +
                     GetShortAnswerMarkup(string.Empty, "0", string.Empty, string.Empty, "tool-box-item") +
-                    GetMultichoiceMarkup(string.Empty, "0", string.Empty, string.Empty, string.Empty, "tool-box-item");
+                    GetMultichoiceMarkup(string.Empty, "0", string.Empty, string.Empty, string.Empty, "tool-box-item") +
+                    GetAnswerKeyMenuItem();
         }
 
         //public string LoadQuestion(int exam, int question)

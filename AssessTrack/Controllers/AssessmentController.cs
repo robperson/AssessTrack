@@ -27,15 +27,26 @@ namespace AssessTrack.Controllers
         public string DesignerData;
     }
 
-    public class AssessmentListViewModel
+    public class AssessmentIndexViewModel
     {
-        public List<Assessment> CurrentAssessments;
-        public List<Assessment> PastAssessments;
+        public List<AssessmentTableModel> AssessmentTables;
+        
 
-        public AssessmentListViewModel(List<Assessment> currAssessments, List<Assessment> pastAssessments)
+        public AssessmentIndexViewModel(List<AssessmentTableModel> tables)
         {
-            CurrentAssessments = currAssessments;
-            PastAssessments = pastAssessments;
+            AssessmentTables = tables;
+        }
+    }
+
+    public class AssessmentTableModel
+    {
+        public string Caption;
+        public List<Assessment> Assessments;
+
+        public AssessmentTableModel(string cap, List<Assessment> assessments)
+        {
+            Caption = cap;
+            Assessments = assessments;
         }
     }
 
@@ -47,9 +58,29 @@ namespace AssessTrack.Controllers
         [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 0, MaxLevel = 10)]
         public ActionResult Index(string siteShortName, string courseTermShortName)
         {
-            List<Assessment> curr = dataRepository.GetUpcomingAssessments(courseTerm);
-            List<Assessment> past = dataRepository.GetPastDueAssessments(courseTerm);
-            return View(new AssessmentListViewModel(curr,past));
+            try
+            {
+                List<AssessmentTableModel> tables = new List<AssessmentTableModel>();
+                CourseTermMember member = dataRepository.GetCourseTermMemberByMembershipID(courseTerm, UserHelpers.GetCurrentUserID());
+                if (member != null && member.AccessLevel > 1)
+                {
+                    tables.Add(new AssessmentTableModel("Private Assessments", dataRepository.GetPrivateAssessments(courseTerm)));
+                }
+                tables.Add(new AssessmentTableModel("Current Assessments", dataRepository.GetUpcomingAssessments(courseTerm)));
+                tables.Add(new AssessmentTableModel("Past Assessments", dataRepository.GetPastDueAssessments(courseTerm)));
+
+                if (member != null && member.AccessLevel > 1)
+                {
+                    tables.Add(new AssessmentTableModel("Question Bank Assessments", dataRepository.GetQuestionBankAssessments(courseTerm)));
+                }
+
+                return View(new AssessmentIndexViewModel(tables));
+            }
+            catch(Exception e)
+            {
+                throw;
+                //probably return not authorized view
+            }
         }
 
         //

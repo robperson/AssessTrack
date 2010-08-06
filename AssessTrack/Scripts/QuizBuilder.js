@@ -20,34 +20,49 @@
     {
         
     }
-    
-    $(document).ready(function() {
-        $('.delete-item').live('click',deleteItem);
-        $("ul#questions").sortable({ handle: 'h2', axis: 'y', items: 'li.question', receive : questionDropped,
-            update: updatelabels, containment: $("#questions")});        
-        
-        $('.tool-box-item.question').draggable({ helper: 'clone', connectToSortable: 'ul#questions'});
 
-        
-        
-        $('.tool-box-item.question-data-item').draggable({ helper: 'clone', connectToSortable: 'ul.question-data'});
-        
+    $(document).ready(function() {
+        $('.delete-item').live('click', deleteItem);
+        $("ul#questions").sortable({ handle: 'h2', axis: 'y', items: 'li.question', receive: questionDropped,
+            update: updatelabels, containment: $("#questions")
+        });
+
+        $('.tool-box-item.question').draggable({ helper: 'clone', connectToSortable: 'ul#questions' });
+
+
+
+        $('.tool-box-item.question-data-item').draggable({ helper: 'clone', connectToSortable: 'ul.question-data' });
+
         $('#build-button').click(getmarkup);
-        
+
         updatelabels();
-        
+
         /*$('#importquiz').dialog({autoOpen:false});
         $('#import').click(function(event){
-            event.preventDefault();
-            event.stopPropagation();
-            $('#importquiz').load("ws_getQuiz.aspx",{id : $("#assignments").val()});
-            $('#importquiz').dialog('open');
+        event.preventDefault();
+        event.stopPropagation();
+        $('#importquiz').load("ws_getQuiz.aspx",{id : $("#assignments").val()});
+        $('#importquiz').dialog('open');
             
         });
         loadAssignments();*/
-        
-        $(".addquestion").live("click",addQuestion);
+
+        $(".addquestion").live("click", addQuestion);
+        $(".add-key").live("click", addKey);
+        $(".delete-key").live("click", deleteKey);
+        $("#hide-qb-menu").click(function() {
+            $(".toolbox").toggle(1000);
+        });
     });
+
+    function deleteKey() {
+        $(this).parent().remove();
+    }
+
+    function addKey() {
+        var template = $(".tool-box-item.answerkey-template").clone().removeClass("anwerkey-template").removeClass("tool-box-item").addClass("answerkey");
+        $(this).siblings("ul").append(template);
+    }
     
     function addQuestion(event)
     {
@@ -74,8 +89,6 @@
     
     function getmarkup(event) 
     {
-        event.preventDefault();
-        event.stopPropagation();
         var assessmentid = "";
         
             var markup = '<assessment>\n';
@@ -112,7 +125,14 @@
                             ansid = 'id="' + $(this).attr('id') + '"';
                         }
                         markup += '<answer weight="{0}" tags="{1}" type="{2}" {3} {4}>\n'.format(weight, tag, type, caption, ansid);
-
+                        var keys = "";
+                        $(this).find(".keys ul li").each(function() {
+                            keys += '<AnswerKey weight="{0}">{1}</AnswerKey>\n'.format($(this).find(".key-weight").val(), $(this).find(".key-answer").val());
+                        });
+                        if (keys != "") {
+                            keys = "<AnswerKeys>\n{0}\n</AnswerKeys>\n".format(keys);
+                        }
+                        markup += keys;
 
                         if ($(this).hasClass('multichoice')) {
                             var choices = $(this).find('textarea').val().split('\n');

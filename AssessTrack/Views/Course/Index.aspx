@@ -1,25 +1,20 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<AssessTrack.Models.Course>>" %>
 <%@ Import Namespace="AssessTrack.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Index
+	Courses
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Index</h2>
+    <h2>Courses</h2>
 
     <table>
         <tr>
-            <th></th>
-            
             <th>
                 Name
             </th>
             <th>
                 Description
-            </th>
-            <th>
-                Short Name
             </th>
         </tr>
 
@@ -27,17 +22,12 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Edit", "Edit", new { id = item.CourseID, siteShortName = Html.CurrentSiteShortName() }, null)%> | 
-                <%= Html.ActionLink("Details", "Details", new { id = item.CourseID, siteShortName = Html.CurrentSiteShortName() })%> |
-            </td>
-            <td>
-                <%= Html.Encode(item.Name) %>
+                <strong><%= Html.ActionLink(item.Name, "Details", new { id = item.CourseID, siteShortName = Html.CurrentSiteShortName() })%></strong>
+                <div class="row-actions"><%= Html.ATAuthLink("Edit", new { action = "Edit", id = item.CourseID, siteShortName = Html.CurrentSiteShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%></div>
+                
             </td>
             <td>
                 <%= Html.Encode(item.Description) %>
-            </td>
-            <td>
-                <%= Html.Encode(item.ShortName) %>
             </td>
         </tr>
     
@@ -46,7 +36,7 @@
     </table>
 
     <p>
-        <%= Html.ActionLink("Create New", "Create", new { siteShortName = Html.CurrentSiteShortName() })%>
+        <%= Html.ATAuthLink("Create New Course", new { action = "Create", siteShortName = Html.CurrentSiteShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
     </p>
 
 </asp:Content>

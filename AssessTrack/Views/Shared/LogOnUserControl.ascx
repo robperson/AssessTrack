@@ -1,10 +1,10 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
+<p class="logon">
 <%
     if (Request.IsAuthenticated) {
-        AssessTrack.Models.AssessTrackDataRepository data = new AssessTrack.Models.AssessTrackDataRepository();
-        AssessTrack.Models.Profile profile = data.GetLoggedInProfile();
+        
 %>
-        Welcome <b><%= Html.Encode(profile.FirstName) %></b>!
+        Welcome, <b><%= Html.Encode(ViewData["UserFullName"]) %></b>!
         [ <%= Html.ActionLink("Log Off", "LogOff", "Account") %> ]
 <%
     }
@@ -15,3 +15,4 @@
 <%
     }
 %>
+</p>

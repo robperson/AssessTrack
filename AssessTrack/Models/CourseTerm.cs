@@ -50,7 +50,19 @@ namespace AssessTrack.Models
             return (from ctm in CourseTermMembers 
                     where ctm.AccessLevel >= minLevel 
                         && ctm.AccessLevel <= maxLevel
+                        orderby ctm.Profile.LastName ascending
                         select ctm).ToList();
+        }
+
+        public double GetAverageGrade()
+        {
+            double total = 0.0;
+            int numStudents = GetMembers(1, 1).Count;
+            foreach (CourseTermMember student in GetMembers(1,1))
+            {
+                total += student.GetFinalGrade();
+            }
+            return total / numStudents;
         }
 
         #region IBackupItem Members

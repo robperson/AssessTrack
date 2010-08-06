@@ -34,11 +34,24 @@ namespace AssessTrack.Controllers
     public class CourseTermJoinModel
     {
         public SelectList CourseTermsList;
-        public CourseTermJoinModel(IEnumerable<CourseTerm> courseTerms)
+        public CourseTermJoinModel(IEnumerable<CourseTerm> courseTerms, CourseTerm selected)
         {
-            CourseTermsList = new SelectList(courseTerms, "CourseTermID", "Name");
+            CourseTermsList = new SelectList(courseTerms, "CourseTermID", "Name", selected.CourseTermID);
         }
     }
+
+    public class CourseTermIndexModel
+    {
+        public CourseTerm CourseTerm;
+        public bool UserEnrolled;
+
+        public CourseTermIndexModel(CourseTerm ct, bool userEnrolled)
+        {
+            CourseTerm = ct;
+            UserEnrolled = userEnrolled;
+        }
+    }
+
     public class CourseTermController : ATController
     {
         //
@@ -46,7 +59,20 @@ namespace AssessTrack.Controllers
         [ATAuth(AuthScope = AuthScope.Site, MinLevel = 0, MaxLevel = 10)]
         public ActionResult Index(string siteShortName)
         {
-            return View(site.CourseTerms.ToList());
+            List<CourseTermIndexModel> courseTermList = new List<CourseTermIndexModel>();
+            foreach (var ct in site.CourseTerms)
+            {
+                courseTermList.Add(new CourseTermIndexModel(ct, dataRepository.IsCurrentUserCourseTermMember(ct))); 
+            }
+            return View(courseTermList);
+        }
+
+        //
+        // GET: /CourseTerm/
+        [ATAuth(AuthScope = AuthScope.Application, MinLevel = 1, MaxLevel = 10)]
+        public ActionResult MyCourseEnrollments()
+        {
+            return View(dataRepository.GetUserCourseTerms());
         }
 
         
@@ -98,9 +124,9 @@ namespace AssessTrack.Controllers
         }
 
         [ATAuth(AuthScope = AuthScope.Site, MinLevel = 0, MaxLevel = 10)]
-        public ActionResult Join(string siteShortName)
+        public ActionResult Join()
         {
-            return View(new CourseTermJoinModel(site.CourseTerms.AsEnumerable()));
+            return View(new CourseTermJoinModel(site.CourseTerms.AsEnumerable(),courseTerm));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -116,7 +142,7 @@ namespace AssessTrack.Controllers
                     (courseTerm.Password != password))
                 {
                     ModelState.AddModelError("_FORM", "Incorrect Password.");
-                    return View(new CourseTermJoinModel(site.CourseTerms.AsEnumerable()));
+                    return View(new CourseTermJoinModel(site.CourseTerms.AsEnumerable(),courseTerm));
                 }
                 if (dataRepository.JoinCourseTerm(courseTerm))
                     return RedirectToAction("Index", new { siteShortName = siteShortName });

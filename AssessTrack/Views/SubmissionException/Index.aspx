@@ -1,16 +1,16 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<AssessTrack.Models.SubmissionException>>" %>
 <%@ Import Namespace="AssessTrack.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Index
+	Submission Exceptions
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Index</h2>
+    <h2>Submission Exceptions</h2>
 
     <table>
+    <caption>All Exceptions</caption>
         <tr>
-            <th></th>
             <th>
                 Assessment
             </th>
@@ -18,17 +18,13 @@
                 Student
             </th>
             <th>
-                Due Date
+                New Due Date
             </th>
         </tr>
 
     <% foreach (var item in Model) { %>
     
         <tr>
-            <td>
-                <%-- <%= Html.ActionLink("Edit", "Edit", new { id=item.SubmissionExceptionID }) %> |
-                <%= Html.ActionLink("Details", "Details", new { id=item.SubmissionExceptionID })%> --%>
-            </td>
             <td>
                 <%= Html.Encode(item.Assessment.Name) %>
             </td>
@@ -45,7 +41,7 @@
     </table>
 
     <p>
-        <%= Html.ActionLink("Create New", "Create", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
+        <%= Html.ActionLink("Create A New Submission Exception", "Create", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
     </p>
 
 </asp:Content>

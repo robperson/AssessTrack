@@ -68,11 +68,29 @@ namespace AssessTrack.Models
             {
                 CourseTerm = courseTerm,
                 Profile = profile,
-                AccessLevel = 0
+                AccessLevel = 1
             };
             dc.CourseTermMembers.InsertOnSubmit(member);
             dc.SubmitChanges();
             return true;
+        }
+
+        public List<CourseTerm> GetUserCourseTerms(Site site)
+        {
+            return (from ct in site.CourseTerms
+                    join ctm in dc.CourseTermMembers
+                    on ct.CourseTermID equals ctm.CourseTermID
+                    where ctm.MembershipID == UserHelpers.GetCurrentUserID()
+                    select ct).ToList();
+        }
+
+        public List<CourseTerm> GetUserCourseTerms()
+        {
+            return (from ct in dc.CourseTerms
+                    join ctm in dc.CourseTermMembers
+                    on ct.CourseTermID equals ctm.CourseTermID
+                    where ctm.MembershipID == UserHelpers.GetCurrentUserID()
+                    select ct).ToList();
         }
 
         public List<CourseTermMember> GetExcludedUsersInCourseTerm(CourseTerm courseTerm)

@@ -18,13 +18,13 @@ namespace AssessTrack.Controllers
         public SubmissionExceptionFormModel(CourseTerm ct)
         {
             AssessmentsList = new SelectList(ct.Assessments,"AssessmentID","Name");
-            StudentsList = new SelectList(ct.CourseTermMembers, "MembershipID", "FullName");
+            StudentsList = new SelectList(ct.GetMembers(1,1), "MembershipID", "FullName");
         }
 
         public SubmissionExceptionFormModel(CourseTerm ct, object selectedStudent, object selectedAssessment, DateTime dueDate)
         {
             AssessmentsList = new SelectList(ct.Assessments, "AssessmentID", "Name", selectedAssessment);
-            StudentsList = new SelectList(ct.CourseTermMembers, "MembershipID", "FullName", selectedStudent);
+            StudentsList = new SelectList(ct.GetMembers(1,1), "MembershipID", "FullName", selectedStudent);
             DueDate = dueDate;
         }
     }

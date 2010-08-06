@@ -10,9 +10,11 @@
 
   <xsl:template match="question">
     <div class="question">
-      <span class="questionnum">
+      <div class="questionnum">
+        <strong>
         <xsl:value-of select="count(preceding::question)+1"/>) [<xsl:value-of select="sum(./answer/@weight)"/> pts]
-      </span>
+        </strong>
+      </div>
       <xsl:apply-templates/>
     </div>
 
@@ -163,7 +165,7 @@
   <xsl:template match="img">
     <img>
       <xsl:attribute name="src">
-        <xsl:text>Images\</xsl:text>
+        <xsl:text>/Images/</xsl:text>
         <xsl:value-of select="."/>
       </xsl:attribute>
     </img>

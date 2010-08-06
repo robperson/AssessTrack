@@ -39,6 +39,26 @@ namespace AssessTrack.Helpers
             return string.Empty;
         }
 
+        public static string SiteLink(this HtmlHelper html, Site site, string before, string after)
+        {
+            if (site == null)
+            {
+                return string.Empty;
+            }
+            string sitelink = HtmlHelper.GenerateRouteLink(html.ViewContext.RequestContext,
+                html.RouteCollection, site.Title, null,
+                new System.Web.Routing.RouteValueDictionary(
+                    new
+                    {
+                        action = "Details",
+                        controller = "Site",
+                        siteShortName = site.ShortName
+                    }), null);
+
+            string finallink = before + sitelink + after;
+            return finallink;
+        }
+
         public static string CurrentCourseTermLink(this HtmlHelper html, string before, string after)
         {
             AssessTrackDataRepository data = new AssessTrackDataRepository();
@@ -74,6 +94,23 @@ namespace AssessTrack.Helpers
                 }
             }
             return string.Empty;
+        }
+
+        public static string CourseTermLink(this HtmlHelper html, CourseTerm courseTerm, string before, string after)
+        {
+            Site site = courseTerm.Site;
+            string courseTermLink = HtmlHelper.GenerateRouteLink(html.ViewContext.RequestContext,
+                html.RouteCollection, courseTerm.Name, null,
+                new System.Web.Routing.RouteValueDictionary(
+                    new
+                    {
+                        action = "Details",
+                        controller = "CourseTerm",
+                        siteShortName = site.ShortName,
+                        courseTermShortName = courseTerm.ShortName
+                    }), null);
+            string finallink = before + courseTermLink + after;
+            return finallink;
         }
 
         public static string CurrentSiteShortName(this HtmlHelper html)

@@ -185,6 +185,10 @@ namespace AssessTrack.Models
                                 string[] tagList = tags.Value.Split(new char[] { ',' });
                                 foreach (string tagname in tagList)
                                 {
+                                    if (string.IsNullOrEmpty(tagname))
+                                    {
+                                        continue;
+                                    }
                                     Tag tag = GetTagByName(assessment.CourseTerm, tagname);
                                     if (tag == null)
                                     {
@@ -231,7 +235,13 @@ namespace AssessTrack.Models
                     orderby asmt.DueDate descending
                     select asmt).ToList();
         }
-
+        public List<Assessment> GetAllNonTestBankAssessments(CourseTerm courseTerm)
+        {
+            return (from asmt in courseTerm.Assessments
+                    where !asmt.AssessmentType.QuestionBank
+                    orderby asmt.DueDate descending
+                    select asmt).ToList();
+        }
         public List<Assessment> GetPastDueAssessments(CourseTerm courseTerm)
         {
             return (from asmt in courseTerm.Assessments
@@ -242,7 +252,22 @@ namespace AssessTrack.Models
                     select asmt).ToList();
         }
 
-        
+        public List<Assessment> GetQuestionBankAssessments(CourseTerm courseTerm)
+        {
+            return (from asmt in courseTerm.Assessments
+                    where asmt.AssessmentType.QuestionBank
+                    orderby asmt.DueDate descending
+                    select asmt).ToList();
+        }
+
+        public List<Assessment> GetPrivateAssessments(CourseTerm courseTerm)
+        {
+            return (from asmt in courseTerm.Assessments
+                    where !asmt.IsVisible
+                    && !asmt.AssessmentType.QuestionBank
+                    orderby asmt.DueDate descending
+                    select asmt).ToList();
+        }
     }
 
 }

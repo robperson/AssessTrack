@@ -2,18 +2,16 @@
 <%@ Import Namespace="AssessTrack.Helpers" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Create
+	Create A Submission Exception
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Create</h2>
+    <h2>Create A Submission Exception</h2>
     <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
     <% using (Html.BeginForm())
        { %>
-        <fieldset>
-            <legend>Fields</legend>
-            <p>
+        <p>
                 <label for="AssessmentID">Assessment:</label>
                 <%= Html.DropDownList("AssessmentID", Model.AssessmentsList)%>
             </p>
@@ -29,7 +27,7 @@
             <p>
                 <input type="submit" value="Create!" />
             </p>
-        </fieldset>
+       
     <% } %>
     <p>
         

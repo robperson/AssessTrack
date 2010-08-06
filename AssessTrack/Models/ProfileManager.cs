@@ -19,7 +19,7 @@ namespace AssessTrack.Models
     {
         public void CreateProfile(Profile newProfile)
         {
-            newProfile.AccessLevel = 0;
+            newProfile.AccessLevel = 1;
             dc.Profiles.InsertOnSubmit(newProfile);
             dc.SubmitChanges();
         }

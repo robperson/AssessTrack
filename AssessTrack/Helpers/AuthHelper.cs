@@ -23,6 +23,32 @@ namespace AssessTrack.Helpers
 {
     public static class AuthHelper
     {
+        public static bool IsCurrentStudentOrUserIsAdmin(CourseTerm ct, Guid requestedID)
+        {
+            try
+            {
+                AssessTrackDataRepository repo = new AssessTrackDataRepository();
+
+                CourseTermMember member = repo.GetCourseTermMemberByMembershipID(ct, UserHelpers.GetCurrentUserID());
+
+                if (member == null)
+                {
+                    return false;
+                }
+                else if (member.AccessLevel < 2 && member.MembershipID != requestedID)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
         public static bool CheckAuthorization(HttpContext httpContext, Site site, CourseTerm courseTerm, AuthScope scope, int minLevel, int maxLevel)
         {
             AssessTrackDataRepository data = new AssessTrackDataRepository();
@@ -160,6 +186,11 @@ namespace AssessTrack.Helpers
 
         public static string ATAuthLink(this HtmlHelper html, string linkText, object routeValues, AuthScope scope, int minLevel, int maxLevel)
         {
+            return ATAuthLink(html, linkText, string.Empty, string.Empty, routeValues, scope, minLevel, maxLevel);
+        }
+
+        public static string ATAuthLink(this HtmlHelper html, string linkText, string before, string after, object routeValues, AuthScope scope, int minLevel, int maxLevel)
+        {
             RouteValueDictionary routeValuesDict = new RouteValueDictionary(html.ViewContext.RouteData.Values);
             //routeValuesDict
 
@@ -177,7 +208,7 @@ namespace AssessTrack.Helpers
                 {
                     newValues["controller"] = routeValuesDict["controller"];
                 }
-                return HtmlHelper.GenerateRouteLink(html.ViewContext.RequestContext,html.RouteCollection,linkText,null,newValues,null);
+                return before + HtmlHelper.GenerateRouteLink(html.ViewContext.RequestContext, html.RouteCollection, linkText, null, newValues, null) + after;
             }
             return "";
         }

@@ -9,11 +9,13 @@ namespace AssessTrack.Models
     {
         public Assessment Assessment;
         public SubmissionRecord SubmissionRecord;
+        public bool IsLate;
         public double Points;
         public double Percentage;
         public Profile Student;
         public Grade(Assessment assessment, Profile profile)
         {
+            IsLate = false;
             Assessment = assessment;
             Student = profile;
             SubmissionRecord record = (from s in assessment.SubmissionRecords 
@@ -31,6 +33,10 @@ namespace AssessTrack.Models
                 Points = record.Score;
                 Percentage = (record.Score / assessment.Weight) * 100;
                 SubmissionRecord = record;
+                if (record.SubmissionDate.CompareTo(assessment.DueDate) > 0)
+                {
+                    IsLate = true;
+                }
             }
         }
     }

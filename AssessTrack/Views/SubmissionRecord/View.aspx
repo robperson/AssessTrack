@@ -17,19 +17,25 @@
     <h3>Submitted on <%= Model.SubmissionRecord.SubmissionDate.ToString() %></h3>
     <h3>Score: <%= Model.SubmissionRecord.Score.ToString() %></h3>
     
+    <% if (Model.OtherSubmissionRecords.Count > 0)
+       { %>
     <div>
         <h4>Other Submissions for this Assessment:</h4>
         <ul>
-            <% foreach(AssessTrack.Models.SubmissionRecord record in Model.OtherSubmissionRecords) {%>
+            <% foreach (AssessTrack.Models.SubmissionRecord record in Model.OtherSubmissionRecords)
+               {%>
             
             <li>
-                <span>Submission on <%= record.SubmissionDate.ToString() %> (Score: <%= record.Score.ToString() %>)</span>
-                <%= Html.ActionLink("Click here to view","View",new {id=record.SubmissionRecordID}) %>
+                <span>Submission on <%= record.SubmissionDate.ToString()%> (Score: <%= record.Score.ToString()%>)</span>
+                <%= Html.ActionLink("Click here to view", "View", new { id = record.SubmissionRecordID })%>
             </li>
             <% } %>
         </ul>
     </div>
+    <%} %>
     
     <%= Html.RenderAssessmentViewForm(Model.SubmissionRecord) %>
-
+    <hr />
+    <h3>Comments</h3>
+        <pre><%= Html.Encode(Model.SubmissionRecord.Comments)%></pre>
 </asp:Content>

@@ -42,6 +42,11 @@ namespace AssessTrack
                 "CourseOfferings/{controller}/{action}/{siteShortName}/{courseTermShortName}/{id}",
                 new { controller = "CourseTerm", action = "Index", courseTermShortName = "", id = "" }
                 );
+            //routes.MapRoute(
+            //    "CourseTerms",
+            //    "CourseEnrollments/{controller}/{action}/",
+            //    new { controller = "CourseTerm", action = "MyCourseEnrollments", }
+            //    );
             
             routes.MapRoute(
                 "Default",                                              // Route name

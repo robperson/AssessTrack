@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using AssessTrack.Filters;
 using AssessTrack.Models;
+using AssessTrack.Helpers;
 
 namespace AssessTrack.Controllers
 {
@@ -58,15 +59,19 @@ namespace AssessTrack.Controllers
             Profile profile = dataRepository.GetProfileByID(id);
             if (profile == null)
                 return View("ProfileNotFound");
+            if (!AuthHelper.IsCurrentStudentOrUserIsAdmin(courseTerm, id))
+            {
+                return View("NotAuthorized");
+            }
             List<GradeSection> sections = new List<GradeSection>();
-            foreach (AssessmentType type in courseTerm.AssessmentTypes.Where(type => !type.QuestionBank))
+            foreach (AssessmentType type in dataRepository.GetNonTestBankAssessmentTypes(courseTerm))
             {
                 GradeSection section = new GradeSection(type, profile);
                 sections.Add(section);
             }
             PerformanceReportModel model = new PerformanceReportModel(sections, profile);
 
-            CourseTermMember member = dataRepository.GetCourseTermMemberByID(courseTerm, id);
+            CourseTermMember member = dataRepository.GetCourseTermMemberByMembershipID(courseTerm, id);
             model.FinalGrade = member.GetFinalGrade();
             model.FinalLetterGrade = member.GetFinalLetterGrade();
             List<CourseTermMember> students = dataRepository.GetStudentsInCourseTerm(courseTerm);
@@ -84,7 +89,7 @@ namespace AssessTrack.Controllers
             {
                 model.NextStudent = students[currentStudentIndex + 1].Profile;
             }
-            else if (currentStudentIndex == 0)
+            else if (currentStudentIndex == students.Count - 1)
             {
                 model.NextStudent = students[0].Profile;
             }

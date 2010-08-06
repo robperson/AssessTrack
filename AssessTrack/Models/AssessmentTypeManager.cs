@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Web.Mvc;
+using System.Collections.Generic;
 
 namespace AssessTrack.Models
 {
@@ -33,6 +34,22 @@ namespace AssessTrack.Models
         public SelectList GetAssessmentTypesSelectList(CourseTerm course, object selectedValue)
         {
             return new SelectList(course.AssessmentTypes, "AssessmentTypeID", "Name", selectedValue);
+        }
+
+        public List<AssessmentType> GetNonTestBankAssessmentTypes(CourseTerm courseTerm)
+        {
+            return (from at in courseTerm.AssessmentTypes
+                    where !at.QuestionBank
+                    orderby at.Name
+                    select at).ToList();
+        }
+
+        public List<AssessmentType> GetTestBankAssessmentTypes(CourseTerm courseTerm)
+        {
+            return (from at in courseTerm.AssessmentTypes
+                    where at.QuestionBank
+                    orderby at.Name
+                    select at).ToList();
         }
     }
 }

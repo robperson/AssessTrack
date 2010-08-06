@@ -10,7 +10,6 @@
 
     <table>
         <tr>
-            <th></th>
             <th>
                 Student Name
             </th>
@@ -23,13 +22,7 @@
     
         <tr>
             <td>
-              
-            </td>
-            <td>
-                <%= Html.Encode(UserHelpers.GetFullNameForID(item.MembershipID)) %>
-            </td>
-            <td>
-               
+                <%= Html.RouteLink(item.Profile.FirstName + " " + item.Profile.LastName, new { controller = "Reports", id = item.MembershipID, action = "StudentPerformance", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, new { title = "Click to view student's Performance Report" })%>
             </td>
             <td>
                 <%= Html.Encode(item.GetFinalLetterGrade()) %>

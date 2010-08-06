@@ -18,7 +18,7 @@ namespace AssessTrack.Models
             AssessmentType = assessmentType;
             TotalPoints = MaxPoints = 0;
             Grades = new List<Grade>();
-            foreach (Assessment assessment in assessmentType.Assessments)
+            foreach (Assessment assessment in assessmentType.Assessments.OrderBy(atype => atype.DueDate))
             {
                 Grade grade = new Grade(assessment, profile);
                 Grades.Add(grade);

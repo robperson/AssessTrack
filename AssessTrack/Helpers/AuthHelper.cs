@@ -49,9 +49,12 @@ namespace AssessTrack.Helpers
                 return false;
             }
         }
+
+        private static AssessTrackDataRepository data = new AssessTrackDataRepository();
+
         public static bool CheckAuthorization(HttpContext httpContext, Site site, CourseTerm courseTerm, AuthScope scope, int minLevel, int maxLevel)
         {
-            AssessTrackDataRepository data = new AssessTrackDataRepository();
+            
             if (httpContext == null)
             {
                 throw new ArgumentNullException("httpContext");
@@ -104,7 +107,6 @@ namespace AssessTrack.Helpers
         {
             //RouteData routeData = RouteTable.Routes.GetRouteData(new HttpContextWrapper(HttpContext.Current));
 
-            AssessTrackDataRepository data = new AssessTrackDataRepository();
             string siteShortName;
             Site site = null;
             string courseTermShortName;

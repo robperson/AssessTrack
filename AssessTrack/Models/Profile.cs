@@ -18,7 +18,7 @@ using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
-    [Bind(Include = "FirstName,LastName,SchoolIDNumber")]
+    [Bind(Include = "FirstName,LastName,SchoolIDNumber,Major")]
     public partial class Profile : IBackupItem
     {
         public bool IsValid
@@ -38,6 +38,9 @@ namespace AssessTrack.Models
                 yield return new RuleViolation("First Name cannot be longer than 50 characters", "FirstName");
             if (LastName.Length > 50)
                 yield return new RuleViolation("Last Name cannot be longer than 50 characters", "LastName");
+
+            if (Major.Length > 100)
+                yield return new RuleViolation("Major cannot be longer than 100 characters", "Major");
 
             yield break;
         }

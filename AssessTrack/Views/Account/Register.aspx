@@ -54,6 +54,11 @@
                     <%= Html.ValidationMessage("SchoolStudentID") %>
                 </p>
                 <p>
+                    <label for="Major">Major:</label>
+                    <%= Html.TextBox("Major") %>
+                    <%= Html.ValidationMessage("Major") %>
+                </p>
+                <p>
                     <input type="submit" value="Register" />
                 </p>
             </fieldset>

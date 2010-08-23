@@ -103,6 +103,11 @@ namespace AssessTrack.Models
             return courseTerm.GetMembers(1, 1);
         }
 
+        public List<Profile> GetStudentProfiles(CourseTerm courseTerm)
+        {
+            return courseTerm.GetMemberProfiles(1, 1);
+        }
+
         public List<CourseTermMember> GetPowerUsersInCourseTerm(CourseTerm courseTerm)
         {
             return courseTerm.GetMembers(2, 5);

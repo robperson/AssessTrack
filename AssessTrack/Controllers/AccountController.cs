@@ -93,14 +93,8 @@ namespace AssessTrack.Controllers
                 string newPassword = user.ResetPassword();
 
                 //email the user their new password
-                string server = ConfigurationManager.AppSettings["SmtpServer"];
-                string port = ConfigurationManager.AppSettings["SmtpPort"];
-                string smtpUsername = ConfigurationManager.AppSettings["SmtpUsername"];
-                string smtpPassword = ConfigurationManager.AppSettings["SmtpPassword"];
-
-                SmtpClient client = new SmtpClient(server, Convert.ToInt32(port));
-                client.EnableSsl = true;
-                client.Credentials = new NetworkCredential(smtpUsername, smtpPassword, "");
+                string smtpUsername = ConfigurationManager.AppSettings["PasswordResetUsername"];
+                string smtpPassword = ConfigurationManager.AppSettings["PasswordResetPassword"];
 
                 string subject = "Your AssessTrack.com password has been reset.";
                 string body = @"As you requested, your password has been reset. Your new password is: ""{0}"" (without the quotation marks).
@@ -110,7 +104,7 @@ After you log on with your new password you can change it to something you will 
 
                 MailMessage message = new MailMessage(smtpUsername, user.Email, subject, body);
 
-                client.Send(message);
+                EmailHelper.SendEmail(smtpUsername, smtpPassword, message);
 
             }
             catch

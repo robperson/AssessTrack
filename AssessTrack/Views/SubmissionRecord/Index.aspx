@@ -15,6 +15,9 @@
     <% } %>
     
     </div>
+    <div>
+        <%= Html.ActionLink("Create A Submission", "CreateSubmission", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
+    </div>
     <table>
         <tr>
             <th>

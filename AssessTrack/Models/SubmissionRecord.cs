@@ -38,7 +38,15 @@ namespace AssessTrack.Models
 
         public double Score
         {
-            get { return Responses.Sum(r => (r.Score ?? 0.0)); }
+            get 
+            {
+                double score = 0.0;
+                foreach (var response in Responses)
+                {
+                    score += response.Score ?? 0.0;
+                }
+                return score;
+            }
         }
 
         #region IBackupItem Members

@@ -31,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HibernatingRhinos.Profiler.Appender, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0774796e73ebf640, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\LinqToSql.Profiler-Build-710\HibernatingRhinos.Profiler.Appender.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Downloads\SharpZipLib_0860_Bin\net-20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="RouteDebug, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -73,6 +81,7 @@
     </Compile>
     <Compile Include="Controllers\CourseTermController.cs" />
     <Compile Include="Controllers\CourseTermMemberController.cs" />
+    <Compile Include="Controllers\CourseTermToolsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -95,6 +104,8 @@
     <Compile Include="Helpers\CodeCompiler.cs" />
     <Compile Include="Helpers\ControllerHelpers.cs" />
     <Compile Include="Helpers\DesignerHelper.cs" />
+    <Compile Include="Helpers\EmailHelper.cs" />
+    <Compile Include="Helpers\FlashMessageHelper.cs" />
     <Compile Include="Helpers\GradeHelpers.cs" />
     <Compile Include="Helpers\NavigationHelper.cs" />
     <Compile Include="Helpers\RuleViolationException.cs" />
@@ -128,6 +139,7 @@
     <Compile Include="Models\Home\SiteSection.cs" />
     <Compile Include="Models\MembershipInfo.cs" />
     <Compile Include="Models\QuestionTag.cs" />
+    <Compile Include="Models\ReportsAndTools\FullResponseList.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\Site.cs" />
     <Compile Include="Models\Question.cs" />
@@ -160,7 +172,7 @@
     <Content Include="Views\Assessment\AlreadySubmitted.aspx" />
     <Content Include="Views\Assessment\AssessmentClosed.aspx" />
     <Content Include="Views\Assessment\AssessmentForm.ascx" />
-    <Content Include="Views\Assessment\AssessmentNotFound.aspx" />
+    <Content Include="Views\Shared\AssessmentNotFound.aspx" />
     <Content Include="Views\Assessment\Create.aspx" />
     <Content Include="Views\Assessment\Details.aspx" />
     <Content Include="Views\Assessment\DueDatePassed.aspx" />
@@ -256,6 +268,11 @@
     <Content Include="Views\CourseTermMember\Edit.aspx" />
     <Content Include="Views\CourseTermMember\Index.aspx" />
     <Content Include="Views\CourseTermMember\MemberTable.ascx" />
+    <Content Include="Views\CourseTermTools\CodeAnswerDownloadLink.aspx" />
+    <Content Include="Views\Shared\AnswerNotFound.aspx" />
+    <Content Include="Views\Shared\CourseTermToolsMenu.ascx" />
+    <Content Include="Views\CourseTermTools\DownloadAnswerCode.aspx" />
+    <Content Include="Views\CourseTermTools\Index.aspx" />
     <Content Include="Views\CourseTerm\MyCourseEnrollments.aspx" />
     <Content Include="Views\Home\Home.aspx" />
     <Content Include="Views\Reports\Students.aspx" />
@@ -266,16 +283,19 @@
     <Content Include="Views\Reports\StudentPerformance.aspx" />
     <Content Include="Views\Shared\BreadCrumbs.ascx" />
     <Content Include="Views\Shared\CourseTermMenu.ascx" />
+    <Content Include="Views\Shared\NoResponses.aspx" />
     <Content Include="Views\Shared\ProfileNotFound.aspx" />
     <Content Include="Views\Shared\QuizBuilder.Master" />
     <Content Include="Views\Shared\ReportsMenu.ascx" />
     <Content Include="Views\Shared\SiteMenu.ascx" />
     <Content Include="Views\SubmissionException\Create.aspx" />
     <Content Include="Views\SubmissionException\Index.aspx" />
+    <Content Include="Views\SubmissionRecord\CreateSubmission.aspx" />
     <Content Include="Views\SubmissionRecord\View.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\CodeDownloads\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

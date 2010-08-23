@@ -18,10 +18,11 @@ namespace AssessTrack.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            base.OnActionExecuting(filterContext);
             ViewData["showSiteMenu"] = false;
             ViewData["showCourseTermMenu"] = false;
             ViewData["UserFullName"] = (Request.IsAuthenticated) ? UserHelpers.GetFullNameForCurrentUser() : "Guest";
+            base.OnActionExecuting(filterContext);
+            
             string siteShortName = (string)(filterContext.RouteData.Values["siteShortName"] ?? string.Empty);
             if (!string.IsNullOrEmpty(siteShortName))
             {

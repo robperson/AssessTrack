@@ -58,6 +58,7 @@
 	    <div class="colmid">
 		    <div class="colleft">
 			    <div class="col1">
+			    <%= FlashMessageHelper.PrintFlash() %>
 				    <!-- main content -->
                     <asp:ContentPlaceHolder ID="MainContent" runat="server" />
                     <!-- main content end -->

@@ -264,6 +264,7 @@
     <Content Include="Views\Account\RecoverPassword.aspx" />
     <Content Include="Views\Account\ResetPassword.aspx" />
     <Content Include="Views\Assessment\AssessmentTable.ascx" />
+    <Content Include="Views\CourseTermMember\DetailedMemberTable.ascx" />
     <Content Include="Views\CourseTermMember\Details.aspx" />
     <Content Include="Views\CourseTermMember\Edit.aspx" />
     <Content Include="Views\CourseTermMember\Index.aspx" />

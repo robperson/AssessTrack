@@ -23,6 +23,11 @@
                 <%= Html.ValidationMessage("AccessLevel", "*") %>
             </p>
             <p>
+                <label for="AccessCode">Access Code:</label>
+                <%= Html.TextBox("AccessCode", Model.AccessCode ?? ""); %>
+                <%= Html.ValidationMessage("AccessCode", "*"); %>
+            </p>
+            <p>
                 <input type="submit" value="Save" />
             </p>
         </fieldset>

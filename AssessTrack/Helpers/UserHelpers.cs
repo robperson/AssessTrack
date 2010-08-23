@@ -29,6 +29,19 @@ namespace AssessTrack.Helpers
             }
         }
 
+        public static string GetPasswordForID(Guid? id)
+        {
+            try
+            {
+                MembershipUser user = Membership.GetUser(id, false);
+                return user.GetPassword();
+            }
+            catch
+            {
+                return "N/A";
+            }
+        }
+
         public static string GetFullNameForCurrentUser()
         {
             try

@@ -9,8 +9,15 @@
     <h2><%= Model.CourseTerm.Name %>'s Members</h2>
     
      <% foreach (var table in Model.Tables) 
-       { 
-           Html.RenderPartial("MemberTable", table); 
+       {
+           if (table.ShowDetails)
+           {
+               Html.RenderPartial("DetailedMemberTable", table);
+           }
+           else
+           {
+               Html.RenderPartial("MemberTable", table);
+           }
        } %>
    
 </asp:Content>

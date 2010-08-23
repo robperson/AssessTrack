@@ -12,7 +12,7 @@ namespace AssessTrack.Controllers
     {
         public List<CourseTermMemberTable> Tables;
         public CourseTerm CourseTerm;
-
+        
         public CourseTermMemberViewModel(List<CourseTermMemberTable> tables, CourseTerm courseTerm)
         {
             Tables = tables;
@@ -25,14 +25,16 @@ namespace AssessTrack.Controllers
         public string Caption;
         public List<CourseTermMember> Members;
         public string EmailAllLink;
+        public bool ShowDetails;
 
-        public CourseTermMemberTable(string cap, List<CourseTermMember> members)
+        public CourseTermMemberTable(string cap, List<CourseTermMember> members, bool details)
         {
             Caption = cap;
             Members = members;
             string linkformat = "mailto:{0}";
             string emails = string.Join(",", (from member in members select member.Profile.EmailAddress).ToArray());
             EmailAllLink = string.Format(linkformat, emails);
+            ShowDetails = details;
         }
     }
 
@@ -41,14 +43,15 @@ namespace AssessTrack.Controllers
         //
         // GET: /CourseTermMember/
 
-        public ActionResult Index(string siteShortName, string courseTermShortName)
+        public ActionResult Index(string siteShortName, string courseTermShortName, bool? details)
         {
             List<CourseTermMemberTable> Tables = new List<CourseTermMemberTable>();
-            Tables.Add(new CourseTermMemberTable("Students", dataRepository.GetStudentsInCourseTerm(courseTerm)));
-            Tables.Add(new CourseTermMemberTable("Power Users (TAs)", dataRepository.GetPowerUsersInCourseTerm(courseTerm)));
-            Tables.Add(new CourseTermMemberTable("Super Users (Instructors)", dataRepository.GetSuperUsersInCourseTerm(courseTerm)));
-            Tables.Add(new CourseTermMemberTable("Owners", dataRepository.GetOwnersInCourseTerm(courseTerm)));
-            Tables.Add(new CourseTermMemberTable("Excluded Users", dataRepository.GetExcludedUsersInCourseTerm(courseTerm)));
+            Tables.Add(new CourseTermMemberTable("Students", dataRepository.GetStudentsInCourseTerm(courseTerm), details ?? false));
+            Tables.Add(new CourseTermMemberTable("Power Users (TAs)", dataRepository.GetPowerUsersInCourseTerm(courseTerm), details ?? false));
+            Tables.Add(new CourseTermMemberTable("Super Users (Instructors)", dataRepository.GetSuperUsersInCourseTerm(courseTerm), details ?? false));
+            Tables.Add(new CourseTermMemberTable("Owners", dataRepository.GetOwnersInCourseTerm(courseTerm), false));
+            Tables.Add(new CourseTermMemberTable("Excluded Users", dataRepository.GetExcludedUsersInCourseTerm(courseTerm), false));
+
             return View(new CourseTermMemberViewModel(Tables, courseTerm));
         }
 

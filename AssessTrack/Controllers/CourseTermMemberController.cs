@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using AssessTrack.Models;
+using AssessTrack.Filters;
 
 namespace AssessTrack.Controllers
 {
@@ -38,6 +39,7 @@ namespace AssessTrack.Controllers
         }
     }
 
+    [ATAuth(AuthScope=AuthScope.CourseTerm,MaxLevel=10,MinLevel=5)]
     public class CourseTermMemberController : ATController
     {
         //

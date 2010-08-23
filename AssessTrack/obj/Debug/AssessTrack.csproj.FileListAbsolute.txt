@@ -10,3 +10,8 @@ C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack\
 C:\Users\robperson\Documents\Visual Studio 2008\Projects\KeelingCMS\AssessTrack\obj\Debug\AssessTrack.pdb
 C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack\bin\ICSharpCode.SharpZipLib.dll
 C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack\bin\HibernatingRhinos.Profiler.Appender.dll
+C:\inetpub\wwwroot\AssessTrack\AssessTrack\bin\AssessTrack.dll
+C:\inetpub\wwwroot\AssessTrack\AssessTrack\bin\AssessTrack.pdb
+C:\inetpub\wwwroot\AssessTrack\AssessTrack\obj\Debug\ResolveAssemblyReference.cache
+C:\inetpub\wwwroot\AssessTrack\AssessTrack\obj\Debug\AssessTrack.dll
+C:\inetpub\wwwroot\AssessTrack\AssessTrack\obj\Debug\AssessTrack.pdb

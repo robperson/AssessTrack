@@ -137,7 +137,7 @@ namespace AssessTrack.Models
                             {
                                 throw new InvalidOperationException("Do not use 'id' Attribute when creating new Assessments");
                             }
-                            if (isNew)
+                            if (isNew || answerNode.Attribute("id") == null)
                             {
                                 answer = new Answer();
                             }
@@ -169,7 +169,7 @@ namespace AssessTrack.Models
                             answer.Weight = Convert.ToDouble(answerNode.Attribute("weight").Value);
                             answer.Question = question;
 
-                            if (isNew)
+                            if (isNew || answerNode.Attribute("id") == null)
                             {
                                 answer.Assessment = assessment;
                                 dc.Answers.InsertOnSubmit(answer);

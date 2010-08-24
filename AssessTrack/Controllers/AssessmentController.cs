@@ -244,5 +244,14 @@ namespace AssessTrack.Controllers
                 return View(assessment);
             }
         }
+
+        public ActionResult Preview(string siteShortName, string courseTermShortName, Guid id)
+        {
+            Assessment assessment = dataRepository.GetAssessmentByID(courseTerm,id);
+            if (assessment == null)
+                return View("AssessmentNotFound");
+            //TODO ensure user has permission to view this
+            return View(assessment);
+        }
     }
 }

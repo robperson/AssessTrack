@@ -39,7 +39,10 @@ namespace AssessTrack.Models
 
                 foreach (Assessment assessment in asmtType.Assessments)
                 {
-
+                    if (!assessment.IsVisible)
+                    {
+                        continue;
+                    }
                     SubmissionRecord record = (from s in assessment.SubmissionRecords
                                                where s.StudentID == this.MembershipID
                                                orderby s.SubmissionDate descending

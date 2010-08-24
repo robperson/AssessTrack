@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<AssessTrack.Models.CourseTermMember>" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<AssessTrack.Models.SiteMember>" %>
 <%@ Import Namespace="AssessTrack.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Details
@@ -18,14 +18,10 @@
             AccessLevel:
             <%= Html.Encode(Model.AccessLevel) %>
         </p>
-        <p>
-            AccessCode:
-            <%= Html.Encode(Model.AccessCode) %>
-        </p>
     </fieldset>
     <p>
 
-        <%=Html.ActionLink("Edit", "Edit", new { id=Model.CourseTermMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }) %> |
+        <%=Html.ActionLink("Edit", "Edit", new { id=Model.SiteMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }) %> |
         <%=Html.ActionLink("Back to List", "Index", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
     </p>
 

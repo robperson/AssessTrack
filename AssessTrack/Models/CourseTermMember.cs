@@ -9,7 +9,7 @@ using AssessTrack.Helpers;
 
 namespace AssessTrack.Models
 {
-    [Bind(Include="AccessLevel")]
+    [Bind(Include="AccessLevel,AccessCode")]
     public partial class CourseTermMember : IBackupItem
     {
         public string GetFormattedGrade()

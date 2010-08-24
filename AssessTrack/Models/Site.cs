@@ -86,6 +86,24 @@ namespace AssessTrack.Models
             dc.Sites.InsertOnSubmit(this);
         }
 
+        public List<SiteMember> GetMembers(int minLevel, int maxLevel)
+        {
+            return (from ctm in SiteMembers
+                    where ctm.AccessLevel >= minLevel
+                        && ctm.AccessLevel <= maxLevel
+                    orderby ctm.Profile.LastName ascending
+                    select ctm).ToList();
+        }
+
+        public List<Profile> GetMemberProfiles(int minLevel, int maxLevel)
+        {
+            return (from ctm in SiteMembers
+                    where ctm.AccessLevel >= minLevel
+                        && ctm.AccessLevel <= maxLevel
+                    orderby ctm.Profile.LastName ascending
+                    select ctm.Profile).ToList();
+        }
+
         #endregion
     }
 }

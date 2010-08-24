@@ -85,6 +85,7 @@
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SiteMemberController.cs" />
     <Compile Include="Controllers\SubmissionExceptionController.cs" />
     <Compile Include="Controllers\SubmissionRecordController.cs" />
     <Compile Include="Controllers\TagController.cs" />
@@ -127,6 +128,7 @@
       <DependentUpon>AssessTrackModelClasses.dbml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\UserHelpers.cs" />
+    <Compile Include="Models\SiteMemberManager.cs" />
     <Compile Include="Models\CourseTermMemberManager.cs" />
     <Compile Include="Models\CourseTerm.cs" />
     <Compile Include="Models\CourseTermManager.cs" />
@@ -264,6 +266,11 @@
     <Content Include="Views\Account\RecoverPassword.aspx" />
     <Content Include="Views\Account\ResetPassword.aspx" />
     <Content Include="Views\Assessment\AssessmentTable.ascx" />
+    <Content Include="Views\SiteMember\DetailedMemberTable.ascx" />
+    <Content Include="Views\SiteMember\Details.aspx" />
+    <Content Include="Views\SiteMember\Edit.aspx" />
+    <Content Include="Views\SiteMember\Index.aspx" />
+    <Content Include="Views\SiteMember\MemberTable.ascx" />
     <Content Include="Views\CourseTermMember\DetailedMemberTable.ascx" />
     <Content Include="Views\CourseTermMember\Details.aspx" />
     <Content Include="Views\CourseTermMember\Edit.aspx" />

@@ -38,6 +38,11 @@ namespace AssessTrack
                 new { controller = "Term", action = "Index", id = "" }
                 );
             routes.MapRoute(
+                "SiteMembers",
+                "Members/{action}/{siteShortName}/{id}",
+                new { controller = "SiteMember", action = "Index", id = "" }
+                );
+            routes.MapRoute(
                 "SiteCourseTerms",
                 "CourseOfferings/{controller}/{action}/{siteShortName}/{courseTermShortName}/{id}",
                 new { controller = "CourseTerm", action = "Index", courseTermShortName = "", id = "" }

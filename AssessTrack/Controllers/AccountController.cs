@@ -90,6 +90,7 @@ namespace AssessTrack.Controllers
             try
             {
                 MembershipUser user = Membership.GetUser(username);
+                user.UnlockUser();
                 string newPassword = user.ResetPassword();
 
                 //email the user their new password

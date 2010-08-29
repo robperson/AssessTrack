@@ -36,7 +36,14 @@ namespace AssessTrack.Controllers
         public SelectList CourseTermsList;
         public CourseTermJoinModel(IEnumerable<CourseTerm> courseTerms, CourseTerm selected)
         {
-            CourseTermsList = new SelectList(courseTerms, "CourseTermID", "Name", selected.CourseTermID);
+            if (selected != null)
+            {
+                CourseTermsList = new SelectList(courseTerms, "CourseTermID", "Name", selected.CourseTermID);
+            }
+            else
+            {
+                CourseTermsList = new SelectList(courseTerms, "CourseTermID", "Name");
+            }
         }
     }
 

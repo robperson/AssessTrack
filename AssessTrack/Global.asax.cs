@@ -65,7 +65,7 @@ namespace AssessTrack
         {
             RegisterRoutes(RouteTable.Routes);
             //RouteDebug.RouteDebugger.RewriteRoutesForTesting(RouteTable.Routes);
-            HibernatingRhinos.Profiler.Appender.LinqToSql.LinqToSqlProfiler.Initialize();
+            //HibernatingRhinos.Profiler.Appender.LinqToSql.LinqToSqlProfiler.Initialize();
         }
     }
 }

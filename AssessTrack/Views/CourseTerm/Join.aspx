@@ -8,7 +8,7 @@
 
     <h2>Enroll in a Course Offering</h2>
     <% using (Html.BeginForm()) { %>
-    <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
+    <%= Html.ValidationSummary("Enrollment was unsuccessful. Please correct the errors and try again.") %>
     
     <p>
         <label for="id">Course Offering:</label>

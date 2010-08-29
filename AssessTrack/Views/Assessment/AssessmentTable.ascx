@@ -25,7 +25,8 @@
                 <div class="row-actions">
                     <%= Html.ATAuthLink("Submit", new { action="Submit", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 1, 1)%>
                     <%= Html.ATAuthLink("Edit", "", " | ", new { action="Edit", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 4, 10)%>
-                    <%= Html.ATAuthLink("Submissions", new { controller = "SubmissionRecord", action="Index", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 2, 10)%>
+                    <%= Html.ATAuthLink("Submissions", "", " | ", new { controller = "SubmissionRecord", action="Index", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 2, 10)%>
+                    <%= Html.ATAuthLink("Preview", "", "", new { controller = "Assessment", action="Preview", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
                 </div>
             </td>
             <td>

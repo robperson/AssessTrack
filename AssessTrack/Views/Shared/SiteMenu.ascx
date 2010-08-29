@@ -1,8 +1,8 @@
 <%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
 <%@ Import Namespace="AssessTrack.Helpers" %>
 <ul>
-<li><%= Html.ATAuthLink("Courses", new { controller = "Course", siteShortName = Html.CurrentSiteShortName(), action = "" }, AssessTrack.Filters.AuthScope.Site, 3, 10)%></li>
-<li><%= Html.ATAuthLink("Terms(Semesters)", new { controller = "Term", siteShortName = Html.CurrentSiteShortName(), action = "" }, AssessTrack.Filters.AuthScope.Site, 3, 10)%></li>
-<li><%= Html.ATAuthLink("Course Offerings", new { controller = "CourseTerm", siteShortName = Html.CurrentSiteShortName(), action = "Index" }, AssessTrack.Filters.AuthScope.Site, 0, 10)%></li>
-<li><%= Html.ATAuthLink("Members", new { controller = "SiteMember", siteShortName = Html.CurrentSiteShortName(), action = "Index" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%></li>
+<%= Html.ATAuthLink("Courses", "<li>", "</li>", new { controller = "Course", siteShortName = Html.CurrentSiteShortName(), action = "" }, AssessTrack.Filters.AuthScope.Site, 3, 10)%>
+<%= Html.ATAuthLink("Terms(Semesters)", "<li>", "</li>", new { controller = "Term", siteShortName = Html.CurrentSiteShortName(), action = "" }, AssessTrack.Filters.AuthScope.Site, 3, 10)%>
+<%= Html.ATAuthLink("Course Offerings", "<li>", "</li>", new { controller = "CourseTerm", siteShortName = Html.CurrentSiteShortName(), action = "Index" }, AssessTrack.Filters.AuthScope.Site, 0, 10)%>
+<%= Html.ATAuthLink("Members", "<li>", "</li>", new { controller = "SiteMember", siteShortName = Html.CurrentSiteShortName(), action = "Index" }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
 </ul>

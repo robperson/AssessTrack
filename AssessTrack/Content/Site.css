@@ -104,7 +104,10 @@ ul ul
 {
     margin-left:10px;
 }
-
+pre
+{
+    margin-bottom:5px;
+}
 
 /* VALIDATION
 -----------------------------------------------------------*/

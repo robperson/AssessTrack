@@ -21,7 +21,14 @@
     
         <tr>
             <td>
-                <strong><%= Html.ATAuthLink(item.Name, new { action = "Details", id = item.AssessmentID ,siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 1, 10)%> </strong>
+                <% if (Model.Admin)
+                   { %>
+                <strong><%= Html.ATAuthLink(item.Name, new { action = "Details", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 1, 10)%> </strong>
+                <% }
+                   else
+                   {%>
+                   <strong><%= Html.ATAuthLink(item.Name, new { action="Submit", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 1, 1)%></strong>
+                <% } %>
                 <div class="row-actions">
                     <%= Html.ATAuthLink("Submit", new { action="Submit", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 1, 1)%>
                     <%= Html.ATAuthLink("Edit", "", " | ", new { action="Edit", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 4, 10)%>

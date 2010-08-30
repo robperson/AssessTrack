@@ -42,11 +42,13 @@ namespace AssessTrack.Controllers
     {
         public string Caption;
         public List<Assessment> Assessments;
+        public bool Admin = false;
 
-        public AssessmentTableModel(string cap, List<Assessment> assessments)
+        public AssessmentTableModel(string cap, List<Assessment> assessments, bool admin)
         {
             Caption = cap;
             Assessments = assessments;
+            Admin = admin;
         }
     }
 
@@ -60,18 +62,24 @@ namespace AssessTrack.Controllers
         {
             try
             {
+                bool admin = false;
+                
                 List<AssessmentTableModel> tables = new List<AssessmentTableModel>();
                 CourseTermMember member = dataRepository.GetCourseTermMemberByMembershipID(courseTerm, UserHelpers.GetCurrentUserID());
-                if (member != null && member.AccessLevel > 1)
+                if (member != null)
                 {
-                    tables.Add(new AssessmentTableModel("Private Assessments", dataRepository.GetPrivateAssessments(courseTerm)));
+                    admin = (member.AccessLevel > 1);
                 }
-                tables.Add(new AssessmentTableModel("Current Assessments", dataRepository.GetUpcomingAssessments(courseTerm)));
-                tables.Add(new AssessmentTableModel("Past Assessments", dataRepository.GetPastDueAssessments(courseTerm)));
-
-                if (member != null && member.AccessLevel > 1)
+                if (admin)
                 {
-                    tables.Add(new AssessmentTableModel("Question Bank Assessments", dataRepository.GetQuestionBankAssessments(courseTerm)));
+                    tables.Add(new AssessmentTableModel("Private Assessments", dataRepository.GetPrivateAssessments(courseTerm),admin));
+                }
+                tables.Add(new AssessmentTableModel("Current Assessments", dataRepository.GetUpcomingAssessments(courseTerm),admin));
+                tables.Add(new AssessmentTableModel("Past Assessments", dataRepository.GetPastDueAssessments(courseTerm),admin));
+
+                if (admin)
+                {
+                    tables.Add(new AssessmentTableModel("Question Bank Assessments", dataRepository.GetQuestionBankAssessments(courseTerm),admin));
                 }
 
                 return View(new AssessmentIndexViewModel(tables));

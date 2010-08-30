@@ -143,6 +143,8 @@ namespace AssessTrack.Controllers
             if (assessment == null)
                 return View("AssessmentNotFound");
             string data = DesignerHelper.LoadAssessment(assessment.Data);
+            // Convert ampersand to appropriate html entity
+            data = data.Replace("&", "&amp;");
             return View(new AssessmentFormViewModel(assessment,dataRepository.GetAssessmentTypesSelectList(courseTerm,assessment.AssessmentTypeID), data));
         }
 

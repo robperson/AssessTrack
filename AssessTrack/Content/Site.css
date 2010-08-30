@@ -537,3 +537,10 @@ div.question > div
     border-top: 1px dashed #777;
     padding:5px;
 }
+
+/* IMAGES
+--------------------------------------------------- */
+.col1 img
+{
+    max-width:90%;
+}

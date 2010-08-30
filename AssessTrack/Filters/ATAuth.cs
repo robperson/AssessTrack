@@ -123,7 +123,7 @@ namespace AssessTrack.Filters
                 
                 if (site == null)
                 {
-                    filterContext.Result = new ViewResult() { ViewName = "SiteNotFound" };
+                    filterContext.Result = new HttpUnauthorizedResult();
                     return;
                 }
                 if (scope == AuthScope.CourseTerm)
@@ -152,7 +152,7 @@ namespace AssessTrack.Filters
                     }
                     if (courseTerm == null)
                     {
-                        filterContext.Result = new ViewResult() { ViewName = "CourseTermNotFound" };
+                        filterContext.Result = new HttpUnauthorizedResult();
                         return;
                     }
                 }
@@ -183,7 +183,8 @@ namespace AssessTrack.Filters
                 else
                 {
                     //not authorized to view resource, redirect to not authorized view
-                    filterContext.Result = new ViewResult() { ViewName = "NotAuthorized" };
+                    //TODO change this to redirect to custom error page
+                    filterContext.Result = new HttpUnauthorizedResult(); ;
                 }
                 
             }

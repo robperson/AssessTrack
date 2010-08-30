@@ -106,7 +106,7 @@ ul ul
 }
 pre
 {
-    margin-bottom:5px;
+    margin-bottom:10px;
 }
 
 /* VALIDATION
@@ -546,4 +546,18 @@ div.question > div
 .col1 img
 {
     max-width:90%;
+}
+div.image
+{
+    text-align:center;
+}
+div.image img
+{
+    display:block;
+    margin: 0 auto;
+}
+div.image span.image-caption
+{
+    text-align:center;
+    font-size:80%;
 }

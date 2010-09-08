@@ -35,7 +35,6 @@
     <%} %>
     
     <%= Html.RenderAssessmentViewForm(Model.SubmissionRecord) %>
-    <hr />
     <h3>Comments</h3>
         <pre><%= Html.Encode(Model.SubmissionRecord.Comments)%></pre>
 </asp:Content>

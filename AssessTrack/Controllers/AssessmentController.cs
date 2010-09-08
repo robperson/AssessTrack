@@ -183,7 +183,7 @@ namespace AssessTrack.Controllers
             {
                 ModelState.AddModelError("_FORM", ex.Message);
             }
-            string data = DesignerHelper.LoadAssessment(assessment.Data);
+            string data = collection["DesignerData"];
             return View(new AssessmentFormViewModel(assessment, dataRepository.GetAssessmentTypesSelectList(courseTerm, assessment.AssessmentTypeID), data));
         }
         [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 1, MaxLevel = 1)]
@@ -241,16 +241,23 @@ namespace AssessTrack.Controllers
                 record.SubmissionDate = DateTime.Now;
                 foreach (Answer answer in assessment.Answers)
                 {
-                    Response response = new Response();
-                    response.Answer = answer;
-                    response.ResponseText = collection[answer.AnswerID.ToString()];
-                    record.Responses.Add(response);
+                    
+                    string responseText = collection[answer.AnswerID.ToString()];
+                    if (responseText != null)
+                    {
+                        Response response = new Response();
+                        response.Answer = answer;
+                        response.ResponseText = responseText;
+                        record.Responses.Add(response);
+                    }
                 }
                 dataRepository.SaveSubmissionRecord(record);
+                FlashMessageHelper.AddMessage("Your answers were submitted successfully!");
                 return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
             }
             catch
             {
+                FlashMessageHelper.AddMessage("An error occurred while submitting your answers :'(");
                 return View(assessment);
             }
         }

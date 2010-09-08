@@ -171,8 +171,6 @@ namespace AssessTrack.Helpers
                 }
             }
 
-
-            
             return transformedData.DocumentElement.OuterXml;
         }
 

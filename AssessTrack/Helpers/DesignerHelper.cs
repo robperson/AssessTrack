@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Web.Mvc;
+using System.Text;
 
 namespace AssessTrack.Helpers
 {
@@ -17,12 +18,12 @@ namespace AssessTrack.Helpers
     {
         public static string InnerHtml(this XElement el)
         {
-            string ret = string.Empty;
+            StringBuilder inner = new StringBuilder();
             foreach (XNode n in el.Nodes())
             {
-                ret += n.ToString();
+                inner.Append( n.ToString());
             }
-            return ret;
+            return inner.ToString();
         }
     }
 
@@ -293,7 +294,7 @@ namespace AssessTrack.Helpers
                     dataElement = dataitem as XElement;
                     if (dataElement.Name == "image")
                     {
-                        questiondata += GetImageMarkup(dataElement.Value);
+                        questiondata += GetImageMarkup(dataElement.InnerHtml());
                     }
                     else if (dataElement.Name == "p" || dataElement.Name == "text")
                     {
@@ -301,7 +302,7 @@ namespace AssessTrack.Helpers
                     }
                     else if (dataElement.Name == "code")
                     {
-                        questiondata += GetCodeMarkup(dataElement.Value);
+                        questiondata += GetCodeMarkup(dataElement.InnerHtml());
                     }
                     else if (dataElement.Name == "answer")
                     {
@@ -323,7 +324,7 @@ namespace AssessTrack.Helpers
                         {
                             foreach (XElement anskey in keyElement.Elements("AnswerKey"))
                             {
-                                keys += GetAnswerKeyMarkup(anskey.Value, anskey.Attribute("weight").Value);
+                                keys += GetAnswerKeyMarkup(anskey.InnerHtml(), anskey.Attribute("weight").Value);
                             }
                         }
 
@@ -346,7 +347,7 @@ namespace AssessTrack.Helpers
                             choices = "";
                             foreach (XElement choice in dataElement.Elements("choice"))
                             {
-                                choices += choice.Value + "\n";
+                                choices += choice.InnerHtml() + "\n";
                             }
                             questiondata += GetMultichoiceMarkup(caption, weight, tags, id, choices, string.Empty, keys);
                         }

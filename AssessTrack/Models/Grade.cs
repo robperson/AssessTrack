@@ -22,7 +22,7 @@ namespace AssessTrack.Models
                                            where s.StudentID == profile.MembershipID
                                            orderby s.SubmissionDate descending
                                            select s).FirstOrDefault();
-            if (record == null || record.GradedBy == null)
+            if (record == null)
             {
                 Points = 0;
                 Percentage = 0;

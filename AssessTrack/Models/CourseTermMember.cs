@@ -76,7 +76,11 @@ namespace AssessTrack.Models
 
             }
             finalgrade = ((coursTermPoints / courseTermMaxPoints) * 100);
-            return finalgrade;
+            if (finalgrade >= 0)
+            {
+                return finalgrade;
+            }
+            return 0.0;
         }
 
         public string FullName

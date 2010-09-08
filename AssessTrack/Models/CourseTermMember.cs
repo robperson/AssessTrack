@@ -47,12 +47,13 @@ namespace AssessTrack.Models
                                                where s.StudentID == this.MembershipID
                                                orderby s.SubmissionDate descending
                                                select s).FirstOrDefault();
-                    if (record != null)
+                    if (record != null && record.GradedBy != null)
                     {
                         typePoints += record.Score;
+                        typeMaxPoints += assessment.Weight;
                     }
 
-                    typeMaxPoints += assessment.Weight;
+                    
                 }
                 if (typeMaxPoints > 0.0)
                 {

@@ -349,6 +349,7 @@ namespace AssessTrack.Helpers
                             {
                                 choices += choice.InnerHtml() + "\n";
                             }
+                            choices = choices.Substring(0, choices.Length - 1);
                             questiondata += GetMultichoiceMarkup(caption, weight, tags, id, choices, string.Empty, keys);
                         }
 

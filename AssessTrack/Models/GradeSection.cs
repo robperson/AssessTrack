@@ -23,7 +23,10 @@ namespace AssessTrack.Models
                 Grade grade = new Grade(assessment, profile);
                 Grades.Add(grade);
                 TotalPoints += grade.Points;
-                MaxPoints += assessment.Weight;
+                if (grade.SubmissionRecord != null)
+                {
+                    MaxPoints += assessment.Weight;
+                }
             }
             Percentage = (TotalPoints / MaxPoints) * 100;
         }

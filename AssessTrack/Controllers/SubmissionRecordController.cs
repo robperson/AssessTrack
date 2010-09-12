@@ -184,5 +184,35 @@ namespace AssessTrack.Controllers
             return View(model);
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult GradeAll(Guid id)
+        {
+            try
+            {
+                Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, id);
+                foreach (SubmissionRecord record in assessment.SubmissionRecords)
+                {
+                    foreach (Models.Response response in record.Responses)
+                    {
+                        foreach (AnswerKey key in response.Answer.AnswerKeys)
+                        {
+                            if (key.Value.ToLower() == response.ResponseText.ToLower())
+                            {
+                                response.Score = key.Weight;
+                                break;
+                            }
+                        }
+                    }
+                }
+                dataRepository.Save();
+                FlashMessageHelper.AddMessage(assessment.Name + "'s submissions were graded successfully.");
+            }
+            catch
+            {
+                FlashMessageHelper.AddMessage("An error occurred while grading all submissions.");
+            }
+            return RedirectToAction("Index", new { siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName, id = id });
+        }
+
     }
 }

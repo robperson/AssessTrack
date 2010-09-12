@@ -59,6 +59,9 @@ namespace AssessTrack
                 new { controller = "Home", action = "Index", id = "" }  // Parameter defaults
             );
 
+            routes.MapRoute("Catch All", "{*path}",
+                new { controller = "Error", action = "NotFound" });
+
         }
 
         protected void Application_Start()

@@ -82,6 +82,7 @@
     <Compile Include="Controllers\CourseTermController.cs" />
     <Compile Include="Controllers\CourseTermMemberController.cs" />
     <Compile Include="Controllers\CourseTermToolsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -258,6 +259,7 @@
     <Content Include="Content\print.css" />
     <Content Include="Content\view.xsl" />
     <Content Include="Content\QuizBuilder.css" />
+    <Content Include="Scripts\htmlparser.js" />
     <Content Include="Scripts\jquery-ui-1.7.2.custom.min.js" />
     <Content Include="Scripts\QuizBuilder.js" />
     <Content Include="Scripts\String.js" />
@@ -268,6 +270,8 @@
     <Content Include="Views\Account\ResetPassword.aspx" />
     <Content Include="Views\Assessment\AssessmentTable.ascx" />
     <Content Include="Views\Assessment\Preview.aspx" />
+    <Content Include="Views\Error\NotFound.aspx" />
+    <Content Include="Views\Error\UnexpectedError.aspx" />
     <Content Include="Views\SiteMember\DetailedMemberTable.ascx" />
     <Content Include="Views\SiteMember\Details.aspx" />
     <Content Include="Views\SiteMember\Edit.aspx" />

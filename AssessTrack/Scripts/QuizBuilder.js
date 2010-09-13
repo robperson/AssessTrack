@@ -90,7 +90,7 @@
     function getmarkup(event) 
     {
         var assessmentid = "";
-        
+        var balancedText = "";
             var markup = '<assessment>\n';
             $('#questions .question').each(function() {
                 var questionid = "";
@@ -104,7 +104,8 @@
                 markup += "<question {0} {1}>\n".format(questiontags, questionid);
                 $(this).find('.question-data-item').each(function() {
                     if ($(this).hasClass('text-item')) {
-                        markup += "<text>{0}</text>".format($(this).find('textarea').val());
+                        balancedText = HTMLtoXML($(this).find('textarea').val());
+                        markup += "<text>{0}</text>".format(balancedText);
                     }
                     else if ($(this).hasClass('image-item')) {
                         markup += '<img>{0}</img>'.format($(this).find('.imgfilename').val());

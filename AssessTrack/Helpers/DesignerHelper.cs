@@ -302,7 +302,7 @@ namespace AssessTrack.Helpers
                     }
                     else if (dataElement.Name == "code")
                     {
-                        questiondata += GetCodeMarkup(dataElement.InnerHtml());
+                        questiondata += GetCodeMarkup(dataElement.Value);
                     }
                     else if (dataElement.Name == "answer")
                     {

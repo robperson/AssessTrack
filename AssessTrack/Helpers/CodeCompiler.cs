@@ -21,10 +21,12 @@ namespace AssessTrack.Helpers
         public static void CompileCodeQuestions(this SubmissionRecord record)
         {
             string VSVarsPath = Environment.GetEnvironmentVariable("VS90COMNTOOLS");
+            string vcvars = @"""{0}vsvars32""";
+            string cl = "cl {0} /EHsc";
             string ExeArgs = @"/c ""{0}vsvars32"" & cl {1} /EHsc";
-            string failMsg = "\nCompile failed for Question #{0}, Answer #{1} on {2}.\n";
-            string longrunMsg = "\nExecution failed for Question #{0}, Answer #{1} on {2}.\n Program did not run in allotted time span.\n";
-            string successMessage = "\nCompile and Execute succeeded for Question #{0}, Answer #{1} on {2}.\nOutput: \n{3}\n----------------------\n";
+            string failMsg = "\nCompile failed for Question #{0}, Answer #{1} on {2}.\n Compiler Output:\n{3}\n\n************************************************************\n\n";
+            string longrunMsg = "\nExecution failed for Question #{0}, Answer #{1} on {2}.\n Program did not run in allotted time span.\n\n************************************************************\n\n";
+            string successMessage = "\nCompile and Execute succeeded for Question #{0}, Answer #{1} on {2}.\nOutput: \n{3}\n\n************************************************************\n\n";
             
             //Create working directory
             string tempDir = Environment.GetEnvironmentVariable("TEMP") + "\\cms-compiles\\" + record.SubmissionRecordID.ToString();
@@ -35,24 +37,39 @@ namespace AssessTrack.Helpers
                 if (response.Answer.Type == "code-answer")
                 {
                     string source = response.ResponseID.ToString() + ".cpp";
-                    string args = string.Format(ExeArgs, VSVarsPath, source,tempDir);
+                    string args = string.Format(ExeArgs, VSVarsPath, source);
                     File.WriteAllText(tempDir + "\\" + source, response.ResponseText);
-                    ProcessStartInfo startInfo = new ProcessStartInfo("cmd", args);
+                    ProcessStartInfo startInfo = new ProcessStartInfo("cmd");
+                    startInfo.RedirectStandardInput = true;
                     startInfo.WorkingDirectory = tempDir;
                     startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    startInfo.RedirectStandardOutput = true;
+                    startInfo.RedirectStandardError = true;
+                    startInfo.UseShellExecute = false;
+                    startInfo.CreateNoWindow = true;
                     Process compiler = new Process();
                     compiler.StartInfo = startInfo;
                     compiler.Start();
+                    compiler.StandardInput.WriteLine(string.Format(vcvars, VSVarsPath));
+                    compiler.StandardInput.WriteLine(string.Format(cl, source));
+                    compiler.StandardInput.Flush();
+                    compiler.StandardInput.Close();
+                    
                     compiler.WaitForExit(5000); //Wait 5 seconds for compiler to finish
                     //Just to be safe, KILL it
                     //If it's not done yet then something dumb happened (probably)
+                    string compilerOutput = compiler.StandardOutput.ReadToEnd() + "\n" + compiler.StandardError.ReadToEnd();
+                    compiler.StandardOutput.Close();
+                    compiler.StandardError.Close();
                     if (!compiler.HasExited)
                         compiler.Kill();
+                    
 
                     string exe = tempDir + @"\" + response.ResponseID.ToString() + ".exe";
                     if (!File.Exists(exe))
                     {
-                        record.Comments += string.Format(failMsg, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString());
+                        response.Comment = string.Format(failMsg, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString(), compilerOutput);
+                        record.Comments += string.Format(failMsg, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString(), compilerOutput);
                         continue;
                     }
 
@@ -75,11 +92,13 @@ namespace AssessTrack.Helpers
                     if (seconds == 30) //Program failed to run allotted time. KILL IT
                     {
                         userProgram.Kill();
+                        response.Comment = string.Format(longrunMsg, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString());
                         record.Comments += string.Format(longrunMsg, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString());
                         continue;
                     }
                     //Get output and set comments
                     string output = userProgram.StandardOutput.ReadToEnd();
+                    response.Comment = string.Format(successMessage, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString(), output);
                     record.Comments += string.Format(successMessage, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString(),output);
                 }
             }

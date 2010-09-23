@@ -390,9 +390,10 @@ li.site-section h3
 table
 {
     border: 1px solid #777;
-    width:100%;
+    max-width:100%;
     border-collapse:collapse;
     overflow:auto;
+    margin-left:5px;
 }
 
 th
@@ -560,4 +561,14 @@ div.image span.image-caption
 {
     text-align:center;
     font-size:80%;
+}
+
+/* FLASH MESSAGES
+----------------------------------------------------- */
+.flash
+{
+    background-color:#FFFFA3;
+    padding: 10px;
+    border:1px solid #B0AE78;
+    margin-top:10px;
 }

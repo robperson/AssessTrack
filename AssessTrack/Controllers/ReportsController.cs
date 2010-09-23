@@ -98,10 +98,21 @@ namespace AssessTrack.Controllers
 
         }
 
-        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 0, MaxLevel = 10)]
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 5, MaxLevel = 10)]
         public ActionResult FinalGrades(string courseTermShortName, string siteShortName)
         {
             return View(dataRepository.GetStudentsInCourseTerm(courseTerm));
+        }
+
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 5, MaxLevel = 10)]
+        public ActionResult StrugglingStudents(string courseTermShortName, string siteShortName)
+        {
+            List<CourseTermMember> students = dataRepository.GetStudentsInCourseTerm(courseTerm);
+            List<CourseTermMember> strugglingStudents = (from student in students
+                                                         where student.GetFinalGrade() < 70
+                                                         select student).ToList();
+
+            return View(strugglingStudents);
         }
 
     }

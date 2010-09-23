@@ -103,6 +103,7 @@
             <xsl:value-of select="@id"/>
           </xsl:attribute>
         </input>
+        of <xsl:value-of select="@weight"/> points.
       </div>
       
       <xsl:apply-templates select="./AnswerKeys/AnswerKey[1]"/>

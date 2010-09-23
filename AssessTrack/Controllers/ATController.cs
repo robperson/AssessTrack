@@ -9,6 +9,7 @@ using AssessTrack.Helpers;
 
 namespace AssessTrack.Controllers
 {
+    [ValidateInput(false)]
     public class ATController : Controller
     {
         protected AssessTrackDataRepository dataRepository = new AssessTrackDataRepository();
@@ -20,6 +21,7 @@ namespace AssessTrack.Controllers
         {
             ViewData["showSiteMenu"] = false;
             ViewData["showCourseTermMenu"] = false;
+            ViewData["RecentMessages"] = (Request.IsAuthenticated) ? dataRepository.GetRecentCourseTermMessages() : null;
             ViewData["UserFullName"] = (Request.IsAuthenticated) ? UserHelpers.GetFullNameForCurrentUser() : "Guest";
             base.OnActionExecuting(filterContext);
             

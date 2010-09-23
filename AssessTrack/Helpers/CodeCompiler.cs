@@ -80,9 +80,25 @@ namespace AssessTrack.Helpers
                     userProgramInfo.RedirectStandardOutput = true;
                     userProgramInfo.WindowStyle = ProcessWindowStyle.Hidden;
                     userProgramInfo.CreateNoWindow = true;
+                    if (!string.IsNullOrEmpty(response.Answer.Stdin))
+                    {
+                        userProgramInfo.RedirectStandardInput = true;
+                    }
+                    
                     Process userProgram = new Process();
                     userProgram.StartInfo = userProgramInfo;
+                    //Write out input file if it exists
+                    if (!string.IsNullOrEmpty(response.Answer.Fstream))
+                    {
+                        File.WriteAllText(tempDir + "\\infile.txt", response.Answer.Fstream);
+                    }
                     userProgram.Start();
+                    if (!string.IsNullOrEmpty(response.Answer.Stdin))
+                    {
+                        userProgram.StandardInput.Write(response.Answer.Stdin);
+                        userProgram.StandardInput.Flush();
+                        userProgram.StandardInput.Close();
+                    }
                     int seconds = 0;
                     while (seconds < 30 && !userProgram.HasExited)
                     {

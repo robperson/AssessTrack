@@ -23,7 +23,9 @@ namespace AssessTrack.Models
                 Grade grade = new Grade(assessment, profile);
                 Grades.Add(grade);
                 TotalPoints += grade.Points;
-                if (grade.SubmissionRecord != null && grade.SubmissionRecord.GradedBy != null)
+                if ((grade.SubmissionRecord != null && grade.SubmissionRecord.GradedBy != null) ||
+                    DateTime.Now.CompareTo(assessment.DueDate) > 0
+                    )
                 {
                     MaxPoints += assessment.Weight;
                 }

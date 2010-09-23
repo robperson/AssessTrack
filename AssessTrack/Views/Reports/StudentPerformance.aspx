@@ -13,7 +13,7 @@
         <%= Html.ATAuthLink("Next: " + Model.NextStudent.FullName, @"<span class=""next"">", "</span>", new { id = Model.NextStudent.MembershipID, action = "StudentPerformance" }, AssessTrack.Filters.AuthScope.CourseTerm, 2, 10)%>
     </div>
     <%= Html.ATAuthLink("Return to Student List", new { action = "Students", controller = "Reports", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
-    <h3>Final Grade*: <%= Html.Encode(Model.FinalLetterGrade) %> (<%= Html.Encode(string.Format("{0:0.00}%",Model.FinalGrade)) %>)</h3>
+    <h3>Current Grade*: <%= Html.Encode(Model.FinalLetterGrade) %> (<%= Html.Encode(string.Format("{0:0.00}%",Model.FinalGrade)) %>)</h3>
     <div class="legend">
     <strong>Legend: </strong> <span class="gradelink">Graded Assessment</span>, <span class="gradelink ungraded">Ungraded Assessment</span>, <span class="gradelink unsubmitted">Unsubmitted Assessment</span>.
     </div>
@@ -37,7 +37,8 @@
            <%
            
        } %>
-       <p>*Note: Final grade only counts assessments that have been graded. Your grade will change if there 
+       <p>*Note: Final grade only counts assessments that have been graded and assignments for which the due date has passed.
+        Your grade will change if there 
        are many ungraded assessments.</p>
 
 </asp:Content>

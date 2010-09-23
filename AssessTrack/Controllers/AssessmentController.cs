@@ -183,7 +183,7 @@ namespace AssessTrack.Controllers
             {
                 ModelState.AddModelError("_FORM", ex.Message);
             }
-            string data = collection["DesignerData"];
+            string data = DesignerHelper.LoadAssessment(assessment.Data);
             return View(new AssessmentFormViewModel(assessment, dataRepository.GetAssessmentTypesSelectList(courseTerm, assessment.AssessmentTypeID), data));
         }
         [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 1, MaxLevel = 1)]

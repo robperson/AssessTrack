@@ -9,6 +9,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using System.Transactions;
 using System.Collections.Generic;
 
@@ -31,11 +32,18 @@ namespace AssessTrack.Models
             SaveAssessment(assessment, true);
         }
 
+        public void DeleteAnswer(Answer answer)
+        {
+            dc.Answers.DeleteOnSubmit(answer);
+            dc.AnswerKeys.DeleteAllOnSubmit(answer.AnswerKeys);
+            dc.Responses.DeleteAllOnSubmit(answer.Responses);
+        }
+
         public void SaveAssessment(Assessment assessment, bool isNew)
         {
             try
             {
-                using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.Required,TimeSpan.MaxValue))
+                using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.Required, TimeSpan.MaxValue))
                 {
                     if (isNew)
                     {
@@ -169,6 +177,18 @@ namespace AssessTrack.Models
                             answer.Weight = Convert.ToDouble(answerNode.Attribute("weight").Value);
                             answer.Question = question;
 
+                            XElement stdin = answerNode.Element("Stdin");
+                            if (stdin != null)
+                            {
+                                answer.Stdin = stdin.Value;
+                            }
+
+                            XElement fstream = answerNode.Element("Fstream");
+                            if (fstream != null)
+                            {
+                                answer.Fstream = fstream.Value;
+                            }
+
                             if (isNew || answerNode.Attribute("id") == null)
                             {
                                 answer.Assessment = assessment;
@@ -215,6 +235,16 @@ namespace AssessTrack.Models
                         dc.SubmitChanges();
                     }
                     assessment.Data = markup.ToString();
+                    //Ensure that we aren't deleting an answer and leaving dangling responses
+                    foreach (Answer answer in assessment.Answers)
+                    {
+                        XElement answerNode = markup.XPathSelectElement(string.Format("//answer[@id='{0}']", answer.AnswerID));
+                        if (answerNode == null)
+                        {
+                            DeleteAnswer(answer);
+                        }
+                    }
+
                     dc.SubmitChanges();
                     transaction.Complete();
                 }

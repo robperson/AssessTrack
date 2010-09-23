@@ -100,6 +100,12 @@
 			    <div class="col3">
 				    <!-- Reminders start -->
 				    <h2>Reminders</h2>
+				    <ul class="menu">
+				        <% if (ViewData["RecentMessages"] != null)
+                            {
+                                Html.RenderPartial("RecentMessagesList", ViewData["RecentMessages"]);
+                            } %>
+				    </ul>
 				    <!-- reminders end -->
 			    </div>
 		    </div>

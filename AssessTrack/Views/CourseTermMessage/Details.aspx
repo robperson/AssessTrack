@@ -15,7 +15,6 @@
        
     <p>
 
-        <%=Html.ActionLink("Edit", "Edit", new { id = Model.MessageID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
         <%=Html.ActionLink("Back to List", "Index", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
     </p>
 

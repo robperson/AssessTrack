@@ -16,6 +16,7 @@ namespace AssessTrack.Controllers
         public Profile Profile;
         public double FinalGrade;
         public string FinalLetterGrade;
+        public double TotalWeight;
         public PerformanceReportModel(List<GradeSection> sections, Profile profile)
         {
             GradeSections = sections;
@@ -57,6 +58,7 @@ namespace AssessTrack.Controllers
         public ActionResult StudentPerformance(string courseTermShortName, string siteShortName, Guid id /*ProfileID*/)
         {
             Profile profile = dataRepository.GetProfileByID(id);
+            double totalWeight = 0;
             if (profile == null)
                 return View("ProfileNotFound");
             if (!AuthHelper.IsCurrentStudentOrUserIsAdmin(courseTerm, id))
@@ -67,10 +69,11 @@ namespace AssessTrack.Controllers
             foreach (AssessmentType type in dataRepository.GetNonTestBankAssessmentTypes(courseTerm))
             {
                 GradeSection section = new GradeSection(type, profile);
+                totalWeight += section.Weight;
                 sections.Add(section);
             }
             PerformanceReportModel model = new PerformanceReportModel(sections, profile);
-
+            model.TotalWeight = totalWeight;
             CourseTermMember member = dataRepository.GetCourseTermMemberByMembershipID(courseTerm, id);
             model.FinalGrade = member.GetFinalGrade();
             model.FinalLetterGrade = member.GetFinalLetterGrade();

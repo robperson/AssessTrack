@@ -20,7 +20,7 @@
     <% foreach (var section in Model.GradeSections)
        {
            %>
-           <h3><%=Html.Encode(section.AssessmentType.Name) %> <span><%= Html.Encode(section.AssessmentType.Weight) %>% of total grade</span></h3>
+           <h3><%=Html.Encode(section.AssessmentType.Name) %> <span><%= Html.Encode(string.Format("{0:0.00}",section.AssessmentType.Weight / Model.TotalWeight * 100)) %>% of total grade</span></h3>
            <ul class="gradesection group">
            <%foreach (var grade in section.Grades)
              {

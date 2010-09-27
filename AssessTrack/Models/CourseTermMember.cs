@@ -34,48 +34,20 @@ namespace AssessTrack.Models
             double courseTermMaxPoints = 0.0;
             foreach (AssessmentType asmtType in this.CourseTerm.AssessmentTypes.Where(type => !type.QuestionBank))
             {
-                double typePoints = 0.0; //total points scored by student
-                double typeMaxPoints = 0.0; //maximum points achievable
-
-                foreach (Assessment assessment in asmtType.Assessments)
+                
+                GradeSection section = new GradeSection(asmtType, this.Profile);
+                if (section.Weight > 0)
                 {
-                    if (!assessment.IsVisible)
-                    {
-                        continue;
-                    }
-                    SubmissionRecord record = (from s in assessment.SubmissionRecords
-                                               where s.StudentID == this.MembershipID
-                                               orderby s.SubmissionDate descending
-                                               select s).FirstOrDefault();
-                    if (record != null)
-                    {
-                        typePoints += record.Score;
-                    }
-
-                    typeMaxPoints += assessment.Weight;
+                    coursTermPoints += ((section.TotalPoints / section.MaxPoints) * asmtType.Weight);
+                    courseTermMaxPoints += section.Weight;
                 }
-                if (typeMaxPoints > 0.0)
-                {
-                    courseTermMaxPoints += asmtType.Weight;
-                }
-                else if (typePoints > 0.0)
-                //if all Assessments are extra credit, 
-                //set typeMaxPoints to 1 so we have something to divide by
-                {
-                    courseTermMaxPoints += asmtType.Weight;
-                    typeMaxPoints = 1.0;
-                }
-                else
-                {
-                    // no scores to add, so continue
-                    continue;
-                }
-
-                coursTermPoints += ((typePoints / typeMaxPoints) * asmtType.Weight);
-
             }
             finalgrade = ((coursTermPoints / courseTermMaxPoints) * 100);
-            return finalgrade;
+            if (finalgrade >= 0)
+            {
+                return finalgrade;
+            }
+            return 0.0;
         }
 
         public string FullName

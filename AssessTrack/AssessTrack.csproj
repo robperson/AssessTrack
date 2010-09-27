@@ -76,12 +76,14 @@
     <Compile Include="Controllers\AssessmentTypeController.cs" />
     <Compile Include="Controllers\ATController.cs" />
     <Compile Include="Controllers\CompilerController.cs" />
+    <Compile Include="Controllers\CourseTermMessageController.cs" />
     <Compile Include="Controllers\CourseController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CourseTermController.cs" />
     <Compile Include="Controllers\CourseTermMemberController.cs" />
     <Compile Include="Controllers\CourseTermToolsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -128,6 +130,8 @@
       <DependentUpon>AssessTrackModelClasses.dbml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\UserHelpers.cs" />
+    <Compile Include="Models\CourseTermMessageManager.cs" />
+    <Compile Include="Models\CourseTermMessage.cs" />
     <Compile Include="Models\SiteMemberManager.cs" />
     <Compile Include="Models\CourseTermMemberManager.cs" />
     <Compile Include="Models\CourseTerm.cs" />
@@ -258,6 +262,8 @@
     <Content Include="Content\print.css" />
     <Content Include="Content\view.xsl" />
     <Content Include="Content\QuizBuilder.css" />
+    <Content Include="robots.txt" />
+    <Content Include="Scripts\htmlparser.js" />
     <Content Include="Scripts\jquery-ui-1.7.2.custom.min.js" />
     <Content Include="Scripts\QuizBuilder.js" />
     <Content Include="Scripts\String.js" />
@@ -268,6 +274,17 @@
     <Content Include="Views\Account\ResetPassword.aspx" />
     <Content Include="Views\Assessment\AssessmentTable.ascx" />
     <Content Include="Views\Assessment\Preview.aspx" />
+    <Content Include="Views\CourseTermMessage\MessageForm.ascx" />
+    <Content Include="Views\CourseTermMessage\Create.aspx" />
+    <Content Include="Views\CourseTermMessage\Details.aspx" />
+    <Content Include="Views\CourseTermMessage\Edit.aspx" />
+    <Content Include="Views\CourseTermMessage\Index.aspx" />
+    <Content Include="Views\CourseTermMessage\MessageNotFound.aspx" />
+    <Content Include="Views\Error\NotFound.aspx" />
+    <Content Include="Views\Error\UnexpectedError.aspx" />
+    <Content Include="Views\Reports\StrugglingStudents.aspx" />
+    <Content Include="Views\Shared\RecentMessagesList.ascx" />
+    <Content Include="Views\Shared\UpcomingAssessmentList.ascx" />
     <Content Include="Views\SiteMember\DetailedMemberTable.ascx" />
     <Content Include="Views\SiteMember\Details.aspx" />
     <Content Include="Views\SiteMember\Edit.aspx" />

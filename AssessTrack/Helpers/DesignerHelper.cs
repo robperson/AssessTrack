@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Web.Mvc;
+using System.Text;
 
 namespace AssessTrack.Helpers
 {
@@ -17,12 +18,12 @@ namespace AssessTrack.Helpers
     {
         public static string InnerHtml(this XElement el)
         {
-            string ret = string.Empty;
+            StringBuilder inner = new StringBuilder();
             foreach (XNode n in el.Nodes())
             {
-                ret += n.ToString();
+                inner.Append( n.ToString());
             }
-            return ret;
+            return inner.ToString();
         }
     }
 
@@ -45,7 +46,7 @@ namespace AssessTrack.Helpers
 				    <h3>Code<span class=""delete-item"">[X]</span></h3>
 				    <div>
 					    <textarea rows=""5"" cols=""40"">{0}</textarea>
-				    </div>				
+				    </div>			
 			    </li>";
         private static string answerTemplate = @"<li class=""question-data-item {0} answer {8}"" answer-type=""{6}"" id=""{7}"">
 				    <h3>{1}<span class=""delete-item"">[X]</span></h3>
@@ -70,6 +71,15 @@ namespace AssessTrack.Helpers
 				    </ul>	
                     <div class='tags meta'><span>Tags:</span><input type='text' value='{3}'/></div>			
 			    </li>";
+
+        private static string codeAnswerMetaTemplate = @"<div class=""stdin"">
+                        <span>stdin:</span>
+                        <textarea>{0}</textarea>
+                    </div>	
+                    <div class=""fstream"">
+                        <span>fstream:</span>
+                        <textarea>{1}</textarea>
+                    </div>	";
         public static string GetAnswerKeyMarkup(string answer, string weight)
         {
             return string.Format(answerKeyTemplate, answer, weight, "answerkey");
@@ -151,14 +161,15 @@ namespace AssessTrack.Helpers
 
         public static string GetCodeAnswerMarkup(string caption, string weight, string tags, string id, string extraClasses)
         {
-            return string.Format(answerTemplate, "code-answer", "Code Answer",
-                caption, weight, tags, string.Empty, "code-answer", id, extraClasses, string.Empty);
+
+            return GetCodeAnswerMarkup(caption, weight, tags, id, extraClasses, string.Empty, string.Empty, string.Empty);
         }
 
-        public static string GetCodeAnswerMarkup(string caption, string weight, string tags, string id, string extraClasses, string keys)
+        public static string GetCodeAnswerMarkup(string caption, string weight, string tags, string id, string extraClasses, string keys, string stdin, string fstream)
         {
+            string inputdata = string.Format(codeAnswerMetaTemplate, stdin, fstream);
             return string.Format(answerTemplate, "code-answer", "Code Answer",
-                caption, weight, tags, string.Empty, "code-answer", id, extraClasses, keys);
+                caption, weight, tags, inputdata, "code-answer", id, extraClasses, keys);
         }
 
         public static string GetMultichoiceMarkup(string caption, string weight, string tags, string id, string choices)
@@ -293,7 +304,7 @@ namespace AssessTrack.Helpers
                     dataElement = dataitem as XElement;
                     if (dataElement.Name == "image")
                     {
-                        questiondata += GetImageMarkup(dataElement.Value);
+                        questiondata += GetImageMarkup(dataElement.InnerHtml());
                     }
                     else if (dataElement.Name == "p" || dataElement.Name == "text")
                     {
@@ -323,7 +334,7 @@ namespace AssessTrack.Helpers
                         {
                             foreach (XElement anskey in keyElement.Elements("AnswerKey"))
                             {
-                                keys += GetAnswerKeyMarkup(anskey.Value, anskey.Attribute("weight").Value);
+                                keys += GetAnswerKeyMarkup(anskey.InnerHtml(), anskey.Attribute("weight").Value);
                             }
                         }
 
@@ -339,15 +350,28 @@ namespace AssessTrack.Helpers
                         }
                         else if (type == "code-answer")
                         {
-                            questiondata += GetCodeAnswerMarkup(caption, weight, tags, id, string.Empty, keys);
+                            string stdin = string.Empty;
+                            string fstream = string.Empty;
+                            XElement stdinEl = dataElement.Element("Stdin");
+                            if (stdinEl != null)
+                            {
+                                stdin = stdinEl.Value;
+                            }
+                            XElement fstreamEl = dataElement.Element("Fstream");
+                            if (fstreamEl != null)
+                            {
+                                fstream = fstreamEl.Value;
+                            }
+                            questiondata += GetCodeAnswerMarkup(caption, weight, tags, id, string.Empty, keys,stdin,fstream);
                         }
                         else if (type == "multichoice")
                         {
                             choices = "";
                             foreach (XElement choice in dataElement.Elements("choice"))
                             {
-                                choices += choice.Value + "\n";
+                                choices += choice.InnerHtml() + "\n";
                             }
+                            choices = choices.Substring(0, choices.Length - 1);
                             questiondata += GetMultichoiceMarkup(caption, weight, tags, id, choices, string.Empty, keys);
                         }
 

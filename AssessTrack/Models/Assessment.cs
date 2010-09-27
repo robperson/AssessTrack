@@ -46,25 +46,7 @@ namespace AssessTrack.Models
                 }
             }
 
-            //Ensure that we aren't deleting an answer and leaving dangling responses
-            if (AssessmentID != null && AssessmentID != Guid.Empty)
-            {
-                XmlDocument data = new XmlDocument();
-                data.LoadXml(Data);
-                foreach (Answer answer in Answers)
-                {
-                    if (answer.Responses.Count() > 0)
-                    {
-                        //make sure this answer is present in the markup if it has responses
-                        XmlNode answerNode = data.SelectSingleNode(string.Format("//answer[@id='{0}']", answer.AnswerID));
-                        if (answerNode == null)
-                        {
-                            yield return new RuleViolation("Answers cannot be removed from an assessment without removing their corresponding responses first.", "Data");
-                            break;
-                        }
-                    }
-                }
-            }
+            
 
             yield break;
         }

@@ -9,12 +9,25 @@
 
     <h2>Submission Records</h2>
     <div>
-    <% using (Html.BeginForm()) { %>
-       <%=Html.DropDownList("id", Model.AssessmentList)%>
-       <input type="submit" value="Get Submission Records"/>
-    <% } %>
-    
+        <% using (Html.BeginForm()) { %>
+           <%=Html.DropDownList("id", Model.AssessmentList)%>
+           <input type="submit" value="Get Submission Records"/>
+        <% } %>
+        
     </div>
+    
+    
+        <% if (Model.AssessmentList.SelectedValue != null)
+           { %>
+           <div>
+                <% using (Html.BeginForm(new { action = "GradeAll", controller = "SubmissionRecord", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName(), id = new Guid(Model.AssessmentList.SelectedValue.ToString()) }))
+                   {%>
+                   <input type="submit" value="Grade All These Submissions" />
+                <%}%>
+           </div>
+           <%}%>
+    
+    
     <div>
         <%= Html.ActionLink("Create A Submission", "CreateSubmission", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
     </div>

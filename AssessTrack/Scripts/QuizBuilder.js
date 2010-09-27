@@ -90,7 +90,7 @@
     function getmarkup(event) 
     {
         var assessmentid = "";
-        
+        var balancedText = "";
             var markup = '<assessment>\n';
             $('#questions .question').each(function() {
                 var questionid = "";
@@ -104,7 +104,17 @@
                 markup += "<question {0} {1}>\n".format(questiontags, questionid);
                 $(this).find('.question-data-item').each(function() {
                     if ($(this).hasClass('text-item')) {
-                        markup += "<text>{0}</text>".format($(this).find('textarea').val());
+                        balancedText = $(this).find('textarea').val();
+                        balancedText = balancedText.replace('<\\', '</');
+                        try {
+                            balancedText = HTMLtoXML(balancedText);
+                            $(this).find('textarea').removeClass('input-validation-error');
+                        }
+                        catch (exception) {
+                            event.preventDefault();
+                            $(this).find('textarea').addClass('input-validation-error');
+                        }
+                        markup += "<text>{0}</text>".format(balancedText);
                     }
                     else if ($(this).hasClass('image-item')) {
                         markup += '<img>{0}</img>'.format($(this).find('.imgfilename').val());
@@ -140,6 +150,18 @@
                                 markup += '<choice>{0}</choice>'.format(choices[c]);
                             }
                         }
+                        else if ($(this).hasClass('code-answer')) {
+                            var stdin = $(this).find(".stdin textarea").val();
+                            if (stdin.length > 0) {
+                                markup += '<Stdin>{0}</Stdin>'.format(stdin);
+                            }
+
+                            var fstream = $(this).find(".fstream textarea").val();
+                            if (fstream.length > 0) {
+                                markup += '<Fstream>{0}</Fstream>'.format(fstream);
+                            }
+                        }
+
                         markup += '</answer>\n';
                     }
 
@@ -165,8 +187,12 @@ function updatelabels()
     $('ul.question-data').sortable({ handle: 'h3', axis: 'y', items: '.question-data-item', receive: questionDataDropped, update: updateQuestionData});
     
 }
-function deleteItem()
-{
+function deleteItem() {
+    if ($(this).parent().parent().attr("id").length > 0 && ($(this).parent().parent().hasClass("answer") || $(this).parent().parent().hasClass("question"))) {
+        if (!confirm("Are you sure you want to delete this? If students have submitted responses for this question/answer they will be lost.")) {
+            return;
+        }
+    }
     $(this).parent().parent().remove();
     updatelabels();
 }

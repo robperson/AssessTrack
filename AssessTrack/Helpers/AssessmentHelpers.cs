@@ -12,7 +12,7 @@ namespace AssessTrack.Helpers
         {
             SubmissionException exc = (from se in assessment.SubmissionExceptions
                                        where se.StudentID == StudentID
-                                       select se).SingleOrDefault();
+                                       select se).OrderByDescending(se => se.DueDate).FirstOrDefault();
             if (exc != null && exc.DueDate.CompareTo(DateTime.Now) > 0)
             {
                 return true;

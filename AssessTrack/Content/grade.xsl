@@ -38,13 +38,13 @@
       </xsl:if>
 
       <xsl:if test="@type='long-answer'">
-        <textarea class="longans" cols="75" rows="10" disabled="disabled">
+        <textarea class="longans" cols="75" rows="10" >
           <xsl:attribute name="id">
             <xsl:value-of select="@id"/>
           </xsl:attribute>Type answer here</textarea>
       </xsl:if>
       <xsl:if test="@type='code-answer'">
-        <textarea class="code-answer" cols="75" rows="10" disabled="disabled">
+        <textarea class="code-answer" cols="75" rows="10" >
           <xsl:attribute name="id">
             <xsl:value-of select="@id"/>
           </xsl:attribute>Insert Code
@@ -52,7 +52,7 @@
       </xsl:if>
 
       <xsl:if test="@type='short-answer'">
-        <input type="text" class="shortans" disabled="disabled">
+        <input type="text" class="shortans" >
           <xsl:attribute name="id">
             <xsl:value-of select="@id"/>
           </xsl:attribute>
@@ -64,7 +64,7 @@
         <div class="multichoice">
           <xsl:for-each select="./choice">
             <div class="choice">
-              <input type="radio" disabled="disabled">
+              <input type="radio" >
                 <xsl:attribute name="id">
                   <xsl:value-of select="../@id"/>
                   <xsl:number value="count(preceding::choice)+1"/>
@@ -102,6 +102,7 @@
             <xsl:value-of select="@id"/>
           </xsl:attribute>
         </input>
+        of <xsl:value-of select="@weight"/> points.
       </div>
       
       <xsl:apply-templates select="./AnswerKeys/AnswerKey[1]"/>

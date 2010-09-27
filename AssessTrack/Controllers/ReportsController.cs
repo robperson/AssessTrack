@@ -16,6 +16,7 @@ namespace AssessTrack.Controllers
         public Profile Profile;
         public double FinalGrade;
         public string FinalLetterGrade;
+        public double TotalWeight;
         public PerformanceReportModel(List<GradeSection> sections, Profile profile)
         {
             GradeSections = sections;
@@ -57,6 +58,7 @@ namespace AssessTrack.Controllers
         public ActionResult StudentPerformance(string courseTermShortName, string siteShortName, Guid id /*ProfileID*/)
         {
             Profile profile = dataRepository.GetProfileByID(id);
+            double totalWeight = 0;
             if (profile == null)
                 return View("ProfileNotFound");
             if (!AuthHelper.IsCurrentStudentOrUserIsAdmin(courseTerm, id))
@@ -67,10 +69,14 @@ namespace AssessTrack.Controllers
             foreach (AssessmentType type in dataRepository.GetNonTestBankAssessmentTypes(courseTerm))
             {
                 GradeSection section = new GradeSection(type, profile);
-                sections.Add(section);
+                if (section.Weight > 0)
+                {
+                    totalWeight += section.Weight;
+                    sections.Add(section);
+                }
             }
             PerformanceReportModel model = new PerformanceReportModel(sections, profile);
-
+            model.TotalWeight = totalWeight;
             CourseTermMember member = dataRepository.GetCourseTermMemberByMembershipID(courseTerm, id);
             model.FinalGrade = member.GetFinalGrade();
             model.FinalLetterGrade = member.GetFinalLetterGrade();
@@ -98,10 +104,21 @@ namespace AssessTrack.Controllers
 
         }
 
-        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 0, MaxLevel = 10)]
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 5, MaxLevel = 10)]
         public ActionResult FinalGrades(string courseTermShortName, string siteShortName)
         {
             return View(dataRepository.GetStudentsInCourseTerm(courseTerm));
+        }
+
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 5, MaxLevel = 10)]
+        public ActionResult StrugglingStudents(string courseTermShortName, string siteShortName)
+        {
+            List<CourseTermMember> students = dataRepository.GetStudentsInCourseTerm(courseTerm);
+            List<CourseTermMember> strugglingStudents = (from student in students
+                                                         where student.GetFinalGrade() < 70
+                                                         select student).ToList();
+
+            return View(strugglingStudents);
         }
 
     }

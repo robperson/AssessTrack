@@ -27,7 +27,7 @@ namespace AssessTrack.Controllers
         public SubmissionRecordViewModel(List<Assessment> assessments, Assessment selectedAssessment)
         {
             AssessmentList = new SelectList(assessments, "AssessmentID", "Name", selectedAssessment.AssessmentID);
-            Submissions = selectedAssessment.SubmissionRecords.OrderBy(sub => sub.StudentID).ToList();
+            Submissions = selectedAssessment.SubmissionRecords.OrderBy(sub => sub.Profile.LastName).ToList();
         }
     }
 
@@ -63,7 +63,7 @@ namespace AssessTrack.Controllers
         public ActionResult Index(string siteShortName, string courseTermShortName, Guid? id)
         {
             if (id == null)
-                return View(new SubmissionRecordViewModel(courseTerm.Assessments.ToList()));
+                return View(new SubmissionRecordViewModel(dataRepository.GetAllNonTestBankAssessments(courseTerm)));
             Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, (Guid)id);
             if (assessment == null)
                 return View(new SubmissionRecordViewModel(courseTerm.Assessments.ToList()));
@@ -74,7 +74,7 @@ namespace AssessTrack.Controllers
         public ActionResult Index(string siteShortName, string courseTermShortName, Guid id)
         {
             Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, id);
-            return View(new SubmissionRecordViewModel(courseTerm.Assessments.ToList(),assessment));
+            return View(new SubmissionRecordViewModel(dataRepository.GetAllNonTestBankAssessments(courseTerm), assessment));
         }
 
         //
@@ -163,9 +163,13 @@ namespace AssessTrack.Controllers
                     dataRepository.Save();
                     return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName, id = submission.AssessmentID });
                 }
+                catch (FormatException)
+                {
+                    FlashMessageHelper.AddMessage("An error occurred while saving scores. One of the scores entered is not a valid number.");
+                }
                 catch
                 {
-                    throw;
+                    FlashMessageHelper.AddMessage("An unexpected error has occurred.");
                 }
 
             }
@@ -182,6 +186,36 @@ namespace AssessTrack.Controllers
 
             //TODO ensure user has permission to view this
             return View(model);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult GradeAll(Guid id)
+        {
+            try
+            {
+                Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, id);
+                foreach (SubmissionRecord record in assessment.SubmissionRecords)
+                {
+                    foreach (Models.Response response in record.Responses)
+                    {
+                        foreach (AnswerKey key in response.Answer.AnswerKeys)
+                        {
+                            if (key.Value.ToLower() == response.ResponseText.ToLower())
+                            {
+                                response.Score = key.Weight;
+                                break;
+                            }
+                        }
+                    }
+                }
+                dataRepository.Save();
+                FlashMessageHelper.AddMessage(assessment.Name + "'s submissions were graded successfully.");
+            }
+            catch
+            {
+                FlashMessageHelper.AddMessage("An error occurred while grading all submissions.");
+            }
+            return RedirectToAction("Index", new { siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName, id = id });
         }
 
     }

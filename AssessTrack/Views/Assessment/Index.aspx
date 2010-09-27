@@ -11,7 +11,7 @@
     <h2>Assessments</h2>
     
     <p>
-        <%= Html.ATAuthLink("Create A New Assessment", new { Action = "Create", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+        <%= Html.ATAuthLink("Create A New Assessment", new { Action = "Create", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
     </p>
     
     
@@ -21,10 +21,8 @@
        } %>
     
     
-    
-
     <p>
-        <%= Html.ATAuthLink("Create A New Assessment", new { Action = "Create", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+        <%= Html.ATAuthLink("Create A New Assessment", new { Action = "Create", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
     </p>
 
 </asp:Content>

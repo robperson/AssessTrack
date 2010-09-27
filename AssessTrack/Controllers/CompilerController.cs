@@ -34,6 +34,7 @@ namespace AssessTrack.Controllers
                 {
                     message = "Finished. See Comments",
                     comments = record.Comments,
+                    answerComments = (from response in record.Responses select new { comment = response.Comment, id = response.AnswerID }).ToArray(),
                     code = 1
                 };
                 return Json(result);

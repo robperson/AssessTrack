@@ -12,6 +12,7 @@ namespace AssessTrack.Models
         public double MaxPoints;
         public double Percentage;
         public List<Grade> Grades;
+        public double Weight;
 
         public GradeSection(AssessmentType assessmentType, Profile profile)
         {
@@ -23,9 +24,28 @@ namespace AssessTrack.Models
                 Grade grade = new Grade(assessment, profile);
                 Grades.Add(grade);
                 TotalPoints += grade.Points;
-                MaxPoints += assessment.Weight;
+                if ((grade.SubmissionRecord != null && grade.SubmissionRecord.GradedBy != null) ||
+                    DateTime.Now.CompareTo(assessment.DueDate) > 0
+                    )
+                {
+                    MaxPoints += assessment.Weight;
+                }
             }
-            Percentage = (TotalPoints / MaxPoints) * 100;
+            if (TotalPoints > 0 && MaxPoints == 0) //if everything is extra credit
+            {
+                MaxPoints = 1; //to avoid division by zero
+            }
+
+            if (TotalPoints == 0 && MaxPoints == 0)
+            {
+                Percentage = 0;
+                Weight = 0;
+            }
+            else
+            {
+                Percentage = (TotalPoints / MaxPoints) * 100;
+                Weight = assessmentType.Weight;
+            }
         }
     }
 }

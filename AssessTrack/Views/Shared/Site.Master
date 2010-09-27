@@ -13,12 +13,14 @@
         function InvokeCompiler(id)
         {
             $("#CompilerOutput").html("Compiling...");
-            $.post('/Compiler/Compile/'+id,function(data){
+            $.post('/Compiler/Compile/' + id, function(data) {
                 var result = JSON.parse(data);
                 $("#CompilerOutput").html(result.message);
-                if (result.code == 1)
-                {
+                if (result.code == 1) {
                     $("textarea[name='Comments']").val(result.comments);
+                    for (var comment in result.answerComments) {
+                        $("#comment-{0}".format(result.answerComments[comment].id)).val(result.answerComments[comment].comment);
+                    }
                 }
             });
         }
@@ -98,6 +100,16 @@
 			    <div class="col3">
 				    <!-- Reminders start -->
 				    <h2>Reminders</h2>
+				    <ul class="menu">
+				        <% if (ViewData["RecentMessages"] != null)
+                            {
+                                Html.RenderPartial("RecentMessagesList", ViewData["RecentMessages"]);
+                            } %>
+                            <% if (ViewData["UpcomingAssessments"] != null)
+                            {
+                                Html.RenderPartial("UpcomingAssessmentList", ViewData["UpcomingAssessments"]);
+                            } %>
+				    </ul>
 				    <!-- reminders end -->
 			    </div>
 		    </div>

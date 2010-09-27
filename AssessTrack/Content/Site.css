@@ -104,7 +104,10 @@ ul ul
 {
     margin-left:10px;
 }
-
+pre
+{
+    margin-bottom:10px;
+}
 
 /* VALIDATION
 -----------------------------------------------------------*/
@@ -387,9 +390,10 @@ li.site-section h3
 table
 {
     border: 1px solid #777;
-    width:100%;
+    max-width:100%;
     border-collapse:collapse;
     overflow:auto;
+    margin-left:5px;
 }
 
 th
@@ -536,4 +540,35 @@ div.question > div
 {
     border-top: 1px dashed #777;
     padding:5px;
+}
+
+/* IMAGES
+--------------------------------------------------- */
+.col1 img
+{
+    max-width:90%;
+}
+div.image
+{
+    text-align:center;
+}
+div.image img
+{
+    display:block;
+    margin: 0 auto;
+}
+div.image span.image-caption
+{
+    text-align:center;
+    font-size:80%;
+}
+
+/* FLASH MESSAGES
+----------------------------------------------------- */
+.flash
+{
+    background-color:#FFFFA3;
+    padding: 10px;
+    border:1px solid #B0AE78;
+    margin-top:10px;
 }

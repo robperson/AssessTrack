@@ -9,13 +9,29 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using System.Transactions;
 using System.Collections.Generic;
+using AssessTrack.Helpers;
 
 namespace AssessTrack.Models
 {
     public partial class AssessTrackDataRepository
     {
+        public List<Assessment> GetUpcomingUnsubmittedAssessments()
+        {
+            var assessments = from assessment in dc.Assessments
+                              from member in dc.CourseTermMembers
+                              where member.MembershipID == UserHelpers.GetCurrentUserID()
+                              && member.CourseTermID == assessment.CourseTermID && member.AccessLevel == 1
+                              && assessment.SubmissionRecords.Where(sub => sub.StudentID == member.MembershipID).Count() == 0
+                              && assessment.DueDate.CompareTo(DateTime.Now) > 0
+                              && assessment.IsVisible && !assessment.AssessmentType.QuestionBank
+                              select assessment;
+
+            return assessments.ToList();
+        }
+
         public Assessment GetAssessmentByName(CourseTerm term, string name)
         {
             return term.Assessments.SingleOrDefault(a => a.Name == name);
@@ -31,11 +47,18 @@ namespace AssessTrack.Models
             SaveAssessment(assessment, true);
         }
 
+        public void DeleteAnswer(Answer answer)
+        {
+            dc.Answers.DeleteOnSubmit(answer);
+            dc.AnswerKeys.DeleteAllOnSubmit(answer.AnswerKeys);
+            dc.Responses.DeleteAllOnSubmit(answer.Responses);
+        }
+
         public void SaveAssessment(Assessment assessment, bool isNew)
         {
             try
             {
-                using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.Required,TimeSpan.MaxValue))
+                using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.Required, TimeSpan.MaxValue))
                 {
                     if (isNew)
                     {
@@ -82,7 +105,7 @@ namespace AssessTrack.Models
                         {
                             throw new InvalidOperationException("Do not use 'id' Attribute when creating new Assessments");
                         }
-                        if (isNew)
+                        if (isNew || questionNode.Attribute("id") == null)
                         {
                             question = new Question();
                         }
@@ -169,6 +192,18 @@ namespace AssessTrack.Models
                             answer.Weight = Convert.ToDouble(answerNode.Attribute("weight").Value);
                             answer.Question = question;
 
+                            XElement stdin = answerNode.Element("Stdin");
+                            if (stdin != null)
+                            {
+                                answer.Stdin = stdin.Value;
+                            }
+
+                            XElement fstream = answerNode.Element("Fstream");
+                            if (fstream != null)
+                            {
+                                answer.Fstream = fstream.Value;
+                            }
+
                             if (isNew || answerNode.Attribute("id") == null)
                             {
                                 answer.Assessment = assessment;
@@ -215,6 +250,16 @@ namespace AssessTrack.Models
                         dc.SubmitChanges();
                     }
                     assessment.Data = markup.ToString();
+                    //Ensure that we aren't deleting an answer and leaving dangling responses
+                    foreach (Answer answer in assessment.Answers)
+                    {
+                        XElement answerNode = markup.XPathSelectElement(string.Format("//answer[@id='{0}']", answer.AnswerID));
+                        if (answerNode == null)
+                        {
+                            DeleteAnswer(answer);
+                        }
+                    }
+
                     dc.SubmitChanges();
                     transaction.Complete();
                 }

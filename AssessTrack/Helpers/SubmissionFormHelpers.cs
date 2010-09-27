@@ -112,17 +112,25 @@ namespace AssessTrack.Helpers
                 foreach (Answer answer in assessment.Answers)
                 {
                     XmlNode answerNode;
+                    //Answernode may be null in some instances, mainly if an answer is deleted from
+                    //an assessment it will still exist in the db but not in the xml
                     if (answer.Type == "short-answer")
                     {
                         answerNode = transformedData.SelectSingleNode(String.Format("//input[@id='{0}']", answer.AnswerID.ToString()));
-                        XmlAttribute value = transformedData.CreateAttribute("value");
-                        value.Value = answers[answer.AnswerID.ToString()];
-                        answerNode.Attributes.Append(value);
+                        if (answerNode != null)
+                        {
+                            XmlAttribute value = transformedData.CreateAttribute("value");
+                            value.Value = answers[answer.AnswerID.ToString()];
+                            answerNode.Attributes.Append(value);
+                        }
                     }
                     else if (answer.Type == "long-answer" || answer.Type == "code-answer")
                     {
                         answerNode = transformedData.SelectSingleNode(String.Format("//textarea[@id='{0}']", answer.AnswerID.ToString()));
-                        answerNode.InnerText = answers[answer.AnswerID.ToString()];
+                        if (answerNode != null)
+                        {
+                            answerNode.InnerText = answers[answer.AnswerID.ToString()];
+                        }
                     }
                     else if (answer.Type == "multichoice")
                     {
@@ -163,8 +171,6 @@ namespace AssessTrack.Helpers
                 }
             }
 
-
-            
             return transformedData.DocumentElement.OuterXml;
         }
 

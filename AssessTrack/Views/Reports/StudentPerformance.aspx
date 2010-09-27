@@ -37,7 +37,7 @@
            <%
            
        } %>
-       <p>*Note: Final grade only counts assessments that have been graded and assignments for which the due date has passed.
+       <p>*Note: Current grade only counts assessments that have been graded and assignments for which the due date has passed.
         Your grade will change if there 
        are many ungraded assessments.</p>
 

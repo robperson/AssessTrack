@@ -12,11 +12,26 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Transactions;
 using System.Collections.Generic;
+using AssessTrack.Helpers;
 
 namespace AssessTrack.Models
 {
     public partial class AssessTrackDataRepository
     {
+        public List<Assessment> GetUpcomingUnsubmittedAssessments()
+        {
+            var assessments = from assessment in dc.Assessments
+                              from member in dc.CourseTermMembers
+                              where member.MembershipID == UserHelpers.GetCurrentUserID()
+                              && member.CourseTermID == assessment.CourseTermID && member.AccessLevel == 1
+                              && assessment.SubmissionRecords.Where(sub => sub.StudentID == member.MembershipID).Count() == 0
+                              && assessment.DueDate.CompareTo(DateTime.Now) > 0
+                              && assessment.IsVisible && !assessment.AssessmentType.QuestionBank
+                              select assessment;
+
+            return assessments.ToList();
+        }
+
         public Assessment GetAssessmentByName(CourseTerm term, string name)
         {
             return term.Assessments.SingleOrDefault(a => a.Name == name);
@@ -90,7 +105,7 @@ namespace AssessTrack.Models
                         {
                             throw new InvalidOperationException("Do not use 'id' Attribute when creating new Assessments");
                         }
-                        if (isNew)
+                        if (isNew || questionNode.Attribute("id") == null)
                         {
                             question = new Question();
                         }

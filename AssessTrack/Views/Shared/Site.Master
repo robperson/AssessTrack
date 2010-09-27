@@ -105,6 +105,10 @@
                             {
                                 Html.RenderPartial("RecentMessagesList", ViewData["RecentMessages"]);
                             } %>
+                            <% if (ViewData["UpcomingAssessments"] != null)
+                            {
+                                Html.RenderPartial("UpcomingAssessmentList", ViewData["UpcomingAssessments"]);
+                            } %>
 				    </ul>
 				    <!-- reminders end -->
 			    </div>

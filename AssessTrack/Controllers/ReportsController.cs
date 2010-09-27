@@ -69,8 +69,11 @@ namespace AssessTrack.Controllers
             foreach (AssessmentType type in dataRepository.GetNonTestBankAssessmentTypes(courseTerm))
             {
                 GradeSection section = new GradeSection(type, profile);
-                totalWeight += section.Weight;
-                sections.Add(section);
+                if (section.Weight > 0)
+                {
+                    totalWeight += section.Weight;
+                    sections.Add(section);
+                }
             }
             PerformanceReportModel model = new PerformanceReportModel(sections, profile);
             model.TotalWeight = totalWeight;

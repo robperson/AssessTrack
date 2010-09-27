@@ -36,8 +36,11 @@ namespace AssessTrack.Models
             {
                 
                 GradeSection section = new GradeSection(asmtType, this.Profile);
-                coursTermPoints += ((section.TotalPoints / section.MaxPoints) * asmtType.Weight);
-                courseTermMaxPoints += section.Weight;
+                if (section.Weight > 0)
+                {
+                    coursTermPoints += ((section.TotalPoints / section.MaxPoints) * asmtType.Weight);
+                    courseTermMaxPoints += section.Weight;
+                }
             }
             finalgrade = ((coursTermPoints / courseTermMaxPoints) * 100);
             if (finalgrade >= 0)

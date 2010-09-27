@@ -178,12 +178,14 @@ namespace AssessTrack.Filters
                 if (!user.Identity.IsAuthenticated)
                 {
                     // not logged in, redirect to login page
+                    FlashMessageHelper.AddMessage("You must be logged in to view this page.");
                     filterContext.Result = new HttpUnauthorizedResult();
                 }
                 else
                 {
                     //not authorized to view resource, redirect to not authorized view
                     //TODO change this to redirect to custom error page
+                    FlashMessageHelper.AddMessage("You are not authorized to view this page.");
                     filterContext.Result = new HttpUnauthorizedResult(); ;
                 }
                 

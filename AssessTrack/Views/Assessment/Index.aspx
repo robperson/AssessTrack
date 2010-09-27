@@ -21,8 +21,6 @@
        } %>
     
     
-    
-
     <p>
         <%= Html.ATAuthLink("Create A New Assessment", new { Action = "Create", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
     </p>

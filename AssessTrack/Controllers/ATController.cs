@@ -22,6 +22,11 @@ namespace AssessTrack.Controllers
             ViewData["showSiteMenu"] = false;
             ViewData["showCourseTermMenu"] = false;
             ViewData["RecentMessages"] = (Request.IsAuthenticated) ? dataRepository.GetRecentCourseTermMessages() : null;
+            if (Request.IsAuthenticated)
+            {
+                List<Assessment> upcomingAssessments = dataRepository.GetUpcomingUnsubmittedAssessments();
+                ViewData["UpcomingAssessments"] = (upcomingAssessments.Count > 0) ? upcomingAssessments : null;
+            }
             ViewData["UserFullName"] = (Request.IsAuthenticated) ? UserHelpers.GetFullNameForCurrentUser() : "Guest";
             base.OnActionExecuting(filterContext);
             

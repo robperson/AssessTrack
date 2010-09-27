@@ -284,6 +284,7 @@
     <Content Include="Views\Error\UnexpectedError.aspx" />
     <Content Include="Views\Reports\StrugglingStudents.aspx" />
     <Content Include="Views\Shared\RecentMessagesList.ascx" />
+    <Content Include="Views\Shared\UpcomingAssessmentList.ascx" />
     <Content Include="Views\SiteMember\DetailedMemberTable.ascx" />
     <Content Include="Views\SiteMember\Details.aspx" />
     <Content Include="Views\SiteMember\Edit.aspx" />

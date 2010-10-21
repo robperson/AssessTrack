@@ -59,7 +59,7 @@ namespace AssessTrack.Models
 
         public double Weight
         {
-            get { return !IsExtraCredit ? Questions.Sum(q => q.Weight) : 0; }
+            get { return !IsExtraCredit ? Answers.Sum(a => a.Weight) : 0; }
             
         }
 

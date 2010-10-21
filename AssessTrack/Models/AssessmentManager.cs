@@ -108,6 +108,7 @@ namespace AssessTrack.Models
                         if (isNew || questionNode.Attribute("id") == null)
                         {
                             question = new Question();
+                            assessment.Questions.Add(question);
                         }
                         else
                         {
@@ -118,7 +119,7 @@ namespace AssessTrack.Models
 
                         if (isNew)
                         {
-                            assessment.Questions.Add(question);
+                            
                             dc.SubmitChanges();
                             questionNode.SetAttributeValue("id", question.QuestionID);
                         }

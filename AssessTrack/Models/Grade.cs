@@ -20,7 +20,7 @@ namespace AssessTrack.Models
             Student = profile;
             SubmissionRecord record = (from s in assessment.SubmissionRecords 
                                            where s.StudentID == profile.MembershipID
-                                           orderby s.SubmissionDate descending
+                                           orderby s.Score descending
                                            select s).FirstOrDefault();
             if (record == null)
             {

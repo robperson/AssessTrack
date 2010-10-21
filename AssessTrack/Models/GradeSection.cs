@@ -25,18 +25,18 @@ namespace AssessTrack.Models
                 Grades.Add(grade);
                 TotalPoints += grade.Points;
                 if ((grade.SubmissionRecord != null && grade.SubmissionRecord.GradedBy != null) ||
-                    DateTime.Now.CompareTo(assessment.DueDate) > 0
+                    (DateTime.Now.CompareTo(assessment.DueDate) > 0 && grade.SubmissionRecord == null)
                     )
                 {
                     MaxPoints += assessment.Weight;
                 }
             }
-            if (TotalPoints > 0 && MaxPoints == 0) //if everything is extra credit
-            {
-                MaxPoints = 1; //to avoid division by zero
-            }
+            //if (TotalPoints > 0 && MaxPoints == 0) //if everything is extra credit
+            //{
+            //    MaxPoints = 1; //to avoid division by zero
+            //}
 
-            if (TotalPoints == 0 && MaxPoints == 0)
+            if (MaxPoints == 0)
             {
                 Percentage = 0;
                 Weight = 0;

@@ -26,7 +26,7 @@ namespace AssessTrack.Helpers
             {
                 return "C";
             }
-            else if (grade < 70.0 && grade >= 65.0)
+            else if (grade < 70.0 && grade >= 60.0)
             {
                 return "D";
             }

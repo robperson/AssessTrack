@@ -21,7 +21,7 @@
   </xsl:template>
 
   <xsl:template match="code">
-    <pre>
+    <pre class="brush: cpp">
       <xsl:value-of select="."/>
     </pre>
 
@@ -45,11 +45,19 @@
           </xsl:attribute>Type answer here</textarea>
       </xsl:if>
       <xsl:if test="@type='code-answer'">
+        <!-- 
         <textarea class="code-answer" cols="75" rows="10">
           <xsl:attribute name="id">
             <xsl:value-of select="@id"/>
           </xsl:attribute>Insert Code
         </textarea>
+        -->
+        <h3>Your Code</h3>
+        <pre class="brush: cpp">
+          <xsl:attribute name="id">
+            <xsl:value-of select="@id"/>
+          </xsl:attribute>Insert Code
+        </pre>
       </xsl:if>
 
       <xsl:if test="@type='short-answer'">

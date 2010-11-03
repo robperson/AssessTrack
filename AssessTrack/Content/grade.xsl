@@ -44,11 +44,17 @@
           </xsl:attribute>Type answer here</textarea>
       </xsl:if>
       <xsl:if test="@type='code-answer'">
-        <textarea class="code-answer" cols="75" rows="10" >
+        <!--<textarea class="code-answer" cols="75" rows="10" >
           <xsl:attribute name="id">
             <xsl:value-of select="@id"/>
           </xsl:attribute>Insert Code
-        </textarea>
+        </textarea>-->
+        <h3>Your Code</h3>
+        <pre class="brush: cpp">
+          <xsl:attribute name="id">
+            <xsl:value-of select="@id"/>
+          </xsl:attribute>Insert Code
+        </pre>
       </xsl:if>
 
       <xsl:if test="@type='short-answer'">

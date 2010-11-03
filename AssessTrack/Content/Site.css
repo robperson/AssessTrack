@@ -577,3 +577,17 @@ div.image span.image-caption
     border:1px solid #B0AE78;
     margin-top:10px;
 }
+/* SYNTAX HIGHLIGHTER
+------------------------------------------------------ */
+div.syntaxhighlighter
+{
+    overflow:auto;
+}
+td.code div 
+{
+    width:auto;
+}
+code.cpp
+{
+    white-space:pre;
+}

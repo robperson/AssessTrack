@@ -16,6 +16,7 @@
     
     <h3>Submitted on <%= Model.SubmissionRecord.SubmissionDate.ToString() %></h3>
     <h3>Score: <%= Model.SubmissionRecord.Score.ToString() %></h3>
+    <h3>Graded By: <%= UserHelpers.GetFullNameForID(Model.SubmissionRecord.GradedBy) %></h3>
     
     <% if (Model.OtherSubmissionRecords.Count > 0)
        { %>

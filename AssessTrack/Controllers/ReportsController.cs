@@ -7,6 +7,7 @@ using System.Web.Mvc.Ajax;
 using AssessTrack.Filters;
 using AssessTrack.Models;
 using AssessTrack.Helpers;
+using AssessTrack.Models.ReportsAndTools;
 
 namespace AssessTrack.Controllers
 {
@@ -37,6 +38,12 @@ namespace AssessTrack.Controllers
             CourseTermName = name;
             Students = students;
         }
+    }
+
+    public class AssessmentGradeDistributionModel
+    {
+        public Assessment Assessment;
+        public GradeDistribution GradeDistribution;
     }
 
     public class ReportsController : ATController
@@ -117,6 +124,47 @@ namespace AssessTrack.Controllers
                                                          select student).ToList();
 
             return View(strugglingStudents);
+        }
+
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 5, MaxLevel = 10)]
+        public ActionResult ClassGradeDistribution()
+        {
+            List<CourseTermMember> students = dataRepository.GetStudentsInCourseTerm(courseTerm);
+            GradeDistribution dist = new GradeDistribution();
+            foreach (var student in students)
+            {
+                dist.AddGrade(student.GetFinalGrade());
+            }
+
+            return View(dist);
+        }
+
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 5, MaxLevel = 10)]
+        public ActionResult AssessmentGradeDistribution(Guid? id)
+        {
+            List<CourseTermMember> students = dataRepository.GetStudentsInCourseTerm(courseTerm);
+            if (id == null)
+            {
+                return View("AssessmentNotFound");
+            }
+            Assessment a = dataRepository.GetAssessmentByID(courseTerm, id.Value);
+            GradeDistribution dist = new GradeDistribution();
+            foreach (var student in students)
+            {
+                Grade g = new Grade(a, student.Profile);
+                if (g.SubmissionRecord != null)
+                {
+                    dist.AddGrade(g.Percentage);
+                }
+                else
+                {
+                    dist.AddGrade(new Nullable<double>());
+                }
+            }
+            AssessmentGradeDistributionModel model = new AssessmentGradeDistributionModel();
+            model.GradeDistribution = dist;
+            model.Assessment = a;
+            return View(model);
         }
 
     }

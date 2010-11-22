@@ -285,7 +285,7 @@ namespace AssessTrack.Models
         {
             return (from asmt in courseTerm.Assessments
                     where !asmt.AssessmentType.QuestionBank
-                    orderby asmt.DueDate descending
+                    orderby asmt.Name
                     select asmt).ToList();
         }
         public List<Assessment> GetPastDueAssessments(CourseTerm courseTerm)

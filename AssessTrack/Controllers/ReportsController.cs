@@ -61,6 +61,36 @@ namespace AssessTrack.Controllers
             return View(new StudentsReportModel(courseTerm.Name,dataRepository.GetStudentsInCourseTerm(courseTerm)));
         }
 
+        public ActionResult GradeSheetOverview()
+        {
+            List<Assessment> assessments = dataRepository.GetAllNonTestBankAssessments(courseTerm);
+            List<Profile> profiles = dataRepository.GetStudentProfiles(courseTerm);
+
+             
+            Func<Assessment, string> ylabel = (a => a.Name);
+            Func<Assessment, string> ydetail = (a => a.Weight.ToString());
+            Func<Assessment, double> yval = a => a.Weight;
+            Func<Profile,string> xlabel = p => p.FullName;
+            Func<Profile,Assessment,double> cellval = (p,a) => 
+                {
+                    Grade g = new Grade(a,p);
+                    return g.Points;
+                };
+            bool showcoltotals = true;
+            bool showcolavgs = true;
+            bool showcolpfmes = true;
+            bool showcolgrade = true;
+
+            GridReport<Profile, Assessment> report = new GridReport<Profile, Assessment>(profiles,
+                assessments,
+                ylabel, ydetail, yval,
+                xlabel, cellval,
+                showcoltotals, showcolavgs, showcolpfmes, showcolgrade);
+
+            return View(report);
+
+        }
+
         [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 0, MaxLevel = 10)]
         public ActionResult StudentPerformance(string courseTermShortName, string siteShortName, Guid id /*ProfileID*/)
         {

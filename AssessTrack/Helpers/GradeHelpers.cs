@@ -35,5 +35,11 @@ namespace AssessTrack.Helpers
                 return "F";
             }
         }
+
+        public static string GetPfme(double grade)
+        {
+            double pfme = (grade / 100) * 5;
+            return pfme.ToString("{0:0.00}");
+        }
     }
 }

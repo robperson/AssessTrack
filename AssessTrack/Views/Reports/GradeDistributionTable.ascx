@@ -10,27 +10,75 @@
     </tr>
     <tr>
         <td>A</td>
-        <td><%= Model.ACount %></td>
+        <td>
+            <p><%= Model.ACount %></p>
+            <p>
+                <% foreach (var profile in Model.AStudents)
+                   {
+                       Response.Write(profile.FullName + ", ");   
+                   } %>
+            </p>        
+        </td>
     </tr>
     <tr>
         <td>B</td>
-        <td><%= Model.BCount %></td>
+        <td>
+            <p><%= Model.BCount %></p>
+            <p>
+                <% foreach (var profile in Model.BStudents)
+                   {
+                       Response.Write(profile.FullName + ", ");   
+                   } %>
+            </p>        
+        </td>
     </tr>
     <tr>
         <td>C</td>
-        <td><%= Model.CCount %></td>
+        <td>
+            <p><%= Model.CCount %></p>
+            <p>
+                <% foreach (var profile in Model.CStudents)
+                   {
+                       Response.Write(profile.FullName + ", ");   
+                   } %>
+            </p>        
+        </td>
     </tr>
     <tr>
         <td>D</td>
-        <td><%= Model.DCount %></td>
+        <td>
+            <p><%= Model.DCount %></p>
+            <p>
+                <% foreach (var profile in Model.DStudents)
+                   {
+                       Response.Write(profile.FullName + ", ");   
+                   } %>
+            </p>        
+        </td>
     </tr>
     <tr>
         <td>F</td>
-        <td><%= Model.FCount %></td>
+        <td>
+            <p><%= Model.FCount %></p>
+            <p>
+                <% foreach (var profile in Model.FStudents)
+                   {
+                       Response.Write(profile.FullName + ", ");   
+                   } %>
+            </p>        
+        </td>
     </tr>
     <tr>
         <td>Ungraded</td>
-        <td><%= Model.UngradedCount %></td>
+        <td>
+            <p><%= Model.UngradedCount %></p>
+            <p>
+                <% foreach (var profile in Model.UngradedStudents)
+                   {
+                       Response.Write(profile.FullName + ", ");   
+                   } %>
+            </p>        
+        </td>
     </tr>
 </table>
 <p>Total Students: <%= Model.TotalCount %></p>

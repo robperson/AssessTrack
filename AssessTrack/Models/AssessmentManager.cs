@@ -72,7 +72,7 @@ namespace AssessTrack.Models
                     DeleteAllTagsFromAssessment(assessment);
 
                     XAttribute tags = markup.Attribute("tags");
-                    if (tags != null)
+                    if (tags != null && !string.IsNullOrEmpty(tags.Value))
                     {
                         string[] tagList = tags.Value.Split(new char[] { ',' });
                         foreach (string tagname in tagList)
@@ -127,7 +127,7 @@ namespace AssessTrack.Models
                         //TODO: Remove this line
                         DeleteAllTagsFromQuestion(question);
                         tags = questionNode.Attribute("tags");
-                        if (tags != null)
+                        if (tags != null && !string.IsNullOrEmpty(tags.Value))
                         {
                             string[] tagList = tags.Value.Split(new char[] { ',' });
                             foreach (string tagname in tagList)
@@ -216,7 +216,7 @@ namespace AssessTrack.Models
                             //TODO: Remove this line
                             DeleteAllTagsFromAnswer(answer);
                             tags = answerNode.Attribute("tags");
-                            if (tags != null)
+                            if (tags != null && !string.IsNullOrEmpty(tags.Value))
                             {
                                 string[] tagList = tags.Value.Split(new char[] { ',' });
                                 foreach (string tagname in tagList)

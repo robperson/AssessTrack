@@ -46,6 +46,7 @@ namespace AssessTrack.Controllers
         public GradeDistribution GradeDistribution;
     }
 
+    [Authorize()]
     public class ReportsController : ATController
     {
         //
@@ -84,6 +85,36 @@ namespace AssessTrack.Controllers
             GridReport<Profile, Assessment> report = new GridReport<Profile, Assessment>(profiles,
                 assessments,
                 ylabel, ydetail, yval,
+                xlabel, cellval,
+                showcoltotals, showcolavgs, showcolpfmes, showcolgrade);
+
+            return View(report);
+
+        }
+
+        public ActionResult CourseOutcomeSummary()
+        {
+            List<Tag> tags = dataRepository.GetTags(courseTerm);
+            List<Profile> profiles = dataRepository.GetStudentProfiles(courseTerm);
+
+
+            Func<Tag, string> ylabel = (tag => tag.Name);
+            
+            
+            Func<Profile, string> xlabel = p => p.FullName;
+            Func<Profile, Tag, double> cellval = (p, t) =>
+            {
+                
+                return dataRepository.GetPfmeForTag(t,p);
+            };
+            bool showcoltotals = false;
+            bool showcolavgs = true;
+            bool showcolpfmes = false;
+            bool showcolgrade = false;
+
+            GridReport<Profile, Tag> report = new GridReport<Profile, Tag>(profiles,
+                tags,
+                ylabel, null, null,
                 xlabel, cellval,
                 showcoltotals, showcolavgs, showcolpfmes, showcolgrade);
 
@@ -163,7 +194,7 @@ namespace AssessTrack.Controllers
             GradeDistribution dist = new GradeDistribution();
             foreach (var student in students)
             {
-                dist.AddGrade(student.GetFinalGrade());
+                dist.AddGrade(student.GetFinalGrade(),student.Profile);
             }
 
             return View(dist);

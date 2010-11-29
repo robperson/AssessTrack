@@ -11,6 +11,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
+using AssessTrack.Helpers;
 
 namespace AssessTrack.Models
 {
@@ -19,6 +20,11 @@ namespace AssessTrack.Models
         public Tag GetTagByName(CourseTerm courseTerm, string name)
         {
             return courseTerm.Tags.SingleOrDefault(t => t.Name == name);
+        }
+
+        public List<Tag> GetTags(CourseTerm courseTerm)
+        {
+            return courseTerm.Tags.OrderBy(tag => tag.Name).ToList();
         }
 
         public Tag GetTagByID(CourseTerm courseTerm, Guid id)
@@ -172,6 +178,42 @@ namespace AssessTrack.Models
                        where a.AnswerID == answer.AnswerID
                        select t;
             return tags.ToList();
+        }
+
+        public List<ITaggable> GetTaggedItems(Tag tag)
+        {
+            List<ITaggable> items = new List<ITaggable>();
+            foreach (var answer in GetTaggedAnswers(tag))
+            {
+                items.Add(answer);
+            }
+            foreach (var question in GetTaggedQuestions(tag))
+            {
+                items.Add(question);
+            }
+            foreach (var assessment in GetTaggedAssessments(tag))
+            {
+                items.Add(assessment);
+            }
+
+            return items;
+        }
+
+        public double GetPfmeForTag(Tag tag, Profile profile)
+        {
+            double totalweight = 0.0;
+            double totalpoints = 0.0;
+
+            List<ITaggable> items = GetTaggedItems(tag);
+            foreach (var taggeditem in items)
+            {
+                totalpoints += taggeditem.Score(profile);
+                totalweight += taggeditem.Weight;
+            }
+            double avg = totalpoints / totalweight * 100;
+            double pfme = GradeHelpers.GetPfme(avg);
+
+            return pfme;
         }
     }
 }

@@ -14,7 +14,7 @@ using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
-    public partial class Question : IBackupItem
+    public partial class Question : IBackupItem, ITaggable
     {
         public int Number
         {
@@ -66,6 +66,31 @@ namespace AssessTrack.Models
         public void Insert(AssessTrackModelClassesDataContext dc)
         {
             dc.Questions.InsertOnSubmit(this);
+        }
+
+        #endregion
+
+        #region ITaggable Members
+
+
+        public string Name
+        {
+            get 
+            {
+                string name = string.Format("{0}, Question #{1}", this.Assessment.Name, Number);
+                return name;    
+            }
+        }
+
+        public double Score(Profile profile)
+        {
+            Grade grade = new Grade(this.Assessment, profile);
+            if (grade.SubmissionRecord == null)
+                return 0.0;
+            var responses = from response in grade.SubmissionRecord.Responses where response.Answer.QuestionID == this.QuestionID select response;
+            double? score = responses.Sum(response => response.Score);
+
+            return (score.HasValue) ? score.Value : 0.0;
         }
 
         #endregion

@@ -21,7 +21,7 @@ using AssessTrack.Backup;
 namespace AssessTrack.Models
 {
     [Bind(Include="AllowMultipleSubmissions,Name,DueDate,IsExtraCredit,AssessmentTypeID,Data,CreatedDate,IsVisible,IsOpen,IsGradable")]
-    public partial class Assessment: IBackupItem
+    public partial class Assessment: IBackupItem, ITaggable
     {
         public bool IsValid
         {
@@ -54,7 +54,10 @@ namespace AssessTrack.Models
         partial void OnValidate(ChangeAction action)
         {
             if (!IsValid)
-                throw new RuleViolationException("Rule violations prevent saving");
+            {
+                RuleViolation first = GetRuleViolations().First();
+                throw new RuleViolationException(first.ErrorMessage);
+            }
         }
 
         public double Weight
@@ -123,6 +126,36 @@ namespace AssessTrack.Models
         public void Insert(AssessTrackModelClassesDataContext dc)
         {
             dc.Assessments.InsertOnSubmit(this);
+        }
+
+        #endregion
+
+        #region ITaggable Members
+
+
+        public double Score(Profile profile)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region ITaggable Members
+
+        double ITaggable.Weight
+        {
+            get { return this.Weight; }
+        }
+
+        string ITaggable.Name
+        {
+            get { return this.Name; }
+        }
+
+        double ITaggable.Score(Profile profile)
+        {
+            Grade grade = new Grade(this, profile);
+            return grade.Points;
         }
 
         #endregion

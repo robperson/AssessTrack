@@ -50,7 +50,7 @@ namespace AssessTrack.Models.ReportsAndTools
             ShowColumnTotals = showcoltotals;
 
             PrintXLabel = xlabel;
-            PrintYDetail = ydetail;
+            printYDetail = ydetail;
             PrintYLabel = ylabel;
             GetCellValue = cellval;
             GetYValue = yval;
@@ -89,7 +89,18 @@ namespace AssessTrack.Models.ReportsAndTools
         }
 
         public Func<YType, string> PrintYLabel;
-        public Func<YType, string> PrintYDetail;
+        private Func<YType, string> printYDetail;
+        public string PrintYDetail(YType yitem)
+        {
+            if (printYDetail != null)
+            {
+                return printYDetail(yitem);
+            }
+            else
+            {
+                return "";
+            }
+        }
         private Func<YType, double> GetYValue;
 
         public Func<XType, string> PrintXLabel;
@@ -132,6 +143,18 @@ namespace AssessTrack.Models.ReportsAndTools
             return avg.ToString("{0:0.00}");
         }
 
+        public string PrintColumnPercentage(XType xitem)
+        {
+            if (!ShowColumnTotals)
+                return "N/A";
+
+            int idx = XItems.IndexOf(xitem);
+            double total = ColumnTotals[idx];
+            double pct = total / detailTotal * 100;
+
+            return string.Format("{0:0.00}", pct);
+        }
+
         public string PrintColumnGrade(XType xitem)
         {
             double avg = getColumnAvg(xitem);
@@ -141,7 +164,7 @@ namespace AssessTrack.Models.ReportsAndTools
         public string PrintColumnPfme(XType xitem)
         {
             double avg = getColumnAvg(xitem);
-            return GradeHelpers.GetPfme(avg);
+            return GradeHelpers.PrintPfme(avg);
         }
     }
 }

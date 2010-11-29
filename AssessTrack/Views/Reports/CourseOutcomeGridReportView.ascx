@@ -1,5 +1,5 @@
 <%@ Import Namespace="AssessTrack.Models" %>
-<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<AssessTrack.Models.ReportsAndTools.GridReport<Profile,Assessment>>" %>
+<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<AssessTrack.Models.ReportsAndTools.GridReport<Profile,Tag>>" %>
 <div class="tablediv">
 <table>
     <thead>
@@ -45,6 +45,18 @@
                 <td><%= Model.PrintColumnPercentage(xitem) %></td>  
           <%} %>
       </tr>
+    <%} %>
+    <%if (Model.ShowColumnAverages)
+      { %>
+      <tr>
+        <th>Average</th>
+        <td>&nbsp;</td>
+        <%foreach (var xitem in Model.XItems)
+          {%>
+                <td><%= Model.PrintColumnAverage(xitem) %></td>  
+          <%} %>
+      </tr>
+      <
     <%} %>
     </tbody>
 </table>

@@ -132,6 +132,7 @@
     <Compile Include="Helpers\UserHelpers.cs" />
     <Compile Include="Models\CourseTermMessageManager.cs" />
     <Compile Include="Models\CourseTermMessage.cs" />
+    <Compile Include="Models\ITaggable.cs" />
     <Compile Include="Models\ReportsAndTools\GradeDistribution.cs" />
     <Compile Include="Models\ReportsAndTools\GridReport.cs" />
     <Compile Include="Models\SiteMemberManager.cs" />
@@ -286,6 +287,8 @@
     <Content Include="Views\Error\UnexpectedError.aspx" />
     <Content Include="Views\Reports\AssessmentGradeDistribution.aspx" />
     <Content Include="Views\Reports\ClassGradeDistribution.aspx" />
+    <Content Include="Views\Reports\CourseOutcomeGridReportView.ascx" />
+    <Content Include="Views\Reports\CourseOutcomeSummary.aspx" />
     <Content Include="Views\Reports\GradeDistributionTable.ascx" />
     <Content Include="Views\Reports\GradeSheetOverview.aspx" />
     <Content Include="Views\Reports\GridReportView.ascx" />

@@ -413,6 +413,11 @@ div.row-actions
 {
     font-size:75%;
 }
+div.tablediv
+{
+    width:99%;
+    overflow:auto;
+}
 
 /* Student Performance Report
 -----------------------------------------------*/

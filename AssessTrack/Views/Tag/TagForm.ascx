@@ -9,9 +9,19 @@
                 <%= Html.ValidationMessage("Name", "*") %>
             </p>
             <p>
+                <label for="DescriptiveName">Descriptive Name:</label>
+                <%= Html.TextBox("DescriptiveName", Model.DescriptiveName)%>
+                <%= Html.ValidationMessage("DescriptiveName", "*")%>
+            </p>
+            <p>
                 <label for="Description">Description:</label>
-                <%= Html.TextBox("Description", Model.Description) %>
+                <%= Html.TextArea("Description", Model.Description) %>
                 <%= Html.ValidationMessage("Description", "*") %>
+            </p>
+            <p>
+                <label for="IsCourseOutcome">Is Course Outcome?:</label>
+                <%= Html.CheckBox("IsCourseOutcome", Model.IsCourseOutcome)%>
+                <%= Html.ValidationMessage("IsCourseOutcome", "*")%>
             </p>
             <p>
                 <input type="submit" value="Save" />

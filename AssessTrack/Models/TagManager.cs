@@ -22,9 +22,24 @@ namespace AssessTrack.Models
             return courseTerm.Tags.SingleOrDefault(t => t.Name == name);
         }
 
-        public List<Tag> GetTags(CourseTerm courseTerm)
+        public List<Tag> GetTags(CourseTerm courseTerm, bool includeEmptyTags)
         {
-            return courseTerm.Tags.OrderBy(tag => tag.Name).ToList();
+            var tags = courseTerm.Tags.ToList();
+            if (!includeEmptyTags)
+            {
+                tags = tags.Where(t => GetTaggedItems(t).Count > 0).ToList();
+            }
+            return tags.OrderBy(t => t.Name).ToList();
+        }
+
+        public List<Tag> GetCourseOutcomes(CourseTerm courseTerm, bool includeEmptyTags)
+        {
+            var tags = courseTerm.Tags.Where(t => t.IsCourseOutcome).ToList();
+            if (!includeEmptyTags)
+            {
+                tags = tags.Where(t => GetTaggedItems(t).Count > 0).ToList();
+            }
+            return tags.OrderBy(t => t.Name).ToList();
         }
 
         public Tag GetTagByID(CourseTerm courseTerm, Guid id)

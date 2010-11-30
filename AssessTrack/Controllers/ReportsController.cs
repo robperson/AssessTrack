@@ -94,11 +94,11 @@ namespace AssessTrack.Controllers
 
         public ActionResult CourseOutcomeSummary()
         {
-            List<Tag> tags = dataRepository.GetTags(courseTerm);
+            List<Tag> tags = dataRepository.GetCourseOutcomes(courseTerm,false);
             List<Profile> profiles = dataRepository.GetStudentProfiles(courseTerm);
 
 
-            Func<Tag, string> ylabel = (tag => tag.Name);
+            Func<Tag, string> ylabel = (tag => (string.IsNullOrEmpty(tag.DescriptiveName))? tag.Name : tag.DescriptiveName);
             
             
             Func<Profile, string> xlabel = p => p.FullName;

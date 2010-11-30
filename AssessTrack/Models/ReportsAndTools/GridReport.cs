@@ -140,7 +140,7 @@ namespace AssessTrack.Models.ReportsAndTools
         public string PrintColumnAverage(XType xitem)
         {
             double avg = getColumnAvg(xitem);
-            return avg.ToString("{0:0.00}");
+            return avg.ToString("0.00");
         }
 
         public string PrintColumnPercentage(XType xitem)

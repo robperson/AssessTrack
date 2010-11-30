@@ -44,7 +44,7 @@ namespace AssessTrack.Helpers
 
         public static double GetPfme(double grade)
         {
-            return (grade / 100) * 5;
+            return Math.Floor((grade / 100) * 5);
         }
     }
 }

@@ -56,7 +56,7 @@
                 <td><%= Model.PrintColumnAverage(xitem) %></td>  
           <%} %>
       </tr>
-      <
+      
     <%} %>
     </tbody>
 </table>

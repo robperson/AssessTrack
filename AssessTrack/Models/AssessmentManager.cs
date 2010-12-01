@@ -283,11 +283,26 @@ namespace AssessTrack.Models
         }
         public List<Assessment> GetAllNonTestBankAssessments(CourseTerm courseTerm)
         {
-            return (from asmt in courseTerm.Assessments
-                    where !asmt.AssessmentType.QuestionBank
-                    orderby asmt.Name
-                    select asmt).ToList();
+            return GetAllNonTestBankAssessments(courseTerm, true);
         }
+
+        public List<Assessment> GetAllNonTestBankAssessments(CourseTerm courseTerm, bool includeExtraCredit)
+        {
+            return GetAllNonTestBankAssessments(courseTerm, includeExtraCredit, null);
+        }
+
+        public List<Assessment> GetAllNonTestBankAssessments(CourseTerm courseTerm, bool includeExtraCredit, AssessmentType filterby)
+        {
+            var assessments = from asmt in courseTerm.Assessments
+                    where !asmt.AssessmentType.QuestionBank && asmt.IsVisible
+                    select asmt;
+            if (!includeExtraCredit)
+                assessments = assessments.Where(a => !a.IsExtraCredit);
+            if (filterby != null)
+                assessments = assessments.Where(a => a.AssessmentType == filterby);
+            return assessments.OrderBy(a => a.Name).ToList();
+        }
+
         public List<Assessment> GetPastDueAssessments(CourseTerm courseTerm)
         {
             return (from asmt in courseTerm.Assessments
@@ -313,6 +328,20 @@ namespace AssessTrack.Models
                     && !asmt.AssessmentType.QuestionBank
                     orderby asmt.DueDate descending
                     select asmt).ToList();
+        }
+
+        public double GetWeightedPointValue(Assessment assessment)
+        {
+            if (assessment.IsExtraCredit)
+                return 0.0;
+            double totalAssignedPoints = GetAllNonTestBankAssessments(assessment.CourseTerm, false).Sum(a => a.Weight);
+            double assessmentTypePercentage = assessment.AssessmentType.Weight / 100.0;
+            double assessmentTypeWeightedPoints = assessmentTypePercentage * totalAssignedPoints;
+            double assessmentTypeTotalPoints = GetAllNonTestBankAssessments(assessment.CourseTerm,false).Where(a => a.AssessmentType == assessment.AssessmentType).Sum(a => a.Weight);
+            double assessmentPointPercentage = assessment.Weight / assessmentTypeTotalPoints;
+            double weightedValue = assessmentPointPercentage * assessmentTypeWeightedPoints;
+
+            return weightedValue;
         }
     }
 

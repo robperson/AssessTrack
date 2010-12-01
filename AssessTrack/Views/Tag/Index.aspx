@@ -24,7 +24,11 @@
             <td>
                 <strong><%= Html.ActionLink(item.Name, "Details", new { id = item.TagID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%></strong>
                 <div class="row-actions">
-                    <%= Html.ActionLink("Edit", "Edit", new { id = item.TagID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>    
+                    <%= Html.ActionLink("Edit", "Edit", new { id = item.TagID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
+                    <% if (item.IsCourseOutcome)
+                       { %>
+                        <%= Html.RouteLink("Course Outcome Details",new { id = item.TagID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName(), controller = "Reports", action = "CourseOutcomeDetails" })%>    
+                    <%} %>
                 </div>
             </td>
             <td>

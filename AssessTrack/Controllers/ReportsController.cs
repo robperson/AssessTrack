@@ -64,29 +64,31 @@ namespace AssessTrack.Controllers
 
         public ActionResult GradeSheetOverview()
         {
-            List<Assessment> assessments = dataRepository.GetAllNonTestBankAssessments(courseTerm);
+            List<Assessment> assessments = dataRepository.GetAllNonTestBankAssessments(courseTerm,false);
             List<Profile> profiles = dataRepository.GetStudentProfiles(courseTerm);
 
              
             Func<Assessment, string> ylabel = (a => a.Name);
-            Func<Assessment, string> ydetail = (a => a.Weight.ToString());
-            Func<Assessment, double> yval = a => a.Weight;
+            Func<Assessment, string> ydetail = (a => dataRepository.GetWeightedPointValue(a).ToString("0.00"));
+            Func<Assessment, double> yval = a => dataRepository.GetWeightedPointValue(a);
             Func<Profile,string> xlabel = p => p.FullName;
             Func<Profile,Assessment,double> cellval = (p,a) => 
                 {
                     Grade g = new Grade(a,p);
-                    return g.Points;
+                    double wv = dataRepository.GetWeightedPointValue(a);
+                    return (a.IsExtraCredit)? g.Points : (g.Percentage/100.0) * wv;
                 };
             bool showcoltotals = true;
-            bool showcolavgs = true;
-            bool showcolpfmes = true;
+            bool showcolavgs = false;
+            bool showcolpfmes = false;
             bool showcolgrade = true;
+            bool showrowavgs = true;
 
             GridReport<Profile, Assessment> report = new GridReport<Profile, Assessment>(profiles,
                 assessments,
                 ylabel, ydetail, yval,
                 xlabel, cellval,
-                showcoltotals, showcolavgs, showcolpfmes, showcolgrade);
+                showcoltotals, showcolavgs, showcolpfmes, showcolgrade, showrowavgs);
 
             return View(report);
 
@@ -98,7 +100,13 @@ namespace AssessTrack.Controllers
             List<Profile> profiles = dataRepository.GetStudentProfiles(courseTerm);
 
 
-            Func<Tag, string> ylabel = (tag => (string.IsNullOrEmpty(tag.DescriptiveName))? tag.Name : tag.DescriptiveName);
+            
+            Func<Tag, string> ylabel = tag =>
+                {
+                    string tagname = string.IsNullOrEmpty(tag.DescriptiveName) ? tag.Name : tag.DescriptiveName;
+                    string url = Url.Action("CourseOutcomeDetails", "Reports", new { id = tag.TagID, siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName });
+                    return string.Format(@"<a href=""{0}"" title=""Click to view Course Outcome Details Report"">{1}</a>",url,tagname);
+                };
             
             
             Func<Profile, string> xlabel = p => p.FullName;
@@ -111,14 +119,50 @@ namespace AssessTrack.Controllers
             bool showcolavgs = true;
             bool showcolpfmes = false;
             bool showcolgrade = false;
+            bool showrowavgs = true;
 
-            GridReport<Profile, Tag> report = new GridReport<Profile, Tag>(profiles,
+            IGridReport report = new GridReport<Profile, Tag>(profiles,
                 tags,
                 ylabel, null, null,
                 xlabel, cellval,
-                showcoltotals, showcolavgs, showcolpfmes, showcolgrade);
+                showcoltotals, showcolavgs, showcolpfmes, showcolgrade,showrowavgs);
 
             return View(report);
+
+        }
+
+        public ActionResult CourseOutcomeDetails(Guid id)
+        {
+            Tag tag = dataRepository.GetTagByID(courseTerm, id);
+            List<ITaggable> taggeditems = dataRepository.GetTaggedItems(tag);
+            List<Profile> profiles = dataRepository.GetStudentProfiles(courseTerm);
+
+
+            Func<ITaggable, string> ylabel = (tagged => tagged.Name);
+            Func<ITaggable, double> yval = (tagged => tagged.Weight);
+            Func<ITaggable, string> ydetail = (tagged => tagged.Weight.ToString("0.00"));
+
+
+            Func<Profile, string> xlabel = p => p.FullName;
+            Func<Profile, ITaggable, double> cellval = (p, t) =>
+            {
+
+                return t.Score(p);
+            };
+            bool showcoltotals = true;
+            bool showcolavgs = false;
+            bool showcolpfmes = true;
+            bool showcolgrade = false;
+            bool showrowavgs = true;
+
+            IGridReport report = new GridReport<Profile, ITaggable>(profiles,
+                taggeditems,
+                ylabel, ydetail, yval,
+                xlabel, cellval,
+                showcoltotals, showcolavgs, showcolpfmes, showcolgrade, showrowavgs);
+
+            CourseOutcomeDetailsModel model = new CourseOutcomeDetailsModel() { CourseOutcome = tag, Report = report };
+            return View(model);
 
         }
 
@@ -136,7 +180,7 @@ namespace AssessTrack.Controllers
             List<GradeSection> sections = new List<GradeSection>();
             foreach (AssessmentType type in dataRepository.GetNonTestBankAssessmentTypes(courseTerm))
             {
-                GradeSection section = new GradeSection(type, profile);
+                GradeSection section = new GradeSection(type, profile,dataRepository,true);
                 totalWeight += section.Weight;
                 sections.Add(section);
                 
@@ -215,11 +259,11 @@ namespace AssessTrack.Controllers
                 Grade g = new Grade(a, student.Profile);
                 if (g.SubmissionRecord != null)
                 {
-                    dist.AddGrade(g.Percentage);
+                    dist.AddGrade(g.Percentage,student.Profile);
                 }
                 else
                 {
-                    dist.AddGrade(new Nullable<double>());
+                    dist.AddGrade(new Nullable<double>(),student.Profile);
                 }
             }
             AssessmentGradeDistributionModel model = new AssessmentGradeDistributionModel();

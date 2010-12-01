@@ -16,6 +16,9 @@
             <th>
                 Final Grade
             </th>
+            <th>
+                Final Grade (w/o Extra Credit)
+            </th>
         </tr>
 
     <% foreach (var item in Model) { %>
@@ -27,6 +30,10 @@
             <td>
                 <%= Html.Encode(item.GetFinalLetterGrade()) %>
                 (<%= Html.Encode(string.Format("{0:0.00}%",item.GetFinalGrade())) %>)
+            </td>
+            <td>
+                <%= Html.Encode(item.GetFinalLetterGrade(false)) %>
+                (<%= Html.Encode(string.Format("{0:0.00}%",item.GetFinalGrade(false))) %>)
             </td>
         </tr>
     

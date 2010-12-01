@@ -1,5 +1,5 @@
 <%@ Import Namespace="AssessTrack.Models" %>
-<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<AssessTrack.Models.ReportsAndTools.GridReport<Profile,Assessment>>" %>
+<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<AssessTrack.Models.ReportsAndTools.IGridReport>" %>
 <div class="tablediv">
 <table>
     <thead>
@@ -9,6 +9,10 @@
                { %>
                 <th><%= Model.PrintXLabel(item) %>   </th>
               <% } %>
+              <%if (Model.ShowRowAverages)
+                { %>
+                <th><strong>Average</strong></th>
+                <%} %>
         </tr>
     </thead>
     <tbody>
@@ -21,11 +25,15 @@
           { %>
             <td><%= Model.PrintCellValue(xval,yval) %></td>
         <%} %>
+        <%if (Model.ShowRowAverages)
+                { %>
+                <td><strong><%= Model.PrintRowAverage(yval) %></strong></td>
+                <%} %>
       </tr>
     <% } %>
     <tr>
     
-        <td colspan="<%= (Model.XItems.Count + 2).ToString() %>">&nbsp;</td>
+        <td colspan="<%= (Model.XItems.Count + 3).ToString() %>">&nbsp;</td>
     </tr>
     <%if (Model.ShowColumnTotals)
       { %>
@@ -36,6 +44,7 @@
           {%>
                 <td><%= Model.PrintColumnTotal(xitem) %></td>  
           <%} %>
+          <td></td>
       </tr>
       <tr>
         <th>Percentage</th>
@@ -44,7 +53,50 @@
           {%>
                 <td><%= Model.PrintColumnPercentage(xitem) %></td>  
           <%} %>
+          <%if (Model.ShowRowAverages)
+            { %>
+                <td><strong><%= Model.PrintTotalAverage() %></strong></td>
+          <%} %>
       </tr>
+    <%} %>
+    
+    <%if (Model.ShowColumnAverages)
+      { %>
+      <tr>
+        <th>Average</th>
+        <td>&nbsp;</td>
+        <%foreach (var xitem in Model.XItems)
+          {%>
+                <td><%= Model.PrintColumnAverage(xitem) %></td>  
+          <%} %>
+      </tr>
+      
+    <%} %>
+    
+    <%if (Model.ShowColumnGrades)
+      { %>
+      <tr>
+        <th>Grade</th>
+        <td>&nbsp;</td>
+        <%foreach (var xitem in Model.XItems)
+          {%>
+                <td><%= Model.PrintColumnGrade(xitem) %></td>  
+          <%} %>
+      </tr>
+      
+    <%} %>
+    
+    <%if (Model.ShowColumnPfmes)
+      { %>
+      <tr>
+        <th>Pfme</th>
+        <td>&nbsp;</td>
+        <%foreach (var xitem in Model.XItems)
+          {%>
+                <td><%= Model.PrintColumnPfme(xitem) %></td>  
+          <%} %>
+      </tr>
+      
     <%} %>
     </tbody>
 </table>

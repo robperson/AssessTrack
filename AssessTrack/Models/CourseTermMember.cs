@@ -14,15 +14,28 @@ namespace AssessTrack.Models
     {
         public string GetFormattedGrade()
         {
-            return GradeHelpers.GetFormattedGrade(GetFinalGrade());
+            return GetFormattedGrade(true);
+        }
+        public string GetFormattedGrade(bool includeExtraCredit)
+        {
+            return GradeHelpers.GetFormattedGrade(GetFinalGrade(includeExtraCredit));
         }
 
         public string GetFinalLetterGrade()
         {
-            return GradeHelpers.GetFinalLetterGrade(GetFinalGrade());
+            return GetFinalLetterGrade(true);
+        }
+        public string GetFinalLetterGrade(bool includeExtraCredit)
+        {
+            return GradeHelpers.GetFinalLetterGrade(GetFinalGrade(includeExtraCredit));
         }
 
         public double GetFinalGrade()
+        {
+            return GetFinalGrade(true);
+        }
+
+        public double GetFinalGrade(bool includeExtraCredit)
         {
             if (this.AccessLevel != 1)
             {
@@ -32,10 +45,11 @@ namespace AssessTrack.Models
             double finalgrade = 0.0;
             double coursTermPoints = 0.0;
             double courseTermMaxPoints = 0.0;
+            AssessTrackDataRepository repo = new AssessTrackDataRepository();
             foreach (AssessmentType asmtType in this.CourseTerm.AssessmentTypes.Where(type => !type.QuestionBank))
             {
                 
-                GradeSection section = new GradeSection(asmtType, this.Profile);
+                GradeSection section = new GradeSection(asmtType, this.Profile,repo,includeExtraCredit);
                 if (section.Weight > 0)
                 {
                     coursTermPoints += ((section.TotalPoints / section.MaxPoints) * asmtType.Weight);

@@ -31,7 +31,7 @@ namespace AssessTrack.Models
             else
             {
                 Points = record.Score;
-                Percentage = (record.Score / assessment.Weight) * 100;
+                Percentage = (assessment.IsExtraCredit)? 100 : ((record.Score / assessment.Weight) * 100);
                 SubmissionRecord = record;
                 if (record.SubmissionDate.CompareTo(assessment.DueDate) > 0)
                 {

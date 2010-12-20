@@ -142,7 +142,7 @@ namespace AssessTrack.Helpers
                     }
                     else if (answer.Type == "multichoice")
                     {
-                        answerNode = transformedData.SelectSingleNode(String.Format("//input[starts-with(@id,'{0}')][@value='{1}']", answer.AnswerID.ToString(), answers[answer.AnswerID.ToString()]));
+                        answerNode = transformedData.SelectSingleNode(String.Format(@"//input[starts-with(@id,'{0}')][@value=""{1}""]", answer.AnswerID.ToString(), answers[answer.AnswerID.ToString()]));
                         if (answerNode != null)
                         {
                             XmlAttribute checkedAttr = transformedData.CreateAttribute("checked");

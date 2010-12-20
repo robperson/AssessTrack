@@ -540,6 +540,8 @@
     <Content Include="Views\Reports\GradeSheetOverview.aspx" />
     <Content Include="Views\Reports\GridReportView.ascx" />
     <Content Include="Views\Reports\StrugglingStudents.aspx" />
+    <Content Include="Views\Reports\TagPerformanceDetails.aspx" />
+    <Content Include="Views\Reports\TagPerformanceSummary.aspx" />
     <Content Include="Views\Shared\RecentMessagesList.ascx" />
     <Content Include="Views\Shared\UpcomingAssessmentList.ascx" />
     <Content Include="Views\SiteMember\DetailedMemberTable.ascx" />

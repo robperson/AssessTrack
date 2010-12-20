@@ -113,7 +113,7 @@ namespace AssessTrack.Controllers
             Func<Profile, Tag, double> cellval = (p, t) =>
             {
                 
-                return dataRepository.GetPfmeForTag(t,p);
+                return dataRepository.GetStudentPfmeForTag(t,p);
             };
             bool showcoltotals = false;
             bool showcolavgs = true;
@@ -131,7 +131,79 @@ namespace AssessTrack.Controllers
 
         }
 
+        public ActionResult TagPerformanceSummary()
+        {
+            List<Tag> tags = dataRepository.GetNonCourseOutcomes(courseTerm, false);
+            List<Profile> profiles = dataRepository.GetStudentProfiles(courseTerm);
+
+
+
+            Func<Tag, string> ylabel = tag =>
+            {
+                string tagname = string.IsNullOrEmpty(tag.DescriptiveName) ? tag.Name : tag.DescriptiveName;
+                string url = Url.Action("TagPerformanceDetails", "Reports", new { id = tag.TagID, siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName });
+                return string.Format(@"<a href=""{0}"" title=""Click to view Tag Performance Details Report"">{1}</a>", url, tagname);
+            };
+
+
+            Func<Profile, string> xlabel = p => p.FullName;
+            Func<Profile, Tag, double> cellval = (p, t) =>
+            {
+
+                return dataRepository.GetStudentPfmeForTag(t, p);
+            };
+            bool showcoltotals = false;
+            bool showcolavgs = true;
+            bool showcolpfmes = false;
+            bool showcolgrade = false;
+            bool showrowavgs = true;
+
+            IGridReport report = new GridReport<Profile, Tag>(profiles,
+                tags,
+                ylabel, null, null,
+                xlabel, cellval,
+                showcoltotals, showcolavgs, showcolpfmes, showcolgrade, showrowavgs);
+
+            return View(report);
+
+        }
+
         public ActionResult CourseOutcomeDetails(Guid id)
+        {
+            Tag tag = dataRepository.GetTagByID(courseTerm, id);
+            List<ITaggable> taggeditems = dataRepository.GetTaggedItems(tag);
+            List<Profile> profiles = dataRepository.GetStudentProfiles(courseTerm);
+
+
+            Func<ITaggable, string> ylabel = (tagged => tagged.Name);
+            Func<ITaggable, double> yval = (tagged => tagged.Weight);
+            Func<ITaggable, string> ydetail = (tagged => tagged.Weight.ToString("0.00"));
+
+
+            Func<Profile, string> xlabel = p => p.FullName;
+            Func<Profile, ITaggable, double> cellval = (p, t) =>
+            {
+
+                return t.Score(p);
+            };
+            bool showcoltotals = true;
+            bool showcolavgs = false;
+            bool showcolpfmes = true;
+            bool showcolgrade = false;
+            bool showrowavgs = true;
+
+            IGridReport report = new GridReport<Profile, ITaggable>(profiles,
+                taggeditems,
+                ylabel, ydetail, yval,
+                xlabel, cellval,
+                showcoltotals, showcolavgs, showcolpfmes, showcolgrade, showrowavgs);
+
+            CourseOutcomeDetailsModel model = new CourseOutcomeDetailsModel() { CourseOutcome = tag, Report = report };
+            return View(model);
+
+        }
+
+        public ActionResult TagPerformanceDetails(Guid id)
         {
             Tag tag = dataRepository.GetTagByID(courseTerm, id);
             List<ITaggable> taggeditems = dataRepository.GetTaggedItems(tag);

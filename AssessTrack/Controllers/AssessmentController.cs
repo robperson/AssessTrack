@@ -8,6 +8,8 @@ using AssessTrack.Models;
 using AssessTrack.Helpers;
 using System.Web.Security;
 using AssessTrack.Filters;
+using System.Xml;
+using System.Text;
 
 namespace AssessTrack.Controllers
 {
@@ -148,8 +150,26 @@ namespace AssessTrack.Controllers
         public ActionResult Edit(string courseTermShortName, string siteShortName, Guid id)
         {
             Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, id);
+            
+
             if (assessment == null)
                 return View("AssessmentNotFound");
+            //Fix markup if question ID's are lost somehow
+            //XmlDocument doc = new XmlDocument();
+            //doc.LoadXml(assessment.Data);
+            //if (doc.SelectSingleNode("//question[@id=\"\"]") != null) //If there exists a question node with an empty id attribute, something bad has happened
+            //{
+            //    //Rebuild the markup from the data in the database
+            //    StringBuilder newmarkup = new StringBuilder();
+            //    newmarkup.Append("<assessment>\n");
+            //    foreach (var question in assessment.Questions)
+            //    {
+            //        newmarkup.Append(question.Data);
+            //    }
+            //    newmarkup.Append("</assessment>");
+            //    assessment.Data = newmarkup.ToString();
+            //}
+
             string data = DesignerHelper.LoadAssessment(assessment.Data);
             // Convert ampersand to appropriate html entity
             data = data.Replace("&", "&amp;");

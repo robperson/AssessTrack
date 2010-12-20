@@ -96,9 +96,13 @@ namespace AssessTrack.Models
         public double Score(Profile profile)
         {
             Grade grade = new Grade(this.Assessment, profile);
-            if (grade.SubmissionRecord == null)
+            if (grade.SubmissionRecord == null || grade.SubmissionRecord.Responses.Count == 0)
                 return 0.0;
-            var response = (from resp in grade.SubmissionRecord.Responses where resp.AnswerID == this.AnswerID select resp).First();
+            var response = (from resp in grade.SubmissionRecord.Responses where resp.AnswerID == this.AnswerID select resp).FirstOrDefault();
+            if (response == null)
+            {
+                return 0.0;
+            }
             return (response.Score.HasValue)? response.Score.Value : 0.0;
         }
 

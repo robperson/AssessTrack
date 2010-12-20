@@ -42,6 +42,16 @@ namespace AssessTrack.Models
             return tags.OrderBy(t => t.Name).ToList();
         }
 
+        public List<Tag> GetNonCourseOutcomes(CourseTerm courseTerm, bool includeEmptyTags)
+        {
+            var tags = courseTerm.Tags.Where(t => !t.IsCourseOutcome).ToList();
+            if (!includeEmptyTags)
+            {
+                tags = tags.Where(t => GetTaggedItems(t).Count > 0).ToList();
+            }
+            return tags.OrderBy(t => t.Name).ToList();
+        }
+
         public Tag GetTagByID(CourseTerm courseTerm, Guid id)
         {
             return courseTerm.Tags.SingleOrDefault(t => t.TagID == id);
@@ -214,7 +224,7 @@ namespace AssessTrack.Models
             return items;
         }
 
-        public double GetPfmeForTag(Tag tag, Profile profile)
+        public double GetStudentPfmeForTag(Tag tag, Profile profile)
         {
             double totalweight = 0.0;
             double totalpoints = 0.0;

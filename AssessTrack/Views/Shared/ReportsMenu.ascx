@@ -8,4 +8,5 @@
         <%= Html.ATAuthLink("Class Grade Distribution", "<li>", "</li>", new { action = "ClassGradeDistribution", controller = "Reports", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
         <%= Html.ATAuthLink("Grade Sheet Overview", "<li>", "</li>", new { action = "GradeSheetOverview", controller = "Reports", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
         <%= Html.ATAuthLink("Course Outcome Summary", "<li>", "</li>", new { action = "CourseOutcomeSummary", controller = "Reports", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
+        <%= Html.ATAuthLink("Tag Performance Summary", "<li>", "</li>", new { action = "TagPerformanceSummary", controller = "Reports", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
     </ul>

@@ -20,7 +20,7 @@ namespace AssessTrack.Models
             Student = profile;
             SubmissionRecord record = (from s in assessment.SubmissionRecords 
                                            where s.StudentID == profile.MembershipID
-                                           orderby s.SubmissionDate descending
+                                           orderby s.Score descending
                                            select s).FirstOrDefault();
             if (record == null)
             {
@@ -31,7 +31,7 @@ namespace AssessTrack.Models
             else
             {
                 Points = record.Score;
-                Percentage = (record.Score / assessment.Weight) * 100;
+                Percentage = (assessment.IsExtraCredit)? 100 : ((record.Score / assessment.Weight) * 100);
                 SubmissionRecord = record;
                 if (record.SubmissionDate.CompareTo(assessment.DueDate) > 0)
                 {

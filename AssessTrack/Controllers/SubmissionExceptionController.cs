@@ -15,16 +15,27 @@ namespace AssessTrack.Controllers
         public SelectList StudentsList;
         public DateTime DueDate = DateTime.Now;
 
-        public SubmissionExceptionFormModel(CourseTerm ct)
+        public SubmissionExceptionFormModel(CourseTerm ct): this(ct.Assessments.OrderBy(a => a.Name).ToList(),ct)
         {
-            AssessmentsList = new SelectList(ct.Assessments,"AssessmentID","Name");
-            StudentsList = new SelectList(ct.GetMembers(1,1), "MembershipID", "FullName");
+        }
+        public SubmissionExceptionFormModel(List<Assessment> Assessments, CourseTerm ct)
+        {
+
+            AssessmentsList = new SelectList(Assessments, "AssessmentID", "Name");
+            StudentsList = new SelectList(ct.GetMembers(1, 1), "MembershipID", "FullName");
         }
 
         public SubmissionExceptionFormModel(CourseTerm ct, object selectedStudent, object selectedAssessment, DateTime dueDate)
         {
             AssessmentsList = new SelectList(ct.Assessments, "AssessmentID", "Name", selectedAssessment);
             StudentsList = new SelectList(ct.GetMembers(1,1), "MembershipID", "FullName", selectedStudent);
+            DueDate = dueDate;
+        }
+
+        public SubmissionExceptionFormModel(List<Assessment> Assessments, CourseTerm ct, object selectedStudent, object selectedAssessment, DateTime dueDate)
+        {
+            AssessmentsList = new SelectList(Assessments, "AssessmentID", "Name", selectedAssessment);
+            StudentsList = new SelectList(ct.GetMembers(1, 1), "MembershipID", "FullName", selectedStudent);
             DueDate = dueDate;
         }
     }
@@ -52,7 +63,9 @@ namespace AssessTrack.Controllers
 
         public ActionResult Create(string siteShortName, string courseTermShortName)
         {
-            return View(new SubmissionExceptionFormModel(courseTerm));
+            List<Assessment> list = dataRepository.GetAllNonTestBankAssessments(courseTerm);
+            list.Sort(new Comparison<Assessment>((a1, a2) => a1.Name.CompareTo(a2.Name)));
+            return View(new SubmissionExceptionFormModel(list,courseTerm));
         } 
 
         //
@@ -71,8 +84,10 @@ namespace AssessTrack.Controllers
             }
             catch (RuleViolationException)
             {
+                List<Assessment> list = dataRepository.GetAllNonTestBankAssessments(courseTerm);
+                list.Sort(new Comparison<Assessment>((a1, a2) => a1.Name.CompareTo(a2.Name)));
                 ModelState.AddModelErrors(subExc.GetRuleViolations());
-                return View(new SubmissionExceptionFormModel(courseTerm, subExc.StudentID, subExc.AssessmentID, subExc.DueDate));
+                return View(new SubmissionExceptionFormModel(list,courseTerm, subExc.StudentID, subExc.AssessmentID, subExc.DueDate));
             }
             catch
             {

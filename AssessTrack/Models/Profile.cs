@@ -54,7 +54,14 @@ namespace AssessTrack.Models
         private string GetEmailAddress()
         {
             MembershipUser member = Membership.GetUser(MembershipID);
-            return member.Email;
+            if (member == null)
+            {
+                return "";
+            }
+            else
+            {
+                return member.Email;
+            }
         }
 
         public string EmailAddress

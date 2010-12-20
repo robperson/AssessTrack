@@ -36,9 +36,37 @@ namespace AssessTrack.Helpers
                 MembershipUser user = Membership.GetUser(id, false);
                 return user.GetPassword();
             }
+            catch(Exception ex)
+            {
+                return "Error: " + ex.Message;
+            }
+            
+        }
+
+        public static bool UnlockAccount(Guid? id)
+        {
+            try
+            {
+                MembershipUser user = Membership.GetUser(id, false);
+                user.UnlockUser();
+                return true;
+            }
             catch
             {
-                return "N/A";
+                return false;
+            }
+        }
+
+        public static bool IsAccountLocked(Guid? id)
+        {
+            try
+            {
+                MembershipUser user = Membership.GetUser(id, false);
+                return user.IsLockedOut;
+            }
+            catch
+            {
+                return true;
             }
         }
 

@@ -21,9 +21,11 @@
   </xsl:template>
 
   <xsl:template match="code">
-    <pre>
-      <xsl:value-of select="."/>
-    </pre>
+    <div class="code">
+      <pre>
+        <xsl:value-of select="."/>
+      </pre>
+    </div>
     
   </xsl:template>
 

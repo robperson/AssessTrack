@@ -20,12 +20,14 @@ namespace AssessTrack.Controllers
 
         public SubmissionRecordViewModel(List<Assessment> assessments)
         {
+            assessments.Sort(new Comparison<Assessment>((a1, a2) => a1.Name.CompareTo(a2.Name)));
             AssessmentList = new SelectList(assessments,"AssessmentID","Name");
             Submissions = new List<SubmissionRecord>();
         }
 
         public SubmissionRecordViewModel(List<Assessment> assessments, Assessment selectedAssessment)
         {
+            assessments.Sort(new Comparison<Assessment>((a1, a2) => a1.Name.CompareTo(a2.Name)));
             AssessmentList = new SelectList(assessments, "AssessmentID", "Name", selectedAssessment.AssessmentID);
             Submissions = selectedAssessment.SubmissionRecords.OrderBy(sub => sub.Profile.LastName).ToList();
         }

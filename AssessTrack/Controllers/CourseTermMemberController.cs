@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using AssessTrack.Models;
 using AssessTrack.Filters;
+using AssessTrack.Helpers;
 
 namespace AssessTrack.Controllers
 {
@@ -75,6 +76,19 @@ namespace AssessTrack.Controllers
         {
             CourseTermMember member = dataRepository.GetCourseTermMemberByID(id);
             return View(member);
+        }
+
+        public ActionResult Unlock(string siteShortName, string courseTermShortName, Guid id)
+        {
+            if (UserHelpers.UnlockAccount(id))
+            {
+                FlashMessageHelper.AddMessage("Account Unlocked.");
+            }
+            else
+            {
+                FlashMessageHelper.AddMessage("Failed to unlock account.");
+            }
+            return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
         }
 
         //

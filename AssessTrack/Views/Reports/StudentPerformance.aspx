@@ -14,13 +14,14 @@
     </div>
     <%= Html.ATAuthLink("Return to Student List", new { action = "Students", controller = "Reports", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
     <h3>Current Grade*: <%= Html.Encode(Model.FinalLetterGrade) %> (<%= Html.Encode(string.Format("{0:0.00}%",Model.FinalGrade)) %>)</h3>
+    
     <div class="legend">
     <strong>Legend: </strong> <span class="gradelink">Graded Assessment</span>, <span class="gradelink ungraded">Ungraded Assessment</span>, <span class="gradelink unsubmitted">Unsubmitted Assessment</span>.
     </div>
     <% foreach (var section in Model.GradeSections)
        {
            %>
-           <h3><%=Html.Encode(section.AssessmentType.Name) %> <span><%= Html.Encode(string.Format("{0:0.00}",section.AssessmentType.Weight / Model.TotalWeight * 100)) %>% of total grade</span></h3>
+           <h3><%=Html.Encode(section.AssessmentType.Name) %> <span><%= Html.Encode(string.Format("{0:0.00}",section.Weight / Model.TotalWeight * 100)) %>% of total grade</span></h3>
            <ul class="gradesection group">
            <%foreach (var grade in section.Grades)
              {

@@ -172,7 +172,8 @@ namespace AssessTrack.Controllers
                 if (ModelState.IsValid)
                 {
                     dataRepository.SaveAssessment(assessment, false);
-                    return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
+                    FlashMessageHelper.AddMessage("Assessment Saved Successfully!");
+                    return RedirectToAction("Edit", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName, id = id });
                 }
             }
             catch (RuleViolationException)
@@ -184,6 +185,7 @@ namespace AssessTrack.Controllers
                 ModelState.AddModelError("_FORM", ex.Message);
             }
             string data = DesignerHelper.LoadAssessment(assessment.Data);
+            data = data.Replace("&", "&amp;");
             return View(new AssessmentFormViewModel(assessment, dataRepository.GetAssessmentTypesSelectList(courseTerm, assessment.AssessmentTypeID), data));
         }
         [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 1, MaxLevel = 1)]

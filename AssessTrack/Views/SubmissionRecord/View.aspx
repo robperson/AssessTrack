@@ -5,6 +5,12 @@
 	<%= AssessTrack.Helpers.UserHelpers.GetFullNameForID(Model.SubmissionRecord.StudentID)%>'s 
 	<%= Model.SubmissionRecord.Assessment.Name %>
 </asp:Content>
+<asp:Content ID="Head" ContentPlaceHolderID="HeadContent" runat="server">
+<link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+    <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
+    <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shAutoloader.js" type="text/javascript"></script>
+    <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushCpp.js" type="text/javascript"></script>
+</asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -16,6 +22,7 @@
     
     <h3>Submitted on <%= Model.SubmissionRecord.SubmissionDate.ToString() %></h3>
     <h3>Score: <%= Model.SubmissionRecord.Score.ToString() %></h3>
+    <h3>Graded By: <%= UserHelpers.GetFullNameForID(Model.SubmissionRecord.GradedBy) %></h3>
     
     <% if (Model.OtherSubmissionRecords.Count > 0)
        { %>

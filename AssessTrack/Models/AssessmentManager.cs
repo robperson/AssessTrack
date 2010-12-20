@@ -72,7 +72,7 @@ namespace AssessTrack.Models
                     DeleteAllTagsFromAssessment(assessment);
 
                     XAttribute tags = markup.Attribute("tags");
-                    if (tags != null)
+                    if (tags != null && !string.IsNullOrEmpty(tags.Value))
                     {
                         string[] tagList = tags.Value.Split(new char[] { ',' });
                         foreach (string tagname in tagList)
@@ -108,6 +108,7 @@ namespace AssessTrack.Models
                         if (isNew || questionNode.Attribute("id") == null)
                         {
                             question = new Question();
+                            assessment.Questions.Add(question);
                         }
                         else
                         {
@@ -118,7 +119,7 @@ namespace AssessTrack.Models
 
                         if (isNew)
                         {
-                            assessment.Questions.Add(question);
+                            
                             dc.SubmitChanges();
                             questionNode.SetAttributeValue("id", question.QuestionID);
                         }
@@ -126,7 +127,7 @@ namespace AssessTrack.Models
                         //TODO: Remove this line
                         DeleteAllTagsFromQuestion(question);
                         tags = questionNode.Attribute("tags");
-                        if (tags != null)
+                        if (tags != null && !string.IsNullOrEmpty(tags.Value))
                         {
                             string[] tagList = tags.Value.Split(new char[] { ',' });
                             foreach (string tagname in tagList)
@@ -215,7 +216,7 @@ namespace AssessTrack.Models
                             //TODO: Remove this line
                             DeleteAllTagsFromAnswer(answer);
                             tags = answerNode.Attribute("tags");
-                            if (tags != null)
+                            if (tags != null && !string.IsNullOrEmpty(tags.Value))
                             {
                                 string[] tagList = tags.Value.Split(new char[] { ',' });
                                 foreach (string tagname in tagList)
@@ -282,11 +283,26 @@ namespace AssessTrack.Models
         }
         public List<Assessment> GetAllNonTestBankAssessments(CourseTerm courseTerm)
         {
-            return (from asmt in courseTerm.Assessments
-                    where !asmt.AssessmentType.QuestionBank
-                    orderby asmt.DueDate descending
-                    select asmt).ToList();
+            return GetAllNonTestBankAssessments(courseTerm, true);
         }
+
+        public List<Assessment> GetAllNonTestBankAssessments(CourseTerm courseTerm, bool includeExtraCredit)
+        {
+            return GetAllNonTestBankAssessments(courseTerm, includeExtraCredit, null);
+        }
+
+        public List<Assessment> GetAllNonTestBankAssessments(CourseTerm courseTerm, bool includeExtraCredit, AssessmentType filterby)
+        {
+            var assessments = from asmt in courseTerm.Assessments
+                    where !asmt.AssessmentType.QuestionBank && asmt.IsVisible
+                    select asmt;
+            if (!includeExtraCredit)
+                assessments = assessments.Where(a => !a.IsExtraCredit);
+            if (filterby != null)
+                assessments = assessments.Where(a => a.AssessmentType == filterby);
+            return assessments.OrderBy(a => a.Name).ToList();
+        }
+
         public List<Assessment> GetPastDueAssessments(CourseTerm courseTerm)
         {
             return (from asmt in courseTerm.Assessments
@@ -312,6 +328,20 @@ namespace AssessTrack.Models
                     && !asmt.AssessmentType.QuestionBank
                     orderby asmt.DueDate descending
                     select asmt).ToList();
+        }
+
+        public double GetWeightedPointValue(Assessment assessment)
+        {
+            if (assessment.IsExtraCredit)
+                return 0.0;
+            double totalAssignedPoints = GetAllNonTestBankAssessments(assessment.CourseTerm, false).Sum(a => a.Weight);
+            double assessmentTypePercentage = assessment.AssessmentType.Weight / 100.0;
+            double assessmentTypeWeightedPoints = assessmentTypePercentage * totalAssignedPoints;
+            double assessmentTypeTotalPoints = GetAllNonTestBankAssessments(assessment.CourseTerm,false).Where(a => a.AssessmentType == assessment.AssessmentType).Sum(a => a.Weight);
+            double assessmentPointPercentage = assessment.Weight / assessmentTypeTotalPoints;
+            double weightedValue = assessmentPointPercentage * assessmentTypeWeightedPoints;
+
+            return weightedValue;
         }
     }
 

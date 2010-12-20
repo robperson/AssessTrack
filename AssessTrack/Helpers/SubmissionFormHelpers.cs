@@ -124,9 +124,17 @@ namespace AssessTrack.Helpers
                             answerNode.Attributes.Append(value);
                         }
                     }
-                    else if (answer.Type == "long-answer" || answer.Type == "code-answer")
+                    else if (answer.Type == "long-answer")
                     {
                         answerNode = transformedData.SelectSingleNode(String.Format("//textarea[@id='{0}']", answer.AnswerID.ToString()));
+                        if (answerNode != null)
+                        {
+                            answerNode.InnerText = answers[answer.AnswerID.ToString()];
+                        }
+                    }
+                    else if (answer.Type == "code-answer")
+                    {
+                        answerNode = transformedData.SelectSingleNode(String.Format("//pre[@id='{0}']", answer.AnswerID.ToString()));
                         if (answerNode != null)
                         {
                             answerNode.InnerText = answers[answer.AnswerID.ToString()];

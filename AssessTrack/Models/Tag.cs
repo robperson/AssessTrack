@@ -18,7 +18,7 @@ using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
-    [Bind(Include="Description,Name")]
+    [Bind(Include="Description,Name,DescriptiveName,IsCourseOutcome")]
     public partial class Tag : IBackupItem
     {
         public bool IsValid
@@ -35,8 +35,8 @@ namespace AssessTrack.Models
             if (Name != null && Name.Length > 50)
                 yield return new RuleViolation("Name cannot be longer than 50 characters", "Name");
 
-            if (Description != null && Description.Length > 100)
-                yield return new RuleViolation("Description cannot be longer than 100 characters", "Description");
+            if (Description != null && Description.Length > 300)
+                yield return new RuleViolation("Description cannot be longer than 300 characters", "Description");
 
             if (CourseTerm != null)
             {
@@ -55,7 +55,10 @@ namespace AssessTrack.Models
         partial void OnValidate(ChangeAction action)
         {
             if (!IsValid)
-                throw new RuleViolationException("Rule violations prevent saving");
+            {
+                RuleViolation first = GetRuleViolations().First();
+                throw new RuleViolationException(first.ErrorMessage);
+            }
         }
 
         #region IBackupItem Members

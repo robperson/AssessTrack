@@ -132,9 +132,9 @@
                 if ($(this).attr('id') != "") {
                     questionid = "id=\"{0}\"".format($(this).attr('id'));
                 }
-                if (escapeHTMLEncode($(this).find('.tags input').val()) != "") {
-                    questiontags = "tags=\"{0}\"".format(escapeHTMLEncode($(this).children('.tags').children('input').val()));
-                }
+                var qtag = escapeHTMLEncode($(this).children('.tags').find('input').val());
+                questiontags = "tags=\"{0}\"".format(qtag);
+                
                 markup += "<question {0} {1}>\n".format(questiontags, questionid);
                 $(this).find('.question-data-item').each(function() {
                     if ($(this).hasClass('text-item')) {

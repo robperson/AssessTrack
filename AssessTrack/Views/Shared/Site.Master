@@ -25,7 +25,10 @@
             });
         }
     </script>
+    
+
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+    
     <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -119,6 +122,9 @@
 	    <p>Copyright &copy; 2010 <a href="http://robperson.com/">Rob Person</a>.</p>
     </div>
  </div>
-<asp:ContentPlaceHolder ID="ExtraContent" runat="server" />   
+<asp:ContentPlaceHolder ID="ExtraContent" runat="server" />  
+<script type="text/javascript">
+    SyntaxHighlighter.all()
+</script> 
 </body>
 </html>

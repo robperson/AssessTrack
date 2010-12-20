@@ -91,6 +91,7 @@ namespace AssessTrack.Helpers
                     if (!string.IsNullOrEmpty(response.Answer.Fstream))
                     {
                         File.WriteAllText(tempDir + "\\infile.txt", response.Answer.Fstream);
+                        File.WriteAllText(tempDir + "\\indata.txt", response.Answer.Fstream);
                     }
                     userProgram.Start();
                     if (!string.IsNullOrEmpty(response.Answer.Stdin))

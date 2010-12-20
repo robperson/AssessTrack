@@ -64,7 +64,12 @@ namespace AssessTrack.Controllers
         public ActionResult Details(string siteShortName, string courseTermShortName, Guid id)
         {
             CourseTermMember member = dataRepository.GetCourseTermMemberByID(id);
-
+            CourseTermMember curr = dataRepository.GetCourseTermMemberByMembershipID(courseTerm, UserHelpers.GetCurrentUserID());
+            if (curr.AccessLevel <= member.AccessLevel && curr.MembershipID != member.MembershipID) //Can only view details people whose access level is lower than yours
+            {
+                FlashMessageHelper.AddMessage("You can only view details of your subordinates!");
+                return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
+            }
             return View(member);
         }
 
@@ -75,6 +80,23 @@ namespace AssessTrack.Controllers
         public ActionResult Edit(string siteShortName, string courseTermShortName, Guid id)
         {
             CourseTermMember member = dataRepository.GetCourseTermMemberByID(id);
+            CourseTermMember curr = dataRepository.GetCourseTermMemberByMembershipID(courseTerm, UserHelpers.GetCurrentUserID());
+            if (curr.AccessLevel <= member.AccessLevel && curr.MembershipID != member.MembershipID) //Can only modify people whose access level is lower than yours
+            {
+                FlashMessageHelper.AddMessage("You can only modify your subordinates!");
+                return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
+            }
+            if (curr.AccessLevel < 6 && member.AccessLevel > 1) //TAs can only modify students
+            {
+                FlashMessageHelper.AddMessage("You can only edit students!");
+                return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
+            }
+            if (curr.AccessLevel < 6 && curr.MembershipID == member.MembershipID) //Can't edit yourself unless you're an instructor
+            {
+                FlashMessageHelper.AddMessage("You can't edit yourself!");
+                return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
+            }
+
             return View(member);
         }
 
@@ -98,10 +120,28 @@ namespace AssessTrack.Controllers
         public ActionResult Edit(string siteShortName, string courseTermShortName, Guid id, FormCollection collection)
         {
             CourseTermMember member = dataRepository.GetCourseTermMemberByID(id);
-            
+            CourseTermMember curr = dataRepository.GetCourseTermMemberByMembershipID(courseTerm, UserHelpers.GetCurrentUserID());
+            if (curr.AccessLevel <= member.AccessLevel && curr.MembershipID != member.MembershipID) //Can only modify people whose access level is lower than yours
+            {
+                FlashMessageHelper.AddMessage("You can only modify your subordinates!");
+                return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
+            }
+            if (curr.AccessLevel < 6 && member.AccessLevel > 1) //TAs can only modify students
+            {
+                FlashMessageHelper.AddMessage("You can only edit students!");
+                return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
+            }
+            if (curr.AccessLevel < 6 && curr.MembershipID == member.MembershipID) //Can't edit yourself unless you're an instructor
+            {
+                FlashMessageHelper.AddMessage("You can't edit yourself!");
+                return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
+            }
+
             try
             {
                 UpdateModel(member);
+                
+
                 dataRepository.Save();
 
                 return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });

@@ -52,6 +52,18 @@ namespace AssessTrack.Models
             dc.Answers.DeleteOnSubmit(answer);
             dc.AnswerKeys.DeleteAllOnSubmit(answer.AnswerKeys);
             dc.Responses.DeleteAllOnSubmit(answer.Responses);
+            DeleteAllTagsFromAnswer(answer);
+        }
+
+        public void DeleteQuestion(Question question)
+        {
+            //Delete the answers
+            foreach (var answer in question.Answers)
+            {
+                DeleteAnswer(answer);
+            }
+            dc.Questions.DeleteOnSubmit(question);
+            DeleteAllTagsFromQuestion(question);
         }
 
         public void SaveAssessment(Assessment assessment, bool isNew)
@@ -117,13 +129,13 @@ namespace AssessTrack.Models
                         question.Weight = questionNode.Elements("answer").Sum(a => Convert.ToDouble(a.Attribute("weight").Value));
                         question.Data = questionNode.ToString();
 
-                        if (isNew)
+                        if (isNew || questionNode.Attribute("id") == null)
                         {
                             
                             dc.SubmitChanges();
                             questionNode.SetAttributeValue("id", question.QuestionID);
                         }
-
+                        question.Data = questionNode.ToString();
                         //TODO: Remove this line
                         DeleteAllTagsFromQuestion(question);
                         tags = questionNode.Attribute("tags");
@@ -260,7 +272,15 @@ namespace AssessTrack.Models
                             DeleteAnswer(answer);
                         }
                     }
-
+                    //Do the same for questions
+                    foreach (Question question in assessment.Questions)
+                    {
+                        XElement questionNode = markup.XPathSelectElement(string.Format("//question[@id='{0}']", question.QuestionID));
+                        if (questionNode == null)
+                        {
+                            DeleteQuestion(question);
+                        }
+                    }
                     dc.SubmitChanges();
                     transaction.Complete();
                 }

@@ -14,6 +14,21 @@
     {
         var item = $(this).find('.tool-box-item');
         item.removeClass('tool-box-item').draggable('destroy');
+        if (item.hasClass('text-item')) {
+            item.find('textarea').tinymce({
+                // Location of TinyMCE script
+                script_url: '/Scripts/tiny_mce/tiny_mce.js',
+
+                // General options
+                theme: "simple",
+                plugins: "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
+
+                theme_advanced_resizing: true,
+
+                // Example content CSS (should be your site CSS)
+                content_css: "/Content/Site.css"
+            });
+        }
     }
     
     function updateQuestionData(event,ui)
@@ -53,10 +68,29 @@
         $("#hide-qb-menu").click(function() {
             $(".toolbox").toggle(1000);
         });
+
+        $('ul#questions .text-item textarea').tinymce({
+            // Location of TinyMCE script
+            script_url: '/Scripts/tiny_mce/tiny_mce.js',
+
+            // General options
+            theme: "advanced",
+            plugins: "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
+            theme_advanced_toolbar_location: "top",
+            theme_advanced_toolbar_align: "left",
+            theme_advanced_statusbar_location: "bottom",
+            theme_advanced_resize_horizontal : false,
+            theme_advanced_resizing: true,
+
+            // Example content CSS (should be your site CSS)
+            content_css: "/Content/Site.css"
+        });
     });
 
     function deleteKey() {
-        $(this).parent().remove();
+        $(this).parent().toggle(1000, function() {
+            $(this).remove();
+        });
     }
 
     function addKey() {
@@ -193,6 +227,9 @@ function deleteItem() {
             return;
         }
     }
-    $(this).parent().parent().remove();
-    updatelabels();
+    $(this).parent().parent().toggle(1000, function() {
+        $(this).remove();
+        updatelabels();
+    });
+    
 }

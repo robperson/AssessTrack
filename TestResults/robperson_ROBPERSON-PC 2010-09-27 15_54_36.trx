@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="f480f200-fd9e-4971-8461-c6378391ff45" name="robperson@ROBPERSON-PC 2010-09-27 15:54:36" runUser="robperson-PC\robperson" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestRunConfiguration name="Default Run Configuration" id="fc9bdc6a-b953-49a9-a6a1-50030a5a9299">
+    <Deployment runDeploymentRoot="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\TestResults\robperson_ROBPERSON-PC 2010-09-27 15_54_36">
+      <DeploymentItem filename="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack\bin\AssessTrack.dll" />
+    </Deployment>
+    <Hosts skipUnhostableTests="false" />
+    <TestTypeSpecific />
+  </TestRunConfiguration>
+  <ResultSummary outcome="Error">
+    <Counters total="27" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="27" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="ROBPERSON-PC" outcome="Error" timestamp="2010-09-27T15:54:36.9370828-04:00">
+        <Text>Failed to queue test run 'robperson@ROBPERSON-PC 2010-09-27 15:54:36': Test Run deployment issue: The location of the file or directory 'c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\ICSharpCode.SharpZipLib.dll' is not trusted.</Text>
+        <Exception>Microsoft.VisualStudio.TestTools.TestManagement.ExecutionException: Test Run deployment issue: The location of the file or directory 'c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\ICSharpCode.SharpZipLib.dll' is not trusted.
+   at Microsoft.VisualStudio.TestTools.TestManagement.DeploymentManager.DoDeployment(TestRun run, FileCopyService fileCopyService)
+   at Microsoft.VisualStudio.TestTools.TestManagement.ControllerProxy.SetupTestRun(TestRun run, Boolean isNewTestRun, FileCopyService&amp; fileCopyService)
+   at Microsoft.VisualStudio.TestTools.TestManagement.ControllerProxy.QueueTestRunWorker(Object state)</Exception>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <Times creation="2010-09-27T15:54:36.1160358-04:00" queuing="2010-09-27T15:54:36.1160358-04:00" start="2010-09-27T15:54:36.1160358-04:00" finish="2010-09-27T15:54:36.9410830-04:00" />
+  <TestDefinitions>
+    <UnitTest name="ConstructorSetsProperties" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="609fa32a-47d7-6a13-5696-e60220c4fe8d">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="ConstructorSetsProperties" />
+    </UnitTest>
+    <UnitTest name="LoginPostRedirectsToReturnUrlIfLoginSuccessfulAndReturnUrlGiven" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="1423d5cd-1bcc-0778-1dca-6a774695ead9">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="LoginPostRedirectsToReturnUrlIfLoginSuccessfulAndReturnUrlGiven" />
+    </UnitTest>
+    <UnitTest name="ConstructorSetsPropertiesToDefaultValues" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="2bf6efa9-53c0-6af8-9058-375f1c8248f3">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="ConstructorSetsPropertiesToDefaultValues" />
+    </UnitTest>
+    <UnitTest name="RegisterPostReturnsViewIfUsernameNotSpecified" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="5686214b-a5b9-3128-8800-3a9781113d17">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="RegisterPostReturnsViewIfUsernameNotSpecified" />
+    </UnitTest>
+    <UnitTest name="RegisterPostReturnsViewIfNewPasswordDoesNotMatchConfirmPassword" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="23f3119f-91a4-8d8f-01f5-933cc02e1981">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="RegisterPostReturnsViewIfNewPasswordDoesNotMatchConfirmPassword" />
+    </UnitTest>
+    <UnitTest name="ChangePasswordGetReturnsView" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="e0b8dc99-09df-22e6-450a-55c2bc27dbb5">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="ChangePasswordGetReturnsView" />
+    </UnitTest>
+    <UnitTest name="RegisterPostRedirectsHomeIfRegistrationSuccessful" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="b9c8dbdf-2490-1ae3-d94b-ef02d1e5b262">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="RegisterPostRedirectsHomeIfRegistrationSuccessful" />
+    </UnitTest>
+    <UnitTest name="ChangePasswordPostRedirectsOnSuccess" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="12a2240e-8047-764b-369b-4fbb8106aecb">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="ChangePasswordPostRedirectsOnSuccess" />
+    </UnitTest>
+    <UnitTest name="About" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="da3fa3dd-e32e-5292-1e6f-985df0159fdc">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.HomeControllerTest, AssessTrack.Tests" name="About" />
+    </UnitTest>
+    <UnitTest name="Index" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="8cc29bf0-73f7-7940-8bc5-bdc536613070">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.HomeControllerTest, AssessTrack.Tests" name="Index" />
+    </UnitTest>
+    <UnitTest name="ChangePasswordPostReturnsViewIfNewPasswordIsNull" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="bbab721a-b65d-38e6-bdc3-7bdb4660d335">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="ChangePasswordPostReturnsViewIfNewPasswordIsNull" />
+    </UnitTest>
+    <UnitTest name="ChangePasswordSuccess" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="0989da9c-db6e-7d1a-ff16-95a554c5c3c9">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="ChangePasswordSuccess" />
+    </UnitTest>
+    <UnitTest name="ChangePasswordPostReturnsViewIfCurrentPasswordNotSpecified" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="32ccbf33-f4c6-cd74-6b03-e754473b0f29">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="ChangePasswordPostReturnsViewIfCurrentPasswordNotSpecified" />
+    </UnitTest>
+    <UnitTest name="LoginPostReturnsViewIfUsernameNotSpecified" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="6e6afaa1-6949-83b7-279d-1689715c041d">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="LoginPostReturnsViewIfUsernameNotSpecified" />
+    </UnitTest>
+    <UnitTest name="RegisterPostReturnsViewIfRegistrationFails" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="731775c3-bfd8-00bf-7b80-564bbac357b7">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="RegisterPostReturnsViewIfRegistrationFails" />
+    </UnitTest>
+    <UnitTest name="RegisterPostReturnsViewIfPasswordIsTooShort" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="0603561e-d71a-8fcc-987d-423a79ddb75d">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="RegisterPostReturnsViewIfPasswordIsTooShort" />
+    </UnitTest>
+    <UnitTest name="LoginPostReturnsViewIfUsernameOrPasswordIsIncorrect" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="f07f95b8-0429-5e08-bfb2-36e1ab1af938">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="LoginPostReturnsViewIfUsernameOrPasswordIsIncorrect" />
+    </UnitTest>
+    <UnitTest name="ChangePasswordPostReturnsViewIfProviderRejectsPassword" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="f2893489-a75f-86aa-49be-21b281f0a36e">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="ChangePasswordPostReturnsViewIfProviderRejectsPassword" />
+    </UnitTest>
+    <UnitTest name="LoginGet" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="0de9b49d-8bdf-4226-5326-afa877082202">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="LoginGet" />
+    </UnitTest>
+    <UnitTest name="LoginPostReturnsViewIfPasswordNotSpecified" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="2ed1de2b-fa78-8030-88e2-79bf2949ab51">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="LoginPostReturnsViewIfPasswordNotSpecified" />
+    </UnitTest>
+    <UnitTest name="RegisterPostReturnsViewIfEmailNotSpecified" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="8955766b-4d03-6cf6-9c51-2a0d865e9f74">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="RegisterPostReturnsViewIfEmailNotSpecified" />
+    </UnitTest>
+    <UnitTest name="ChangePasswordPostReturnsViewIfNewPasswordDoesNotMatchConfirmPassword" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="8b7277a3-7ff4-e284-c368-ae108e3dfbf6">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="ChangePasswordPostReturnsViewIfNewPasswordDoesNotMatchConfirmPassword" />
+    </UnitTest>
+    <UnitTest name="RegisterPostReturnsViewIfPasswordIsNull" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="1442ba6f-fb9c-d22e-4efc-b427ecd120b5">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="RegisterPostReturnsViewIfPasswordIsNull" />
+    </UnitTest>
+    <UnitTest name="ChangePasswordPostReturnsViewIfNewPasswordIsTooShort" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="c86b9a63-0180-6b2a-9422-df6ac3223398">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="ChangePasswordPostReturnsViewIfNewPasswordIsTooShort" />
+    </UnitTest>
+    <UnitTest name="RegisterGet" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="aa571640-8b95-6be4-c3df-0f6fa6443622">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="RegisterGet" />
+    </UnitTest>
+    <UnitTest name="LogOff" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="da18241b-e110-4152-7252-f7c0e2a87c96">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="LogOff" />
+    </UnitTest>
+    <UnitTest name="LoginPostRedirectsHomeIfLoginSuccessfulButNoReturnUrlGiven" storage="c:\users\robperson\documents\visual studio 2008\projects\assesstrack\assesstrack.tests\bin\debug\assesstrack.tests.dll" id="a635f0bb-ca2b-e1b6-1022-9cb601350dce">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:\Users\robperson\Documents\Visual Studio 2008\Projects\AssessTrack\AssessTrack.Tests\bin\Debug\AssessTrack.Tests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AssessTrack.Tests.Controllers.AccountControllerTest, AssessTrack.Tests" name="LoginPostRedirectsHomeIfLoginSuccessfulButNoReturnUrlGiven" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="e0b8dc99-09df-22e6-450a-55c2bc27dbb5" executionId="0ce6a8a7-f8f6-4ed9-92a7-74ac3064bd47" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="12a2240e-8047-764b-369b-4fbb8106aecb" executionId="61c87c25-e685-40ce-9530-9ebe85b55224" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="32ccbf33-f4c6-cd74-6b03-e754473b0f29" executionId="8ca44b18-1435-4549-bbad-369ee658f88c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8b7277a3-7ff4-e284-c368-ae108e3dfbf6" executionId="4230babc-4ad3-457d-abf5-d90c34563d23" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bbab721a-b65d-38e6-bdc3-7bdb4660d335" executionId="2fa8a375-7275-4ed4-9431-5e646bf232f7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c86b9a63-0180-6b2a-9422-df6ac3223398" executionId="e01b458b-de20-477d-a754-f1e5693132be" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f2893489-a75f-86aa-49be-21b281f0a36e" executionId="31be0318-3ba1-4057-9ded-71165e07c08f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0989da9c-db6e-7d1a-ff16-95a554c5c3c9" executionId="535a55c1-a5aa-46b4-9b25-29a1186ef6e9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="609fa32a-47d7-6a13-5696-e60220c4fe8d" executionId="c560aced-28c6-4982-b4c1-09af11e2e819" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2bf6efa9-53c0-6af8-9058-375f1c8248f3" executionId="8e314df8-a398-43ca-b7a0-4a4a63cee490" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0de9b49d-8bdf-4226-5326-afa877082202" executionId="72bce80e-ad01-404f-b129-0147ef6e9d7f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a635f0bb-ca2b-e1b6-1022-9cb601350dce" executionId="42dafd8c-c0d4-483e-a7d5-39924a51ea2e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1423d5cd-1bcc-0778-1dca-6a774695ead9" executionId="0af02efc-1055-4a0a-b800-59429c53e0bc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2ed1de2b-fa78-8030-88e2-79bf2949ab51" executionId="08f97223-1b54-4ded-b07a-114b096d9d9e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6e6afaa1-6949-83b7-279d-1689715c041d" executionId="64c8e822-aecc-41ab-826a-bb8bdca20918" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f07f95b8-0429-5e08-bfb2-36e1ab1af938" executionId="0d900415-1f22-4505-856c-16667a9d6da8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="da18241b-e110-4152-7252-f7c0e2a87c96" executionId="bc2cb2e8-17f9-42d0-9f88-29a8d8418389" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="aa571640-8b95-6be4-c3df-0f6fa6443622" executionId="194474bb-87bc-458a-9588-31e480c1836c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b9c8dbdf-2490-1ae3-d94b-ef02d1e5b262" executionId="17752efa-61eb-47fc-ba26-e829878c0b19" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8955766b-4d03-6cf6-9c51-2a0d865e9f74" executionId="eba585d7-1e7f-48df-9aba-f7bd0a6aba05" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="23f3119f-91a4-8d8f-01f5-933cc02e1981" executionId="39e4b2f0-2d44-4f89-992a-609c4521c406" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1442ba6f-fb9c-d22e-4efc-b427ecd120b5" executionId="1c379112-12fe-4ae6-b335-0f3d820a59e3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0603561e-d71a-8fcc-987d-423a79ddb75d" executionId="34f643e0-91ff-466f-a500-e0b581dc4183" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="731775c3-bfd8-00bf-7b80-564bbac357b7" executionId="b4711950-3c08-4139-bf4c-f6991f16b3b7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5686214b-a5b9-3128-8800-3a9781113d17" executionId="c0325f23-6e85-4f35-8f07-50937266517a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8cc29bf0-73f7-7940-8bc5-bdc536613070" executionId="ec7f28d3-6b37-4f27-bfe4-87096aadff93" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="da3fa3dd-e32e-5292-1e6f-985df0159fdc" executionId="4181511d-2c42-4a12-aa2d-3523ed355ec0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="0ce6a8a7-f8f6-4ed9-92a7-74ac3064bd47" testId="e0b8dc99-09df-22e6-450a-55c2bc27dbb5" testName="ChangePasswordGetReturnsView" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="61c87c25-e685-40ce-9530-9ebe85b55224" testId="12a2240e-8047-764b-369b-4fbb8106aecb" testName="ChangePasswordPostRedirectsOnSuccess" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="8ca44b18-1435-4549-bbad-369ee658f88c" testId="32ccbf33-f4c6-cd74-6b03-e754473b0f29" testName="ChangePasswordPostReturnsViewIfCurrentPasswordNotSpecified" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="4230babc-4ad3-457d-abf5-d90c34563d23" testId="8b7277a3-7ff4-e284-c368-ae108e3dfbf6" testName="ChangePasswordPostReturnsViewIfNewPasswordDoesNotMatchConfirmPassword" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="2fa8a375-7275-4ed4-9431-5e646bf232f7" testId="bbab721a-b65d-38e6-bdc3-7bdb4660d335" testName="ChangePasswordPostReturnsViewIfNewPasswordIsNull" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="e01b458b-de20-477d-a754-f1e5693132be" testId="c86b9a63-0180-6b2a-9422-df6ac3223398" testName="ChangePasswordPostReturnsViewIfNewPasswordIsTooShort" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="31be0318-3ba1-4057-9ded-71165e07c08f" testId="f2893489-a75f-86aa-49be-21b281f0a36e" testName="ChangePasswordPostReturnsViewIfProviderRejectsPassword" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="535a55c1-a5aa-46b4-9b25-29a1186ef6e9" testId="0989da9c-db6e-7d1a-ff16-95a554c5c3c9" testName="ChangePasswordSuccess" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="c560aced-28c6-4982-b4c1-09af11e2e819" testId="609fa32a-47d7-6a13-5696-e60220c4fe8d" testName="ConstructorSetsProperties" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="8e314df8-a398-43ca-b7a0-4a4a63cee490" testId="2bf6efa9-53c0-6af8-9058-375f1c8248f3" testName="ConstructorSetsPropertiesToDefaultValues" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="72bce80e-ad01-404f-b129-0147ef6e9d7f" testId="0de9b49d-8bdf-4226-5326-afa877082202" testName="LoginGet" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="42dafd8c-c0d4-483e-a7d5-39924a51ea2e" testId="a635f0bb-ca2b-e1b6-1022-9cb601350dce" testName="LoginPostRedirectsHomeIfLoginSuccessfulButNoReturnUrlGiven" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="0af02efc-1055-4a0a-b800-59429c53e0bc" testId="1423d5cd-1bcc-0778-1dca-6a774695ead9" testName="LoginPostRedirectsToReturnUrlIfLoginSuccessfulAndReturnUrlGiven" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="08f97223-1b54-4ded-b07a-114b096d9d9e" testId="2ed1de2b-fa78-8030-88e2-79bf2949ab51" testName="LoginPostReturnsViewIfPasswordNotSpecified" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="64c8e822-aecc-41ab-826a-bb8bdca20918" testId="6e6afaa1-6949-83b7-279d-1689715c041d" testName="LoginPostReturnsViewIfUsernameNotSpecified" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="0d900415-1f22-4505-856c-16667a9d6da8" testId="f07f95b8-0429-5e08-bfb2-36e1ab1af938" testName="LoginPostReturnsViewIfUsernameOrPasswordIsIncorrect" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="bc2cb2e8-17f9-42d0-9f88-29a8d8418389" testId="da18241b-e110-4152-7252-f7c0e2a87c96" testName="LogOff" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="194474bb-87bc-458a-9588-31e480c1836c" testId="aa571640-8b95-6be4-c3df-0f6fa6443622" testName="RegisterGet" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="17752efa-61eb-47fc-ba26-e829878c0b19" testId="b9c8dbdf-2490-1ae3-d94b-ef02d1e5b262" testName="RegisterPostRedirectsHomeIfRegistrationSuccessful" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="eba585d7-1e7f-48df-9aba-f7bd0a6aba05" testId="8955766b-4d03-6cf6-9c51-2a0d865e9f74" testName="RegisterPostReturnsViewIfEmailNotSpecified" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="39e4b2f0-2d44-4f89-992a-609c4521c406" testId="23f3119f-91a4-8d8f-01f5-933cc02e1981" testName="RegisterPostReturnsViewIfNewPasswordDoesNotMatchConfirmPassword" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="1c379112-12fe-4ae6-b335-0f3d820a59e3" testId="1442ba6f-fb9c-d22e-4efc-b427ecd120b5" testName="RegisterPostReturnsViewIfPasswordIsNull" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="34f643e0-91ff-466f-a500-e0b581dc4183" testId="0603561e-d71a-8fcc-987d-423a79ddb75d" testName="RegisterPostReturnsViewIfPasswordIsTooShort" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="b4711950-3c08-4139-bf4c-f6991f16b3b7" testId="731775c3-bfd8-00bf-7b80-564bbac357b7" testName="RegisterPostReturnsViewIfRegistrationFails" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="c0325f23-6e85-4f35-8f07-50937266517a" testId="5686214b-a5b9-3128-8800-3a9781113d17" testName="RegisterPostReturnsViewIfUsernameNotSpecified" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="ec7f28d3-6b37-4f27-bfe4-87096aadff93" testId="8cc29bf0-73f7-7940-8bc5-bdc536613070" testName="Index" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+    <UnitTestResult executionId="4181511d-2c42-4a12-aa2d-3523ed355ec0" testId="da3fa3dd-e32e-5292-1e6f-985df0159fdc" testName="About" computerName="ROBPERSON-PC" duration="00:00:00" startTime="0001-01-01T00:00:00.0000000-05:00" endTime="0001-01-01T00:00:00.0000000-05:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+  </Results>
+</TestRun>

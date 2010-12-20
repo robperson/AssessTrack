@@ -1,0 +1,6 @@
+bin/
+debug/
+*.dll
+*.pdb
+*.suo
+*.csproj.user

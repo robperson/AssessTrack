@@ -589,6 +589,7 @@ div.image span.image-caption
 body#tinymce
 {
     background-color:#fff;
+    width:100%;
 }
 /* SYNTAX HIGHLIGHTER
 ------------------------------------------------------ */

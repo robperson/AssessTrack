@@ -56,6 +56,14 @@ namespace AssessTrack.Controllers
                 }
                 else
                 {
+                    if (courseTerm.Term.EndDate.CompareTo(DateTime.Now) < 0) //This course has ended
+                    {
+                        CourseTermMember member = dataRepository.GetCourseTermMemberByMembershipID(courseTerm, UserHelpers.GetCurrentUserID());
+                        if (member.AccessLevel < 6) //Only admins can view course info after a semester has ended
+                        {
+                            filterContext.Result = View("SemesterEnded");
+                        }
+                    }
                     ViewData["showCourseTermMenu"] = true;
                 }
             }

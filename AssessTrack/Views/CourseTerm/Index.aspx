@@ -29,6 +29,7 @@
                        { %>
                        <%= Html.ActionLink("Enroll", "Join", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = item.CourseTerm.ShortName })%>
                     <% } %>
+                    <%= Html.ActionLink("Edit", "Edit", new { siteShortName = Html.CurrentSiteShortName(), id = item.CourseTerm.CourseTermID, courseTermShortName = item.CourseTerm.ShortName })%>
                 </div>
             </td>
             <td>

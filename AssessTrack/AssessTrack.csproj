@@ -84,6 +84,7 @@
     <Compile Include="Controllers\CourseTermMemberController.cs" />
     <Compile Include="Controllers\CourseTermToolsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Helpers\ControllerHelpers.cs" />
     <Compile Include="Helpers\DesignerHelper.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
+    <Compile Include="Helpers\FileUploader.cs" />
     <Compile Include="Helpers\FlashMessageHelper.cs" />
     <Compile Include="Helpers\GradeHelpers.cs" />
     <Compile Include="Helpers\NavigationHelper.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Helpers\UserHelpers.cs" />
     <Compile Include="Models\CourseTermMessageManager.cs" />
     <Compile Include="Models\CourseTermMessage.cs" />
+    <Compile Include="Models\FileManager.cs" />
     <Compile Include="Models\ITaggable.cs" />
     <Compile Include="Models\ReportsAndTools\CourseOutcomeDetailsModel.cs" />
     <Compile Include="Models\ReportsAndTools\GradeDistribution.cs" />
@@ -530,6 +533,7 @@
     <Content Include="Views\CourseTermMessage\Edit.aspx" />
     <Content Include="Views\CourseTermMessage\Index.aspx" />
     <Content Include="Views\CourseTermMessage\MessageNotFound.aspx" />
+    <Content Include="Views\CourseTerm\Edit.aspx" />
     <Content Include="Views\Error\NotFound.aspx" />
     <Content Include="Views\Error\UnexpectedError.aspx" />
     <Content Include="Views\Reports\AssessmentGradeDistribution.aspx" />
@@ -542,6 +546,7 @@
     <Content Include="Views\Reports\StrugglingStudents.aspx" />
     <Content Include="Views\Reports\TagPerformanceDetails.aspx" />
     <Content Include="Views\Reports\TagPerformanceSummary.aspx" />
+    <Content Include="Views\Shared\FileNotFound.aspx" />
     <Content Include="Views\Shared\RecentMessagesList.ascx" />
     <Content Include="Views\Shared\UpcomingAssessmentList.ascx" />
     <Content Include="Views\SiteMember\DetailedMemberTable.ascx" />

@@ -38,7 +38,7 @@ namespace AssessTrack.Helpers
                 {
                     string source = response.ResponseID.ToString() + ".cpp";
                     string args = string.Format(ExeArgs, VSVarsPath, source);
-                    File.WriteAllText(tempDir + "\\" + source, response.ResponseText);
+                    System.IO.File.WriteAllText(tempDir + "\\" + source, response.ResponseText);
                     ProcessStartInfo startInfo = new ProcessStartInfo("cmd");
                     startInfo.RedirectStandardInput = true;
                     startInfo.WorkingDirectory = tempDir;
@@ -66,7 +66,7 @@ namespace AssessTrack.Helpers
                     
 
                     string exe = tempDir + @"\" + response.ResponseID.ToString() + ".exe";
-                    if (!File.Exists(exe))
+                    if (!System.IO.File.Exists(exe))
                     {
                         response.Comment = string.Format(failMsg, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString(), compilerOutput);
                         record.Comments += string.Format(failMsg, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString(), compilerOutput);
@@ -90,8 +90,8 @@ namespace AssessTrack.Helpers
                     //Write out input file if it exists
                     if (!string.IsNullOrEmpty(response.Answer.Fstream))
                     {
-                        File.WriteAllText(tempDir + "\\infile.txt", response.Answer.Fstream);
-                        File.WriteAllText(tempDir + "\\indata.txt", response.Answer.Fstream);
+                        System.IO.File.WriteAllText(tempDir + "\\infile.txt", response.Answer.Fstream);
+                        System.IO.File.WriteAllText(tempDir + "\\indata.txt", response.Answer.Fstream);
                     }
                     userProgram.Start();
                     if (!string.IsNullOrEmpty(response.Answer.Stdin))

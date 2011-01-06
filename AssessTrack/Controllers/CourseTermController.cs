@@ -130,6 +130,49 @@ namespace AssessTrack.Controllers
             return View(new CourseTermViewModel(site, courseTerm, CourseID, TermID));
         }
 
+        //
+        // GET: /CourseTerm/Edit
+        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 10, MaxLevel = 10)]
+        public ActionResult Edit()
+        {
+            return View(new CourseTermViewModel(site, courseTerm));
+        }
+
+        //
+        // POST: /CourseTerm/Edit
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 10, MaxLevel = 10)]
+        public ActionResult Edit(string siteShortName, Guid CourseID, Guid TermID)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    UpdateModel(courseTerm);
+                    AssessTrack.Models.File file = FileUploader.GetFile("Syllabus",Request);
+                    if (file != null)
+                    {
+                        courseTerm.File = file;
+                        FileUploader.SaveFile(dataRepository, file);
+                        FlashMessageHelper.AddMessage("New syllabus uploaded.");
+                    }
+                    dataRepository.Save();
+                    FlashMessageHelper.AddMessage(courseTerm.Name + " has been updated.");
+                    return RedirectToAction("Index", new { siteShortName = siteShortName });
+                }
+                catch (RuleViolationException)
+                {
+                    ModelState.AddModelErrors(courseTerm.GetRuleViolations());
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("_FORM", ex.Message);
+                }
+            }
+            return View(new CourseTermViewModel(site, courseTerm, CourseID, TermID));
+        }
+
         [ATAuth(AuthScope = AuthScope.Site, MinLevel = 0, MaxLevel = 10)]
         public ActionResult Join()
         {
@@ -162,6 +205,23 @@ namespace AssessTrack.Controllers
                 throw;
             }
             
+        }
+
+        //
+        // GET: /CourseTerm/Edit
+        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 1, MaxLevel = 10)]
+        public ActionResult GetSyllabus()
+        {
+            
+            if (courseTerm.File != null)
+            {
+                return File(courseTerm.File.Data.ToArray(), courseTerm.File.Mimetype, courseTerm.File.Name);
+            }
+            else
+            {
+                FlashMessageHelper.AddMessage("No Syllabus.");
+                return RedirectToAction("Index", new { siteShortName = site.ShortName });
+            }
         }
     }
 }

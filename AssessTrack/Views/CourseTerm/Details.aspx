@@ -22,6 +22,19 @@
             Term:
             <%= Html.Encode(Model.Term.Name) %>
         </p>
+        <% if (Model.File != null)
+           { %>
+        <p>
+            Download Syllabus:
+            <%= Html.ActionLink(Model.File.Name, "Download", new {controller="File", id = Model.Syllabus.Value}) %>
+        </p>
+        <%}
+           else
+           { %>
+        <p>
+            No Syllabus!
+        </p>
+        <% } %>
     </fieldset>
     <h3>Links</h3>
     <% Html.RenderPartial("CourseTermMenu"); %>

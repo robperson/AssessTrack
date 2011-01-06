@@ -33,6 +33,11 @@ namespace AssessTrack
                 "Compiler/{action}/{submissionRecordID}",
                 new { controller = "Compiler" }
                 );
+            //routes.MapRoute(
+            //    "File",
+            //    "File/{action}/{id}",
+            //    new { controller = "File" }
+            //    );
             routes.MapRoute(
                 "SiteCourses",
                 "Courses/{action}/{siteShortName}/{id}",

@@ -31,7 +31,7 @@ namespace AssessTrack.Models
                            where member.MembershipID == UserHelpers.GetCurrentUserID()
                            && member.CourseTermID == message.CourseTermID
                            select message;
-            return messages.OrderByDescending(msg => msg.CreatedDate).Take(10).ToList();
+            return messages.OrderByDescending(msg => msg.CreatedDate).Take(5).ToList();
         }
     }
 

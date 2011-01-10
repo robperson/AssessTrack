@@ -292,10 +292,23 @@ After you log on with your new password you can change it to something you will 
             {
                 ModelState.AddModelError("password", "You must specify a password.");
             }
+            try
+            {
+
+                MembershipUser user = Membership.GetUser(userName);
+                if (user.IsLockedOut)
+                {
+                    ModelState.AddModelError("_FORM", "Your account has been locked. Contact and administrator to have it unlocked.");
+                }
+            }
+            catch
+            {
+            }
             if (!MembershipService.ValidateUser(userName, password))
             {
                 ModelState.AddModelError("_FORM", "The username or password provided is incorrect.");
             }
+            
 
             return ModelState.IsValid;
         }

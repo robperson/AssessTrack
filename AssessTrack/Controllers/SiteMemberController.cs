@@ -49,7 +49,12 @@ namespace AssessTrack.Controllers
         {
             List<SiteMemberTable> Tables = new List<SiteMemberTable>();
             Tables.Add(new SiteMemberTable("Students", site.GetMembers(1,1), details ?? false));
-            Tables.Add(new SiteMemberTable("Admins", site.GetMembers(2, 10), false));
+            Tables.Add(new SiteMemberTable("All Faculty", site.GetMembers(5, 10), false));
+            Tables.Add(new SiteMemberTable("Curriculum Committee", site.GetMembers(6, 6), false));
+            Tables.Add(new SiteMemberTable("Assessment Committee", site.GetMembers(7, 7), false));
+            Tables.Add(new SiteMemberTable("Assessment Coordinator", site.GetMembers(8, 8), false));
+            Tables.Add(new SiteMemberTable("Department Chair", site.GetMembers(9, 9), false));
+            Tables.Add(new SiteMemberTable("Site Admin", site.GetMembers(10, 10), false));
             Tables.Add(new SiteMemberTable("Excluded", site.GetMembers(0, 0), false));
 
             return View(new SiteMemberViewModel(Tables, site));

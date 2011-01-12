@@ -286,11 +286,41 @@ namespace AssessTrack.Controllers
 
         public ActionResult Preview(string siteShortName, string courseTermShortName, Guid id)
         {
-            Assessment assessment = dataRepository.GetAssessmentByID(courseTerm,id);
+            Assessment assessment = dataRepository.GetAssessmentByID(id);
             if (assessment == null)
                 return View("AssessmentNotFound");
             //TODO ensure user has permission to view this
             return View(assessment);
+        }
+
+        public ActionResult Delete(Guid id)
+        {
+            Assessment assessment = dataRepository.GetAssessmentByID(id);
+            if (assessment == null)
+                return View("AssessmentNotFound");
+
+            return View(assessment);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Delete(Guid id, FormCollection input)
+        {
+            Assessment assessment = dataRepository.GetAssessmentByID(id);
+            if (assessment == null)
+                return View("AssessmentNotFound");
+
+            try
+            {
+                dataRepository.DeleteAssessment(assessment);
+                dataRepository.Save();
+                FlashMessageHelper.AddMessage("Assessment deleted successfully.");
+            }
+            catch (Exception e)
+            {
+                FlashMessageHelper.AddMessage("An error occurred: " + e.Message);
+            }
+
+            return RedirectToAction("Index", new { siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName });
         }
     }
 }

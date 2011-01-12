@@ -51,5 +51,15 @@ namespace AssessTrack.Models
                     orderby at.Name
                     select at).ToList();
         }
+
+        public void DeleteAssessmentType(AssessmentType assessmentType)
+        {
+            foreach (var assessment in assessmentType.Assessments)
+            {
+                DeleteAssessment(assessment);
+            }
+
+            dc.AssessmentTypes.DeleteOnSubmit(assessmentType);
+        }
     }
 }

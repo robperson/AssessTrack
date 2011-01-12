@@ -24,7 +24,10 @@
         <tr>
             <td>
                 <strong><%= Html.ATAuthLink(item.Name, new { action = "Details", id = item.TermID, siteShortName = Html.CurrentSiteShortName() }, AssessTrack.Filters.AuthScope.Site, 1, 10)%></strong>
-                <div class="row-actions"><%= Html.ATAuthLink("Edit", new { action = "Edit", id = item.TermID, siteShortName = Html.CurrentSiteShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%></div>
+                <div class="row-actions">
+                <%= Html.ATAuthLink("Edit", new { action = "Edit", id = item.TermID, siteShortName = Html.CurrentSiteShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+                <%= Html.ATAuthLink("Delete", new { action = "Delete", id = item.TermID, siteShortName = Html.CurrentSiteShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+                </div>
             </td>
             <td>
                 <%= Html.Encode(String.Format("{0:g}", item.StartDate.ToShortDateString())) %>

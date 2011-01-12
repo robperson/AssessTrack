@@ -29,7 +29,8 @@
                        { %>
                        <%= Html.ActionLink("Enroll", "Join", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = item.CourseTerm.ShortName })%>
                     <% } %>
-                    <%= Html.ActionLink("Edit", "Edit", new { siteShortName = Html.CurrentSiteShortName(), id = item.CourseTerm.CourseTermID, courseTermShortName = item.CourseTerm.ShortName })%>
+                    <%= Html.ATAuthLink("Edit", "", " | ", new { action = "Edit", siteShortName = Html.CurrentSiteShortName(), id = item.CourseTerm.CourseTermID, courseTermShortName = item.CourseTerm.ShortName }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+                    <%= Html.ATAuthLink("Delete", "", " | ", new { action = "Delete", siteShortName = Html.CurrentSiteShortName(), id = item.CourseTerm.CourseTermID, courseTermShortName = item.CourseTerm.ShortName }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
                 </div>
             </td>
             <td>

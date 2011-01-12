@@ -134,6 +134,21 @@ namespace AssessTrack.Models
         {
             return courseTerm.GetMembers(10, 10);
         }
+
+        public void DeleteCourseTerm(CourseTerm courseTerm)
+        {
+            foreach (var assessmentType in courseTerm.AssessmentTypes)
+            {
+                DeleteAssessmentType(assessmentType);
+            }
+
+            dc.Invitations.DeleteAllOnSubmit(courseTerm.Invitations);
+            dc.CourseTermMessages.DeleteAllOnSubmit(courseTerm.CourseTermMessages);
+            dc.CourseTermMembers.DeleteAllOnSubmit(courseTerm.CourseTermMembers);
+            dc.Tags.DeleteAllOnSubmit(courseTerm.Tags);
+
+            dc.CourseTerms.DeleteOnSubmit(courseTerm);
+        }
     }
 
 

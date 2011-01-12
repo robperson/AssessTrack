@@ -23,7 +23,10 @@
         <tr>
             <td>
                 <strong><%= Html.ActionLink(item.Name, "Details", new { id = item.CourseID, siteShortName = Html.CurrentSiteShortName() })%></strong>
-                <div class="row-actions"><%= Html.ATAuthLink("Edit", new { action = "Edit", id = item.CourseID, siteShortName = Html.CurrentSiteShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%></div>
+                <div class="row-actions">
+                <%= Html.ATAuthLink("Edit", new { action = "Edit", id = item.CourseID, siteShortName = Html.CurrentSiteShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+                <%= Html.ATAuthLink("Delete", " | ", "", new { action = "Delete", id = item.CourseID, siteShortName = Html.CurrentSiteShortName() }, AssessTrack.Filters.AuthScope.Site, 5, 10)%>
+                </div>
                 
             </td>
             <td>

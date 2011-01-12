@@ -76,6 +76,18 @@ namespace AssessTrack.Models
             DeleteAllTagsFromQuestion(question);
         }
 
+        public void DeleteAssessment(Assessment assessment)
+        {
+            dc.SubmissionExceptions.DeleteAllOnSubmit(assessment.SubmissionExceptions);
+            DeleteAllTagsFromAssessment(assessment);
+            foreach (var question in assessment.Questions)
+            {
+                DeleteQuestion(question);
+            }
+            dc.SubmissionRecords.DeleteAllOnSubmit(assessment.SubmissionRecords);
+            dc.Assessments.DeleteOnSubmit(assessment);
+        }
+
         public void SaveAssessment(Assessment assessment, bool isNew)
         {
             try

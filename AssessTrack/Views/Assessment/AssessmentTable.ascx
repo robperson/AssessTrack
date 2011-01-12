@@ -35,6 +35,7 @@
                     <%= Html.ATAuthLink("Submissions", "", " | ", new { controller = "SubmissionRecord", action="Index", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 2, 10)%>
                     <%= Html.ATAuthLink("Preview", "", "", new { controller = "Assessment", action="Preview", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 1, 10)%>
                     <%= Html.ATAuthLink("Grade Distribution", " | ", "", new { controller="Reports", action="AssessmentGradeDistribution", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 4, 10)%>
+                    <%= Html.ATAuthLink("Delete", " | ", "", new { controller="Assessment", action="Delete", id = item.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
                 </div>
             </td>
             <td>

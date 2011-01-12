@@ -33,7 +33,10 @@ namespace AssessTrack.Models
         partial void OnValidate(ChangeAction action)
         {
             if (!IsValid)
-                throw new RuleViolationException("Rule violations prevent saving");
+            {
+                RuleViolation first = GetRuleViolations().First();
+                throw new RuleViolationException(first.ErrorMessage);
+            }
         }
 
         public double Score

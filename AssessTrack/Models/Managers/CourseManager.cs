@@ -54,6 +54,16 @@ namespace AssessTrack.Models
             }
         }
 
+        public void DeleteCourse(Course course)
+        {
+            foreach (var courseTerm in course.CourseTerms)
+            {
+                DeleteCourseTerm(courseTerm);
+            }
+
+            dc.Courses.DeleteOnSubmit(course);
+        }
+
         public void Save()
         {
             dc.SubmitChanges();

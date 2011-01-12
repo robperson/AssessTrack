@@ -37,5 +37,15 @@ namespace AssessTrack.Models
         {
             return (from term in dc.Terms where term.TermID == id select term).SingleOrDefault();
         }
+
+        public void DeleteTerm(Term term)
+        {
+            foreach (var courseTerm in term.CourseTerms)
+            {
+                DeleteCourseTerm(courseTerm);
+            }
+
+            dc.Terms.DeleteOnSubmit(term);
+        }
     }
 }

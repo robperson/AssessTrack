@@ -121,5 +121,49 @@ namespace AssessTrack.Controllers
                 return View("TermNotFound");
             }
         }
+
+        //
+        // GET: /Term/Delete/5
+        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 3, MaxLevel = 10)]
+        public ActionResult Delete(string siteShortName, Guid id)
+        {
+            Term term = dataRepository.GetTermByID(id);
+            if (term != null)
+            {
+                return View(term);
+            }
+            else
+            {
+                return View("TermNotFound");
+            }
+        }
+
+        //
+        // POST: /Term/Delete/5
+        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 3, MaxLevel = 10)]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Delete(string siteShortName, Guid id, FormCollection collection)
+        {
+            Term term = dataRepository.GetTermByID(id);
+            if (term != null)
+            {
+                try
+                {
+                    dataRepository.DeleteTerm(term);
+                    dataRepository.Save();
+                    FlashMessageHelper.AddMessage(term.Name + " has been deleted.");
+                }
+                catch (Exception ex)
+                {
+                    FlashMessageHelper.AddMessage("An error occurred: " + ex.Message);
+                }
+
+                return RedirectToAction("Index", new { siteShortName = siteShortName });
+            }
+            else
+            {
+                return View("TermNotFound");
+            }
+        }
     }
 }

@@ -106,5 +106,39 @@ namespace AssessTrack.Controllers
             }
             return View(assessmentType);
         }
+
+        //
+        // GET: /AssessmentType/Delete/5
+
+        public ActionResult Delete(string courseTermShortName, string siteShortName, Guid id)
+        {
+            AssessmentType assessmentType = dataRepository.GetAssessmentTypeByID(courseTerm, id);
+            if (assessmentType == null)
+                return View("AssessmentTypeNotFound");
+            return View(assessmentType);
+        }
+
+        //
+        // POST: /AssessmentType/Delete/5
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Delete(string courseTermShortName, string siteShortName, Guid id, FormCollection collection)
+        {
+            AssessmentType assessmentType = dataRepository.GetAssessmentTypeByID(courseTerm, id);
+            if (assessmentType == null)
+                return View("AssessmentTypeNotFound");
+            try
+            {
+                dataRepository.DeleteAssessmentType(assessmentType);
+                dataRepository.Save();
+                FlashMessageHelper.AddMessage("Assessment Type deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                FlashMessageHelper.AddMessage("An error occured while deleting: " + ex.Message);
+            }
+
+            return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
+        }
     }
 }

@@ -223,5 +223,34 @@ namespace AssessTrack.Controllers
                 return RedirectToAction("Index", new { siteShortName = site.ShortName });
             }
         }
+
+        //
+        // GET: /CourseTerm/Delete
+        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 10, MaxLevel = 10)]
+        public ActionResult Delete()
+        {
+            return View(courseTerm);
+        }
+
+        //
+        // POST: /CourseTerm/Edit
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 10, MaxLevel = 10)]
+        public ActionResult Delete(FormCollection input)
+        {
+            try
+            {
+                dataRepository.DeleteCourseTerm(courseTerm);
+                dataRepository.Save();
+                FlashMessageHelper.AddMessage(courseTerm.Name + " has been deleted.");
+            }
+            catch (Exception ex)
+            {
+                FlashMessageHelper.AddMessage("An error occurred: " + ex.Message);
+            }
+
+            return RedirectToAction("Index", new { siteShortName = site.ShortName });
+        }
     }
 }

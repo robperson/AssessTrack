@@ -546,7 +546,9 @@
     <Content Include="Views\Account\ProfileUpdateSuccess.aspx" />
     <Content Include="Views\Account\RecoverPassword.aspx" />
     <Content Include="Views\Account\ResetPassword.aspx" />
+    <Content Include="Views\AssessmentType\Delete.aspx" />
     <Content Include="Views\Assessment\AssessmentTable.ascx" />
+    <Content Include="Views\Assessment\Delete.aspx" />
     <Content Include="Views\Assessment\Preview.aspx" />
     <Content Include="Views\CourseTermMessage\MessageForm.ascx" />
     <Content Include="Views\CourseTermMessage\Create.aspx" />
@@ -554,7 +556,9 @@
     <Content Include="Views\CourseTermMessage\Edit.aspx" />
     <Content Include="Views\CourseTermMessage\Index.aspx" />
     <Content Include="Views\CourseTermMessage\MessageNotFound.aspx" />
+    <Content Include="Views\CourseTerm\Delete.aspx" />
     <Content Include="Views\CourseTerm\Edit.aspx" />
+    <Content Include="Views\Course\Delete.aspx" />
     <Content Include="Views\Error\NotFound.aspx" />
     <Content Include="Views\Error\UnexpectedError.aspx" />
     <Content Include="Views\Reports\AssessmentGradeDistribution.aspx" />
@@ -605,6 +609,7 @@
     <Content Include="Views\SubmissionException\Index.aspx" />
     <Content Include="Views\SubmissionRecord\CreateSubmission.aspx" />
     <Content Include="Views\SubmissionRecord\View.aspx" />
+    <Content Include="Views\Term\Delete.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

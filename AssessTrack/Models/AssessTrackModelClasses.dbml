@@ -122,6 +122,7 @@
       <Association Name="Site_Term" Member="Terms" ThisKey="SiteID" OtherKey="SiteID" Type="Term" />
       <Association Name="Site_SiteMember" Member="SiteMembers" ThisKey="SiteID" OtherKey="SiteID" Type="SiteMember" />
       <Association Name="Site_CourseTerm" Member="CourseTerms" ThisKey="SiteID" OtherKey="SiteID" Type="CourseTerm" />
+      <Association Name="Site_Invitation" Member="Invitations" ThisKey="SiteID" OtherKey="SiteID" Type="Invitation" />
     </Type>
   </Table>
   <Table Name="dbo.SubmissionExceptions" Member="SubmissionExceptions">
@@ -253,6 +254,7 @@
       <Association Name="CourseTerm_CourseTermMember" Member="CourseTermMembers" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTermMember" />
       <Association Name="CourseTerm_CourseTermMessage" Member="CourseTermMessages" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTermMessage" />
       <Association Name="CourseTerm_Tag" Member="Tags" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="Tag" />
+      <Association Name="CourseTerm_Invitation" Member="Invitations" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="Invitation" />
       <Association Name="Course_CourseTerm" Member="Course" ThisKey="CourseID" OtherKey="CourseID" Type="Course" IsForeignKey="true" />
       <Association Name="Site_CourseTerm" Member="Site" ThisKey="SiteID" OtherKey="SiteID" Type="Site" IsForeignKey="true" />
       <Association Name="Term_CourseTerm" Member="Term" ThisKey="TermID" OtherKey="TermID" Type="Term" IsForeignKey="true" />
@@ -268,6 +270,18 @@
       <Column Name="OwnerID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Association Name="File_CourseTerm" Member="CourseTerms" ThisKey="FileID" OtherKey="Syllabus" Type="CourseTerm" />
       <Association Name="Profile_File" Member="Profile" ThisKey="OwnerID" OtherKey="MembershipID" Type="Profile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Invitations" Member="Invitations">
+    <Type Name="Invitation">
+      <Column Name="InvitationID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="SiteAccessLevel" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="CourseTermID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="CourseTermAccessLevel" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Accepted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="CourseTerm_Invitation" Member="CourseTerm" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />
+      <Association Name="Site_Invitation" Member="Site" ThisKey="SiteID" OtherKey="SiteID" Type="Site" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.sp_AddAssessmentTag" Method="sp_AddAssessmentTag">

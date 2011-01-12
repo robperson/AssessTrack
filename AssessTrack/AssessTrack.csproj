@@ -85,6 +85,7 @@
     <Compile Include="Controllers\CourseTermToolsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\QuizBuilderImportController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -119,10 +120,10 @@
     <Compile Include="Models\AnswerKey.cs" />
     <Compile Include="Models\AnswerTag.cs" />
     <Compile Include="Models\Assessment.cs" />
-    <Compile Include="Models\AssessmentManager.cs" />
+    <Compile Include="Models\Managers\AssessmentManager.cs" />
     <Compile Include="Models\AssessmentTag.cs" />
     <Compile Include="Models\AssessmentType.cs" />
-    <Compile Include="Models\AssessmentTypeManager.cs" />
+    <Compile Include="Models\Managers\AssessmentTypeManager.cs" />
     <Compile Include="Models\AssessTrackModelClasses.cs">
       <DependentUpon>AssessTrackModelClasses.dbml</DependentUpon>
     </Compile>
@@ -132,20 +133,20 @@
       <DependentUpon>AssessTrackModelClasses.dbml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\UserHelpers.cs" />
-    <Compile Include="Models\CourseTermMessageManager.cs" />
+    <Compile Include="Models\Managers\CourseTermMessageManager.cs" />
     <Compile Include="Models\CourseTermMessage.cs" />
-    <Compile Include="Models\FileManager.cs" />
+    <Compile Include="Models\Managers\FileManager.cs" />
     <Compile Include="Models\ITaggable.cs" />
     <Compile Include="Models\ReportsAndTools\CourseOutcomeDetailsModel.cs" />
     <Compile Include="Models\ReportsAndTools\GradeDistribution.cs" />
     <Compile Include="Models\ReportsAndTools\GridReport.cs" />
     <Compile Include="Models\ReportsAndTools\IGridReport.cs" />
-    <Compile Include="Models\SiteMemberManager.cs" />
-    <Compile Include="Models\CourseTermMemberManager.cs" />
+    <Compile Include="Models\Managers\SiteMemberManager.cs" />
+    <Compile Include="Models\Managers\CourseTermMemberManager.cs" />
     <Compile Include="Models\CourseTerm.cs" />
-    <Compile Include="Models\CourseTermManager.cs" />
+    <Compile Include="Models\Managers\CourseTermManager.cs" />
     <Compile Include="Models\CourseTermMember.cs" />
-    <Compile Include="Models\DBManager.cs" />
+    <Compile Include="Models\Managers\DBManager.cs" />
     <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\GradeSection.cs" />
     <Compile Include="Models\Home\CourseTermSection.cs" />
@@ -158,19 +159,19 @@
     <Compile Include="Models\Site.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\Profile.cs" />
-    <Compile Include="Models\ProfileManager.cs" />
-    <Compile Include="Models\SiteManager.cs" />
+    <Compile Include="Models\Managers\ProfileManager.cs" />
+    <Compile Include="Models\Managers\SiteManager.cs" />
     <Compile Include="Models\SiteMember.cs" />
     <Compile Include="Models\SubmissionException.cs" />
     <Compile Include="Models\Tag.cs" />
-    <Compile Include="Models\TagManager.cs" />
+    <Compile Include="Models\Managers\TagManager.cs" />
     <Compile Include="Models\Course.cs" />
-    <Compile Include="Models\CourseManager.cs" />
+    <Compile Include="Models\Managers\CourseManager.cs" />
     <Compile Include="Models\RuleViolation.cs" />
     <Compile Include="Models\SubmissionRecord.cs" />
-    <Compile Include="Models\SubmissionRecordManager.cs" />
+    <Compile Include="Models\Managers\SubmissionRecordManager.cs" />
     <Compile Include="Models\Term.cs" />
-    <Compile Include="Models\TermManager.cs" />
+    <Compile Include="Models\Managers\TermManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -267,7 +268,24 @@
     <None Include="Models\AssessTrackModelClasses.dbml.layout">
       <DependentUpon>AssessTrackModelClasses.dbml</DependentUpon>
     </None>
+    <Content Include="Content\import.xsl" />
     <Content Include="Content\print.css" />
+    <Content Include="Content\redmond\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\redmond\images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="Content\redmond\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Content\redmond\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Content\redmond\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\redmond\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Content\redmond\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Content\redmond\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Content\redmond\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Content\redmond\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\redmond\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Content\redmond\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Content\redmond\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\redmond\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Content\redmond\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Content\redmond\jquery-ui-1.7.2.custom.css" />
     <Content Include="Content\view.xsl" />
     <Content Include="Content\QuizBuilder.css" />
     <Content Include="robots.txt" />

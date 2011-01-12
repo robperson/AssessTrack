@@ -7,6 +7,7 @@
 <asp:Content ID="qbHead" ContentPlaceHolderID="HeadContent" runat="server">
     <script src="/Scripts/jquery-ui-1.7.2.custom.min.js" type="text/javascript"></script>
     <link href="/Content/QuizBuilder.css" rel="stylesheet" type="text/css" />
+    <link type="text/css" href="/Content/redmond/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
     <script src="/Scripts/htmlparser.js" type="text/javascript"></script>
     <script type="text/javascript" src="/Scripts/tiny_mce/jquery.tinymce.js"></script>
     <script src="/Scripts/QuizBuilder.js" type="text/javascript"></script>
@@ -24,6 +25,23 @@
 			   <%= Html.PrintQBMenu() %>
 		    </ul>
 	        <div class="clear"></div>
+	        <div class="import-menu">
+	            <p>
+	                <label for="CourseTermList">Course Offering</label>
+	                <select id="CourseTermList" name="CourseTermList">
+	                    <option value="null">Select a Course Offering</option>
+	                </select>
+	            </p>
+	            <p>
+	                <label for="AssessmentList">Assessment</label>
+	                <select id="AssessmentList" name="AssessmentList">
+	                    <option value="null">Select a Course Offering</option>
+	                </select>
+	            </p>
+	            <p>
+	                <button id="import">Import</button>
+	            </p>
+	        </div>
 	        <div class="assessment-attributes">
 	        <h3>Assessment Attributes</h3>
 	        <% using (Html.BeginForm()) {%>

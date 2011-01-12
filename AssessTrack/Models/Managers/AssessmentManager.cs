@@ -18,6 +18,11 @@ namespace AssessTrack.Models
 {
     public partial class AssessTrackDataRepository
     {
+        public Question GetQuestionByID(Guid id)
+        {
+            return dc.Questions.SingleOrDefault(q => q.QuestionID == id);
+        }
+
         public List<Assessment> GetUpcomingUnsubmittedAssessments()
         {
             var assessments = from assessment in dc.Assessments
@@ -35,6 +40,11 @@ namespace AssessTrack.Models
         public Assessment GetAssessmentByName(CourseTerm term, string name)
         {
             return term.Assessments.SingleOrDefault(a => a.Name == name);
+        }
+
+        public Assessment GetAssessmentByID(Guid id)
+        {
+            return dc.Assessments.SingleOrDefault(a => a.AssessmentID == id);
         }
 
         public Assessment GetAssessmentByID(CourseTerm courseTerm, Guid id)

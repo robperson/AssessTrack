@@ -77,12 +77,22 @@ namespace AssessTrack.Helpers
 
         }
 
+        public static string RenderImportForm(Assessment assessment)
+        {
+            return RenderAssessmentForm(assessment, "~/Content/import.xsl", null, null, null);
+        }
+
         public static string RenderAssessmentForm(this HtmlHelper helper, Assessment assessment, string stylesheet, NameValueCollection answers, NameValueCollection inputs)
         {
             return RenderAssessmentForm(helper, assessment, stylesheet, answers, inputs, null);
         }
 
         public static string RenderAssessmentForm(this HtmlHelper helper, Assessment assessment, string stylesheet, NameValueCollection answers, NameValueCollection inputs, NameValueCollection comments)
+        {
+            return RenderAssessmentForm(assessment, stylesheet, answers, inputs, comments);
+        }
+
+        public static string RenderAssessmentForm(Assessment assessment, string stylesheet, NameValueCollection answers, NameValueCollection inputs, NameValueCollection comments)
         {
             
             XslCompiledTransform xslt = new XslCompiledTransform();

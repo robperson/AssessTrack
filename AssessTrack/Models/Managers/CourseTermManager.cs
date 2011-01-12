@@ -50,6 +50,13 @@ namespace AssessTrack.Models
                     select courseterm).SingleOrDefault();
         }
 
+        public CourseTerm GetCourseTermByID(Guid id)
+        {
+            return (from courseterm in dc.CourseTerms
+                    where courseterm.CourseTermID == id
+                    select courseterm).SingleOrDefault();
+        }
+
         public bool IsCourseTermMember(CourseTerm courseTerm, Profile profile)
         {
             CourseTermMember ctMember = (from ctm in dc.CourseTermMembers
@@ -86,10 +93,15 @@ namespace AssessTrack.Models
 
         public List<CourseTerm> GetUserCourseTerms()
         {
+            return GetUserCourseTerms(0);
+        }
+        public List<CourseTerm> GetUserCourseTerms(int minAccessLevel)
+        {
             return (from ct in dc.CourseTerms
                     join ctm in dc.CourseTermMembers
                     on ct.CourseTermID equals ctm.CourseTermID
                     where ctm.MembershipID == UserHelpers.GetCurrentUserID()
+                    && ctm.AccessLevel >= minAccessLevel
                     select ct).ToList();
         }
 

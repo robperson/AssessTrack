@@ -21,5 +21,21 @@ namespace AssessTrack.Helpers
 
             client.Send(message);
         }
+
+        public static void SendPasswordResetEmail(MailMessage message)
+        {
+            string smtpUsername = ConfigurationManager.AppSettings["PasswordResetUsername"];
+            string smtpPassword = ConfigurationManager.AppSettings["PasswordResetPassword"];
+
+            SendEmail(smtpUsername, smtpPassword, message);
+        }
+
+        public static void SendInvitationEmail(MailMessage message)
+        {
+            string smtpUsername = ConfigurationManager.AppSettings["InvitationsUsername"];
+            string smtpPassword = ConfigurationManager.AppSettings["InvitationsPassword"];
+
+            SendEmail(smtpUsername, smtpPassword, message);
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using AssessTrack.Models;
 using AssessTrack.Filters;
+using AssessTrack.Helpers;
 
 namespace AssessTrack.Controllers
 {
@@ -99,6 +100,15 @@ namespace AssessTrack.Controllers
             {
                 return View(member);
             }
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult SendInvite(string email, int accesslevel)
+        {
+
+
+            FlashMessageHelper.AddMessage("Invite sent to " + email);
+            return RedirectToAction("Index", new { siteShortName = site.ShortName });
         }
     }
 }

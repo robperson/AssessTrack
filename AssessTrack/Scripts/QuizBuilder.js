@@ -37,6 +37,7 @@
     }
 
     $(document).ready(function() {
+        //Setup...
         $('.delete-item').live('click', deleteItem);
         $("ul#questions").sortable({ handle: 'h2', axis: 'y', items: 'li.question', receive: questionDropped,
             update: updatelabels, containment: $("#questions")
@@ -50,25 +51,50 @@
 
         $('#build-button').click(getmarkup);
 
+        //Initialize labels
         updatelabels();
 
-        /*$('#importquiz').dialog({autoOpen:false});
-        $('#import').click(function(event){
-        event.preventDefault();
-        event.stopPropagation();
-        $('#importquiz').load("ws_getQuiz.aspx",{id : $("#assignments").val()});
-        $('#importquiz').dialog('open');
-            
+        //Import Stuff
+        $('#importquiz').dialog({ autoOpen: false, width: 1000 });
+        
+        $.getJSON('/QuizBuilderImport/GetCourseOfferings', function(data) {
+            $.each(data, function() {
+                var option = '<option value="{0}">{1}</option>'.format(this.id, this.name);
+                $('#CourseTermList').append(option);
+            });
         });
-        loadAssignments();*/
 
-        $(".addquestion").live("click", addQuestion);
+        $('#CourseTermList').change(function() {
+            if ($(this).val() == "null") { return; }
+            $.getJSON('/QuizBuilderImport/GetAssessments/' + $(this).val(), function(data) {
+                $('#AssessmentList').empty();
+                $.each(data, function() {
+                    var option = '<option value="{0}">{1}</option>'.format(this.id, this.name);
+                    $('#AssessmentList').append(option);
+                });
+            });
+        });
+
+        $('#import').click(function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if ($("#AssessmentList").val() == "null") { return; }
+            $('#importquiz').load('/QuizBuilderImport/GetAssessmentImportForm/' + $("#AssessmentList").val());
+            $('#importquiz').dialog('open');
+
+        });
+
+
+        //Button/toggle handlers
+        $(".import-question").live("click", addQuestion);
         $(".add-key").live("click", addKey);
         $(".delete-key").live("click", deleteKey);
         $("#hide-qb-menu").click(function() {
             $(".toolbox").toggle(1000);
         });
 
+
+        //load tinyMCE
         $('ul#questions .text-item textarea').tinymce({
             // Location of TinyMCE script
             script_url: '/Scripts/tiny_mce/tiny_mce.js',
@@ -79,7 +105,7 @@
             theme_advanced_toolbar_location: "top",
             theme_advanced_toolbar_align: "left",
             theme_advanced_statusbar_location: "bottom",
-            theme_advanced_resize_horizontal : false,
+            theme_advanced_resize_horizontal: false,
             theme_advanced_resizing: true,
 
             // Example content CSS (should be your site CSS)
@@ -102,11 +128,26 @@
     {
         event.preventDefault();
         event.stopPropagation();
-        var exam = $("#assignments").val();
-        var question = $(this).attr("id").split("-")[1];
-        $.get("ws_getQuestion.aspx",{aid: exam, q : question},function(data){
+        var question = $(this).attr("id");
+        $.get('/QuizBuilderImport/GetQuestion/' + question, function(data){
             $("#questions").append($(data));
             updatelabels();
+            $('ul#questions .text-item textarea').tinymce({
+                // Location of TinyMCE script
+                script_url: '/Scripts/tiny_mce/tiny_mce.js',
+
+                // General options
+                theme: "advanced",
+                plugins: "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
+                theme_advanced_toolbar_location: "top",
+                theme_advanced_toolbar_align: "left",
+                theme_advanced_statusbar_location: "bottom",
+                theme_advanced_resize_horizontal: false,
+                theme_advanced_resizing: true,
+
+                // Example content CSS (should be your site CSS)
+                content_css: "/Content/Site.css"
+            });
         });
     }
     

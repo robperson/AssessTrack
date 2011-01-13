@@ -349,7 +349,10 @@ pre
 textarea
 {
     font-family:Monospace;
-    width:80%;
+    width:600px;
+    overflow:hidden;
+    height:auto;
+
     border:1px solid #777;
     display:block;
 }

@@ -10,6 +10,7 @@
     <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
     <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shAutoloader.js" type="text/javascript"></script>
     <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushCpp.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.autogrowtextarea.js" type="text/javascript"></script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -31,4 +32,11 @@
         <input type="submit" value="Save Scores" />
     <% } %>
 
+</asp:Content>
+
+<asp:Content ID="Content3" ContentPlaceHolderID="ExtraContent" runat="server">
+<script type="text/javascript">
+    SyntaxHighlighter.all();
+    $('.response-comment, #Comments').autogrow();
+</script>
 </asp:Content>

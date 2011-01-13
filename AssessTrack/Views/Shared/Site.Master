@@ -123,8 +123,6 @@
     </div>
  </div>
 <asp:ContentPlaceHolder ID="ExtraContent" runat="server" />  
-<script type="text/javascript">
-    SyntaxHighlighter.all()
-</script> 
+ 
 </body>
 </html>

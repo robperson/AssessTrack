@@ -294,6 +294,7 @@
     <Content Include="robots.txt" />
     <Content Include="Scripts\htmlparser.js" />
     <Content Include="Scripts\jquery-ui-1.7.2.custom.min.js" />
+    <Content Include="Scripts\jquery.autogrowtextarea.js" />
     <Content Include="Scripts\QuizBuilder.js" />
     <Content Include="Scripts\String.js" />
     <Content Include="Scripts\tiny_mce\jquery.tinymce.js" />

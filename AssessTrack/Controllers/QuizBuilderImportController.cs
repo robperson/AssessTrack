@@ -48,7 +48,14 @@ namespace AssessTrack.Controllers
         {
             AssessTrackDataRepository repo = new AssessTrackDataRepository();
             Question question = repo.GetQuestionByID(id);
-            string questiondata = DesignerHelper.GetQuestionMarkupFromXml(XElement.Parse(question.Data));
+            //Strip id attributes from the question and its answers
+            XElement questionXml = XElement.Parse(question.Data);
+            questionXml.SetAttributeValue("id", null);
+            foreach (XElement answer in questionXml.Elements("answer"))
+            {
+                answer.SetAttributeValue("id", null);
+            }
+            string questiondata = DesignerHelper.GetQuestionMarkupFromXml(questionXml);
             return Content(questiondata);
         }
 

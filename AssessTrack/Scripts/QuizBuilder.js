@@ -14,6 +14,7 @@
     {
         var item = $(this).find('.tool-box-item');
         item.removeClass('tool-box-item').draggable('destroy');
+        $(".code-item textarea, .answer textarea").autogrow();
         if (item.hasClass('text-item')) {
             item.find('textarea').tinymce({
                 // Location of TinyMCE script

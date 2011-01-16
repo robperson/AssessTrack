@@ -93,6 +93,9 @@ namespace AssessTrack.Models
     partial void InsertProgramOutcome(ProgramOutcome instance);
     partial void UpdateProgramOutcome(ProgramOutcome instance);
     partial void DeleteProgramOutcome(ProgramOutcome instance);
+    partial void InsertTagProgramOutcome(TagProgramOutcome instance);
+    partial void UpdateTagProgramOutcome(TagProgramOutcome instance);
+    partial void DeleteTagProgramOutcome(TagProgramOutcome instance);
     #endregion
 		
 		public AssessTrackModelClassesDataContext() : 
@@ -314,6 +317,14 @@ namespace AssessTrack.Models
 			get
 			{
 				return this.GetTable<ProgramOutcome>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TagProgramOutcome> TagProgramOutcomes
+		{
+			get
+			{
+				return this.GetTable<TagProgramOutcome>();
 			}
 		}
 		
@@ -4747,6 +4758,8 @@ namespace AssessTrack.Models
 		
 		private bool _IsCourseOutcome;
 		
+		private EntitySet<TagProgramOutcome> _TagProgramOutcomes;
+		
 		private EntityRef<Profile> _Profile;
 		
 		private EntityRef<CourseTerm> _CourseTerm;
@@ -4773,6 +4786,7 @@ namespace AssessTrack.Models
 		
 		public Tag()
 		{
+			this._TagProgramOutcomes = new EntitySet<TagProgramOutcome>(new Action<TagProgramOutcome>(this.attach_TagProgramOutcomes), new Action<TagProgramOutcome>(this.detach_TagProgramOutcomes));
 			this._Profile = default(EntityRef<Profile>);
 			this._CourseTerm = default(EntityRef<CourseTerm>);
 			OnCreated();
@@ -4926,6 +4940,19 @@ namespace AssessTrack.Models
 			}
 		}
 		
+		[Association(Name="Tag_TagProgramOutcome", Storage="_TagProgramOutcomes", ThisKey="TagID", OtherKey="TagID")]
+		public EntitySet<TagProgramOutcome> TagProgramOutcomes
+		{
+			get
+			{
+				return this._TagProgramOutcomes;
+			}
+			set
+			{
+				this._TagProgramOutcomes.Assign(value);
+			}
+		}
+		
 		[Association(Name="Profile_Tag", Storage="_Profile", ThisKey="CreatedBy", OtherKey="MembershipID", IsForeignKey=true)]
 		public Profile Profile
 		{
@@ -5012,6 +5039,18 @@ namespace AssessTrack.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_TagProgramOutcomes(TagProgramOutcome entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tag = this;
+		}
+		
+		private void detach_TagProgramOutcomes(TagProgramOutcome entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tag = null;
 		}
 	}
 	
@@ -6454,6 +6493,8 @@ namespace AssessTrack.Models
 		
 		private System.Guid _SiteID;
 		
+		private EntitySet<TagProgramOutcome> _TagProgramOutcomes;
+		
 		private EntityRef<Site> _Site;
 		
     #region Extensibility Method Definitions
@@ -6472,6 +6513,7 @@ namespace AssessTrack.Models
 		
 		public ProgramOutcome()
 		{
+			this._TagProgramOutcomes = new EntitySet<TagProgramOutcome>(new Action<TagProgramOutcome>(this.attach_TagProgramOutcomes), new Action<TagProgramOutcome>(this.detach_TagProgramOutcomes));
 			this._Site = default(EntityRef<Site>);
 			OnCreated();
 		}
@@ -6560,6 +6602,19 @@ namespace AssessTrack.Models
 			}
 		}
 		
+		[Association(Name="ProgramOutcome_TagProgramOutcome", Storage="_TagProgramOutcomes", ThisKey="ProgramOutcomeID", OtherKey="ProgramOutcomeID")]
+		public EntitySet<TagProgramOutcome> TagProgramOutcomes
+		{
+			get
+			{
+				return this._TagProgramOutcomes;
+			}
+			set
+			{
+				this._TagProgramOutcomes.Assign(value);
+			}
+		}
+		
 		[Association(Name="Site_ProgramOutcome", Storage="_Site", ThisKey="SiteID", OtherKey="SiteID", IsForeignKey=true)]
 		public Site Site
 		{
@@ -6590,6 +6645,210 @@ namespace AssessTrack.Models
 						this._SiteID = default(System.Guid);
 					}
 					this.SendPropertyChanged("Site");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_TagProgramOutcomes(TagProgramOutcome entity)
+		{
+			this.SendPropertyChanging();
+			entity.ProgramOutcome = this;
+		}
+		
+		private void detach_TagProgramOutcomes(TagProgramOutcome entity)
+		{
+			this.SendPropertyChanging();
+			entity.ProgramOutcome = null;
+		}
+	}
+	
+	[Table(Name="dbo.TagProgramOutcomes")]
+	public partial class TagProgramOutcome : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _TagProgramOutcomeID;
+		
+		private System.Guid _TagID;
+		
+		private System.Guid _ProgramOutcomeID;
+		
+		private EntityRef<ProgramOutcome> _ProgramOutcome;
+		
+		private EntityRef<Tag> _Tag;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTagProgramOutcomeIDChanging(System.Guid value);
+    partial void OnTagProgramOutcomeIDChanged();
+    partial void OnTagIDChanging(System.Guid value);
+    partial void OnTagIDChanged();
+    partial void OnProgramOutcomeIDChanging(System.Guid value);
+    partial void OnProgramOutcomeIDChanged();
+    #endregion
+		
+		public TagProgramOutcome()
+		{
+			this._ProgramOutcome = default(EntityRef<ProgramOutcome>);
+			this._Tag = default(EntityRef<Tag>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_TagProgramOutcomeID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
+		public System.Guid TagProgramOutcomeID
+		{
+			get
+			{
+				return this._TagProgramOutcomeID;
+			}
+			set
+			{
+				if ((this._TagProgramOutcomeID != value))
+				{
+					this.OnTagProgramOutcomeIDChanging(value);
+					this.SendPropertyChanging();
+					this._TagProgramOutcomeID = value;
+					this.SendPropertyChanged("TagProgramOutcomeID");
+					this.OnTagProgramOutcomeIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_TagID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid TagID
+		{
+			get
+			{
+				return this._TagID;
+			}
+			set
+			{
+				if ((this._TagID != value))
+				{
+					if (this._Tag.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTagIDChanging(value);
+					this.SendPropertyChanging();
+					this._TagID = value;
+					this.SendPropertyChanged("TagID");
+					this.OnTagIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_ProgramOutcomeID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid ProgramOutcomeID
+		{
+			get
+			{
+				return this._ProgramOutcomeID;
+			}
+			set
+			{
+				if ((this._ProgramOutcomeID != value))
+				{
+					if (this._ProgramOutcome.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnProgramOutcomeIDChanging(value);
+					this.SendPropertyChanging();
+					this._ProgramOutcomeID = value;
+					this.SendPropertyChanged("ProgramOutcomeID");
+					this.OnProgramOutcomeIDChanged();
+				}
+			}
+		}
+		
+		[Association(Name="ProgramOutcome_TagProgramOutcome", Storage="_ProgramOutcome", ThisKey="ProgramOutcomeID", OtherKey="ProgramOutcomeID", IsForeignKey=true)]
+		public ProgramOutcome ProgramOutcome
+		{
+			get
+			{
+				return this._ProgramOutcome.Entity;
+			}
+			set
+			{
+				ProgramOutcome previousValue = this._ProgramOutcome.Entity;
+				if (((previousValue != value) 
+							|| (this._ProgramOutcome.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ProgramOutcome.Entity = null;
+						previousValue.TagProgramOutcomes.Remove(this);
+					}
+					this._ProgramOutcome.Entity = value;
+					if ((value != null))
+					{
+						value.TagProgramOutcomes.Add(this);
+						this._ProgramOutcomeID = value.ProgramOutcomeID;
+					}
+					else
+					{
+						this._ProgramOutcomeID = default(System.Guid);
+					}
+					this.SendPropertyChanged("ProgramOutcome");
+				}
+			}
+		}
+		
+		[Association(Name="Tag_TagProgramOutcome", Storage="_Tag", ThisKey="TagID", OtherKey="TagID", IsForeignKey=true)]
+		public Tag Tag
+		{
+			get
+			{
+				return this._Tag.Entity;
+			}
+			set
+			{
+				Tag previousValue = this._Tag.Entity;
+				if (((previousValue != value) 
+							|| (this._Tag.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Tag.Entity = null;
+						previousValue.TagProgramOutcomes.Remove(this);
+					}
+					this._Tag.Entity = value;
+					if ((value != null))
+					{
+						value.TagProgramOutcomes.Add(this);
+						this._TagID = value.TagID;
+					}
+					else
+					{
+						this._TagID = default(System.Guid);
+					}
+					this.SendPropertyChanged("Tag");
 				}
 			}
 		}

@@ -7,6 +7,7 @@ using System.Web.Mvc.Ajax;
 using AssessTrack.Models;
 using AssessTrack.Helpers;
 using AssessTrack.Filters;
+using AssessTrack.Models.ViewModels;
 
 namespace AssessTrack.Controllers
 {
@@ -61,14 +62,15 @@ namespace AssessTrack.Controllers
         public ActionResult Create(string courseTermShortName, string siteShortName)
         {
             Tag newTag = new Tag();
-            return View(newTag);
+            TagEditViewModel model = new TagEditViewModel(newTag, site.ProgramOutcomes.ToList());
+            return View(model);
         } 
 
         //
         // POST: /AssessmentType/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(string courseTermShortName, string siteShortName, Tag newTag)
+        public ActionResult Create(string courseTermShortName, string siteShortName, Tag newTag, FormCollection input)
         {
             if (ModelState.IsValid)
             {
@@ -76,6 +78,22 @@ namespace AssessTrack.Controllers
                     {
                         newTag.Profile = dataRepository.GetLoggedInProfile();
                         courseTerm.Tags.Add(newTag);
+                        if (newTag.IsCourseOutcome)
+                        {
+                            foreach (var outcome in site.ProgramOutcomes)
+                            {
+                                
+                                string checkedState = input[outcome.ProgramOutcomeID.ToString()];
+                                if (checkedState != "false")
+                                {
+                                    TagProgramOutcome tpo = new TagProgramOutcome()
+                                    {
+                                        Tag = newTag,
+                                        ProgramOutcome = outcome
+                                    };
+                                }
+                            }
+                        }
                         dataRepository.Save();
                         return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
                     }
@@ -99,8 +117,8 @@ namespace AssessTrack.Controllers
             Tag tag = dataRepository.GetTagByID(courseTerm, id);
             if (tag == null)
                 return View("TagNotFound");
-            return View(tag);
-
+            TagEditViewModel model = new TagEditViewModel(tag, site.ProgramOutcomes.ToList());
+            return View(model);
         }
 
         //
@@ -118,6 +136,33 @@ namespace AssessTrack.Controllers
             {
                 try
                 {
+                    if (tag.IsCourseOutcome)
+                    {
+                        foreach (var outcome in site.ProgramOutcomes)
+                        {
+                            string checkedState = collection[outcome.ProgramOutcomeID.ToString()];
+                            TagProgramOutcomeRelationship rel = new TagProgramOutcomeRelationship(tag, outcome);
+                            if (checkedState != "false")
+                            {
+                                if (!rel.AreRelated)
+                                {
+                                    TagProgramOutcome tpo = new TagProgramOutcome()
+                                        {
+                                            Tag = tag,
+                                            ProgramOutcome = outcome
+                                        };
+                                }
+                            }
+                            else
+                            {
+                                if (rel.AreRelated)
+                                {
+                                    TagProgramOutcome tpo = dataRepository.Single<TagProgramOutcome>(t => t.ProgramOutcome == outcome && t.Tag == tag);
+                                    dataRepository.Remove<TagProgramOutcome>(tpo);
+                                }
+                            }
+                        }
+                    }
                     dataRepository.Save();
                     return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
                 }

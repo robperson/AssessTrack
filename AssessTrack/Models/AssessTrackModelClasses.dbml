@@ -233,6 +233,7 @@
       <Association Name="Tag_AnswerTag" Member="AnswerTags" ThisKey="TagID" OtherKey="TagID" Type="AnswerTag" />
       <Association Name="Tag_AssessmentTag" Member="AssessmentTags" ThisKey="TagID" OtherKey="TagID" Type="AssessmentTag" />
       <Association Name="Tag_QuestionTag" Member="QuestionTags" ThisKey="TagID" OtherKey="TagID" Type="QuestionTag" />
+      <Association Name="Tag_TagProgramOutcome" Member="TagProgramOutcomes" ThisKey="TagID" OtherKey="TagID" Type="TagProgramOutcome" />
       <Association Name="Profile_Tag" Member="Profile" ThisKey="CreatedBy" OtherKey="MembershipID" Type="Profile" IsForeignKey="true" />
       <Association Name="CourseTerm_Tag" Member="CourseTerm" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />
     </Type>
@@ -304,7 +305,17 @@
       <Column Name="Label" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="VarChar(300) NOT NULL" CanBeNull="false" />
       <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="ProgramOutcome_TagProgramOutcome" Member="TagProgramOutcomes" ThisKey="ProgramOutcomeID" OtherKey="ProgramOutcomeID" Type="TagProgramOutcome" />
       <Association Name="Site_ProgramOutcome" Member="Site" ThisKey="SiteID" OtherKey="SiteID" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TagProgramOutcomes" Member="TagProgramOutcomes">
+    <Type Name="TagProgramOutcome">
+      <Column Name="TagProgramOutcomeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TagID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ProgramOutcomeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="ProgramOutcome_TagProgramOutcome" Member="ProgramOutcome" ThisKey="ProgramOutcomeID" OtherKey="ProgramOutcomeID" Type="ProgramOutcome" IsForeignKey="true" />
+      <Association Name="Tag_TagProgramOutcome" Member="Tag" ThisKey="TagID" OtherKey="TagID" Type="Tag" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.sp_AddAssessmentTag" Method="sp_AddAssessmentTag">

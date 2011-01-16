@@ -8,6 +8,7 @@ using AssessTrack.Filters;
 using AssessTrack.Models;
 using AssessTrack.Helpers;
 using AssessTrack.Models.ReportsAndTools;
+using System.Text;
 
 namespace AssessTrack.Controllers
 {
@@ -86,6 +87,56 @@ namespace AssessTrack.Controllers
 
             GridReport<Profile, Assessment> report = new GridReport<Profile, Assessment>(profiles,
                 assessments,
+                ylabel, ydetail, yval,
+                xlabel, cellval,
+                showcoltotals, showcolavgs, showcolpfmes, showcolgrade, showrowavgs);
+
+            return View(report);
+
+        }
+
+        public ActionResult ProgramOutcomeSummary()
+        {
+            List<ProgramOutcome> outcomes = site.ProgramOutcomes.ToList();
+            List<Profile> profiles = dataRepository.GetStudentProfiles(courseTerm);
+
+
+            Func<ProgramOutcome, string> ylabel = (o => o.Label);
+            Func<ProgramOutcome, string> ydetail = outcome =>
+                {
+                    StringBuilder taglist = new StringBuilder();
+                    foreach (var tag in outcome.TagProgramOutcomes.Where(tpo => tpo.Tag.CourseTerm == courseTerm))
+                    {
+                        taglist.Append(tag.Tag.Name);
+                        taglist.Append(", ");
+                    }
+                    taglist.Remove(taglist.Length - 2, 2);
+                    return taglist.ToString();
+                };
+            Func<ProgramOutcome, double> yval = null;
+            Func<Profile, string> xlabel = p => p.FullName;
+            Func<Profile, ProgramOutcome, double> cellval = (profile, outcome) =>
+            {
+                double total = 0.0;
+                double count = 0;
+                foreach (var tag in outcome.TagProgramOutcomes.Where(tpo => tpo.Tag.CourseTerm == courseTerm))
+                {
+                    count++;
+                    total += dataRepository.GetStudentPfmeForTag(tag.Tag, profile);
+                }
+                if (count > 0)
+                    return total / count;
+                else
+                    return 0.0;
+            };
+            bool showcoltotals = false;
+            bool showcolavgs = true;
+            bool showcolpfmes = false;
+            bool showcolgrade = false;
+            bool showrowavgs = true;
+
+            GridReport<Profile, ProgramOutcome> report = new GridReport<Profile, ProgramOutcome>(profiles,
+                outcomes,
                 ylabel, ydetail, yval,
                 xlabel, cellval,
                 showcoltotals, showcolavgs, showcolpfmes, showcolgrade, showrowavgs);

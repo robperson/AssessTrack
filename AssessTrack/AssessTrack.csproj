@@ -181,6 +181,8 @@
     <Compile Include="Models\Managers\SubmissionRecordManager.cs" />
     <Compile Include="Models\Term.cs" />
     <Compile Include="Models\Managers\TermManager.cs" />
+    <Compile Include="Models\ViewModels\TagEditViewModel.cs" />
+    <Compile Include="Models\ViewModels\TagProgramOutcomeRelationship.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -585,6 +587,7 @@
     <Content Include="Views\Reports\GradeDistributionTable.ascx" />
     <Content Include="Views\Reports\GradeSheetOverview.aspx" />
     <Content Include="Views\Reports\GridReportView.ascx" />
+    <Content Include="Views\Reports\ProgramOutcomeSummary.aspx" />
     <Content Include="Views\Reports\StrugglingStudents.aspx" />
     <Content Include="Views\Reports\TagPerformanceDetails.aspx" />
     <Content Include="Views\Reports\TagPerformanceSummary.aspx" />

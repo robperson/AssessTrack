@@ -70,6 +70,23 @@
         </input>
       </xsl:if>
 
+      <xsl:if test="@type='attachment'">
+        <label>
+          <xsl:attribute name="for">
+            <xsl:value-of select="@id"/>
+          </xsl:attribute>
+          <xsl:text>Select file</xsl:text>
+        </label>
+        <input type="file">
+          <xsl:attribute name="id">
+            <xsl:value-of select="@id"/>
+          </xsl:attribute>
+          <xsl:attribute name="name">
+            <xsl:value-of select="@id"/>
+          </xsl:attribute>
+        </input>
+      </xsl:if>
+
       <xsl:if test="@type='multichoice'">
         <div class="multichoice">
           <xsl:for-each select="./choice">

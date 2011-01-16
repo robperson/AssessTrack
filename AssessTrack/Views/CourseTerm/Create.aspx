@@ -10,7 +10,7 @@
 
     <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
 
-    <% using (Html.BeginForm("", "CourseTerm", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    <% using (Html.BeginForm("Create", "CourseTerm", FormMethod.Post, new { enctype = "multipart/form-data" }))
    {%>
 
         <fieldset>

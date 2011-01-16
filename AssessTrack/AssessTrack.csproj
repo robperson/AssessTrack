@@ -79,6 +79,7 @@
     <Compile Include="Controllers\AssessmentTypeController.cs" />
     <Compile Include="Controllers\ATController.cs" />
     <Compile Include="Controllers\CompilerController.cs" />
+    <Compile Include="Controllers\CourseTermFileController.cs" />
     <Compile Include="Controllers\CourseTermMessageController.cs" />
     <Compile Include="Controllers\CourseController.cs">
       <SubType>Code</SubType>
@@ -123,6 +124,8 @@
     <Compile Include="Models\AnswerKey.cs" />
     <Compile Include="Models\AnswerTag.cs" />
     <Compile Include="Models\Assessment.cs" />
+    <Compile Include="Models\File.cs" />
+    <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\Managers\AssessmentManager.cs" />
     <Compile Include="Models\AssessmentTag.cs" />
     <Compile Include="Models\AssessmentType.cs" />
@@ -136,10 +139,12 @@
       <DependentUpon>AssessTrackModelClasses.dbml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\UserHelpers.cs" />
+    <Compile Include="Models\Managers\AssessTrackDataRepository.cs" />
     <Compile Include="Models\Managers\CourseTermMessageManager.cs" />
     <Compile Include="Models\CourseTermMessage.cs" />
     <Compile Include="Models\Managers\FileManager.cs" />
     <Compile Include="Models\ITaggable.cs" />
+    <Compile Include="Models\ProgramOutcome.cs" />
     <Compile Include="Models\ReportsAndTools\CourseOutcomeDetailsModel.cs" />
     <Compile Include="Models\ReportsAndTools\GradeDistribution.cs" />
     <Compile Include="Models\ReportsAndTools\GridReport.cs" />
@@ -551,6 +556,10 @@
     <Content Include="Views\Assessment\AssessmentTable.ascx" />
     <Content Include="Views\Assessment\Delete.aspx" />
     <Content Include="Views\Assessment\Preview.aspx" />
+    <Content Include="Views\CourseTermFile\Delete.aspx" />
+    <Content Include="Views\CourseTermFile\Edit.aspx" />
+    <Content Include="Views\CourseTermFile\Index.aspx" />
+    <Content Include="Views\CourseTermFile\Upload.aspx" />
     <Content Include="Views\CourseTermMessage\MessageForm.ascx" />
     <Content Include="Views\CourseTermMessage\Create.aspx" />
     <Content Include="Views\CourseTermMessage\Details.aspx" />

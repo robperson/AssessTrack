@@ -10,6 +10,7 @@ using System.Web.Security;
 using AssessTrack.Filters;
 using System.Xml;
 using System.Text;
+using System.Transactions;
 
 namespace AssessTrack.Controllers
 {
@@ -256,26 +257,57 @@ namespace AssessTrack.Controllers
             }
             try
             {
-                SubmissionRecord record = new SubmissionRecord();
-                record.Assessment = assessment;
-                Guid studentID = dataRepository.GetLoggedInProfile().MembershipID;
-                record.StudentID = studentID;
-                record.SubmissionDate = DateTime.Now;
-                foreach (Answer answer in assessment.Answers)
+                using (TransactionScope transaction = new TransactionScope())
                 {
-                    
-                    string responseText = collection[answer.AnswerID.ToString()];
-                    if (responseText != null)
+                    //Upload all attachments and store their IDs
+                    Dictionary<string, string> answerAttachments = new Dictionary<string, string>();
+                    foreach (Answer answer in assessment.Answers)
                     {
-                        Response response = new Response();
-                        response.Answer = answer;
-                        response.ResponseText = responseText;
-                        record.Responses.Add(response);
+                        if (answer.Type == "attachment")
+                        {
+                            AssessTrack.Models.File file = FileUploader.GetFile(answer.AnswerID.ToString(), Request);
+                            if (file != null)
+                            {
+                                dataRepository.SaveFile(file);
+                                dataRepository.Save();
+                                string downloadUrl = Url.Action("Download", "File", new { id = file.FileID });
+                                string link = string.Format("<a href=\"{0}\">Click here to download {1}.</a>", downloadUrl, file.Name);
+                                answerAttachments.Add(answer.AnswerID.ToString(), link);
+                            }
+                        }
                     }
+                    
+                    SubmissionRecord record = new SubmissionRecord();
+                    
+                    Guid studentID = dataRepository.GetLoggedInProfile().MembershipID;
+                    record.StudentID = studentID;
+                    record.SubmissionDate = DateTime.Now;
+                    
+                    foreach (Answer answer in assessment.Answers)
+                    {
+                        string responseText = collection[answer.AnswerID.ToString()];
+
+                        //Put the download link in responseText if this is an attachment
+                        if (answer.Type == "attachment")
+                        {
+                            answerAttachments.TryGetValue(answer.AnswerID.ToString(), out responseText);
+                        }
+                        
+                        if (responseText != null)
+                        {
+                            Response response = new Response();
+                            response.Answer = answer;
+                            response.ResponseText = responseText;
+                            record.Responses.Add(response);
+                        }
+                        
+                    }
+                    record.Assessment = assessment;
+                    dataRepository.SaveSubmissionRecord(record);
+                    FlashMessageHelper.AddMessage("Your answers were submitted successfully!");
+                    transaction.Complete();
+                    return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
                 }
-                dataRepository.SaveSubmissionRecord(record);
-                FlashMessageHelper.AddMessage("Your answers were submitted successfully!");
-                return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
             }
             catch
             {

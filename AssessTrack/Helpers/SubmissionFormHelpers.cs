@@ -134,6 +134,17 @@ namespace AssessTrack.Helpers
                             answerNode.Attributes.Append(value);
                         }
                     }
+                    else if (answer.Type == "attachment")
+                    {
+                        if (string.IsNullOrEmpty(answers[answer.AnswerID.ToString()]))
+                            continue;
+                        answerNode = transformedData.SelectSingleNode(String.Format("//p[@id='download-{0}']", answer.AnswerID.ToString()));
+                        //For submit and import this will be null, for view and grade there will be a paragraph to insert a download link
+                        if (answerNode != null)
+                        {
+                            answerNode.InnerXml = answers[answer.AnswerID.ToString()];
+                        }
+                    }
                     else if (answer.Type == "long-answer")
                     {
                         answerNode = transformedData.SelectSingleNode(String.Format("//textarea[@id='{0}']", answer.AnswerID.ToString()));

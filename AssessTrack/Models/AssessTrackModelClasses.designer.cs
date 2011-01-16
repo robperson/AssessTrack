@@ -81,12 +81,18 @@ namespace AssessTrack.Models
     partial void InsertCourseTerm(CourseTerm instance);
     partial void UpdateCourseTerm(CourseTerm instance);
     partial void DeleteCourseTerm(CourseTerm instance);
-    partial void InsertFile(File instance);
-    partial void UpdateFile(File instance);
-    partial void DeleteFile(File instance);
     partial void InsertInvitation(Invitation instance);
     partial void UpdateInvitation(Invitation instance);
     partial void DeleteInvitation(Invitation instance);
+    partial void InsertFile(File instance);
+    partial void UpdateFile(File instance);
+    partial void DeleteFile(File instance);
+    partial void InsertCourseTermFile(CourseTermFile instance);
+    partial void UpdateCourseTermFile(CourseTermFile instance);
+    partial void DeleteCourseTermFile(CourseTermFile instance);
+    partial void InsertProgramOutcome(ProgramOutcome instance);
+    partial void UpdateProgramOutcome(ProgramOutcome instance);
+    partial void DeleteProgramOutcome(ProgramOutcome instance);
     #endregion
 		
 		public AssessTrackModelClassesDataContext() : 
@@ -279,6 +285,14 @@ namespace AssessTrack.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<Invitation> Invitations
+		{
+			get
+			{
+				return this.GetTable<Invitation>();
+			}
+		}
+		
 		public System.Data.Linq.Table<File> Files
 		{
 			get
@@ -287,11 +301,19 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Invitation> Invitations
+		public System.Data.Linq.Table<CourseTermFile> CourseTermFiles
 		{
 			get
 			{
-				return this.GetTable<Invitation>();
+				return this.GetTable<CourseTermFile>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ProgramOutcome> ProgramOutcomes
+		{
+			get
+			{
+				return this.GetTable<ProgramOutcome>();
 			}
 		}
 		
@@ -2294,6 +2316,8 @@ namespace AssessTrack.Models
 		
 		private EntitySet<Invitation> _Invitations;
 		
+		private EntitySet<ProgramOutcome> _ProgramOutcomes;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2317,6 +2341,7 @@ namespace AssessTrack.Models
 			this._SiteMembers = new EntitySet<SiteMember>(new Action<SiteMember>(this.attach_SiteMembers), new Action<SiteMember>(this.detach_SiteMembers));
 			this._CourseTerms = new EntitySet<CourseTerm>(new Action<CourseTerm>(this.attach_CourseTerms), new Action<CourseTerm>(this.detach_CourseTerms));
 			this._Invitations = new EntitySet<Invitation>(new Action<Invitation>(this.attach_Invitations), new Action<Invitation>(this.detach_Invitations));
+			this._ProgramOutcomes = new EntitySet<ProgramOutcome>(new Action<ProgramOutcome>(this.attach_ProgramOutcomes), new Action<ProgramOutcome>(this.detach_ProgramOutcomes));
 			OnCreated();
 		}
 		
@@ -2485,6 +2510,19 @@ namespace AssessTrack.Models
 			}
 		}
 		
+		[Association(Name="Site_ProgramOutcome", Storage="_ProgramOutcomes", ThisKey="SiteID", OtherKey="SiteID")]
+		public EntitySet<ProgramOutcome> ProgramOutcomes
+		{
+			get
+			{
+				return this._ProgramOutcomes;
+			}
+			set
+			{
+				this._ProgramOutcomes.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2560,6 +2598,18 @@ namespace AssessTrack.Models
 		}
 		
 		private void detach_Invitations(Invitation entity)
+		{
+			this.SendPropertyChanging();
+			entity.Site = null;
+		}
+		
+		private void attach_ProgramOutcomes(ProgramOutcome entity)
+		{
+			this.SendPropertyChanging();
+			entity.Site = this;
+		}
+		
+		private void detach_ProgramOutcomes(ProgramOutcome entity)
 		{
 			this.SendPropertyChanging();
 			entity.Site = null;
@@ -5005,6 +5055,8 @@ namespace AssessTrack.Models
 		
 		private EntitySet<Invitation> _Invitations;
 		
+		private EntitySet<CourseTermFile> _CourseTermFiles;
+		
 		private EntityRef<Course> _Course;
 		
 		private EntityRef<Site> _Site;
@@ -5048,6 +5100,7 @@ namespace AssessTrack.Models
 			this._CourseTermMessages = new EntitySet<CourseTermMessage>(new Action<CourseTermMessage>(this.attach_CourseTermMessages), new Action<CourseTermMessage>(this.detach_CourseTermMessages));
 			this._Tags = new EntitySet<Tag>(new Action<Tag>(this.attach_Tags), new Action<Tag>(this.detach_Tags));
 			this._Invitations = new EntitySet<Invitation>(new Action<Invitation>(this.attach_Invitations), new Action<Invitation>(this.detach_Invitations));
+			this._CourseTermFiles = new EntitySet<CourseTermFile>(new Action<CourseTermFile>(this.attach_CourseTermFiles), new Action<CourseTermFile>(this.detach_CourseTermFiles));
 			this._Course = default(EntityRef<Course>);
 			this._Site = default(EntityRef<Site>);
 			this._Term = default(EntityRef<Term>);
@@ -5362,6 +5415,19 @@ namespace AssessTrack.Models
 			}
 		}
 		
+		[Association(Name="CourseTerm_CourseTermFile", Storage="_CourseTermFiles", ThisKey="CourseTermID", OtherKey="CourseTermID")]
+		public EntitySet<CourseTermFile> CourseTermFiles
+		{
+			get
+			{
+				return this._CourseTermFiles;
+			}
+			set
+			{
+				this._CourseTermFiles.Assign(value);
+			}
+		}
+		
 		[Association(Name="Course_CourseTerm", Storage="_Course", ThisKey="CourseID", OtherKey="CourseID", IsForeignKey=true)]
 		public Course Course
 		{
@@ -5601,232 +5667,17 @@ namespace AssessTrack.Models
 			this.SendPropertyChanging();
 			entity.CourseTerm = null;
 		}
-	}
-	
-	[Table(Name="dbo.Files")]
-	public partial class File : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _FileID;
-		
-		private string _Name;
-		
-		private string _Mimetype;
-		
-		private System.Data.Linq.Binary _Data;
-		
-		private System.Guid _OwnerID;
-		
-		private EntitySet<CourseTerm> _CourseTerms;
-		
-		private EntityRef<Profile> _Profile;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnFileIDChanging(System.Guid value);
-    partial void OnFileIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnMimetypeChanging(string value);
-    partial void OnMimetypeChanged();
-    partial void OnDataChanging(System.Data.Linq.Binary value);
-    partial void OnDataChanged();
-    partial void OnOwnerIDChanging(System.Guid value);
-    partial void OnOwnerIDChanged();
-    #endregion
-		
-		public File()
-		{
-			this._CourseTerms = new EntitySet<CourseTerm>(new Action<CourseTerm>(this.attach_CourseTerms), new Action<CourseTerm>(this.detach_CourseTerms));
-			this._Profile = default(EntityRef<Profile>);
-			OnCreated();
-		}
-		
-		[Column(Storage="_FileID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
-		public System.Guid FileID
-		{
-			get
-			{
-				return this._FileID;
-			}
-			set
-			{
-				if ((this._FileID != value))
-				{
-					this.OnFileIDChanging(value);
-					this.SendPropertyChanging();
-					this._FileID = value;
-					this.SendPropertyChanged("FileID");
-					this.OnFileIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Name", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Mimetype", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string Mimetype
-		{
-			get
-			{
-				return this._Mimetype;
-			}
-			set
-			{
-				if ((this._Mimetype != value))
-				{
-					this.OnMimetypeChanging(value);
-					this.SendPropertyChanging();
-					this._Mimetype = value;
-					this.SendPropertyChanged("Mimetype");
-					this.OnMimetypeChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Data", DbType="Image NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
-		public System.Data.Linq.Binary Data
-		{
-			get
-			{
-				return this._Data;
-			}
-			set
-			{
-				if ((this._Data != value))
-				{
-					this.OnDataChanging(value);
-					this.SendPropertyChanging();
-					this._Data = value;
-					this.SendPropertyChanged("Data");
-					this.OnDataChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_OwnerID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid OwnerID
-		{
-			get
-			{
-				return this._OwnerID;
-			}
-			set
-			{
-				if ((this._OwnerID != value))
-				{
-					if (this._Profile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnOwnerIDChanging(value);
-					this.SendPropertyChanging();
-					this._OwnerID = value;
-					this.SendPropertyChanged("OwnerID");
-					this.OnOwnerIDChanged();
-				}
-			}
-		}
-		
-		[Association(Name="File_CourseTerm", Storage="_CourseTerms", ThisKey="FileID", OtherKey="Syllabus")]
-		public EntitySet<CourseTerm> CourseTerms
-		{
-			get
-			{
-				return this._CourseTerms;
-			}
-			set
-			{
-				this._CourseTerms.Assign(value);
-			}
-		}
-		
-		[Association(Name="Profile_File", Storage="_Profile", ThisKey="OwnerID", OtherKey="MembershipID", IsForeignKey=true)]
-		public Profile Profile
-		{
-			get
-			{
-				return this._Profile.Entity;
-			}
-			set
-			{
-				Profile previousValue = this._Profile.Entity;
-				if (((previousValue != value) 
-							|| (this._Profile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Profile.Entity = null;
-						previousValue.Files.Remove(this);
-					}
-					this._Profile.Entity = value;
-					if ((value != null))
-					{
-						value.Files.Add(this);
-						this._OwnerID = value.MembershipID;
-					}
-					else
-					{
-						this._OwnerID = default(System.Guid);
-					}
-					this.SendPropertyChanged("Profile");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_CourseTerms(CourseTerm entity)
+		private void attach_CourseTermFiles(CourseTermFile entity)
 		{
 			this.SendPropertyChanging();
-			entity.File = this;
+			entity.CourseTerm = this;
 		}
 		
-		private void detach_CourseTerms(CourseTerm entity)
+		private void detach_CourseTermFiles(CourseTermFile entity)
 		{
 			this.SendPropertyChanging();
-			entity.File = null;
+			entity.CourseTerm = null;
 		}
 	}
 	
@@ -6062,6 +5913,676 @@ namespace AssessTrack.Models
 					if ((value != null))
 					{
 						value.Invitations.Add(this);
+						this._SiteID = value.SiteID;
+					}
+					else
+					{
+						this._SiteID = default(System.Guid);
+					}
+					this.SendPropertyChanged("Site");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="dbo.Files")]
+	public partial class File : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _FileID;
+		
+		private string _Name;
+		
+		private string _Mimetype;
+		
+		private System.Data.Linq.Binary _Data;
+		
+		private System.Guid _OwnerID;
+		
+		private string _Title;
+		
+		private string _Description;
+		
+		private EntitySet<CourseTerm> _CourseTerms;
+		
+		private EntitySet<CourseTermFile> _CourseTermFiles;
+		
+		private EntityRef<Profile> _Profile;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnFileIDChanging(System.Guid value);
+    partial void OnFileIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnMimetypeChanging(string value);
+    partial void OnMimetypeChanged();
+    partial void OnDataChanging(System.Data.Linq.Binary value);
+    partial void OnDataChanged();
+    partial void OnOwnerIDChanging(System.Guid value);
+    partial void OnOwnerIDChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    #endregion
+		
+		public File()
+		{
+			this._CourseTerms = new EntitySet<CourseTerm>(new Action<CourseTerm>(this.attach_CourseTerms), new Action<CourseTerm>(this.detach_CourseTerms));
+			this._CourseTermFiles = new EntitySet<CourseTermFile>(new Action<CourseTermFile>(this.attach_CourseTermFiles), new Action<CourseTermFile>(this.detach_CourseTermFiles));
+			this._Profile = default(EntityRef<Profile>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_FileID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
+		public System.Guid FileID
+		{
+			get
+			{
+				return this._FileID;
+			}
+			set
+			{
+				if ((this._FileID != value))
+				{
+					this.OnFileIDChanging(value);
+					this.SendPropertyChanging();
+					this._FileID = value;
+					this.SendPropertyChanged("FileID");
+					this.OnFileIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Mimetype", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string Mimetype
+		{
+			get
+			{
+				return this._Mimetype;
+			}
+			set
+			{
+				if ((this._Mimetype != value))
+				{
+					this.OnMimetypeChanging(value);
+					this.SendPropertyChanging();
+					this._Mimetype = value;
+					this.SendPropertyChanged("Mimetype");
+					this.OnMimetypeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Data", DbType="Image NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary Data
+		{
+			get
+			{
+				return this._Data;
+			}
+			set
+			{
+				if ((this._Data != value))
+				{
+					this.OnDataChanging(value);
+					this.SendPropertyChanging();
+					this._Data = value;
+					this.SendPropertyChanged("Data");
+					this.OnDataChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_OwnerID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid OwnerID
+		{
+			get
+			{
+				return this._OwnerID;
+			}
+			set
+			{
+				if ((this._OwnerID != value))
+				{
+					if (this._Profile.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnOwnerIDChanging(value);
+					this.SendPropertyChanging();
+					this._OwnerID = value;
+					this.SendPropertyChanged("OwnerID");
+					this.OnOwnerIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Title", DbType="VarChar(100)")]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Description", DbType="VarChar(300)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[Association(Name="File_CourseTerm", Storage="_CourseTerms", ThisKey="FileID", OtherKey="Syllabus")]
+		public EntitySet<CourseTerm> CourseTerms
+		{
+			get
+			{
+				return this._CourseTerms;
+			}
+			set
+			{
+				this._CourseTerms.Assign(value);
+			}
+		}
+		
+		[Association(Name="File_CourseTermFile", Storage="_CourseTermFiles", ThisKey="FileID", OtherKey="FileID")]
+		public EntitySet<CourseTermFile> CourseTermFiles
+		{
+			get
+			{
+				return this._CourseTermFiles;
+			}
+			set
+			{
+				this._CourseTermFiles.Assign(value);
+			}
+		}
+		
+		[Association(Name="Profile_File", Storage="_Profile", ThisKey="OwnerID", OtherKey="MembershipID", IsForeignKey=true)]
+		public Profile Profile
+		{
+			get
+			{
+				return this._Profile.Entity;
+			}
+			set
+			{
+				Profile previousValue = this._Profile.Entity;
+				if (((previousValue != value) 
+							|| (this._Profile.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Profile.Entity = null;
+						previousValue.Files.Remove(this);
+					}
+					this._Profile.Entity = value;
+					if ((value != null))
+					{
+						value.Files.Add(this);
+						this._OwnerID = value.MembershipID;
+					}
+					else
+					{
+						this._OwnerID = default(System.Guid);
+					}
+					this.SendPropertyChanged("Profile");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_CourseTerms(CourseTerm entity)
+		{
+			this.SendPropertyChanging();
+			entity.File = this;
+		}
+		
+		private void detach_CourseTerms(CourseTerm entity)
+		{
+			this.SendPropertyChanging();
+			entity.File = null;
+		}
+		
+		private void attach_CourseTermFiles(CourseTermFile entity)
+		{
+			this.SendPropertyChanging();
+			entity.File = this;
+		}
+		
+		private void detach_CourseTermFiles(CourseTermFile entity)
+		{
+			this.SendPropertyChanging();
+			entity.File = null;
+		}
+	}
+	
+	[Table(Name="dbo.CourseTermFiles")]
+	public partial class CourseTermFile : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _CourseTermFileID;
+		
+		private System.Guid _CourseTermID;
+		
+		private System.Guid _FileID;
+		
+		private EntityRef<CourseTerm> _CourseTerm;
+		
+		private EntityRef<File> _File;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCourseTermFileIDChanging(System.Guid value);
+    partial void OnCourseTermFileIDChanged();
+    partial void OnCourseTermIDChanging(System.Guid value);
+    partial void OnCourseTermIDChanged();
+    partial void OnFileIDChanging(System.Guid value);
+    partial void OnFileIDChanged();
+    #endregion
+		
+		public CourseTermFile()
+		{
+			this._CourseTerm = default(EntityRef<CourseTerm>);
+			this._File = default(EntityRef<File>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_CourseTermFileID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid CourseTermFileID
+		{
+			get
+			{
+				return this._CourseTermFileID;
+			}
+			set
+			{
+				if ((this._CourseTermFileID != value))
+				{
+					this.OnCourseTermFileIDChanging(value);
+					this.SendPropertyChanging();
+					this._CourseTermFileID = value;
+					this.SendPropertyChanged("CourseTermFileID");
+					this.OnCourseTermFileIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CourseTermID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CourseTermID
+		{
+			get
+			{
+				return this._CourseTermID;
+			}
+			set
+			{
+				if ((this._CourseTermID != value))
+				{
+					if (this._CourseTerm.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCourseTermIDChanging(value);
+					this.SendPropertyChanging();
+					this._CourseTermID = value;
+					this.SendPropertyChanged("CourseTermID");
+					this.OnCourseTermIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_FileID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid FileID
+		{
+			get
+			{
+				return this._FileID;
+			}
+			set
+			{
+				if ((this._FileID != value))
+				{
+					if (this._File.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFileIDChanging(value);
+					this.SendPropertyChanging();
+					this._FileID = value;
+					this.SendPropertyChanged("FileID");
+					this.OnFileIDChanged();
+				}
+			}
+		}
+		
+		[Association(Name="CourseTerm_CourseTermFile", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
+		public CourseTerm CourseTerm
+		{
+			get
+			{
+				return this._CourseTerm.Entity;
+			}
+			set
+			{
+				CourseTerm previousValue = this._CourseTerm.Entity;
+				if (((previousValue != value) 
+							|| (this._CourseTerm.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CourseTerm.Entity = null;
+						previousValue.CourseTermFiles.Remove(this);
+					}
+					this._CourseTerm.Entity = value;
+					if ((value != null))
+					{
+						value.CourseTermFiles.Add(this);
+						this._CourseTermID = value.CourseTermID;
+					}
+					else
+					{
+						this._CourseTermID = default(System.Guid);
+					}
+					this.SendPropertyChanged("CourseTerm");
+				}
+			}
+		}
+		
+		[Association(Name="File_CourseTermFile", Storage="_File", ThisKey="FileID", OtherKey="FileID", IsForeignKey=true)]
+		public File File
+		{
+			get
+			{
+				return this._File.Entity;
+			}
+			set
+			{
+				File previousValue = this._File.Entity;
+				if (((previousValue != value) 
+							|| (this._File.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._File.Entity = null;
+						previousValue.CourseTermFiles.Remove(this);
+					}
+					this._File.Entity = value;
+					if ((value != null))
+					{
+						value.CourseTermFiles.Add(this);
+						this._FileID = value.FileID;
+					}
+					else
+					{
+						this._FileID = default(System.Guid);
+					}
+					this.SendPropertyChanged("File");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="dbo.ProgramOutcomes")]
+	public partial class ProgramOutcome : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _ProgramOutcomeID;
+		
+		private string _Label;
+		
+		private string _Description;
+		
+		private System.Guid _SiteID;
+		
+		private EntityRef<Site> _Site;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnProgramOutcomeIDChanging(System.Guid value);
+    partial void OnProgramOutcomeIDChanged();
+    partial void OnLabelChanging(string value);
+    partial void OnLabelChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnSiteIDChanging(System.Guid value);
+    partial void OnSiteIDChanged();
+    #endregion
+		
+		public ProgramOutcome()
+		{
+			this._Site = default(EntityRef<Site>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ProgramOutcomeID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid ProgramOutcomeID
+		{
+			get
+			{
+				return this._ProgramOutcomeID;
+			}
+			set
+			{
+				if ((this._ProgramOutcomeID != value))
+				{
+					this.OnProgramOutcomeIDChanging(value);
+					this.SendPropertyChanging();
+					this._ProgramOutcomeID = value;
+					this.SendPropertyChanged("ProgramOutcomeID");
+					this.OnProgramOutcomeIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Label", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Label
+		{
+			get
+			{
+				return this._Label;
+			}
+			set
+			{
+				if ((this._Label != value))
+				{
+					this.OnLabelChanging(value);
+					this.SendPropertyChanging();
+					this._Label = value;
+					this.SendPropertyChanged("Label");
+					this.OnLabelChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Description", DbType="VarChar(300) NOT NULL", CanBeNull=false)]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					if (this._Site.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSiteIDChanging(value);
+					this.SendPropertyChanging();
+					this._SiteID = value;
+					this.SendPropertyChanged("SiteID");
+					this.OnSiteIDChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Site_ProgramOutcome", Storage="_Site", ThisKey="SiteID", OtherKey="SiteID", IsForeignKey=true)]
+		public Site Site
+		{
+			get
+			{
+				return this._Site.Entity;
+			}
+			set
+			{
+				Site previousValue = this._Site.Entity;
+				if (((previousValue != value) 
+							|| (this._Site.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Site.Entity = null;
+						previousValue.ProgramOutcomes.Remove(this);
+					}
+					this._Site.Entity = value;
+					if ((value != null))
+					{
+						value.ProgramOutcomes.Add(this);
 						this._SiteID = value.SiteID;
 					}
 					else

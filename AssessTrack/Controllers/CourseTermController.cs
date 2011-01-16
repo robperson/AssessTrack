@@ -116,6 +116,16 @@ namespace AssessTrack.Controllers
                     courseTerm.TermID = TermID;
                     courseTerm.Site = site;
                     dataRepository.CreateCourseTerm(courseTerm);
+                    
+                    AssessTrack.Models.File file = FileUploader.GetFile("Syllabus",Request);
+                    
+                    if (file != null)
+                    {
+                        courseTerm.File = file;
+                        FileUploader.SaveFile(dataRepository, file);
+                        dataRepository.Save();
+                        FlashMessageHelper.AddMessage("New syllabus uploaded.");
+                    }
                     return RedirectToAction("Index", new { siteShortName = siteShortName });
                 }
                 catch (RuleViolationException)
@@ -150,11 +160,21 @@ namespace AssessTrack.Controllers
                 try
                 {
                     UpdateModel(courseTerm);
-                    AssessTrack.Models.File file = FileUploader.GetFile("Syllabus",Request);
+                    AssessTrack.Models.File file; // = FileUploader.GetFile("Syllabus",Request);
+                    if (courseTerm.File == null)
+                    {
+                        file = FileUploader.GetFile("Syllabus", Request);
+                        FileUploader.SaveFile(dataRepository, file);
+                    }
+                    else
+                    {
+                        file = courseTerm.File;
+                        FileUploader.UpdateFile("Syllabus", Request, file);
+                    }
                     if (file != null)
                     {
                         courseTerm.File = file;
-                        FileUploader.SaveFile(dataRepository, file);
+                        
                         FlashMessageHelper.AddMessage("New syllabus uploaded.");
                     }
                     dataRepository.Save();

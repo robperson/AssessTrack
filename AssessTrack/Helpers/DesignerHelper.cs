@@ -136,6 +136,17 @@ namespace AssessTrack.Helpers
                 caption, weight, tags, string.Empty, "short-answer", id, extraClasses, keys);
         }
 
+
+        public static string GetAttachmentMarkup(string caption, string weight, string tags, string id, string extraClasses)
+        {
+            return GetAttachmentMarkup(caption, weight, tags, id, extraClasses, string.Empty);
+        }
+        public static string GetAttachmentMarkup(string caption, string weight, string tags, string id, string extraClasses, string keys)
+        {
+            return string.Format(answerTemplate, "attachment", "Attachment",
+                caption, weight, tags, string.Empty, "attachment", id, extraClasses, keys);
+        }
+
         public static string GetLongAnswerMarkup(string caption, string weight, string tags, string id)
         {
             return GetLongAnswerMarkup(caption, weight, tags, id, string.Empty);
@@ -344,6 +355,10 @@ namespace AssessTrack.Helpers
                         {
                             questiondata += GetShortAnswerMarkup(caption, weight, tags, id, string.Empty, keys);
                         }
+                        else if (type == "attachment")
+                        {
+                            questiondata += GetAttachmentMarkup(caption, weight, tags, id, string.Empty, keys);
+                        }
                         else if (type == "long-answer")
                         {
                             questiondata += GetLongAnswerMarkup(caption, weight, tags, id, string.Empty, keys);
@@ -362,7 +377,7 @@ namespace AssessTrack.Helpers
                             {
                                 fstream = fstreamEl.Value;
                             }
-                            questiondata += GetCodeAnswerMarkup(caption, weight, tags, id, string.Empty, keys,stdin,fstream);
+                            questiondata += GetCodeAnswerMarkup(caption, weight, tags, id, string.Empty, keys, stdin, fstream);
                         }
                         else if (type == "multichoice")
                         {
@@ -411,6 +426,7 @@ namespace AssessTrack.Helpers
                     GetCodeAnswerMarkup(string.Empty, "0", string.Empty, string.Empty, "tool-box-item") +
                     GetLongAnswerMarkup(string.Empty, "0", string.Empty, string.Empty, "tool-box-item") +
                     GetShortAnswerMarkup(string.Empty, "0", string.Empty, string.Empty, "tool-box-item") +
+                    GetAttachmentMarkup(string.Empty, "0", string.Empty, string.Empty, "tool-box-item") +
                     GetMultichoiceMarkup(string.Empty, "0", string.Empty, string.Empty, string.Empty, "tool-box-item") +
                     GetAnswerKeyMenuItem();
         }

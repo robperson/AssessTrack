@@ -29,7 +29,14 @@
             <td>
                 <strong><%= Html.Encode(item.Name) %></strong>
                 <div class="row-actions">
-                <%= Html.ActionLink("Edit", "Edit", new { id = item.AssessmentTypeID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
+                <%= Html.ActionLink("Edit", "Edit", 
+                                        new 
+                                        { 
+                                            id = item.AssessmentTypeID, 
+                                            siteShortName = Html.CurrentSiteShortName(), 
+                                            courseTermShortName = Html.CurrentCourseTermShortName() 
+                                        }
+                                    )%> |
                 <%= Html.ActionLink("Details", "Details", new { id = item.AssessmentTypeID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
                 <%= Html.ActionLink("Delete", "Delete", new { id = item.AssessmentTypeID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
                 </div>

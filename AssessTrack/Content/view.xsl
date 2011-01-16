@@ -69,6 +69,16 @@
         </input>
       </xsl:if>
 
+      <xsl:if test="@type='attachment'">
+        <p>
+          <xsl:attribute name="id">
+            <xsl:text>download-</xsl:text>
+            <xsl:value-of select="@id"/>
+          </xsl:attribute>
+
+        </p>
+      </xsl:if>
+
       <xsl:if test="@type='multichoice'">
         <div class="multichoice">
           <xsl:for-each select="./choice">

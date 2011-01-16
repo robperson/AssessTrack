@@ -14,7 +14,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Submit</h2>
-    <% using (Html.BeginForm()) { %>
+    <%  using (Html.BeginForm("Submit", "Assessment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        { %>
            
            <%= Html.RenderAssessmentSubmissionForm(Model)%>
            

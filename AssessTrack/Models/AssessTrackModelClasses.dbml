@@ -300,7 +300,7 @@
   </Table>
   <Table Name="dbo.ProgramOutcomes" Member="ProgramOutcomes">
     <Type Name="ProgramOutcome">
-      <Column Name="ProgramOutcomeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProgramOutcomeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Label" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="VarChar(300) NOT NULL" CanBeNull="false" />
       <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />

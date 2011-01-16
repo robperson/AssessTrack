@@ -89,6 +89,7 @@
     <Compile Include="Controllers\CourseTermToolsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\ProgramOutcomeController.cs" />
     <Compile Include="Controllers\QuizBuilderImportController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Helpers\AuthHelper.cs" />
     <Compile Include="Helpers\CodeCompiler.cs" />
     <Compile Include="Helpers\ControllerHelpers.cs" />
+    <Compile Include="Helpers\DebugTextWriter.cs" />
     <Compile Include="Helpers\DesignerHelper.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\FileUploader.cs" />
@@ -125,7 +127,6 @@
     <Compile Include="Models\AnswerTag.cs" />
     <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\File.cs" />
-    <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\Managers\AssessmentManager.cs" />
     <Compile Include="Models\AssessmentTag.cs" />
     <Compile Include="Models\AssessmentType.cs" />
@@ -571,6 +572,12 @@
     <Content Include="Views\Course\Delete.aspx" />
     <Content Include="Views\Error\NotFound.aspx" />
     <Content Include="Views\Error\UnexpectedError.aspx" />
+    <Content Include="Views\ProgramOutcome\ProgramOutcomeForm.ascx" />
+    <Content Include="Views\ProgramOutcome\Create.aspx" />
+    <Content Include="Views\ProgramOutcome\Delete.aspx" />
+    <Content Include="Views\ProgramOutcome\Edit.aspx" />
+    <Content Include="Views\ProgramOutcome\Index.aspx" />
+    <Content Include="Views\ProgramOutcome\OutcomeNotFound.aspx" />
     <Content Include="Views\Reports\AssessmentGradeDistribution.aspx" />
     <Content Include="Views\Reports\ClassGradeDistribution.aspx" />
     <Content Include="Views\Reports\CourseOutcomeDetails.aspx" />

@@ -6476,7 +6476,7 @@ namespace AssessTrack.Models
 			OnCreated();
 		}
 		
-		[Column(Storage="_ProgramOutcomeID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		[Column(Storage="_ProgramOutcomeID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
 		public System.Guid ProgramOutcomeID
 		{
 			get

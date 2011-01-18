@@ -202,7 +202,7 @@ namespace AssessTrack.Controllers
                     {
                         foreach (AnswerKey key in response.Answer.AnswerKeys)
                         {
-                            if (key.Value.ToLower() == response.ResponseText.ToLower())
+                            if (key.Value.ToLower().Replace("\r", "") == response.ResponseText.ToLower().Replace("\r", ""))
                             {
                                 response.Score = key.Weight;
                                 break;

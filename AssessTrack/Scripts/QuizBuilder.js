@@ -228,10 +228,12 @@
                 script_url: '/Scripts/tiny_mce/tiny_mce.js',
 
                 // General options
-                theme: "simple",
+                theme: "advanced",
                 plugins: "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
 
                 theme_advanced_resizing: true,
+                theme_advanced_statusbar_location: "bottom",
+                theme_advanced_resize_horizontal : false,
 
                 // Example content CSS (should be your site CSS)
                 content_css: "/Content/Site.css"
@@ -308,10 +310,12 @@
             script_url: '/Scripts/tiny_mce/tiny_mce.js',
 
             // General options
-            theme: "simple",
-            //plugins: "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
+            theme: "advanced",
+            plugins: "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
 
-            //theme_advanced_resizing: true,
+            theme_advanced_resizing: true,
+            theme_advanced_statusbar_location: "bottom",
+            theme_advanced_resize_horizontal: false,
 
             // Example content CSS (should be your site CSS)
             content_css: "/Content/Site.css"

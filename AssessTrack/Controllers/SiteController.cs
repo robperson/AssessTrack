@@ -13,9 +13,12 @@ namespace AssessTrack.Controllers
     public class SiteViewModel
     {
         public SelectList SiteList;
+        public List<Site> Sites;
+
         public SiteViewModel(IEnumerable<Site> sites)
         {
             SiteList = new SelectList(sites,"SiteID","Title");
+            Sites = sites.ToList();
         }
     }
     
@@ -47,7 +50,6 @@ namespace AssessTrack.Controllers
 
         //
         // POST: /Site/Create
-
         [ATAuth(AuthScope = AuthScope.Application, MinLevel = 9, MaxLevel = 10)]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(FormCollection collection)
@@ -108,7 +110,7 @@ namespace AssessTrack.Controllers
         [ATAuth(AuthScope = AuthScope.Application, MinLevel = 0, MaxLevel = 10)]
         public ActionResult Join()
         {
-            return View(new SiteViewModel(dataRepository.GetAllSites()));
+            return View(new SiteViewModel(dataRepository.GetUnEnrolledSites(UserHelpers.GetCurrentUserID())));
         }
 
         [ATAuth(AuthScope = AuthScope.Application, MinLevel = 0, MaxLevel = 10)]
@@ -124,7 +126,7 @@ namespace AssessTrack.Controllers
                     (site.Password != password))
                 {
                     ModelState.AddModelError("_FORM", "Incorrect Password.");
-                    return View(new SiteViewModel(dataRepository.GetAllSites()));
+                    return View(new SiteViewModel(dataRepository.GetUnEnrolledSites(UserHelpers.GetCurrentUserID())));
                 }
                 if (dataRepository.JoinSite(site))
                     return RedirectToAction("Index");
@@ -135,7 +137,15 @@ namespace AssessTrack.Controllers
             {
                 throw;
             }
-            return View(new SiteViewModel(dataRepository.GetAllSites()));
+            return View(new SiteViewModel(dataRepository.GetUnEnrolledSites(UserHelpers.GetCurrentUserID())));
+        }
+
+        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 5, MaxLevel = 10)]
+        public ActionResult CreateInvite()
+        {
+            Invitation invite = new Invitation();
+            invite.Site = site;
+            return View(invite);
         }
     }
 }

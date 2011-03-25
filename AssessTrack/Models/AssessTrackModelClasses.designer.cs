@@ -5767,7 +5767,7 @@ namespace AssessTrack.Models
 			OnCreated();
 		}
 		
-		[Column(Storage="_InvitationID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		[Column(Storage="_InvitationID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
 		public System.Guid InvitationID
 		{
 			get

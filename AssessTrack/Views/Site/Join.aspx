@@ -7,20 +7,32 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Join a Site</h2>
-    <% using (Html.BeginForm()) { %>
-    <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
     <p>
-        <%= Html.DropDownList("id",Model.SiteList) %>
-        
-        
+        <%= Html.ValidationSummary() %>
     </p>
-    <p>
-        <label for="Password">Password:</label>
-        <%= Html.TextBox("Password") %>
-    </p>
-    <p>
-        <input type="submit" value="Join this Site!" />
-    </p>    
+    <% foreach (var site in Model.Sites)
+       {%>
+       <div class="enroll">
+            <h3><%=site.Title %></h3>
+            <p>
+            <%= site.Description %>
+            </p>
+            <% using (Html.BeginForm())
+               { %>
+                <%= Html.Hidden("id",site.SiteID) %>
+            
+                <% if (!string.IsNullOrEmpty(site.Password))
+                   { %>
+                    <p>
+                        <label for="Password">Password:</label>
+                        <%= Html.TextBox("Password")%>
+                    </p>
+                <% } %>
+                <p>                   
+                    <input type="submit" value="Join  <%= site.Title %>" />
+                </p>    
+            <% } %>
+        </div>
     <% } %>
 
 </asp:Content>

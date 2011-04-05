@@ -49,6 +49,6 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="ExtraContent" runat="server">
 <script type="text/javascript">
     SyntaxHighlighter.all();
-    $('.response-comment').autogrow();
+    $('textarea').autogrow();
 </script>
 </asp:Content>

@@ -240,5 +240,41 @@ namespace AssessTrack.Models
 
             return pfme;
         }
+
+        public void DeleteTagFromTaggable(Tag tag, ITaggable taggable)
+        {
+            if (taggable is Answer)
+            {
+                DeleteTagFromAnswer(taggable as Answer, tag);
+            }
+            else if (taggable is Question)
+            {
+                DeleteTagFromQuestion(taggable as Question, tag);
+            }
+            else if (taggable is Assessment)
+            {
+                DeleteTagFromAssessment(taggable as Assessment, tag);
+            }
+            else
+            {
+                throw new Exception("Cannot delete unsupported ITaggable object.");
+            }
+        }
+
+        public void DeleteTag(Tag tag)
+        {
+            List<ITaggable> items = GetTaggedItems(tag);
+            foreach (var item in items)
+            {
+                DeleteTagFromTaggable(tag, item);
+            }
+
+            var progOutcomeRelationships = from tpo in dc.TagProgramOutcomes
+                                           where tpo.Tag == tag
+                                           select tpo;
+            dc.TagProgramOutcomes.DeleteAllOnSubmit(progOutcomeRelationships);
+
+            dc.Tags.DeleteOnSubmit(tag);
+        }
     }
 }

@@ -29,6 +29,28 @@ namespace AssessTrack.Models
                    where sitemember.MembershipID == userid
                    select site).ToList();
         }
+
+        /// <summary>
+        /// Get sites that the user is not enrolled in
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public List<Site> GetUnEnrolledSites(Guid userid)
+        {
+            List<Site> allSites = GetAllSites().ToList();
+            List<Site> unenrolled = new List<Site>();
+
+            foreach (var site in allSites)
+            {
+                if (!IsSiteMember(site, userid))
+                {
+                    unenrolled.Add(site);
+                }
+            }
+
+            return unenrolled;
+        }
+
         public IEnumerable<Site> GetAllSites()
         {
             return dc.Sites.AsEnumerable();
@@ -57,6 +79,15 @@ namespace AssessTrack.Models
                                     where sm.Profile == profile
                                     && sm.Site == site
                                     select sm).SingleOrDefault();
+            return (sitemember != null);
+        }
+
+        public bool IsSiteMember(Site site, Guid id)
+        {
+            SiteMember sitemember = (from sm in dc.SiteMembers
+                                     where sm.MembershipID == id
+                                     && sm.Site == site
+                                     select sm).SingleOrDefault();
             return (sitemember != null);
         }
 

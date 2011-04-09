@@ -12,6 +12,7 @@ using AssessTrack.Helpers;
 using System.Configuration;
 using System.Net.Mail;
 using System.Net;
+using System.Transactions;
 
 namespace AssessTrack.Controllers
 {
@@ -247,6 +248,100 @@ After you log on with your new password you can change it to something you will 
             }
         }
 
+        public ActionResult AcceptInvite(Guid id)
+        {
+            ViewData["PasswordLength"] = MembershipService.MinPasswordLength;
+
+            Invitation invite = dataRepository.Single<Invitation>(inv => inv.InvitationID == id);
+
+            if (invite == null)
+            {
+                FlashMessageHelper.AddMessage("Invite not found.");
+                return RedirectToRoute(new { action = "Index", controller = "Home" });
+            }
+            else if (invite.Accepted)
+            {
+                FlashMessageHelper.AddMessage("Invite already accepted.");
+                return RedirectToRoute(new { action = "Index", controller = "Home" });
+            }
+
+            return View(invite);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult AcceptInvite(Guid id, string userName, string password, string confirmPassword)
+        {
+            Invitation invite = dataRepository.Single<Invitation>(inv => inv.InvitationID == id);
+
+            if (invite == null)
+            {
+                FlashMessageHelper.AddMessage("Invite not found.");
+                return RedirectToRoute(new { action = "Index", controller = "Home" });
+            }
+            using (TransactionScope scope = new TransactionScope())
+            {
+                string email = invite.Email;
+                ViewData["PasswordLength"] = MembershipService.MinPasswordLength;
+
+                if (ValidateRegistration(userName, email, password, confirmPassword))
+                {
+                    // Attempt to register the user
+                    MembershipCreateStatus createStatus = MembershipService.CreateUser(userName, password, email);
+
+                    if (createStatus == MembershipCreateStatus.Success)
+                    {
+                        Guid membershipID = UserHelpers.GetIDFromUsername(userName);
+                        Profile profile = new Profile();
+                        UpdateModel(profile);
+                        if (ModelState.IsValid)
+                        {
+                            try
+                            {
+                                profile.MembershipID = membershipID;
+                                dataRepository.CreateProfile(profile);
+
+                                //Create site membership
+                                SiteMember sitemember = new SiteMember()
+                                {
+                                    AccessLevel = invite.SiteAccessLevel,
+                                    Site = invite.Site,
+                                    Profile = profile
+                                };
+
+                                //Create courseterm member
+                                if (invite.CourseTerm != null)
+                                {
+                                    CourseTermMember ctmember = new CourseTermMember()
+                                    {
+                                        AccessLevel = invite.CourseTermAccessLevel.Value,
+                                        CourseTerm = invite.CourseTerm,
+                                        Profile = profile
+                                    };
+                                }
+
+                                invite.Accepted = true;
+                                dataRepository.Save();
+                                FormsAuth.SignIn(userName, false /* createPersistentCookie */);
+                                scope.Complete();
+                                return RedirectToAction("Index", "Home");
+                            }
+                            catch
+                            {
+                                ModelState.AddModelErrors(profile.GetRuleViolations());
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("_FORM", ErrorCodeToString(createStatus));
+                    }
+                }
+                
+            }
+            // If we got this far, something failed, redisplay form
+            return View(invite);
+        }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

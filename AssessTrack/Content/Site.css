@@ -89,6 +89,7 @@ h5, h6
 }
 
 
+
 /* MISC  
 ----------------------------------------------------------*/
 .clear
@@ -607,4 +608,16 @@ td.code div
 code.cpp
 {
     white-space:pre;
+}
+
+/* Enroll Page
+--------------------------------------------------------- */
+div.enroll h3
+{
+     border-bottom:1px solid #369;
+}
+
+div.enroll
+{
+    border-bottom:1px solid #ccc;
 }

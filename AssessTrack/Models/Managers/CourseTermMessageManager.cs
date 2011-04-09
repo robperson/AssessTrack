@@ -30,6 +30,7 @@ namespace AssessTrack.Models
                            from member in dc.CourseTermMembers
                            where member.MembershipID == UserHelpers.GetCurrentUserID()
                            && member.CourseTermID == message.CourseTermID
+                           && message.CreatedDate.CompareTo(DateTime.Now.AddDays(-30.0)) >= 0
                            select message;
             return messages.OrderByDescending(msg => msg.CreatedDate).Take(5).ToList();
         }

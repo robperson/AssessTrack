@@ -7,6 +7,7 @@ using System.Web.Mvc.Ajax;
 using AssessTrack.Helpers;
 using AssessTrack.Models;
 using AssessTrack.Filters;
+using AssessTrack.Models.ViewModels;
 
 namespace AssessTrack.Controllers
 {
@@ -140,12 +141,5 @@ namespace AssessTrack.Controllers
             return View(new SiteViewModel(dataRepository.GetUnEnrolledSites(UserHelpers.GetCurrentUserID())));
         }
 
-        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 5, MaxLevel = 10)]
-        public ActionResult CreateInvite()
-        {
-            Invitation invite = new Invitation();
-            invite.Site = site;
-            return View(invite);
-        }
     }
 }

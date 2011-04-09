@@ -82,6 +82,13 @@ namespace AssessTrack.Models
             return true;
         }
 
+        public List<CourseTerm> GetAllCourseTerms(Site site)
+        {
+            var cts = from ct in site.CourseTerms
+                      select ct;
+            return cts.OrderBy(ct => ct.Term.EndDate).ToList();
+        }
+
         public List<CourseTerm> GetUserCourseTerms(Site site)
         {
             return (from ct in site.CourseTerms

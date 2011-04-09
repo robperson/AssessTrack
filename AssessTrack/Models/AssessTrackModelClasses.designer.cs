@@ -81,9 +81,6 @@ namespace AssessTrack.Models
     partial void InsertCourseTerm(CourseTerm instance);
     partial void UpdateCourseTerm(CourseTerm instance);
     partial void DeleteCourseTerm(CourseTerm instance);
-    partial void InsertInvitation(Invitation instance);
-    partial void UpdateInvitation(Invitation instance);
-    partial void DeleteInvitation(Invitation instance);
     partial void InsertFile(File instance);
     partial void UpdateFile(File instance);
     partial void DeleteFile(File instance);
@@ -96,6 +93,9 @@ namespace AssessTrack.Models
     partial void InsertTagProgramOutcome(TagProgramOutcome instance);
     partial void UpdateTagProgramOutcome(TagProgramOutcome instance);
     partial void DeleteTagProgramOutcome(TagProgramOutcome instance);
+    partial void InsertInvitation(Invitation instance);
+    partial void UpdateInvitation(Invitation instance);
+    partial void DeleteInvitation(Invitation instance);
     #endregion
 		
 		public AssessTrackModelClassesDataContext() : 
@@ -288,14 +288,6 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Invitation> Invitations
-		{
-			get
-			{
-				return this.GetTable<Invitation>();
-			}
-		}
-		
 		public System.Data.Linq.Table<File> Files
 		{
 			get
@@ -325,6 +317,14 @@ namespace AssessTrack.Models
 			get
 			{
 				return this.GetTable<TagProgramOutcome>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Invitation> Invitations
+		{
+			get
+			{
+				return this.GetTable<Invitation>();
 			}
 		}
 		
@@ -2325,9 +2325,9 @@ namespace AssessTrack.Models
 		
 		private EntitySet<CourseTerm> _CourseTerms;
 		
-		private EntitySet<Invitation> _Invitations;
-		
 		private EntitySet<ProgramOutcome> _ProgramOutcomes;
+		
+		private EntitySet<Invitation> _Invitations;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2351,8 +2351,8 @@ namespace AssessTrack.Models
 			this._Terms = new EntitySet<Term>(new Action<Term>(this.attach_Terms), new Action<Term>(this.detach_Terms));
 			this._SiteMembers = new EntitySet<SiteMember>(new Action<SiteMember>(this.attach_SiteMembers), new Action<SiteMember>(this.detach_SiteMembers));
 			this._CourseTerms = new EntitySet<CourseTerm>(new Action<CourseTerm>(this.attach_CourseTerms), new Action<CourseTerm>(this.detach_CourseTerms));
-			this._Invitations = new EntitySet<Invitation>(new Action<Invitation>(this.attach_Invitations), new Action<Invitation>(this.detach_Invitations));
 			this._ProgramOutcomes = new EntitySet<ProgramOutcome>(new Action<ProgramOutcome>(this.attach_ProgramOutcomes), new Action<ProgramOutcome>(this.detach_ProgramOutcomes));
+			this._Invitations = new EntitySet<Invitation>(new Action<Invitation>(this.attach_Invitations), new Action<Invitation>(this.detach_Invitations));
 			OnCreated();
 		}
 		
@@ -2508,19 +2508,6 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Site_Invitation", Storage="_Invitations", ThisKey="SiteID", OtherKey="SiteID")]
-		public EntitySet<Invitation> Invitations
-		{
-			get
-			{
-				return this._Invitations;
-			}
-			set
-			{
-				this._Invitations.Assign(value);
-			}
-		}
-		
 		[Association(Name="Site_ProgramOutcome", Storage="_ProgramOutcomes", ThisKey="SiteID", OtherKey="SiteID")]
 		public EntitySet<ProgramOutcome> ProgramOutcomes
 		{
@@ -2531,6 +2518,19 @@ namespace AssessTrack.Models
 			set
 			{
 				this._ProgramOutcomes.Assign(value);
+			}
+		}
+		
+		[Association(Name="Site_Invitation", Storage="_Invitations", ThisKey="SiteID", OtherKey="SiteID")]
+		public EntitySet<Invitation> Invitations
+		{
+			get
+			{
+				return this._Invitations;
+			}
+			set
+			{
+				this._Invitations.Assign(value);
 			}
 		}
 		
@@ -2602,18 +2602,6 @@ namespace AssessTrack.Models
 			entity.Site = null;
 		}
 		
-		private void attach_Invitations(Invitation entity)
-		{
-			this.SendPropertyChanging();
-			entity.Site = this;
-		}
-		
-		private void detach_Invitations(Invitation entity)
-		{
-			this.SendPropertyChanging();
-			entity.Site = null;
-		}
-		
 		private void attach_ProgramOutcomes(ProgramOutcome entity)
 		{
 			this.SendPropertyChanging();
@@ -2621,6 +2609,18 @@ namespace AssessTrack.Models
 		}
 		
 		private void detach_ProgramOutcomes(ProgramOutcome entity)
+		{
+			this.SendPropertyChanging();
+			entity.Site = null;
+		}
+		
+		private void attach_Invitations(Invitation entity)
+		{
+			this.SendPropertyChanging();
+			entity.Site = this;
+		}
+		
+		private void detach_Invitations(Invitation entity)
 		{
 			this.SendPropertyChanging();
 			entity.Site = null;
@@ -5092,9 +5092,9 @@ namespace AssessTrack.Models
 		
 		private EntitySet<Tag> _Tags;
 		
-		private EntitySet<Invitation> _Invitations;
-		
 		private EntitySet<CourseTermFile> _CourseTermFiles;
+		
+		private EntitySet<Invitation> _Invitations;
 		
 		private EntityRef<Course> _Course;
 		
@@ -5138,8 +5138,8 @@ namespace AssessTrack.Models
 			this._CourseTermMembers = new EntitySet<CourseTermMember>(new Action<CourseTermMember>(this.attach_CourseTermMembers), new Action<CourseTermMember>(this.detach_CourseTermMembers));
 			this._CourseTermMessages = new EntitySet<CourseTermMessage>(new Action<CourseTermMessage>(this.attach_CourseTermMessages), new Action<CourseTermMessage>(this.detach_CourseTermMessages));
 			this._Tags = new EntitySet<Tag>(new Action<Tag>(this.attach_Tags), new Action<Tag>(this.detach_Tags));
-			this._Invitations = new EntitySet<Invitation>(new Action<Invitation>(this.attach_Invitations), new Action<Invitation>(this.detach_Invitations));
 			this._CourseTermFiles = new EntitySet<CourseTermFile>(new Action<CourseTermFile>(this.attach_CourseTermFiles), new Action<CourseTermFile>(this.detach_CourseTermFiles));
+			this._Invitations = new EntitySet<Invitation>(new Action<Invitation>(this.attach_Invitations), new Action<Invitation>(this.detach_Invitations));
 			this._Course = default(EntityRef<Course>);
 			this._Site = default(EntityRef<Site>);
 			this._Term = default(EntityRef<Term>);
@@ -5441,19 +5441,6 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="CourseTerm_Invitation", Storage="_Invitations", ThisKey="CourseTermID", OtherKey="CourseTermID")]
-		public EntitySet<Invitation> Invitations
-		{
-			get
-			{
-				return this._Invitations;
-			}
-			set
-			{
-				this._Invitations.Assign(value);
-			}
-		}
-		
 		[Association(Name="CourseTerm_CourseTermFile", Storage="_CourseTermFiles", ThisKey="CourseTermID", OtherKey="CourseTermID")]
 		public EntitySet<CourseTermFile> CourseTermFiles
 		{
@@ -5464,6 +5451,19 @@ namespace AssessTrack.Models
 			set
 			{
 				this._CourseTermFiles.Assign(value);
+			}
+		}
+		
+		[Association(Name="CourseTerm_Invitation", Storage="_Invitations", ThisKey="CourseTermID", OtherKey="CourseTermID")]
+		public EntitySet<Invitation> Invitations
+		{
+			get
+			{
+				return this._Invitations;
+			}
+			set
+			{
+				this._Invitations.Assign(value);
 			}
 		}
 		
@@ -5695,18 +5695,6 @@ namespace AssessTrack.Models
 			entity.CourseTerm = null;
 		}
 		
-		private void attach_Invitations(Invitation entity)
-		{
-			this.SendPropertyChanging();
-			entity.CourseTerm = this;
-		}
-		
-		private void detach_Invitations(Invitation entity)
-		{
-			this.SendPropertyChanging();
-			entity.CourseTerm = null;
-		}
-		
 		private void attach_CourseTermFiles(CourseTermFile entity)
 		{
 			this.SendPropertyChanging();
@@ -5718,269 +5706,17 @@ namespace AssessTrack.Models
 			this.SendPropertyChanging();
 			entity.CourseTerm = null;
 		}
-	}
-	
-	[Table(Name="dbo.Invitations")]
-	public partial class Invitation : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _InvitationID;
-		
-		private System.Guid _SiteID;
-		
-		private byte _SiteAccessLevel;
-		
-		private System.Nullable<System.Guid> _CourseTermID;
-		
-		private System.Nullable<byte> _CourseTermAccessLevel;
-		
-		private bool _Accepted;
-		
-		private EntityRef<CourseTerm> _CourseTerm;
-		
-		private EntityRef<Site> _Site;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnInvitationIDChanging(System.Guid value);
-    partial void OnInvitationIDChanged();
-    partial void OnSiteIDChanging(System.Guid value);
-    partial void OnSiteIDChanged();
-    partial void OnSiteAccessLevelChanging(byte value);
-    partial void OnSiteAccessLevelChanged();
-    partial void OnCourseTermIDChanging(System.Nullable<System.Guid> value);
-    partial void OnCourseTermIDChanged();
-    partial void OnCourseTermAccessLevelChanging(System.Nullable<byte> value);
-    partial void OnCourseTermAccessLevelChanged();
-    partial void OnAcceptedChanging(bool value);
-    partial void OnAcceptedChanged();
-    #endregion
-		
-		public Invitation()
+		private void attach_Invitations(Invitation entity)
 		{
-			this._CourseTerm = default(EntityRef<CourseTerm>);
-			this._Site = default(EntityRef<Site>);
-			OnCreated();
+			this.SendPropertyChanging();
+			entity.CourseTerm = this;
 		}
 		
-		[Column(Storage="_InvitationID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
-		public System.Guid InvitationID
+		private void detach_Invitations(Invitation entity)
 		{
-			get
-			{
-				return this._InvitationID;
-			}
-			set
-			{
-				if ((this._InvitationID != value))
-				{
-					this.OnInvitationIDChanging(value);
-					this.SendPropertyChanging();
-					this._InvitationID = value;
-					this.SendPropertyChanged("InvitationID");
-					this.OnInvitationIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SiteID
-		{
-			get
-			{
-				return this._SiteID;
-			}
-			set
-			{
-				if ((this._SiteID != value))
-				{
-					if (this._Site.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnSiteIDChanging(value);
-					this.SendPropertyChanging();
-					this._SiteID = value;
-					this.SendPropertyChanged("SiteID");
-					this.OnSiteIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_SiteAccessLevel", DbType="TinyInt NOT NULL")]
-		public byte SiteAccessLevel
-		{
-			get
-			{
-				return this._SiteAccessLevel;
-			}
-			set
-			{
-				if ((this._SiteAccessLevel != value))
-				{
-					this.OnSiteAccessLevelChanging(value);
-					this.SendPropertyChanging();
-					this._SiteAccessLevel = value;
-					this.SendPropertyChanged("SiteAccessLevel");
-					this.OnSiteAccessLevelChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_CourseTermID", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> CourseTermID
-		{
-			get
-			{
-				return this._CourseTermID;
-			}
-			set
-			{
-				if ((this._CourseTermID != value))
-				{
-					if (this._CourseTerm.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCourseTermIDChanging(value);
-					this.SendPropertyChanging();
-					this._CourseTermID = value;
-					this.SendPropertyChanged("CourseTermID");
-					this.OnCourseTermIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_CourseTermAccessLevel", DbType="TinyInt")]
-		public System.Nullable<byte> CourseTermAccessLevel
-		{
-			get
-			{
-				return this._CourseTermAccessLevel;
-			}
-			set
-			{
-				if ((this._CourseTermAccessLevel != value))
-				{
-					this.OnCourseTermAccessLevelChanging(value);
-					this.SendPropertyChanging();
-					this._CourseTermAccessLevel = value;
-					this.SendPropertyChanged("CourseTermAccessLevel");
-					this.OnCourseTermAccessLevelChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Accepted", DbType="Bit NOT NULL")]
-		public bool Accepted
-		{
-			get
-			{
-				return this._Accepted;
-			}
-			set
-			{
-				if ((this._Accepted != value))
-				{
-					this.OnAcceptedChanging(value);
-					this.SendPropertyChanging();
-					this._Accepted = value;
-					this.SendPropertyChanged("Accepted");
-					this.OnAcceptedChanged();
-				}
-			}
-		}
-		
-		[Association(Name="CourseTerm_Invitation", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
-		public CourseTerm CourseTerm
-		{
-			get
-			{
-				return this._CourseTerm.Entity;
-			}
-			set
-			{
-				CourseTerm previousValue = this._CourseTerm.Entity;
-				if (((previousValue != value) 
-							|| (this._CourseTerm.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._CourseTerm.Entity = null;
-						previousValue.Invitations.Remove(this);
-					}
-					this._CourseTerm.Entity = value;
-					if ((value != null))
-					{
-						value.Invitations.Add(this);
-						this._CourseTermID = value.CourseTermID;
-					}
-					else
-					{
-						this._CourseTermID = default(Nullable<System.Guid>);
-					}
-					this.SendPropertyChanged("CourseTerm");
-				}
-			}
-		}
-		
-		[Association(Name="Site_Invitation", Storage="_Site", ThisKey="SiteID", OtherKey="SiteID", IsForeignKey=true)]
-		public Site Site
-		{
-			get
-			{
-				return this._Site.Entity;
-			}
-			set
-			{
-				Site previousValue = this._Site.Entity;
-				if (((previousValue != value) 
-							|| (this._Site.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Site.Entity = null;
-						previousValue.Invitations.Remove(this);
-					}
-					this._Site.Entity = value;
-					if ((value != null))
-					{
-						value.Invitations.Add(this);
-						this._SiteID = value.SiteID;
-					}
-					else
-					{
-						this._SiteID = default(System.Guid);
-					}
-					this.SendPropertyChanged("Site");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.SendPropertyChanging();
+			entity.CourseTerm = null;
 		}
 	}
 	
@@ -6849,6 +6585,294 @@ namespace AssessTrack.Models
 						this._TagID = default(System.Guid);
 					}
 					this.SendPropertyChanged("Tag");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="dbo.Invitations")]
+	public partial class Invitation : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _InvitationID;
+		
+		private System.Guid _SiteID;
+		
+		private byte _SiteAccessLevel;
+		
+		private System.Nullable<System.Guid> _CourseTermID;
+		
+		private System.Nullable<byte> _CourseTermAccessLevel;
+		
+		private bool _Accepted;
+		
+		private string _Email;
+		
+		private EntityRef<CourseTerm> _CourseTerm;
+		
+		private EntityRef<Site> _Site;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnInvitationIDChanging(System.Guid value);
+    partial void OnInvitationIDChanged();
+    partial void OnSiteIDChanging(System.Guid value);
+    partial void OnSiteIDChanged();
+    partial void OnSiteAccessLevelChanging(byte value);
+    partial void OnSiteAccessLevelChanged();
+    partial void OnCourseTermIDChanging(System.Nullable<System.Guid> value);
+    partial void OnCourseTermIDChanged();
+    partial void OnCourseTermAccessLevelChanging(System.Nullable<byte> value);
+    partial void OnCourseTermAccessLevelChanged();
+    partial void OnAcceptedChanging(bool value);
+    partial void OnAcceptedChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    #endregion
+		
+		public Invitation()
+		{
+			this._CourseTerm = default(EntityRef<CourseTerm>);
+			this._Site = default(EntityRef<Site>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_InvitationID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
+		public System.Guid InvitationID
+		{
+			get
+			{
+				return this._InvitationID;
+			}
+			set
+			{
+				if ((this._InvitationID != value))
+				{
+					this.OnInvitationIDChanging(value);
+					this.SendPropertyChanging();
+					this._InvitationID = value;
+					this.SendPropertyChanged("InvitationID");
+					this.OnInvitationIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_SiteID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SiteID
+		{
+			get
+			{
+				return this._SiteID;
+			}
+			set
+			{
+				if ((this._SiteID != value))
+				{
+					if (this._Site.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSiteIDChanging(value);
+					this.SendPropertyChanging();
+					this._SiteID = value;
+					this.SendPropertyChanged("SiteID");
+					this.OnSiteIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_SiteAccessLevel", DbType="TinyInt NOT NULL")]
+		public byte SiteAccessLevel
+		{
+			get
+			{
+				return this._SiteAccessLevel;
+			}
+			set
+			{
+				if ((this._SiteAccessLevel != value))
+				{
+					this.OnSiteAccessLevelChanging(value);
+					this.SendPropertyChanging();
+					this._SiteAccessLevel = value;
+					this.SendPropertyChanged("SiteAccessLevel");
+					this.OnSiteAccessLevelChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CourseTermID", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> CourseTermID
+		{
+			get
+			{
+				return this._CourseTermID;
+			}
+			set
+			{
+				if ((this._CourseTermID != value))
+				{
+					if (this._CourseTerm.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCourseTermIDChanging(value);
+					this.SendPropertyChanging();
+					this._CourseTermID = value;
+					this.SendPropertyChanged("CourseTermID");
+					this.OnCourseTermIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CourseTermAccessLevel", DbType="TinyInt")]
+		public System.Nullable<byte> CourseTermAccessLevel
+		{
+			get
+			{
+				return this._CourseTermAccessLevel;
+			}
+			set
+			{
+				if ((this._CourseTermAccessLevel != value))
+				{
+					this.OnCourseTermAccessLevelChanging(value);
+					this.SendPropertyChanging();
+					this._CourseTermAccessLevel = value;
+					this.SendPropertyChanged("CourseTermAccessLevel");
+					this.OnCourseTermAccessLevelChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Accepted", DbType="Bit NOT NULL")]
+		public bool Accepted
+		{
+			get
+			{
+				return this._Accepted;
+			}
+			set
+			{
+				if ((this._Accepted != value))
+				{
+					this.OnAcceptedChanging(value);
+					this.SendPropertyChanging();
+					this._Accepted = value;
+					this.SendPropertyChanged("Accepted");
+					this.OnAcceptedChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Email", DbType="NVarChar(100)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
+				}
+			}
+		}
+		
+		[Association(Name="CourseTerm_Invitation", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
+		public CourseTerm CourseTerm
+		{
+			get
+			{
+				return this._CourseTerm.Entity;
+			}
+			set
+			{
+				CourseTerm previousValue = this._CourseTerm.Entity;
+				if (((previousValue != value) 
+							|| (this._CourseTerm.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CourseTerm.Entity = null;
+						previousValue.Invitations.Remove(this);
+					}
+					this._CourseTerm.Entity = value;
+					if ((value != null))
+					{
+						value.Invitations.Add(this);
+						this._CourseTermID = value.CourseTermID;
+					}
+					else
+					{
+						this._CourseTermID = default(Nullable<System.Guid>);
+					}
+					this.SendPropertyChanged("CourseTerm");
+				}
+			}
+		}
+		
+		[Association(Name="Site_Invitation", Storage="_Site", ThisKey="SiteID", OtherKey="SiteID", IsForeignKey=true)]
+		public Site Site
+		{
+			get
+			{
+				return this._Site.Entity;
+			}
+			set
+			{
+				Site previousValue = this._Site.Entity;
+				if (((previousValue != value) 
+							|| (this._Site.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Site.Entity = null;
+						previousValue.Invitations.Remove(this);
+					}
+					this._Site.Entity = value;
+					if ((value != null))
+					{
+						value.Invitations.Add(this);
+						this._SiteID = value.SiteID;
+					}
+					else
+					{
+						this._SiteID = default(System.Guid);
+					}
+					this.SendPropertyChanged("Site");
 				}
 			}
 		}

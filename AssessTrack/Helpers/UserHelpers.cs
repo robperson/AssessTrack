@@ -29,6 +29,11 @@ namespace AssessTrack.Helpers
             }
         }
 
+        public static bool IsEmailRegistered(string email)
+        {
+            return (Membership.GetUserNameByEmail(email) != null);
+        }
+
         public static string GetPasswordForID(Guid? id)
         {
             try
@@ -103,6 +108,8 @@ namespace AssessTrack.Helpers
                 throw new InvalidOperationException("UserID cannot be retreived if user is not logged in.");
             }
             MembershipUser user = Membership.GetUser(HttpContext.Current.User.Identity.Name);
+            if (user == null)
+                return Guid.Empty;
             return (Guid)user.ProviderUserKey;
             
         }

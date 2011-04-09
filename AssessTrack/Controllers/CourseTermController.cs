@@ -145,7 +145,7 @@ namespace AssessTrack.Controllers
         [ATAuth(AuthScope = AuthScope.Site, MinLevel = 10, MaxLevel = 10)]
         public ActionResult Edit()
         {
-            return View(new CourseTermViewModel(site, courseTerm));
+            return View(new CourseTermViewModel(site, courseTerm,courseTerm.CourseID,courseTerm.TermID));
         }
 
         //

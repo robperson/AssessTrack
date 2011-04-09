@@ -58,6 +58,8 @@ namespace AssessTrack.Helpers
 
         public static void SaveFile(AssessTrackDataRepository repo, AssessTrack.Models.File file)
         {
+            if (file == null)
+                return;
             repo.SaveFile(file);
         }
     }

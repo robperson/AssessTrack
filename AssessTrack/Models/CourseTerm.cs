@@ -35,7 +35,16 @@ namespace AssessTrack.Models
 
             if (!Regex.IsMatch(ShortName, @"\A[a-zA-Z0-9_-]+\Z"))
                 yield return new RuleViolation("Short Name can only contain letters, numbers, underscores (_) and dashes (-)", "ShortName");
-            
+
+            if (this.Site != null)
+            {
+                int nameCount = Site.CourseTerms.Count(t => t.ShortName == ShortName);
+                if (nameCount > 1)
+                {
+                    yield return new RuleViolation(@"A Course Offering with Short Name """ + ShortName + "\" already exists for this Site", "ShortName");
+                }
+            }
+
             yield break;
         }
 

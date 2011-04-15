@@ -5774,10 +5774,8 @@ namespace AssessTrack.Models
 			OnCreated();
 		}
 		
-
 		[Column(Storage="_FileID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
 		public System.Guid FileID
-
 		{
 			get
 			{

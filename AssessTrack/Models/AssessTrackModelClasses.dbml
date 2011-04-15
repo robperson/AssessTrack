@@ -264,20 +264,6 @@
       <Association Name="File_CourseTerm" Member="File" ThisKey="Syllabus" OtherKey="FileID" Type="File" IsForeignKey="true" />
     </Type>
   </Table>
-
-  <Table Name="dbo.Invitations" Member="Invitations">
-    <Type Name="Invitation">
-      <Column Name="InvitationID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="SiteID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="SiteAccessLevel" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
-      <Column Name="CourseTermID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="CourseTermAccessLevel" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Column Name="Accepted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="CourseTerm_Invitation" Member="CourseTerm" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />
-      <Association Name="Site_Invitation" Member="Site" ThisKey="SiteID" OtherKey="SiteID" Type="Site" IsForeignKey="true" />
-    </Type>
-  </Table>
-
   <Table Name="dbo.Files" Member="Files">
     <Type Name="File">
       <Column Name="FileID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />

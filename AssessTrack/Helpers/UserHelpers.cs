@@ -31,7 +31,9 @@ namespace AssessTrack.Helpers
 
         public static bool IsEmailRegistered(string email)
         {
-            return (string.IsNullOrEmpty(email) || Membership.GetUserNameByEmail(email) != null);
+            if (string.IsNullOrEmpty(email))
+                return false;
+            return (Membership.GetUserNameByEmail(email) != null);
         }
 
         public static string GetPasswordForID(Guid? id)

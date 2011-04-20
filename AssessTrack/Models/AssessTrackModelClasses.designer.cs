@@ -75,9 +75,6 @@ namespace AssessTrack.Models
     partial void InsertCourseTermMessage(CourseTermMessage instance);
     partial void UpdateCourseTermMessage(CourseTermMessage instance);
     partial void DeleteCourseTermMessage(CourseTermMessage instance);
-    partial void InsertTag(Tag instance);
-    partial void UpdateTag(Tag instance);
-    partial void DeleteTag(Tag instance);
     partial void InsertCourseTerm(CourseTerm instance);
     partial void UpdateCourseTerm(CourseTerm instance);
     partial void DeleteCourseTerm(CourseTerm instance);
@@ -96,6 +93,9 @@ namespace AssessTrack.Models
     partial void InsertInvitation(Invitation instance);
     partial void UpdateInvitation(Invitation instance);
     partial void DeleteInvitation(Invitation instance);
+    partial void InsertTag(Tag instance);
+    partial void UpdateTag(Tag instance);
+    partial void DeleteTag(Tag instance);
     #endregion
 		
 		public AssessTrackModelClassesDataContext() : 
@@ -272,14 +272,6 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Tag> Tags
-		{
-			get
-			{
-				return this.GetTable<Tag>();
-			}
-		}
-		
 		public System.Data.Linq.Table<CourseTerm> CourseTerms
 		{
 			get
@@ -325,6 +317,14 @@ namespace AssessTrack.Models
 			get
 			{
 				return this.GetTable<Invitation>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Tag> Tags
+		{
+			get
+			{
+				return this.GetTable<Tag>();
 			}
 		}
 		
@@ -3252,9 +3252,9 @@ namespace AssessTrack.Models
 		
 		private EntitySet<CourseTermMessage> _CourseTermMessages;
 		
-		private EntitySet<Tag> _Tags;
-		
 		private EntitySet<File> _Files;
+		
+		private EntitySet<Tag> _Tags;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3281,8 +3281,8 @@ namespace AssessTrack.Models
 			this._SubmissionRecords = new EntitySet<SubmissionRecord>(new Action<SubmissionRecord>(this.attach_SubmissionRecords), new Action<SubmissionRecord>(this.detach_SubmissionRecords));
 			this._CourseTermMembers = new EntitySet<CourseTermMember>(new Action<CourseTermMember>(this.attach_CourseTermMembers), new Action<CourseTermMember>(this.detach_CourseTermMembers));
 			this._CourseTermMessages = new EntitySet<CourseTermMessage>(new Action<CourseTermMessage>(this.attach_CourseTermMessages), new Action<CourseTermMessage>(this.detach_CourseTermMessages));
-			this._Tags = new EntitySet<Tag>(new Action<Tag>(this.attach_Tags), new Action<Tag>(this.detach_Tags));
 			this._Files = new EntitySet<File>(new Action<File>(this.attach_Files), new Action<File>(this.detach_Files));
+			this._Tags = new EntitySet<Tag>(new Action<Tag>(this.attach_Tags), new Action<Tag>(this.detach_Tags));
 			OnCreated();
 		}
 		
@@ -3471,19 +3471,6 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="Profile_Tag", Storage="_Tags", ThisKey="MembershipID", OtherKey="CreatedBy")]
-		public EntitySet<Tag> Tags
-		{
-			get
-			{
-				return this._Tags;
-			}
-			set
-			{
-				this._Tags.Assign(value);
-			}
-		}
-		
 		[Association(Name="Profile_File", Storage="_Files", ThisKey="MembershipID", OtherKey="OwnerID")]
 		public EntitySet<File> Files
 		{
@@ -3494,6 +3481,19 @@ namespace AssessTrack.Models
 			set
 			{
 				this._Files.Assign(value);
+			}
+		}
+		
+		[Association(Name="Profile_Tag", Storage="_Tags", ThisKey="MembershipID", OtherKey="CreatedBy")]
+		public EntitySet<Tag> Tags
+		{
+			get
+			{
+				return this._Tags;
+			}
+			set
+			{
+				this._Tags.Assign(value);
 			}
 		}
 		
@@ -3577,18 +3577,6 @@ namespace AssessTrack.Models
 			entity.Profile = null;
 		}
 		
-		private void attach_Tags(Tag entity)
-		{
-			this.SendPropertyChanging();
-			entity.Profile = this;
-		}
-		
-		private void detach_Tags(Tag entity)
-		{
-			this.SendPropertyChanging();
-			entity.Profile = null;
-		}
-		
 		private void attach_Files(File entity)
 		{
 			this.SendPropertyChanging();
@@ -3596,6 +3584,18 @@ namespace AssessTrack.Models
 		}
 		
 		private void detach_Files(File entity)
+		{
+			this.SendPropertyChanging();
+			entity.Profile = null;
+		}
+		
+		private void attach_Tags(Tag entity)
+		{
+			this.SendPropertyChanging();
+			entity.Profile = this;
+		}
+		
+		private void detach_Tags(Tag entity)
 		{
 			this.SendPropertyChanging();
 			entity.Profile = null;
@@ -4738,322 +4738,6 @@ namespace AssessTrack.Models
 		}
 	}
 	
-	[Table(Name="dbo.Tags")]
-	public partial class Tag : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _TagID;
-		
-		private string _Name;
-		
-		private string _Description;
-		
-		private System.Guid _CreatedBy;
-		
-		private System.Guid _CourseTermID;
-		
-		private string _DescriptiveName;
-		
-		private bool _IsCourseOutcome;
-		
-		private EntitySet<TagProgramOutcome> _TagProgramOutcomes;
-		
-		private EntityRef<Profile> _Profile;
-		
-		private EntityRef<CourseTerm> _CourseTerm;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnTagIDChanging(System.Guid value);
-    partial void OnTagIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnCreatedByChanging(System.Guid value);
-    partial void OnCreatedByChanged();
-    partial void OnCourseTermIDChanging(System.Guid value);
-    partial void OnCourseTermIDChanged();
-    partial void OnDescriptiveNameChanging(string value);
-    partial void OnDescriptiveNameChanged();
-    partial void OnIsCourseOutcomeChanging(bool value);
-    partial void OnIsCourseOutcomeChanged();
-    #endregion
-		
-		public Tag()
-		{
-			this._TagProgramOutcomes = new EntitySet<TagProgramOutcome>(new Action<TagProgramOutcome>(this.attach_TagProgramOutcomes), new Action<TagProgramOutcome>(this.detach_TagProgramOutcomes));
-			this._Profile = default(EntityRef<Profile>);
-			this._CourseTerm = default(EntityRef<CourseTerm>);
-			OnCreated();
-		}
-		
-		[Column(Storage="_TagID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
-		public System.Guid TagID
-		{
-			get
-			{
-				return this._TagID;
-			}
-			set
-			{
-				if ((this._TagID != value))
-				{
-					this.OnTagIDChanging(value);
-					this.SendPropertyChanging();
-					this._TagID = value;
-					this.SendPropertyChanged("TagID");
-					this.OnTagIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Description", DbType="VarChar(300)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_CreatedBy", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid CreatedBy
-		{
-			get
-			{
-				return this._CreatedBy;
-			}
-			set
-			{
-				if ((this._CreatedBy != value))
-				{
-					if (this._Profile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCreatedByChanging(value);
-					this.SendPropertyChanging();
-					this._CreatedBy = value;
-					this.SendPropertyChanged("CreatedBy");
-					this.OnCreatedByChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_CourseTermID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid CourseTermID
-		{
-			get
-			{
-				return this._CourseTermID;
-			}
-			set
-			{
-				if ((this._CourseTermID != value))
-				{
-					if (this._CourseTerm.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCourseTermIDChanging(value);
-					this.SendPropertyChanging();
-					this._CourseTermID = value;
-					this.SendPropertyChanged("CourseTermID");
-					this.OnCourseTermIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_DescriptiveName", DbType="VarChar(100)")]
-		public string DescriptiveName
-		{
-			get
-			{
-				return this._DescriptiveName;
-			}
-			set
-			{
-				if ((this._DescriptiveName != value))
-				{
-					this.OnDescriptiveNameChanging(value);
-					this.SendPropertyChanging();
-					this._DescriptiveName = value;
-					this.SendPropertyChanged("DescriptiveName");
-					this.OnDescriptiveNameChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_IsCourseOutcome", DbType="Bit NOT NULL")]
-		public bool IsCourseOutcome
-		{
-			get
-			{
-				return this._IsCourseOutcome;
-			}
-			set
-			{
-				if ((this._IsCourseOutcome != value))
-				{
-					this.OnIsCourseOutcomeChanging(value);
-					this.SendPropertyChanging();
-					this._IsCourseOutcome = value;
-					this.SendPropertyChanged("IsCourseOutcome");
-					this.OnIsCourseOutcomeChanged();
-				}
-			}
-		}
-		
-		[Association(Name="Tag_TagProgramOutcome", Storage="_TagProgramOutcomes", ThisKey="TagID", OtherKey="TagID")]
-		public EntitySet<TagProgramOutcome> TagProgramOutcomes
-		{
-			get
-			{
-				return this._TagProgramOutcomes;
-			}
-			set
-			{
-				this._TagProgramOutcomes.Assign(value);
-			}
-		}
-		
-		[Association(Name="Profile_Tag", Storage="_Profile", ThisKey="CreatedBy", OtherKey="MembershipID", IsForeignKey=true)]
-		public Profile Profile
-		{
-			get
-			{
-				return this._Profile.Entity;
-			}
-			set
-			{
-				Profile previousValue = this._Profile.Entity;
-				if (((previousValue != value) 
-							|| (this._Profile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Profile.Entity = null;
-						previousValue.Tags.Remove(this);
-					}
-					this._Profile.Entity = value;
-					if ((value != null))
-					{
-						value.Tags.Add(this);
-						this._CreatedBy = value.MembershipID;
-					}
-					else
-					{
-						this._CreatedBy = default(System.Guid);
-					}
-					this.SendPropertyChanged("Profile");
-				}
-			}
-		}
-		
-		[Association(Name="CourseTerm_Tag", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
-		public CourseTerm CourseTerm
-		{
-			get
-			{
-				return this._CourseTerm.Entity;
-			}
-			set
-			{
-				CourseTerm previousValue = this._CourseTerm.Entity;
-				if (((previousValue != value) 
-							|| (this._CourseTerm.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._CourseTerm.Entity = null;
-						previousValue.Tags.Remove(this);
-					}
-					this._CourseTerm.Entity = value;
-					if ((value != null))
-					{
-						value.Tags.Add(this);
-						this._CourseTermID = value.CourseTermID;
-					}
-					else
-					{
-						this._CourseTermID = default(System.Guid);
-					}
-					this.SendPropertyChanged("CourseTerm");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_TagProgramOutcomes(TagProgramOutcome entity)
-		{
-			this.SendPropertyChanging();
-			entity.Tag = this;
-		}
-		
-		private void detach_TagProgramOutcomes(TagProgramOutcome entity)
-		{
-			this.SendPropertyChanging();
-			entity.Tag = null;
-		}
-	}
-	
 	[Table(Name="dbo.CourseTerms")]
 	public partial class CourseTerm : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -5090,11 +4774,11 @@ namespace AssessTrack.Models
 		
 		private EntitySet<CourseTermMessage> _CourseTermMessages;
 		
-		private EntitySet<Tag> _Tags;
-		
 		private EntitySet<CourseTermFile> _CourseTermFiles;
 		
 		private EntitySet<Invitation> _Invitations;
+		
+		private EntitySet<Tag> _Tags;
 		
 		private EntityRef<Course> _Course;
 		
@@ -5137,9 +4821,9 @@ namespace AssessTrack.Models
 			this._SubmissionExceptions = new EntitySet<SubmissionException>(new Action<SubmissionException>(this.attach_SubmissionExceptions), new Action<SubmissionException>(this.detach_SubmissionExceptions));
 			this._CourseTermMembers = new EntitySet<CourseTermMember>(new Action<CourseTermMember>(this.attach_CourseTermMembers), new Action<CourseTermMember>(this.detach_CourseTermMembers));
 			this._CourseTermMessages = new EntitySet<CourseTermMessage>(new Action<CourseTermMessage>(this.attach_CourseTermMessages), new Action<CourseTermMessage>(this.detach_CourseTermMessages));
-			this._Tags = new EntitySet<Tag>(new Action<Tag>(this.attach_Tags), new Action<Tag>(this.detach_Tags));
 			this._CourseTermFiles = new EntitySet<CourseTermFile>(new Action<CourseTermFile>(this.attach_CourseTermFiles), new Action<CourseTermFile>(this.detach_CourseTermFiles));
 			this._Invitations = new EntitySet<Invitation>(new Action<Invitation>(this.attach_Invitations), new Action<Invitation>(this.detach_Invitations));
+			this._Tags = new EntitySet<Tag>(new Action<Tag>(this.attach_Tags), new Action<Tag>(this.detach_Tags));
 			this._Course = default(EntityRef<Course>);
 			this._Site = default(EntityRef<Site>);
 			this._Term = default(EntityRef<Term>);
@@ -5428,19 +5112,6 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[Association(Name="CourseTerm_Tag", Storage="_Tags", ThisKey="CourseTermID", OtherKey="CourseTermID")]
-		public EntitySet<Tag> Tags
-		{
-			get
-			{
-				return this._Tags;
-			}
-			set
-			{
-				this._Tags.Assign(value);
-			}
-		}
-		
 		[Association(Name="CourseTerm_CourseTermFile", Storage="_CourseTermFiles", ThisKey="CourseTermID", OtherKey="CourseTermID")]
 		public EntitySet<CourseTermFile> CourseTermFiles
 		{
@@ -5464,6 +5135,19 @@ namespace AssessTrack.Models
 			set
 			{
 				this._Invitations.Assign(value);
+			}
+		}
+		
+		[Association(Name="CourseTerm_Tag", Storage="_Tags", ThisKey="CourseTermID", OtherKey="CourseTermID")]
+		public EntitySet<Tag> Tags
+		{
+			get
+			{
+				return this._Tags;
+			}
+			set
+			{
+				this._Tags.Assign(value);
 			}
 		}
 		
@@ -5683,18 +5367,6 @@ namespace AssessTrack.Models
 			entity.CourseTerm = null;
 		}
 		
-		private void attach_Tags(Tag entity)
-		{
-			this.SendPropertyChanging();
-			entity.CourseTerm = this;
-		}
-		
-		private void detach_Tags(Tag entity)
-		{
-			this.SendPropertyChanging();
-			entity.CourseTerm = null;
-		}
-		
 		private void attach_CourseTermFiles(CourseTermFile entity)
 		{
 			this.SendPropertyChanging();
@@ -5714,6 +5386,18 @@ namespace AssessTrack.Models
 		}
 		
 		private void detach_Invitations(Invitation entity)
+		{
+			this.SendPropertyChanging();
+			entity.CourseTerm = null;
+		}
+		
+		private void attach_Tags(Tag entity)
+		{
+			this.SendPropertyChanging();
+			entity.CourseTerm = this;
+		}
+		
+		private void detach_Tags(Tag entity)
 		{
 			this.SendPropertyChanging();
 			entity.CourseTerm = null;
@@ -6895,6 +6579,346 @@ namespace AssessTrack.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[Table(Name="dbo.Tags")]
+	public partial class Tag : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _TagID;
+		
+		private string _Name;
+		
+		private string _Description;
+		
+		private System.Guid _CreatedBy;
+		
+		private System.Guid _CourseTermID;
+		
+		private string _DescriptiveName;
+		
+		private bool _IsCourseOutcome;
+		
+		private string _Tutorial;
+		
+		private EntitySet<TagProgramOutcome> _TagProgramOutcomes;
+		
+		private EntityRef<CourseTerm> _CourseTerm;
+		
+		private EntityRef<Profile> _Profile;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTagIDChanging(System.Guid value);
+    partial void OnTagIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnCreatedByChanging(System.Guid value);
+    partial void OnCreatedByChanged();
+    partial void OnCourseTermIDChanging(System.Guid value);
+    partial void OnCourseTermIDChanged();
+    partial void OnDescriptiveNameChanging(string value);
+    partial void OnDescriptiveNameChanged();
+    partial void OnIsCourseOutcomeChanging(bool value);
+    partial void OnIsCourseOutcomeChanged();
+    partial void OnTutorialChanging(string value);
+    partial void OnTutorialChanged();
+    #endregion
+		
+		public Tag()
+		{
+			this._TagProgramOutcomes = new EntitySet<TagProgramOutcome>(new Action<TagProgramOutcome>(this.attach_TagProgramOutcomes), new Action<TagProgramOutcome>(this.detach_TagProgramOutcomes));
+			this._CourseTerm = default(EntityRef<CourseTerm>);
+			this._Profile = default(EntityRef<Profile>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_TagID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
+		public System.Guid TagID
+		{
+			get
+			{
+				return this._TagID;
+			}
+			set
+			{
+				if ((this._TagID != value))
+				{
+					this.OnTagIDChanging(value);
+					this.SendPropertyChanging();
+					this._TagID = value;
+					this.SendPropertyChanged("TagID");
+					this.OnTagIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Description", DbType="VarChar(300)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CreatedBy", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					if (this._Profile.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCreatedByChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedBy = value;
+					this.SendPropertyChanged("CreatedBy");
+					this.OnCreatedByChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CourseTermID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid CourseTermID
+		{
+			get
+			{
+				return this._CourseTermID;
+			}
+			set
+			{
+				if ((this._CourseTermID != value))
+				{
+					if (this._CourseTerm.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCourseTermIDChanging(value);
+					this.SendPropertyChanging();
+					this._CourseTermID = value;
+					this.SendPropertyChanged("CourseTermID");
+					this.OnCourseTermIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_DescriptiveName", DbType="VarChar(100)")]
+		public string DescriptiveName
+		{
+			get
+			{
+				return this._DescriptiveName;
+			}
+			set
+			{
+				if ((this._DescriptiveName != value))
+				{
+					this.OnDescriptiveNameChanging(value);
+					this.SendPropertyChanging();
+					this._DescriptiveName = value;
+					this.SendPropertyChanged("DescriptiveName");
+					this.OnDescriptiveNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_IsCourseOutcome", DbType="Bit NOT NULL")]
+		public bool IsCourseOutcome
+		{
+			get
+			{
+				return this._IsCourseOutcome;
+			}
+			set
+			{
+				if ((this._IsCourseOutcome != value))
+				{
+					this.OnIsCourseOutcomeChanging(value);
+					this.SendPropertyChanging();
+					this._IsCourseOutcome = value;
+					this.SendPropertyChanged("IsCourseOutcome");
+					this.OnIsCourseOutcomeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Tutorial", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Tutorial
+		{
+			get
+			{
+				return this._Tutorial;
+			}
+			set
+			{
+				if ((this._Tutorial != value))
+				{
+					this.OnTutorialChanging(value);
+					this.SendPropertyChanging();
+					this._Tutorial = value;
+					this.SendPropertyChanged("Tutorial");
+					this.OnTutorialChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Tag_TagProgramOutcome", Storage="_TagProgramOutcomes", ThisKey="TagID", OtherKey="TagID")]
+		public EntitySet<TagProgramOutcome> TagProgramOutcomes
+		{
+			get
+			{
+				return this._TagProgramOutcomes;
+			}
+			set
+			{
+				this._TagProgramOutcomes.Assign(value);
+			}
+		}
+		
+		[Association(Name="CourseTerm_Tag", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
+		public CourseTerm CourseTerm
+		{
+			get
+			{
+				return this._CourseTerm.Entity;
+			}
+			set
+			{
+				CourseTerm previousValue = this._CourseTerm.Entity;
+				if (((previousValue != value) 
+							|| (this._CourseTerm.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CourseTerm.Entity = null;
+						previousValue.Tags.Remove(this);
+					}
+					this._CourseTerm.Entity = value;
+					if ((value != null))
+					{
+						value.Tags.Add(this);
+						this._CourseTermID = value.CourseTermID;
+					}
+					else
+					{
+						this._CourseTermID = default(System.Guid);
+					}
+					this.SendPropertyChanged("CourseTerm");
+				}
+			}
+		}
+		
+		[Association(Name="Profile_Tag", Storage="_Profile", ThisKey="CreatedBy", OtherKey="MembershipID", IsForeignKey=true)]
+		public Profile Profile
+		{
+			get
+			{
+				return this._Profile.Entity;
+			}
+			set
+			{
+				Profile previousValue = this._Profile.Entity;
+				if (((previousValue != value) 
+							|| (this._Profile.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Profile.Entity = null;
+						previousValue.Tags.Remove(this);
+					}
+					this._Profile.Entity = value;
+					if ((value != null))
+					{
+						value.Tags.Add(this);
+						this._CreatedBy = value.MembershipID;
+					}
+					else
+					{
+						this._CreatedBy = default(System.Guid);
+					}
+					this.SendPropertyChanged("Profile");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_TagProgramOutcomes(TagProgramOutcome entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tag = this;
+		}
+		
+		private void detach_TagProgramOutcomes(TagProgramOutcome entity)
+		{
+			this.SendPropertyChanging();
+			entity.Tag = null;
 		}
 	}
 }

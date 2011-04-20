@@ -39,6 +39,11 @@
                  <%  } %>
             </div>
             <p>
+                <label for="Tutorial">Tutorial (HTML):</label>
+                <%= Html.TextArea("Tutorial", Model.Tag.Tutorial) %>
+                <%= Html.ValidationMessage("Tutorial", "*") %>
+            </p>
+            <p>
                 <input type="submit" value="Save" />
             </p>
         </fieldset>

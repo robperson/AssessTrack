@@ -102,6 +102,7 @@
     <Compile Include="Controllers\TermController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\TutorController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -186,6 +187,7 @@
     <Compile Include="Models\ViewModels\InviteModel.cs" />
     <Compile Include="Models\ViewModels\TagEditViewModel.cs" />
     <Compile Include="Models\ViewModels\TagProgramOutcomeRelationship.cs" />
+    <Compile Include="Models\ViewModels\TagViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -638,6 +640,7 @@
     <Content Include="Views\SubmissionRecord\CreateSubmission.aspx" />
     <Content Include="Views\SubmissionRecord\View.aspx" />
     <Content Include="Views\Term\Delete.aspx" />
+    <Content Include="Views\Tutor\Index.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
 using AssessTrack.Helpers;
+using AssessTrack.Models.ViewModels;
 
 namespace AssessTrack.Models
 {
@@ -239,6 +240,36 @@ namespace AssessTrack.Models
             double pfme = GradeHelpers.GetPfme(avg);
 
             return pfme;
+        }
+
+        public double GetStudentScoreForTag(Tag tag, Profile profile)
+        {
+            double totalweight = 0.0;
+            double totalpoints = 0.0;
+
+            List<ITaggable> items = GetTaggedItems(tag);
+            foreach (var taggeditem in items)
+            {
+                totalpoints += taggeditem.Score(profile);
+                totalweight += taggeditem.Weight;
+            }
+            double avg = totalpoints / totalweight * 100;
+
+            if (double.IsNaN(avg))
+            {
+                avg = -100.0;
+            }
+
+            return avg;
+        }
+
+        public List<TagViewModel> GetStrugglingTags(Profile p, CourseTerm t)
+        {
+            var tags = from tag in t.Tags
+                       let score = GetStudentScoreForTag(tag, p)
+                       where score <= 65.0 && score >= 0.0
+                       select new TagViewModel() { Tag = tag, Score = GetStudentScoreForTag(tag, p) };
+            return tags.ToList();
         }
     }
 }

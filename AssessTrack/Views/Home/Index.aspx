@@ -27,7 +27,8 @@
                 <% } %>
            </ul>
        </li>
-         <p><%= Html.ATAuthLink("Join A Site", new { Action = "Join", controller = "Site" }, AssessTrack.Filters.AuthScope.Application, 1, 10)%></p>  
+         
     <% }%>
     </ul>
+    <p><%= Html.ATAuthLink("Join A Site", new { Action = "Join", controller = "Site" }, AssessTrack.Filters.AuthScope.Application, 1, 10)%></p>  
 </asp:Content>

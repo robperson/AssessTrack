@@ -16,6 +16,7 @@
     
     <%= Html.ATAuthLink("Submissions", "<li>", "</li>", new { controller = "SubmissionRecord", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
     <%= Html.ATAuthLink("Tags", "<li>", "</li>", new { controller = "Tag", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
+    <%= Html.ATAuthLink("Tutoring", "<li>", "</li>", new { controller = "Tutor", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 1, 1)%>
     <li>
         <%= Html.ATAuthLink("Tools", new { controller = "CourseTermTools", action = "Index", siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 5, 10)%>
         <% Html.RenderPartial("CourseTermToolsMenu"); %>

@@ -70,14 +70,17 @@ namespace AssessTrack.Controllers
         // POST: /AssessmentType/Create
         [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 3, MaxLevel = 10)]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(string courseTermShortName, string siteShortName, Tag newTag, FormCollection input)
+        public ActionResult Create(string courseTermShortName, string siteShortName, FormCollection input)
         {
+            Tag newTag = new Tag();
+            UpdateModel(newTag);
             if (ModelState.IsValid)
             {
                     try
                     {
                         newTag.Profile = dataRepository.GetLoggedInProfile();
                         courseTerm.Tags.Add(newTag);
+                        newTag.Name = newTag.Name.Trim();
                         if (newTag.IsCourseOutcome)
                         {
                             foreach (var outcome in site.ProgramOutcomes)
@@ -106,7 +109,8 @@ namespace AssessTrack.Controllers
                         ModelState.AddModelError("_FORM", ex);
                     }
             }
-            return View(newTag);
+            TagEditViewModel model = new TagEditViewModel(newTag, site.ProgramOutcomes.ToList());
+            return View(model);
         }
 
         //
@@ -132,6 +136,7 @@ namespace AssessTrack.Controllers
                 return View("TagNotFound");
                     
             UpdateModel(tag);
+            tag.Name = tag.Name.Trim();
             if (ModelState.IsValid)
             {
                 try
@@ -172,13 +177,46 @@ namespace AssessTrack.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("*", ex);
+                    ModelState.AddModelError("_FORM", ex);
                 }
             }
-            return View(tag);
-                
-
+            TagEditViewModel model = new TagEditViewModel(tag, site.ProgramOutcomes.ToList());
+            return View(model);
         }
+
+        //
+        // GET: /Tag/Delete/5
+
+        public ActionResult Delete(Guid id)
+        {
+            Tag tag = dataRepository.GetTagByID(courseTerm, id);
+            if (tag == null)
+                return View("TagNotFound");
+            return View(tag);
+        }
+
+        //
+        // POST: /Tag/Delete/5
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Delete(Guid id, FormCollection input)
+        {
+            Tag tag = dataRepository.GetTagByID(courseTerm, id);
+            if (tag == null)
+                return View("TagNotFound");
+            try
+            {
+                dataRepository.DeleteTag(tag);
+                dataRepository.Save();
+                FlashMessageHelper.AddMessage("Tag Deleted Successfully");
+                return RedirectToAction("Index", new { siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName });
+            }
+            catch (Exception ex)
+            {
+                FlashMessageHelper.AddMessage("An error occurred: " + ex.Message);
+            }
+            return View(tag);
+        }
+
         [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 1, MaxLevel = 10)]
         public ActionResult Tutorial(Guid id)
         {

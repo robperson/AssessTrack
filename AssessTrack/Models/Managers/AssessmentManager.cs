@@ -111,13 +111,19 @@ namespace AssessTrack.Models
                         string[] tagList = tags.Value.Split(new char[] { ',' });
                         foreach (string tagname in tagList)
                         {
-                            Tag tag = GetTagByName(assessment.CourseTerm, tagname);
+                            string cleanName = tagname.Trim();
+                            if (string.IsNullOrEmpty(cleanName))
+                            {
+                                continue;
+                            }
+                            Tag tag = GetTagByName(assessment.CourseTerm, cleanName);
                             if (tag == null)
                             {
+                                throw new Exception("Tag not found.");
                                 tag = new Tag()
                                 {
                                     Profile = GetLoggedInProfile(),
-                                    Name = tagname,
+                                    Name = cleanName,
                                     CourseTerm = assessment.CourseTerm
                                 };
                                 //TODO find a way to defer saving tags to db in order
@@ -166,13 +172,19 @@ namespace AssessTrack.Models
                             string[] tagList = tags.Value.Split(new char[] { ',' });
                             foreach (string tagname in tagList)
                             {
-                                Tag tag = GetTagByName(assessment.CourseTerm, tagname);
+                                string cleanName = tagname.Trim();
+                                if (string.IsNullOrEmpty(cleanName))
+                                {
+                                    continue;
+                                }
+                                Tag tag = GetTagByName(assessment.CourseTerm, cleanName);
                                 if (tag == null)
                                 {
+                                    throw new Exception("Tag not found.");
                                     tag = new Tag()
                                     {
                                         Profile = GetLoggedInProfile(),
-                                        Name = tagname,
+                                        Name = cleanName,
                                         CourseTerm = assessment.CourseTerm
                                     };
                                     //TODO find a way to defer saving tags to db in order
@@ -255,17 +267,19 @@ namespace AssessTrack.Models
                                 string[] tagList = tags.Value.Split(new char[] { ',' });
                                 foreach (string tagname in tagList)
                                 {
-                                    if (string.IsNullOrEmpty(tagname))
+                                    string cleanName = tagname.Trim();
+                                    if (string.IsNullOrEmpty(cleanName))
                                     {
                                         continue;
                                     }
-                                    Tag tag = GetTagByName(assessment.CourseTerm, tagname);
+                                    Tag tag = GetTagByName(assessment.CourseTerm, cleanName);
                                     if (tag == null)
                                     {
+                                        throw new Exception("Tag not found.");
                                         tag = new Tag()
                                         {
                                             Profile = GetLoggedInProfile(),
-                                            Name = tagname,
+                                            Name = cleanName,
                                             CourseTerm = assessment.CourseTerm
                                         };
                                         //TODO find a way to defer saving tags to db in order

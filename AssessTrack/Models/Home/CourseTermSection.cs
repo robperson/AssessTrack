@@ -26,6 +26,10 @@ namespace AssessTrack.Models.Home
             {
                 Grade = GradeHelpers.GetFormattedGrade(ct.GetAverageGrade());
             }
+            else
+            {
+                Grade = "";
+            }
         }
     }
 }

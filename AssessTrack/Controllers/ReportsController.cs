@@ -222,6 +222,8 @@ namespace AssessTrack.Controllers
         public ActionResult CourseOutcomeDetails(Guid id)
         {
             Tag tag = dataRepository.GetTagByID(courseTerm, id);
+            if (tag == null)
+                return View("TagNotFound");
             List<ITaggable> taggeditems = dataRepository.GetTaggedItems(tag);
             List<Profile> profiles = dataRepository.GetStudentProfiles(courseTerm);
 
@@ -257,6 +259,8 @@ namespace AssessTrack.Controllers
         public ActionResult TagPerformanceDetails(Guid id)
         {
             Tag tag = dataRepository.GetTagByID(courseTerm, id);
+            if (tag == null)
+                return View("TagNotFound");
             List<ITaggable> taggeditems = dataRepository.GetTaggedItems(tag);
             List<Profile> profiles = dataRepository.GetStudentProfiles(courseTerm);
 

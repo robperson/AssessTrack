@@ -223,7 +223,7 @@
   </Table>
   <Table Name="dbo.CourseTerms" Member="CourseTerms">
     <Type Name="CourseTerm">
-      <Column Name="CourseTermID" AutoSync="OnInsert" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseTermID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="ShortName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Information" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
@@ -263,7 +263,7 @@
   </Table>
   <Table Name="dbo.CourseTermFiles" Member="CourseTermFiles">
     <Type Name="CourseTermFile">
-      <Column Name="CourseTermFileID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseTermFileID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="CourseTermID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="FileID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Association Name="CourseTerm_CourseTermFile" Member="CourseTerm" ThisKey="CourseTermID" OtherKey="CourseTermID" Type="CourseTerm" IsForeignKey="true" />

@@ -30,12 +30,12 @@ namespace AssessTrack.Controllers
         }
     }
 
-    [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 3, MaxLevel = 10)]
+    
     public class TagController : ATController
     {
         //
         // GET: /AssessmentType/
-
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 3, MaxLevel = 10)]
         public ActionResult Index(string siteShortName, string courseTermShortName)
         {
             return View(courseTerm.Tags.ToList());
@@ -43,7 +43,7 @@ namespace AssessTrack.Controllers
 
         //
         // GET: /AssessmentType/Details/5
-
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 3, MaxLevel = 10)]
         public ActionResult Details(string siteShortName, string courseTermShortName, Guid id)
         {
             Tag tag = dataRepository.GetTagByID(courseTerm, id);
@@ -58,7 +58,7 @@ namespace AssessTrack.Controllers
 
         //
         // GET: /AssessmentType/Create
-
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 3, MaxLevel = 10)]
         public ActionResult Create(string courseTermShortName, string siteShortName)
         {
             Tag newTag = new Tag();
@@ -68,7 +68,7 @@ namespace AssessTrack.Controllers
 
         //
         // POST: /AssessmentType/Create
-
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 3, MaxLevel = 10)]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(string courseTermShortName, string siteShortName, Tag newTag, FormCollection input)
         {
@@ -111,7 +111,7 @@ namespace AssessTrack.Controllers
 
         //
         // GET: /AssessmentType/Edit/5
- 
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 3, MaxLevel = 10)]
         public ActionResult Edit(string courseTermShortName, string siteShortName, Guid id)
         {
             Tag tag = dataRepository.GetTagByID(courseTerm, id);
@@ -123,7 +123,7 @@ namespace AssessTrack.Controllers
 
         //
         // POST: /AssessmentType/Edit/5
-
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 3, MaxLevel = 10)]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(string courseTermShortName, string siteShortName, Guid id, FormCollection collection)
         {
@@ -178,6 +178,15 @@ namespace AssessTrack.Controllers
             return View(tag);
                 
 
+        }
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 1, MaxLevel = 10)]
+        public ActionResult Tutorial(Guid id)
+        {
+            Tag tag = dataRepository.GetTagByID(courseTerm, id);
+            if (tag == null)
+                return View("TagNotFound");
+
+            return View(tag);
         }
     }
 }

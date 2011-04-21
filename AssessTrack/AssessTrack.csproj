@@ -639,6 +639,7 @@
     <Content Include="Views\SubmissionException\Index.aspx" />
     <Content Include="Views\SubmissionRecord\CreateSubmission.aspx" />
     <Content Include="Views\SubmissionRecord\View.aspx" />
+    <Content Include="Views\Tag\Tutorial.aspx" />
     <Content Include="Views\Term\Delete.aspx" />
     <Content Include="Views\Tutor\Index.aspx" />
   </ItemGroup>

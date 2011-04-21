@@ -17,12 +17,12 @@ namespace AssessTrack.Models.Home
             AssessTrackDataRepository repo = new AssessTrackDataRepository();
             CourseTerm = ct;
             CourseTermMember member = repo.GetCourseTermMemberByMembershipID(ct,UserHelpers.GetCurrentUserID());
-            DisplayGrade = true;
+            DisplayGrade = false;
             if (member.AccessLevel == 1)
             {
                 Grade = member.GetFormattedGrade();
             }
-            else
+            else if (DisplayGrade)
             {
                 Grade = GradeHelpers.GetFormattedGrade(ct.GetAverageGrade());
             }

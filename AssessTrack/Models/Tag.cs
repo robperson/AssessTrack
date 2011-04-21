@@ -18,7 +18,7 @@ using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
-    [Bind(Include="Description,Name,DescriptiveName,IsCourseOutcome")]
+    [Bind(Include="Description,Name,DescriptiveName,IsCourseOutcome,Tutorial")]
     public partial class Tag : IBackupItem
     {
         public bool IsValid

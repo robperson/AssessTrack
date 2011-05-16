@@ -209,5 +209,28 @@ namespace AssessTrack.Helpers
             NameValueCollection answers = helper.ViewContext.HttpContext.Request.Form;
             return helper.RenderAssessmentForm(assessment, "~/Content/submit.xsl", answers, null);
         }
+
+        public static string RenderAssessmentFragment(this HtmlHelper helper, string fragment)
+        {
+            XslCompiledTransform xslt = new XslCompiledTransform();
+            xslt.Load(HttpContext.Current.Server.MapPath("~/Content/review.xsl"));
+
+            //Prepare the xml output writer
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.ConformanceLevel = ConformanceLevel.Fragment;
+            StringWriter sw = new StringWriter();
+            XmlWriter writer = XmlWriter.Create(sw, settings);
+
+            //Load the xml document
+            XmlDocument assessmentData = new XmlDocument();
+            assessmentData.LoadXml(fragment);
+            XmlNodeReader reader = new XmlNodeReader(assessmentData);
+
+            //Perform the transform
+            xslt.Transform(reader, writer);
+            string markup = sw.ToString();
+
+            return markup;
+        }
     }
 }

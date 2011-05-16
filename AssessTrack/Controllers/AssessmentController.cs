@@ -127,7 +127,16 @@ namespace AssessTrack.Controllers
                 {
                     newAssessment.CourseTerm = courseTerm;
                     dataRepository.SaveAssessment(newAssessment);
-                    return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
+                    string previewlink = Url.Action("preview", new
+                    {
+                        controller = "assessment",
+                        siteShortName = site.ShortName,
+                        courseTermShortName = courseTerm.ShortName,
+                        id = newAssessment.AssessmentID
+                    });
+                    FlashMessageHelper.AddMessage(string.Format(@"Assessment Saved Successfully! <a href=""{0}"" target=""_NEWWINDOW_"">Click here to preview.</a>", previewlink));
+                    return RedirectToAction("Edit", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName, id = newAssessment.AssessmentID });
+                    //return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
                 }
                 catch (RuleViolationException)
                 {
@@ -193,7 +202,14 @@ namespace AssessTrack.Controllers
                 if (ModelState.IsValid)
                 {
                     dataRepository.SaveAssessment(assessment, false);
-                    FlashMessageHelper.AddMessage("Assessment Saved Successfully!");
+                    string previewlink = Url.Action("preview", new
+                    {
+                        controller = "assessment",
+                        siteShortName = site.ShortName,
+                        courseTermShortName = courseTerm.ShortName,
+                        id = id
+                    });
+                    FlashMessageHelper.AddMessage(string.Format(@"Assessment Saved Successfully! <a href=""{0}"" target=""_NEWWINDOW_"">Click here to preview.</a>",previewlink));
                     return RedirectToAction("Edit", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName, id = id });
                 }
             }

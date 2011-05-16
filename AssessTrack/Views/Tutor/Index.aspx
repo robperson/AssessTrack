@@ -16,6 +16,7 @@
        <p><strong><%= tag.Tag.DescriptiveName ?? tag.Tag.Name %></strong> - <%= tag.Tag.Description %></p>
        <p>You scored <%= tag.Score %>% on questions about <%= tag.Tag.DescriptiveName ?? tag.Tag.Name %>.
        <%= Html.RouteLink("Click here to view a tutorial.",new { id = tag.Tag.TagID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName(), controller = "Tag", action = "Tutorial" })%>    </p>
+       <p><%= Html.RouteLink("Click here for a review.",new { id = tag.Tag.TagID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName(), controller = "Tutor", action = "TagReview" })%>    </p>
        </li>
        
     <% } %>

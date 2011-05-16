@@ -93,6 +93,12 @@ namespace AssessTrack.Models
             return (score.HasValue) ? score.Value : 0.0;
         }
 
+        public double Score()
+        {
+            AssessTrackDataRepository repo = new AssessTrackDataRepository();
+            return Score(repo.GetLoggedInProfile());
+        }
+
         #endregion
     }
 }

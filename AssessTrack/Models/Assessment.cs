@@ -130,15 +130,7 @@ namespace AssessTrack.Models
 
         #endregion
 
-        #region ITaggable Members
-
-
-        public double Score(Profile profile)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
+        
 
         #region ITaggable Members
 
@@ -156,6 +148,12 @@ namespace AssessTrack.Models
         {
             Grade grade = new Grade(this, profile);
             return grade.Points;
+        }
+
+        double ITaggable.Score()
+        {
+            AssessTrackDataRepository repo = new AssessTrackDataRepository();
+            return (this as ITaggable).Score(repo.GetLoggedInProfile());
         }
 
         #endregion

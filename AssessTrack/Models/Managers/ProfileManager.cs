@@ -27,7 +27,10 @@ namespace AssessTrack.Models
         public Profile GetLoggedInProfile()
         {
             Guid id = UserHelpers.GetCurrentUserID();
+            if (UserDataCache.CurrentProfile != null)
+                return UserDataCache.CurrentProfile;
             Profile profile = dc.Profiles.SingleOrDefault(sp => sp.MembershipID == id);
+            UserDataCache.CurrentProfile = profile;
             return profile;
         }
 

@@ -55,20 +55,34 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Transactions" />
-    <Reference Include="System.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Web.Mobile">
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backup\BackupItemFactory.cs" />
@@ -124,6 +138,7 @@
     <Compile Include="Helpers\NavigationHelper.cs" />
     <Compile Include="Helpers\RuleViolationException.cs" />
     <Compile Include="Helpers\SubmissionFormHelpers.cs" />
+    <Compile Include="Helpers\UserDataCache.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\AnswerKey.cs" />
     <Compile Include="Models\AnswerTag.cs" />
@@ -187,6 +202,7 @@
     <Compile Include="Models\ViewModels\InviteModel.cs" />
     <Compile Include="Models\ViewModels\TagEditViewModel.cs" />
     <Compile Include="Models\ViewModels\TagProgramOutcomeRelationship.cs" />
+    <Compile Include="Models\ViewModels\TagReviewViewModel.cs" />
     <Compile Include="Models\ViewModels\TagViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -302,6 +318,7 @@
     <Content Include="Content\redmond\images\ui-icons_d8e7f3_256x240.png" />
     <Content Include="Content\redmond\images\ui-icons_f9bd01_256x240.png" />
     <Content Include="Content\redmond\jquery-ui-1.7.2.custom.css" />
+    <Content Include="Content\review.xsl" />
     <Content Include="Content\view.xsl" />
     <Content Include="Content\QuizBuilder.css" />
     <Content Include="robots.txt" />
@@ -643,6 +660,7 @@
     <Content Include="Views\Tag\Delete.aspx" />
     <Content Include="Views\Term\Delete.aspx" />
     <Content Include="Views\Tutor\Index.aspx" />
+    <Content Include="Views\Tutor\TagReview.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

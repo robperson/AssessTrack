@@ -109,9 +109,12 @@ namespace AssessTrack.Helpers
             {
                 throw new InvalidOperationException("UserID cannot be retreived if user is not logged in.");
             }
+            if (UserDataCache.CurrentUserID != null)
+                return UserDataCache.CurrentUserID.Value;
             MembershipUser user = Membership.GetUser(HttpContext.Current.User.Identity.Name);
             if (user == null)
                 return Guid.Empty;
+            UserDataCache.CurrentUserID = (Guid)user.ProviderUserKey;
             return (Guid)user.ProviderUserKey;
             
         }

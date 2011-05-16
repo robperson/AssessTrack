@@ -10,5 +10,6 @@ namespace AssessTrack.Models
         double Weight { get; }
         string Name { get; }
         double Score(Profile profile);
+        double Score();
     }
 }

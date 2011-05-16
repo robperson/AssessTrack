@@ -75,9 +75,7 @@ namespace AssessTrack.Helpers
                     }
                 case AuthScope.Site:
                     {
-                        SiteMember member = (from siteMember in site.SiteMembers
-                                             where siteMember.Profile.MembershipID == profile.MembershipID
-                                             select siteMember).SingleOrDefault();
+                        SiteMember member = data.GetSiteMemberByMembershipID(site,profile.MembershipID);
                         if (member == null ||
                             (member.AccessLevel < minLevel || member.AccessLevel > maxLevel))
                             return false;
@@ -85,9 +83,7 @@ namespace AssessTrack.Helpers
                     break;
                 case AuthScope.CourseTerm:
                     {
-                        CourseTermMember member = (from ctm in courseTerm.CourseTermMembers
-                                                   where ctm.Profile.MembershipID == profile.MembershipID
-                                                   select ctm).SingleOrDefault();
+                        CourseTermMember member = data.GetCourseTermMemberByMembershipID(courseTerm, profile.MembershipID);
                         if (member == null ||
                             (member.AccessLevel < minLevel || member.AccessLevel > maxLevel))
                             return false;

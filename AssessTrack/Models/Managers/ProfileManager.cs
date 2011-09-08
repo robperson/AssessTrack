@@ -38,5 +38,7 @@ namespace AssessTrack.Models
         {
             return dc.Profiles.SingleOrDefault(p => p.MembershipID == id);
         }
+
+
     }
 }

@@ -46,10 +46,52 @@ namespace AssessTrack.Controllers
             if (ModelState.IsValid)
             {
                 //If a user is already registered with this email
-                //let them enroll themselves
+                //create the appropriate membership
                 if (UserHelpers.IsEmailRegistered(invite.Email))
                 {
-                    FlashMessageHelper.AddMessage(string.Format(@"""{0}"" is already registered.", invite.Email));
+                    Guid profileid = UserHelpers.GetIDFromEmail(invite.Email);
+                    Profile profile = dataRepository.GetProfileByID(profileid);
+                    //Create site membership if user is not a site member already
+                    SiteMember existingSiteMember = dataRepository.Single<SiteMember>(sm => sm.SiteID == site.SiteID && sm.MembershipID == profileid);
+                    if (existingSiteMember == null)
+                    {
+                        SiteMember sitemember = new SiteMember()
+                        {
+                            AccessLevel = (byte)invite.SiteAccessLevel,
+                            Site = site,
+                            Profile = profile
+                        };
+
+                        
+                    }
+                    else
+                    {
+                        existingSiteMember.AccessLevel = (byte)invite.SiteAccessLevel;
+                    }
+
+
+                    //Create courseterm member if user is not already a member
+                    if (invite.CourseTermID != null)
+                    {
+                        CourseTermMember existingCourseTermMember = dataRepository.Single<CourseTermMember>(ctm => ctm.CourseTermID == invite.CourseTermID && ctm.MembershipID == profileid);
+                        if (existingCourseTermMember == null)
+                        {
+                            CourseTermMember ctmember = new CourseTermMember()
+                            {
+                                AccessLevel = (byte)invite.CourseTermAccessLevel.Value,
+                                CourseTermID = invite.CourseTermID.Value,
+                                Profile = profile
+                            };
+                        }
+                        else
+                        {
+                            existingCourseTermMember.AccessLevel = (byte)invite.CourseTermAccessLevel;
+                        }
+                    }
+
+
+                    dataRepository.Save();
+                    FlashMessageHelper.AddMessage(string.Format(@"""{0}"" is already registered. They have been granted the requested permissions.", invite.Email));
                     return RedirectToAction("Index", new { siteShortName = site.ShortName });
                 }
                 Invitation inv = new Invitation();

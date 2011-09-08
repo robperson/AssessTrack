@@ -124,5 +124,11 @@ namespace AssessTrack.Helpers
             MembershipUser user = Membership.GetUser(username);
             return (Guid)user.ProviderUserKey;
         }
+
+        public static Guid GetIDFromEmail(string email)
+        {
+            string username = Membership.GetUserNameByEmail(email);
+            return GetIDFromUsername(username);
+        }
     }
 }

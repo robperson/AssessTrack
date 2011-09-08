@@ -97,6 +97,7 @@
 		                        <li><%= Html.ActionLink("My Sites","Index","Site") %></li>
 		                        <li><%= Html.ActionLink("My Courses", "MyCourseEnrollments","CourseTerm") %></li>
 		                        <li><%= Html.ActionLink("My Profile", "Profile","Account") %></li>
+                                <%= Html.ATAuthLink("Manage Profiles", "<li>", "</li>", new { controller = "Profile", action = "Index" }, AssessTrack.Filters.AuthScope.Application, 5, 10)%>
 	                        </ul>
 	                    </li>
 	                </ul>

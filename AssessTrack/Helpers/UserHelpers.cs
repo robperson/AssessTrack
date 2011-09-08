@@ -29,6 +29,19 @@ namespace AssessTrack.Helpers
             }
         }
 
+        public static DateTime GetUserRegistrationDate(Guid id)
+        {
+            MembershipUser user = Membership.GetUser(id);
+            if (user != null)
+            {
+                return user.CreationDate;
+            }
+            else
+            {
+                return DateTime.MinValue;
+            }
+        }
+
         public static bool IsEmailRegistered(string email)
         {
             if (string.IsNullOrEmpty(email))

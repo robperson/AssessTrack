@@ -101,6 +101,7 @@
     <Compile Include="Controllers\AssessmentTypeController.cs" />
     <Compile Include="Controllers\ATController.cs" />
     <Compile Include="Controllers\CompilerController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\CourseTermFileController.cs" />
     <Compile Include="Controllers\CourseTermMessageController.cs" />
     <Compile Include="Controllers\CourseController.cs">
@@ -232,6 +233,11 @@
     <Content Include="Views\Assessment\AlreadySubmitted.aspx" />
     <Content Include="Views\Assessment\AssessmentClosed.aspx" />
     <Content Include="Views\Assessment\AssessmentForm.ascx" />
+    <Content Include="Views\Profile\DetailedMemberTable.ascx" />
+    <Content Include="Views\Profile\Details.aspx" />
+    <Content Include="Views\Profile\Edit.aspx" />
+    <Content Include="Views\Profile\Index.aspx" />
+    <Content Include="Views\Profile\MemberTable.ascx" />
     <Content Include="Views\Shared\AssessmentNotFound.aspx" />
     <Content Include="Views\Assessment\Create.aspx" />
     <Content Include="Views\Assessment\Details.aspx" />

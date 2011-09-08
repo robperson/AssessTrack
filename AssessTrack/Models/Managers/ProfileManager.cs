@@ -39,6 +39,10 @@ namespace AssessTrack.Models
             return dc.Profiles.SingleOrDefault(p => p.MembershipID == id);
         }
 
+        public List<Profile> GetAllProfiles(int minAccessLevel, int maxAccessLevel)
+        {
+            return dc.Profiles.Where(p => p.AccessLevel >= minAccessLevel && p.AccessLevel <= maxAccessLevel).OrderBy(p => p.LastName).ToList();
+        }
 
     }
 }

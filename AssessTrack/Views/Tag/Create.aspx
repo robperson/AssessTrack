@@ -4,7 +4,6 @@
 	Create A New Tag
 </asp:Content>
 <asp:Content ID="Head" ContentPlaceHolderID="HeadContent" runat="server">
-<script src="/Scripts/jquery.autogrowtextarea.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -22,6 +21,5 @@
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ExtraContent" runat="server">
 <script type="text/javascript">
-    $('textarea').autogrow();
 </script>
 </asp:Content>

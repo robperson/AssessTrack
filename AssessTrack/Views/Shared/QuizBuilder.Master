@@ -11,7 +11,6 @@
     <script src="/Scripts/htmlparser.js" type="text/javascript"></script>
     <script type="text/javascript" src="/Scripts/tiny_mce/jquery.tinymce.js"></script>
     <script src="/Scripts/QuizBuilder.js" type="text/javascript"></script>
-    <script src="/Scripts/jquery.autogrowtextarea.js" type="text/javascript"></script>
 </asp:Content>
 
  <asp:Content ID="qbMain" ContentPlaceHolderID="MainContent" runat="server">
@@ -107,6 +106,5 @@
     <div id="importquiz" style="display:none;" title="Question Importer"></div>
     <script type="text/javascript">
         $("body").addClass("qb-body");
-        $(".code-item textarea, .answer textarea").autogrow();
     </script>
 </asp:Content>

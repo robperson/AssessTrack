@@ -12,11 +12,11 @@
     <%= Html.ValidationSummary() %>
     <% using(Html.BeginForm()){ %>
         <p>
-        <label for="email">Username: </label>
-        <%= Html.TextBox("username") %>
+        <label for="email">Email Address: </label>
+        <%= Html.TextBox("email") %>
         </p>
         <p>
-            <input type="submit" value="Reset My Password!" />
+            <input type="submit" value="Send My Password!" />
         </p>
     <%} %>
 </asp:Content>

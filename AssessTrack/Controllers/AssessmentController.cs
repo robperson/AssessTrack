@@ -320,7 +320,10 @@ namespace AssessTrack.Controllers
                     }
                     record.Assessment = assessment;
                     dataRepository.SaveSubmissionRecord(record);
-                    FlashMessageHelper.AddMessage("Your answers were submitted successfully!");
+                    string message = "Your answers were submitted successfully! " +
+                        "Your Comfirmation Number is \"" + record.SubmissionRecordID + 
+                        "\". Keep this number for you records!";
+                    FlashMessageHelper.AddMessage(message);
                     transaction.Complete();
                     return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
                 }

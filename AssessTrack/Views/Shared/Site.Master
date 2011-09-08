@@ -17,9 +17,9 @@
                 var result = JSON.parse(data);
                 $("#CompilerOutput").html(result.message);
                 if (result.code == 1) {
-                    $("textarea[name='Comments']").val(result.comments);
+                    //$("textarea[name='Comments']").val(result.comments);
                     for (var comment in result.answerComments) {
-                        $("#comment-{0}".format(result.answerComments[comment].id)).val(result.answerComments[comment].comment);
+                        $("#comment-{0}".format(result.answerComments[comment].id)).val(result.answerComments[comment].comment).change();
                     }
                 }
             });

@@ -20,7 +20,7 @@ namespace AssessTrack.Helpers
     {
         public static void CompileCodeQuestions(this SubmissionRecord record)
         {
-            string VSVarsPath = Environment.GetEnvironmentVariable("VS90COMNTOOLS");
+            string VSVarsPath = Environment.GetEnvironmentVariable("VS100COMNTOOLS");
             string vcvars = @"""{0}vsvars32""";
             string cl = "cl {0} /EHsc";
             string ExeArgs = @"/c ""{0}vsvars32"" & cl {1} /EHsc";

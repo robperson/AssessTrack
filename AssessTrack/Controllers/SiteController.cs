@@ -141,5 +141,33 @@ namespace AssessTrack.Controllers
             return View(new SiteViewModel(dataRepository.GetUnEnrolledSites(UserHelpers.GetCurrentUserID())));
         }
 
+        //
+        // GET: /Site/Delete
+        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 10, MaxLevel = 10)]
+        public ActionResult Delete()
+        {
+            return View(site);
+        }
+
+        //
+        // POST: /Site/Delete
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 10, MaxLevel = 10)]
+        public ActionResult Delete(FormCollection input)
+        {
+            try
+            {
+                dataRepository.DeleteSite(site);
+                dataRepository.Save();
+                FlashMessageHelper.AddMessage(site.Title + " has been deleted.");
+            }
+            catch (Exception ex)
+            {
+                FlashMessageHelper.AddMessage("An error occurred: " + ex.Message);
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

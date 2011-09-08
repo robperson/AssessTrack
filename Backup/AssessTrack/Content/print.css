@@ -1,0 +1,46 @@
+﻿html > body #header ul
+{
+    display:none;
+}
+html > body #header #subheader
+{
+    display:none;
+}
+html > body .page .colmask .colmid .colleft .col1 
+{
+    float:none;
+    width:auto;
+}
+.col2,.col3
+{
+    display:none;
+}
+.row-actions
+{
+    display:none;
+}
+html > body div
+{
+    float:none;
+    overflow:visible;
+}
+table
+{
+    border: 1px solid #777;
+    width:100%;
+    border-collapse:collapse;
+    overflow:auto;
+}
+
+th
+{
+    background-color:#C2D6EB;
+    padding:5px;
+    border-bottom:1px solid #777;
+}
+
+td
+{
+    border:1px solid #777;
+    padding:5px;
+}

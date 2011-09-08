@@ -1,0 +1,160 @@
+﻿/* GENERAL
+--------------------------------------------------- */
+body.qb-body .page
+    {
+    	padding-left:300px;
+    	width:auto;
+    	z-index:0;
+    }
+    
+    .toolbox
+    {
+        border:1px dotted #777;
+    }
+    
+    body.qb-body .delete-item 
+    { 
+        float: right; 
+    }
+    body.qb-body .toolbox .delete-item 
+    { 
+        display:none; 
+    }
+    #quiz-builder-menu
+	{
+	    display:none;
+	}
+	
+	body.qb-body div#quiz-builder-menu
+	{
+		position:fixed;
+		padding:5px;
+		height:100%;
+		width:289px;
+		background-color:#eee;
+		top:0px;
+		left:0px;
+		display:block;
+		border-right:1px solid #777;
+		z-index:100;
+		
+	}
+	body.qb-body ,html,#dfrm
+	{
+		height:100%;
+	}
+	.qb-body #Data 
+	{ 
+	    display:none;
+	    }
+	
+	body.qb-body .deletelnk 
+	{ 
+	    display:block;
+	    }
+	    .assessment-attributes
+	    {
+	        padding:5px;
+	    }
+/* TOOLBOX ITEMS
+-------------------------------------------------*/
+    body.qb-body .toolbox .question, body.qb-body .toolbox .question-data-item 
+	{
+		 border:1px solid #876;
+		 padding:0px;
+		 margin:5px; 
+		 
+    }
+    body.qb-body .toolbox .question-data-item h3 
+	{
+	    color:#000;
+	    }
+	    
+	body.qb-body .toolbox h2
+	{
+	    background:transparent;
+	    margin:0;
+	    color:#369;
+	}
+	body.qb-body .toolbox h3 
+	{
+	    background:#eee;
+	    margin:0;
+	    }
+	.tool-box-item.answerkey-template
+	{
+	    display:none;
+	}
+/* QUESTIONS
+--------------------------------------------------*/
+	body.qb-body .question 
+	{ 
+	    border:2px solid #369;
+	    padding:0px;
+	    margin:0 0 10px 0;
+	    background: #C2D6EB;
+	    }
+	body.qb-body #questions .question h2
+	{ 
+	    margin:0;
+	    color:#369; 
+	    }
+	body.qb-body #questions 
+	{
+		 padding: 10px;
+		 border:1px dotted #777;
+		  background:#eee;
+		  height:100%;
+		  overflow:auto;
+		  
+	}
+	
+	body.qb-body .question-data 
+	{ 
+	    margin:0;
+	    padding:10px;
+	    }
+	    
+/* QUESTION DATA ITEMS
+--------------------------------------------------*/
+	body.qb-body .question-data-item 
+	{ 
+	    border:1px solid #777;
+	    background:#eee;
+	    padding:5px;
+	    margin:0 0 10px 0;
+	    display:block;
+	    }
+	
+	body.qb-body #questions .question-data-item h3
+	{ 
+	    color:#000; 
+	    margin:0;
+	    
+	    }
+	    body.qb-body .question-data-item textarea
+	    {
+	        width:100%;
+	    }
+	body.qb-body .question-data-item div 
+	{
+	    border-bottom:1px solid #777; 
+	    padding:5px;
+	    }
+	body.qb-body .tool-box-item .question-data li, .tool-box-item.question-data-item div, .tool-box-item div 
+	{
+	    display:none;
+	    }
+	
+	.delete-key
+	{
+	    display:block;
+	}
+	.answerkey
+	{
+	    padding:5px;
+	    border:1px dotted #777;
+	    margin-bottom:5px;
+	}
+	
+	

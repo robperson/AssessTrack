@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssessTrack.Tests", "AssessTrack.Tests\AssessTrack.Tests.csproj", "{CA6737E6-FFC6-4F48-8873-3168EE102CBF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssessTrack", "AssessTrack\AssessTrack.csproj", "{D27B1B7D-A6E3-4AB3-8B01-10D8AB198B5A}"

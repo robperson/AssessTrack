@@ -1,0 +1,623 @@
+﻿/* COLOR SCHEME
+  dark blue = #369
+  lightblue = #C2D6EB
+----------------------------------------------------------*/
+
+/* RESET
+----------------------------------------------------------*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+body {
+	line-height: 1;
+	color: black;
+	background: white;
+}
+ol, ul {
+	list-style: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+caption, th, td {
+	text-align: left;
+	font-weight: normal;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: "";
+}
+blockquote, q {
+	quotes: "" "";
+}
+
+/* HEADINGS   
+----------------------------------------------------------*/
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 1.5em;
+    color: #000;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
+{
+    display:block;
+    text-decoration:none;
+}
+
+h1
+{
+    font-size: 2em;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+h2
+{
+    padding: 0 0 10px 0;
+}
+h3
+{
+    font-size: 1.2em;
+}
+h4
+{
+    font-size: 1.1em;
+}
+h5, h6
+{
+    font-size: 1em;
+}
+
+
+
+/* MISC  
+----------------------------------------------------------*/
+.clear
+{
+    clear: both;
+}
+.col1 ul
+{
+    list-style-type: square;
+    list-style-position:inside;
+}
+ul ul
+{
+    margin-left:10px;
+}
+pre
+{
+    margin-bottom:10px;
+    width:auto;
+}
+
+/* VALIDATION
+-----------------------------------------------------------*/
+.error
+{
+    color:Red;
+}
+
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+/* LAYOUT
+----------------------------------------------------------*/
+html, body, #page
+{
+    min-height:100%;
+}
+body {
+	margin:0;
+	padding:0;
+	border:0;			/* This removes the border around the viewport in old versions of IE */
+	width:100%;
+	background:#C2D6EB;
+	min-width:600px;    	/* Minimum width of layout - remove line if not required */
+					/* The min-width property does not work in old versions of Internet Explorer */
+	font-size:90%;
+}
+a {
+	color:#369;
+}
+a:hover {
+	color:#fff;
+	background:#369;
+	text-decoration:none;
+}
+h1, h2, h3 {
+	margin:.8em 0 .2em 0;
+	padding:0;
+}
+p {
+	margin:.4em 0 .8em 0;
+	padding:0;
+}
+img {
+	margin:10px 0 5px;
+}
+
+/* Header styles */
+#header {
+	clear:both;
+	float:left;
+	width:100%;
+	background-color:#fff;
+}
+#header {
+	border-bottom:1px solid #369;
+}
+#header p
+{
+    margin:0;
+    padding:0;
+}
+#header h1,
+#header h2 {
+	padding:.4em 15px 0 15px;
+	margin:0;
+	color:#369;
+}
+#header ul {
+	clear:left;
+	float:left;
+	width:100%;
+	list-style:none;
+	margin:10px 0 0 0;
+	padding:0;
+}
+#header ul li {
+	display:block;
+	list-style:none;
+	margin:0;
+	padding:0;
+	margin-right:5px;
+	float:left;
+	
+}
+#header ul li a {
+	display:block;
+	float:left;
+	margin:0 0 0 1px;
+	padding:3px 10px;
+	text-align:center;
+	background:#369;
+	color:#fff;
+	text-decoration:none;
+	position:relative;
+	left:15px;
+	line-height:1.3em;
+	border:1px solid #369;
+	border-bottom:0;
+}
+#header ul li a:hover {
+	background:#fff;
+	color:#369;
+	
+}
+#header ul li a.active,
+#header ul li a.active:hover {
+	color:#369;
+	background:#fff;
+	font-weight:bold;
+	
+}
+#header ul li a span {
+	display:block;
+}
+/* 'widths' sub menu */
+#subheader {
+	clear:both;
+	background:#C2D6EB;
+	border-top:4px solid #369;
+	margin:0;
+	padding:6px 15px !important;
+}
+#subheader p.logon
+{
+    
+    float:right;
+    text-align:right;
+}
+#subheader .breadcrumbs
+{
+   
+    margin:0;
+    float:left;
+}
+/* column container */
+.colmask {
+	position:relative;		/* This fixes the IE7 overflow hidden bug */
+	clear:both;
+	float:left;
+	width:100%;				/* width of whole page */
+	overflow:hidden;			/* This chops off any overhanging divs */
+}
+/* common column settings */
+.colright,
+.colmid,
+.colleft {
+	float:left;
+	width:100%;				/* width of page */
+	position:relative;
+}
+.col1,
+.col2,
+.col3 {
+	float:left;
+	position:relative;
+	padding:0 0 1em 0;		/* no left and right padding on columns, we just make them narrower instead 
+						only padding top and bottom is included here, make it whatever value you need */
+	overflow:hidden;
+}
+/* 3 Column blog style settings */
+.blogstyle {
+	background:#eee;			/* right column background colour */
+}
+.blogstyle .colmid {
+	right:20%;				/* width of the right column */
+	background:#eee;		/* center column background colour */
+	border-right:1px solid #777;
+}
+.blogstyle .colleft {
+	right:20%;				/* width of the middle column */
+	background:#fff;			/* left column background colour */
+	border-right:1px solid #777;
+}
+.blogstyle .col1 {
+	width:56%;				/* width of center column content (column width minus padding on either side) */
+	left:42%;				/* 100% plus left padding of center column */
+}
+.blogstyle .col2 {
+	width:16%;				/* Width of left column content (column width minus padding on either side) */
+	left:46%;				/* width of (right column) plus (center column left and right padding) plus (left column left padding) */
+}
+.blogstyle .col3 {
+	width:16%;				/* Width of right column content (column width minus padding on either side) */
+	left:50%;				/* Please make note of the brackets here:
+						(100% - left column width) plus (center column left and right padding) plus (left column left and right padding) plus (right column left padding) */
+}
+/* Footer styles */
+#footer {
+	clear:both;
+	float:left;
+	width:100%;
+	border-top:1px solid #369;
+	background-color:#C2D6EB;
+}
+#footer p {
+	padding:10px;
+	margin:0;
+}
+
+/* CLEARFIX
+-------------------------------------------------*/
+.group:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+/* Typography
+-------------------------------------------------*/
+body {
+font-family:"Lucida Sans Unicode","Lucida Grande","Lucida Sans",Verdana,Arial,sans-serif;
+line-height:1.45em;
+}
+strong { font-weight:bold; }
+em { font-style:italic; }
+pre
+{
+    font-family:Monospace;
+    border:1px dotted #777;
+    background:#eee;
+}
+textarea
+{
+    font-family:Monospace;
+    width:600px;
+    overflow:hidden;
+    height:auto;
+    font-size:16px;
+    border:1px solid #777;
+    display:block;
+}
+/* Menus
+-------------------------------------------------*/
+.col2 ul.menu h3, .col3 ul.menu h3
+{
+    text-decoration:none;
+    border-bottom:1px solid #369;
+}
+.col2 ul.menu h3 a, .col3 ul.menu h3 a
+{
+    text-decoration:none;
+}
+/* Home page list
+------------------------------------------------*/
+ul.site-sections, ul.site-sections ul 
+{
+    list-style-type:none;
+}
+li.courseterm-section span
+{
+    float:right;
+}
+li.courseterm-section a
+{
+    text-decoration:none;
+}
+li.courseterm-section
+{
+    border-bottom:1px dotted #777;
+}
+li.site-section h3
+{
+    border-bottom:1px solid #369;
+}
+/* Tables
+------------------------------------------------*/
+table
+{
+    border: 1px solid #777;
+    max-width:100%;
+    border-collapse:collapse;
+    overflow:auto;
+    margin-left:5px;
+}
+
+th
+{
+    background-color:#C2D6EB;
+    padding:5px;
+    border-bottom:1px solid #777;
+}
+
+td
+{
+    border:1px solid #777;
+    padding:5px;
+}
+div.row-actions
+{
+    font-size:75%;
+}
+div.tablediv
+{
+    width:99%;
+    overflow:auto;
+}
+
+/* Student Performance Report
+-----------------------------------------------*/
+ul.gradesection
+{
+    width:auto;
+    border-bottom: 1px solid #777;
+    border-top: 1px solid #777;
+    padding-top:5px;
+    list-style-type:none;
+}
+
+.gradelink
+{
+    display:block;
+    width:100px;
+    height:100px;
+    margin:0 5px 5px 0;
+    border: 1px solid #369;
+    float:left;
+    background:#C2D6EB;
+    font-size:14px;
+    line-height:19px;
+    text-decoration:none;
+}
+
+.legend .gradelink
+{
+    float:none;
+    display:inline;
+    margin:0;
+}
+
+.gradelink.graded
+{
+    background:#C2D6EB;
+}
+
+.gradelink.unsubmitted
+{
+    border: 1px solid #f00;
+    background:#fcc;
+    color:#f00;
+}
+
+.gradelink.ungraded
+{
+    border: 1px solid #777;
+    background:#eee;
+    color:#000;
+}
+
+
+
+ul.gradesection .gradelink:hover span.assessmentinfotitle
+{
+    background:#369;
+    color:#fff;
+}
+
+ul.gradesection .gradelink.unsubmitted:hover span.assessmentinfotitle
+{
+    background:#f00;
+    color:#fff;
+}
+
+ul.gradesection .gradelink.ungraded:hover span.assessmentinfotitle
+{
+    background:#000;
+    color:#fff;
+}
+
+ul.gradesection .gradelink span
+{
+    display:block;
+    height:35px;
+    border-bottom:1px solid #777;
+    overflow:hidden;
+    padding:2px;
+    background:transparent;
+    text-decoration:none;
+    
+}
+
+ul.gradesection .gradelink span.grade
+{
+    border:none;
+    height:15px;
+    font-size:12px;
+    color:#000;
+}
+
+ul.gradesection .gradelink span.duedate
+{
+    font-size:12px;
+    color:#000;
+}
+
+span.next
+{
+    float:right;
+}
+
+span.prev
+{
+    float:left;
+}
+/* ASSESSMENT FORMS
+---------------------------------------------------- */
+div.question
+{
+    padding: 5px;
+    border-bottom:1px solid #777;
+    margin-bottom:5px;
+}
+div.question .questionnum
+{
+    background:#C2D6EB;
+    color:#369;
+}
+div.question > div
+{
+    margin-bottom:15px;
+}
+.score-div, .key-div, .comment-div
+{
+    border-top: 1px dashed #777;
+    padding:5px;
+}
+div.code
+{
+    width:auto;
+    overflow:auto;
+}
+/* IMAGES
+--------------------------------------------------- */
+.col1 img
+{
+    max-width:90%;
+}
+div.image
+{
+    text-align:center;
+}
+div.image img
+{
+    display:block;
+    margin: 0 auto;
+}
+div.image span.image-caption
+{
+    text-align:center;
+    font-size:80%;
+}
+
+/* FLASH MESSAGES
+----------------------------------------------------- */
+.flash
+{
+    background-color:#FFFFA3;
+    padding: 10px;
+    border:1px solid #B0AE78;
+    margin-top:10px;
+}
+
+
+/* TINYMCE
+--------------------------------------------------------*/
+body#tinymce
+{
+    background-color:#fff;
+    width:100%;
+}
+/* SYNTAX HIGHLIGHTER
+------------------------------------------------------ */
+div.syntaxhighlighter
+{
+    overflow:auto;
+}
+td.code div 
+{
+    width:auto;
+}
+code.cpp
+{
+    white-space:pre;
+}
+
+/* Enroll Page
+--------------------------------------------------------- */
+div.enroll h3
+{
+     border-bottom:1px solid #369;
+}
+
+div.enroll
+{
+    border-bottom:1px solid #ccc;
+}

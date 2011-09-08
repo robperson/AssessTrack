@@ -114,5 +114,19 @@ namespace AssessTrack.Models
         {
             return (from site in dc.Sites where site.SiteID == id select site).SingleOrDefault();
         }
+
+        public void DeleteSite(Site site)
+        {
+            dc.Courses.DeleteAllOnSubmit(site.Courses);
+            dc.Terms.DeleteAllOnSubmit(site.Terms);
+            dc.SiteMembers.DeleteAllOnSubmit(site.SiteMembers);
+            dc.Invitations.DeleteAllOnSubmit(site.Invitations);
+            dc.ProgramOutcomes.DeleteAllOnSubmit(site.ProgramOutcomes);
+            foreach (var courseTerm in site.CourseTerms)
+            {
+                DeleteCourseTerm(courseTerm);
+            }
+
+        }
     }
 }

@@ -78,21 +78,21 @@ namespace AssessTrack.Controllers
             {
                     try
                     {
-                        newTag.Profile = dataRepository.GetLoggedInProfile();
+                        newTag.CreatedBy = dataRepository.GetLoggedInProfile().MembershipID;
                         courseTerm.Tags.Add(newTag);
                         newTag.Name = newTag.Name.Trim();
                         if (newTag.IsCourseOutcome)
                         {
                             foreach (var outcome in site.ProgramOutcomes)
                             {
-                                
+
                                 string checkedState = input[outcome.ProgramOutcomeID.ToString()];
                                 if (checkedState != "false")
                                 {
                                     TagProgramOutcome tpo = new TagProgramOutcome()
                                     {
                                         Tag = newTag,
-                                        ProgramOutcome = outcome
+                                        ProgramOutcomeID = outcome.ProgramOutcomeID
                                     };
                                 }
                             }

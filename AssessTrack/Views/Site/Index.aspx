@@ -24,7 +24,10 @@
         <tr>
            <td>
                 <strong><%= Html.ATAuthLink(item.Title , new { siteShortName = item.ShortName, action = "Details" }, AssessTrack.Filters.AuthScope.Site, 0, 10)%></strong>
-                <div class="row-actions"><%= Html.ATAuthLink("Edit", new { siteShortName=item.ShortName, action="Edit" },AssessTrack.Filters.AuthScope.Site,5,10) %></div>
+                <div class="row-actions">
+                    <%= Html.ATAuthLink("Edit", new { siteShortName=item.ShortName, action="Edit" },AssessTrack.Filters.AuthScope.Site,5,10) %>
+                    <%= Html.ATAuthLink("Delete", new { siteShortName=item.ShortName, action="Delete" },AssessTrack.Filters.AuthScope.Site,10,10) %>
+                 </div>
             </td>
             <td>
                 <p><%= Html.Encode(item.Description) %></p>

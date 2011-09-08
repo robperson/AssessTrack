@@ -125,7 +125,7 @@ namespace AssessTrack.Controllers
             {
                 try
                 {
-                    newAssessment.CourseTerm = courseTerm;
+                    newAssessment.CourseTermID = courseTerm.CourseTermID;
                     dataRepository.SaveAssessment(newAssessment);
                     string previewlink = Url.Action("preview", new
                     {

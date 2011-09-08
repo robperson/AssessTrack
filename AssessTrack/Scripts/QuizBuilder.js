@@ -234,6 +234,7 @@
                 theme_advanced_resizing: true,
                 theme_advanced_statusbar_location: "bottom",
                 theme_advanced_resize_horizontal : false,
+                relative_urls: false,
 
                 // Example content CSS (should be your site CSS)
                 content_css: "/Content/Site.css"
@@ -246,7 +247,7 @@
         
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         //Setup...
         $('.delete-item').live('click', deleteItem);
         $("ul#questions").sortable({ handle: 'h2', axis: 'y', items: 'li.question', receive: questionDropped,
@@ -266,26 +267,28 @@
 
         //Import Stuff
         $('#importquiz').dialog({ autoOpen: false, width: 1000 });
-        
-        $.getJSON('/QuizBuilderImport/GetCourseOfferings', function(data) {
-            $.each(data, function() {
+
+        $.post('/QuizBuilderImport/GetCourseOfferings', function (data) {
+            var items = JSON.parse(data);
+            $.each(items, function () {
                 var option = '<option value="{0}">{1}</option>'.format(this.id, this.name);
                 $('#CourseTermList').append(option);
             });
         });
 
-        $('#CourseTermList').change(function() {
+        $('#CourseTermList').change(function () {
             if ($(this).val() == "null") { return; }
-            $.getJSON('/QuizBuilderImport/GetAssessments/' + $(this).val(), function(data) {
+            $.post('/QuizBuilderImport/GetAssessments/' + $(this).val(), function (data) {
+                var items = JSON.parse(data);
                 $('#AssessmentList').empty();
-                $.each(data, function() {
+                $.each(items, function () {
                     var option = '<option value="{0}">{1}</option>'.format(this.id, this.name);
                     $('#AssessmentList').append(option);
                 });
             });
         });
 
-        $('#import').click(function(event) {
+        $('#import').click(function (event) {
             event.preventDefault();
             event.stopPropagation();
             if ($("#AssessmentList").val() == "null") { return; }
@@ -299,7 +302,7 @@
         $(".import-question").live("click", addQuestion);
         $(".add-key").live("click", addKey);
         $(".delete-key").live("click", deleteKey);
-        $("#hide-qb-menu").click(function() {
+        $("#hide-qb-menu").click(function () {
             $(".toolbox").toggle(1000);
         });
 
@@ -316,10 +319,11 @@
             theme_advanced_resizing: true,
             theme_advanced_statusbar_location: "bottom",
             theme_advanced_resize_horizontal: false,
+            relative_urls: false,
 
             // Example content CSS (should be your site CSS)
             content_css: "/Content/Site.css"
-            });
+        });
     });
 
     function deleteKey() {
@@ -344,6 +348,7 @@
             $('ul#questions .text-item textarea').tinymce({
             // Location of TinyMCE script
             script_url: '/Scripts/tiny_mce/tiny_mce.js',
+            relative_urls: false,
 
             // General options
             theme: "simple",

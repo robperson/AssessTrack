@@ -42,7 +42,7 @@ namespace AssessTrack.Helpers
         {
             string subject = string.Format("You've been invited to join \"{0}\" at AssessTrack.com!", siteName);
             string messageBody = @"<h2>You've been invited to join the site ""{0}"" on AssessTrack.com!</h2>
-<p><a href=""http://assesstrack.com/Account/AcceptInvite/{1}"">Click here to accept the invite.</a></p>";
+<p><a href=""http://74.93.208.198/Account/AcceptInvite/{1}"">Click here to accept the invite.</a></p>";
             messageBody = string.Format(messageBody, siteName, id.ToString());
             MailMessage msg = new MailMessage("noreply@assesstrack.com",to,subject,messageBody);
             msg.IsBodyHtml = true;
@@ -53,7 +53,7 @@ namespace AssessTrack.Helpers
         {
             string subject = string.Format("You've been invited to join \"{0} - {1}\" at AssessTrack.com!", siteName, courseTermName);
             string messageBody = @"<h2>You've been invited to join the site ""{0}"" on AssessTrack.com!</h2>
-<p>You'll be automatically enrolled in ""{2}"" when you accept the invite. <a href=""http://assesstrack.com/Account/AcceptInvite/{1}"">Click here to accept the invite.</a></p>";
+<p>You'll be automatically enrolled in ""{2}"" when you accept the invite. <a href=""http://74.93.208.198/Account/AcceptInvite/{1}"">Click here to accept the invite.</a></p>";
             messageBody = string.Format(messageBody, siteName, id.ToString(), courseTermName);
             MailMessage msg = new MailMessage("noreply@assesstrack.com", to, subject, messageBody);
             msg.IsBodyHtml = true;

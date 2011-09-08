@@ -23,6 +23,10 @@
                     <%= Html.ActionLink("Edit", "Edit", new { id = item.SiteMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
                     <%= Html.ActionLink("Details", "Details", new { id = item.SiteMemberID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%> |
                     <a href="mailto:<%= item.Profile.EmailAddress %>" title="Send this member an email.">Send Email</a>
+                    <% if (UserHelpers.IsAccountLocked(item.MembershipID))
+                       { %>
+                        | <%= Html.ActionLink("Unlock", "Unlock", new { id = item.MembershipID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
+                    <%} %>
                 </div>
             </td>
             <td>

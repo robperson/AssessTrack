@@ -142,7 +142,7 @@ namespace AssessTrack.Controllers
 
         //
         // GET: /CourseTerm/Edit
-        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 10, MaxLevel = 10)]
+        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 5, MaxLevel = 10)]
         public ActionResult Edit()
         {
             return View(new CourseTermViewModel(site, courseTerm,courseTerm.CourseID,courseTerm.TermID));
@@ -152,7 +152,7 @@ namespace AssessTrack.Controllers
         // POST: /CourseTerm/Edit
 
         [AcceptVerbs(HttpVerbs.Post)]
-        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 10, MaxLevel = 10)]
+        [ATAuth(AuthScope = AuthScope.Site, MinLevel = 5, MaxLevel = 10)]
         public ActionResult Edit(string siteShortName, Guid CourseID, Guid TermID)
         {
             if (ModelState.IsValid)
@@ -253,7 +253,7 @@ namespace AssessTrack.Controllers
         }
 
         //
-        // POST: /CourseTerm/Edit
+        // POST: /CourseTerm/Delete
 
         [AcceptVerbs(HttpVerbs.Post)]
         [ATAuth(AuthScope = AuthScope.Site, MinLevel = 10, MaxLevel = 10)]

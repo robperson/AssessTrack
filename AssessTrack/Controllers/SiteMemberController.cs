@@ -102,13 +102,17 @@ namespace AssessTrack.Controllers
             }
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult SendInvite(string email, int accesslevel)
+        public ActionResult Unlock(string siteShortName, string courseTermShortName, Guid id)
         {
-
-
-            FlashMessageHelper.AddMessage("Invite sent to " + email);
-            return RedirectToAction("Index", new { siteShortName = site.ShortName });
+            if (UserHelpers.UnlockAccount(id))
+            {
+                FlashMessageHelper.AddMessage("Account Unlocked.");
+            }
+            else
+            {
+                FlashMessageHelper.AddMessage("Failed to unlock account.");
+            }
+            return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
         }
     }
 }

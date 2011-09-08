@@ -8,7 +8,7 @@
 
     <h2>Password Reset Success</h2>
     <p>
-    Your password has been reset and emailed to you. Check your email shortly to get your new password.
+    Your username and password has been emailed to you. Check your email shortly to get your password.
     Once you log on, you can change your password to one of your choosing.
     </p>
 

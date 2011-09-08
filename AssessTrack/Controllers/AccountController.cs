@@ -86,23 +86,31 @@ namespace AssessTrack.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult ResetPassword(string username)
+        public ActionResult ResetPassword(string email)
         {
             try
             {
+                string username = Membership.GetUserNameByEmail(email);
                 MembershipUser user = Membership.GetUser(username);
-                //user.UnlockUser();
-                string newPassword = user.ResetPassword();
+                string password;
+                try
+                {
+                    password = user.GetPassword();
+                }
+                catch
+                {
+                    password = user.ResetPassword();
+                }
 
-                //email the user their new password
+                //email the user their password
                 string smtpUsername = ConfigurationManager.AppSettings["PasswordResetUsername"];
                 string smtpPassword = ConfigurationManager.AppSettings["PasswordResetPassword"];
 
-                string subject = "Your AssessTrack.com password has been reset.";
-                string body = @"As you requested, your password has been reset. Your new password is: ""{0}"" (without the quotation marks).
-After you log on with your new password you can change it to something you will be able to remember.";
+                string subject = "Your AssessTrack.com Account Login Information.";
+                string body = @"As you requested, Your username is: ""{0}"", Your password is: ""{1}"" (without the quotation marks).
+After you log on you can change it to something you will be able to remember.";
 
-                body = string.Format(body, newPassword);
+                body = string.Format(body, username, password);
 
                 MailMessage message = new MailMessage(smtpUsername, user.Email, subject, body);
 

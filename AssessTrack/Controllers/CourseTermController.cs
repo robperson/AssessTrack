@@ -160,17 +160,11 @@ namespace AssessTrack.Controllers
                 try
                 {
                     UpdateModel(courseTerm);
-                    AssessTrack.Models.File file; // = FileUploader.GetFile("Syllabus",Request);
-                    if (courseTerm.File == null)
-                    {
-                        file = FileUploader.GetFile("Syllabus", Request);
-                        FileUploader.SaveFile(dataRepository, file);
-                    }
-                    else
-                    {
-                        file = courseTerm.File;
-                        FileUploader.UpdateFile("Syllabus", Request, file);
-                    }
+                    courseTerm.Course = dataRepository.Single<Course>(c => c.CourseID == CourseID);
+                    courseTerm.Term = dataRepository.Single<Term>(t => t.TermID == TermID);
+
+                    AssessTrack.Models.File file = FileUploader.GetFile("Syllabus",Request);
+                    
                     if (file != null)
                     {
                         courseTerm.File = file;

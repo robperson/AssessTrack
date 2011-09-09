@@ -19,7 +19,9 @@
 	<%= AssessTrack.Helpers.UserHelpers.GetFullNameForID(Model.SubmissionRecord.StudentID)%>'s 
 	<%= Model.SubmissionRecord.Assessment.Name %>
     </h2>
-    
+    <p>
+        <%= Html.ATAuthLink("Click here to Submit this assignment again.", new { controller="Assessment", action="Submit", id = Model.SubmissionRecord.AssessmentID, siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }, AssessTrack.Filters.AuthScope.CourseTerm, 1, 1)%>
+    </p>
     <h3>Submitted on <%= Model.SubmissionRecord.SubmissionDate.ToString() %></h3>
     <h3>Score: <%= Model.SubmissionRecord.Score.ToString() %></h3>
     <h3>Graded By: <%= UserHelpers.GetFullNameForID(Model.SubmissionRecord.GradedBy) %></h3>

@@ -65,6 +65,20 @@ namespace AssessTrack.Helpers
             //Get the user's profile and see if they have
             //the required access level
             Profile profile = data.GetLoggedInProfile();
+            
+            // Setting a profile to Access Level 0 essentially disables their account
+            if (profile.AccessLevel == 0)
+                return false;
+
+            SiteMember smember = null;
+            if (scope == AuthScope.Site || scope == AuthScope.CourseTerm)
+                smember = data.GetSiteMemberByMembershipID(site, profile.MembershipID);
+            
+            
+            CourseTermMember cmember = null;
+            if (scope == AuthScope.CourseTerm)
+                cmember = data.GetCourseTermMemberByMembershipID(courseTerm, profile.MembershipID);
+
             switch (scope)
             {
                 case AuthScope.Application:
@@ -75,17 +89,17 @@ namespace AssessTrack.Helpers
                     }
                 case AuthScope.Site:
                     {
-                        SiteMember member = data.GetSiteMemberByMembershipID(site,profile.MembershipID);
-                        if (member == null ||
-                            (member.AccessLevel < minLevel || member.AccessLevel > maxLevel))
+                        
+                        if (smember == null ||
+                            (smember.AccessLevel < minLevel || smember.AccessLevel > maxLevel))
                             return false;
                     }
                     break;
                 case AuthScope.CourseTerm:
                     {
-                        CourseTermMember member = data.GetCourseTermMemberByMembershipID(courseTerm, profile.MembershipID);
-                        if (member == null ||
-                            (member.AccessLevel < minLevel || member.AccessLevel > maxLevel))
+                        if (cmember == null ||
+                            (cmember.AccessLevel < minLevel || cmember.AccessLevel > maxLevel) ||
+                            smember.AccessLevel == 0) // If site access level is 0, user can't access dependent course offering info
                             return false;
                     }
                     break;

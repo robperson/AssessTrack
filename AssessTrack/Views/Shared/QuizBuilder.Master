@@ -89,11 +89,6 @@
                 <%= Html.ValidationMessage("IsOpen", "*") %>
             </p>
             <p>
-                <label for="IsGradable">Is Gradable:</label>
-                <%= Html.CheckBox("IsGradable", Model.Assessment.IsGradable)%>
-                <%= Html.ValidationMessage("IsGradable", "*") %>
-            </p>
-            <p>
                 <input type="submit" value="Save" id="build-button"/>
             </p>
             <%= Html.TextArea("Data", Model.Assessment.Data, 5, 50, new { id = "Data" })%>           

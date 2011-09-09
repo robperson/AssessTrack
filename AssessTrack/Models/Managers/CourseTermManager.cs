@@ -155,7 +155,11 @@ namespace AssessTrack.Models
             dc.Invitations.DeleteAllOnSubmit(courseTerm.Invitations);
             dc.CourseTermMessages.DeleteAllOnSubmit(courseTerm.CourseTermMessages);
             dc.CourseTermMembers.DeleteAllOnSubmit(courseTerm.CourseTermMembers);
-            dc.Tags.DeleteAllOnSubmit(courseTerm.Tags);
+            foreach (var tag in courseTerm.Tags)
+            {
+                DeleteTag(tag);
+            }
+            //dc.Tags.DeleteAllOnSubmit(courseTerm.Tags);
 
             dc.CourseTerms.DeleteOnSubmit(courseTerm);
         }

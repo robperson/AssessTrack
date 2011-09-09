@@ -95,7 +95,10 @@ namespace AssessTrack.Models
                     join ctm in dc.CourseTermMembers
                     on ct.CourseTermID equals ctm.CourseTermID
                     where ctm.MembershipID == UserHelpers.GetCurrentUserID()
-                    select ct).ToList();
+                    select ct)
+                    .OrderByDescending(ct => ct.Term.StartDate)
+                    .ThenBy(ct => ct.Name)
+                    .ToList();
         }
 
         public List<CourseTerm> GetUserCourseTerms()

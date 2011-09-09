@@ -27,7 +27,10 @@ namespace AssessTrack.Models
             return (from site in dc.Sites
                    join sitemember in dc.SiteMembers on site.SiteID equals sitemember.SiteID
                    where sitemember.MembershipID == userid
-                   select site).ToList();
+                   select site)
+                   .OrderByDescending(s => s.Terms.Max(t => t.StartDate))
+                   .ThenBy(s => s.Title)
+                   .ToList();
         }
 
         /// <summary>

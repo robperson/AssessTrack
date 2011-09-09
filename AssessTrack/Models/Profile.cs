@@ -34,12 +34,12 @@ namespace AssessTrack.Models
             if (String.IsNullOrEmpty(LastName))
                 yield return new RuleViolation("Last Name is required", "LastName");
 
-            if (FirstName.Length > 50)
+            if (FirstName != null && FirstName.Length > 50)
                 yield return new RuleViolation("First Name cannot be longer than 50 characters", "FirstName");
-            if (LastName.Length > 50)
+            if (LastName != null && LastName.Length > 50)
                 yield return new RuleViolation("Last Name cannot be longer than 50 characters", "LastName");
 
-            if (Major.Length > 100)
+            if (Major != null && Major.Length > 100)
                 yield return new RuleViolation("Major cannot be longer than 100 characters", "Major");
 
             yield break;

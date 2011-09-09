@@ -85,7 +85,7 @@ namespace AssessTrack.Controllers
 
             try
             {
-                UpdateModel(member);
+                member.AccessLevel = Convert.ToByte(collection["AccessLevel"]);
                 dataRepository.Save();
 
                 return RedirectToAction("Index");

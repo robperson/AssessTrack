@@ -5,6 +5,16 @@
 	Submit
 </asp:Content>
 <asp:Content ID="Head" ContentPlaceHolderID="HeadContent" runat="server">
+<script type="text/javascript">
+ $(document).ready(function () {
+            // This will prevent the enter key from submitting any forms
+            $("input").bind("keypress", function (e) {
+                if (e.keyCode == 13) {
+                    return false;
+                }
+            });
+        }); 
+ </script>
 <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
     <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
     <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shAutoloader.js" type="text/javascript"></script>

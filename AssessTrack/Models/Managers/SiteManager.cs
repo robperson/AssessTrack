@@ -129,7 +129,7 @@ namespace AssessTrack.Models
             {
                 DeleteCourseTerm(courseTerm);
             }
-
+            dc.Sites.DeleteOnSubmit(site);
         }
     }
 }

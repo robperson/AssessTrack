@@ -29,7 +29,7 @@
     <% if (Model.OtherSubmissionRecords.Count > 0)
        { %>
     <div>
-        <h4>Other Submissions for this Assessment:</h4>
+        <h4>Other Submissions for this Assessment (only the highest scoring submission will be counted):</h4>
         <ul>
             <% foreach (AssessTrack.Models.SubmissionRecord record in Model.OtherSubmissionRecords)
                {%>

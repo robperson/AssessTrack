@@ -16,21 +16,9 @@ namespace AssessTrack.Controllers
     public class SubmissionRecordViewModel
     {
         public SelectList AssessmentList;
-        public List<SubmissionRecord> Submissions;
+        public List<SubmissionRecord> Submissions = new List<SubmissionRecord>();
 
-        public SubmissionRecordViewModel(List<Assessment> assessments)
-        {
-            assessments.Sort(new Comparison<Assessment>((a1, a2) => a1.Name.CompareTo(a2.Name)));
-            AssessmentList = new SelectList(assessments,"AssessmentID","Name");
-            Submissions = new List<SubmissionRecord>();
-        }
-
-        public SubmissionRecordViewModel(List<Assessment> assessments, Assessment selectedAssessment)
-        {
-            assessments.Sort(new Comparison<Assessment>((a1, a2) => a1.Name.CompareTo(a2.Name)));
-            AssessmentList = new SelectList(assessments, "AssessmentID", "Name", selectedAssessment.AssessmentID);
-            Submissions = selectedAssessment.SubmissionRecords.OrderBy(sub => sub.Profile.LastName).ToList();
-        }
+        
     }
 
     public class CreateSubmissionViewModel
@@ -64,19 +52,46 @@ namespace AssessTrack.Controllers
         // GET: /SubmissionRecord/
         public ActionResult Index(string siteShortName, string courseTermShortName, Guid? id)
         {
-            if (id == null)
-                return View(new SubmissionRecordViewModel(dataRepository.GetAllNonTestBankAssessments(courseTerm)));
-            Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, (Guid)id);
-            if (assessment == null)
-                return View(new SubmissionRecordViewModel(courseTerm.Assessments.ToList()));
-            return View(new SubmissionRecordViewModel(courseTerm.Assessments.ToList(), assessment));
+            SubmissionRecordViewModel model = new SubmissionRecordViewModel();
+            Assessment assessment = null;
+            IEnumerable<Assessment> assessments = dataRepository.GetAllNonTestBankAssessments(courseTerm);
+
+            if (id != null)
+                assessment = dataRepository.GetAssessmentByID(id.Value);
+
+            if (assessment != null)
+            {
+                model.AssessmentList = new SelectList(assessments, "AssessmentID", "Name", id.Value);
+                model.Submissions.AddRange(dataRepository.GetMostRecentSubmissions(assessment));
+            }
+            else
+            {
+                model.AssessmentList = new SelectList(assessments, "AssessmentID", "Name");
+            }
+
+            return View(model);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Index(string siteShortName, string courseTermShortName, Guid id)
         {
-            Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, id);
-            return View(new SubmissionRecordViewModel(dataRepository.GetAllNonTestBankAssessments(courseTerm), assessment));
+            SubmissionRecordViewModel model = new SubmissionRecordViewModel();
+            Assessment assessment = null;
+            IEnumerable<Assessment> assessments = dataRepository.GetAllNonTestBankAssessments(courseTerm);
+
+            assessment = dataRepository.GetAssessmentByID(id);
+
+            if (assessment != null)
+            {
+                model.AssessmentList = new SelectList(assessments, "AssessmentID", "Name", id);
+                model.Submissions = dataRepository.GetMostRecentSubmissions(assessment);
+            }
+            else
+            {
+                return View("AssessmentNotFound");
+            }
+
+            return View(model);
         }
 
         //
@@ -140,7 +155,9 @@ namespace AssessTrack.Controllers
             if (submission == null)
                 return View("SubmissionNotFound");
             //TODO ensure user has permission to grade this
-            return View(submission);
+            List<SubmissionRecord> othersubmissions = dataRepository.GetOtherSubmissionRecords(submission);
+            SingleSubmissionViewModel model = new SingleSubmissionViewModel(submission, othersubmissions);
+            return View(model);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -149,6 +166,9 @@ namespace AssessTrack.Controllers
             SubmissionRecord submission = dataRepository.GetSubmissionRecordByID(id);
             if (submission == null)
                 return View("SubmissionNotFound");
+
+            List<SubmissionRecord> othersubmissions = dataRepository.GetOtherSubmissionRecords(submission);
+            SingleSubmissionViewModel model = new SingleSubmissionViewModel(submission, othersubmissions);
             if (ModelState.IsValid)
             {
                 try
@@ -175,7 +195,7 @@ namespace AssessTrack.Controllers
                 }
 
             }
-            return View(submission);
+            return View(model);
         }
 
         public ActionResult View(string siteShortName, string courseTermShortName, Guid id)

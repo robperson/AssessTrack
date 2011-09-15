@@ -45,5 +45,36 @@ namespace AssessTrack.Models
             return subs.ToList();
 
         }
+
+        public List<SubmissionRecord> GetMostRecentSubmissions(Assessment assessment)
+        {
+            List<SubmissionRecord> records = new List<SubmissionRecord>();
+
+            List<CourseTermMember> students = GetStudentsInCourseTerm(assessment.CourseTerm);
+
+            foreach (var student in students)
+            {
+                SubmissionRecord record = GetMostRecentSubmisionForStudent(assessment, student);
+                if (record != null)
+                    records.Add(record);
+            }
+
+            return records;
+        }
+
+        public SubmissionRecord GetMostRecentSubmisionForStudent(Assessment assessment, CourseTermMember student)
+        {
+            var submission = from sub in assessment.SubmissionRecords
+                             where sub.StudentID == student.MembershipID
+                             orderby sub.SubmissionDate descending
+                             select sub;
+            return submission.FirstOrDefault();
+        }
+
+        public void DeleteSubmissionRecord(SubmissionRecord record)
+        {
+            dc.Responses.DeleteAllOnSubmit(record.Responses);
+            dc.SubmissionRecords.DeleteOnSubmit(record);
+        }
     }
 }

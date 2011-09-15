@@ -18,7 +18,7 @@ using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
-    [Bind(Include = "FirstName,LastName,SchoolIDNumber,Major")]
+    [Bind(Include = "FirstName,LastName,SchoolIDNumber,Major,EmailAddress")]
     public partial class Profile : IBackupItem
     {
         public bool IsValid
@@ -67,9 +67,22 @@ namespace AssessTrack.Models
             }
         }
 
+        private void SetEmailAddress(string email)
+        {
+            MembershipUser member = Membership.GetUser(MembershipID);
+            if (member == null)
+            {
+                return;
+            }
+
+            member.Email = email;
+            Membership.UpdateUser(member);
+        }
+
         public string EmailAddress
         {
             get { return GetEmailAddress(); }
+            set { SetEmailAddress(value); }
         }
 
         public string FullName

@@ -15,11 +15,6 @@
     <% using (Html.BeginForm()) {%>
 
         <p>
-            <label for="SchoolIDNumber">School ID Number:</label>
-            <%= Html.TextBox("SchoolIDNumber", Model.SchoolIDNumber) %>
-            <%= Html.ValidationMessage("SchoolIDNumber", "*") %>
-        </p>
-        <p>
             <label for="FirstName">First Name:</label>
             <%= Html.TextBox("FirstName", Model.FirstName) %>
             <%= Html.ValidationMessage("FirstName", "*") %>
@@ -29,6 +24,22 @@
             <%= Html.TextBox("LastName", Model.LastName) %>
             <%= Html.ValidationMessage("LastName", "*") %>
         </p>
+        <p>
+            <label for="SchoolIDNumber">School ID Number:</label>
+            <%= Html.TextBox("SchoolIDNumber", Model.SchoolIDNumber) %>
+            <%= Html.ValidationMessage("SchoolIDNumber", "*") %>
+        </p>
+        <p>
+            <label for="Major">Major:</label>
+            <%= Html.TextBox("Major", Model.Major) %>
+            <%= Html.ValidationMessage("Major", "*") %>
+        </p>
+        <p>
+            <label for="EmailAddress">EmailAddress:</label>
+            <%= Html.TextBox("EmailAddress", Model.EmailAddress)%>
+            <%= Html.ValidationMessage("EmailAddress", "*")%>
+        </p>
+        
         <p>
             <input type="submit" value="Save Changes" />
         </p>

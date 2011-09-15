@@ -245,7 +245,7 @@ After you log on you can change it to something you will be able to remember.";
             Profile p = dataRepository.GetLoggedInProfile();
             try
             {
-                UpdateModel(p, new string[] { "FirstName", "LastName", "SchoolIDNumber" });
+                UpdateModel(p, new string[] { "FirstName", "LastName", "SchoolIDNumber", "Major", "EmailAddress" });
                 dataRepository.Save();
                 return View("ProfileUpdateSuccess");
             }

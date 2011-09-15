@@ -158,6 +158,7 @@
       <DependentUpon>AssessTrackModelClasses.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\File.cs" />
+    <Compile Include="Models\Home\DepartmentSiteListItem.cs" />
     <Compile Include="Models\Invitation.cs" />
     <Compile Include="Models\Managers\AssessmentManager.cs" />
     <Compile Include="Models\AssessmentTag.cs" />

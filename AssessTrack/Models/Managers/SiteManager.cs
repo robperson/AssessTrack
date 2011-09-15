@@ -56,7 +56,10 @@ namespace AssessTrack.Models
 
         public IEnumerable<Site> GetAllSites()
         {
-            return dc.Sites.AsEnumerable();
+            return dc.Sites
+                .OrderByDescending(s => s.Terms.Max(t => t.StartDate))
+                   .ThenBy(s => s.Title)
+                   .AsEnumerable();
         }
 
         public bool JoinSite(Site site)
@@ -75,14 +78,15 @@ namespace AssessTrack.Models
         }
 
         //public SiteMember GetSiteMember
+        public bool IsSiteMember(Site site)
+        {
+            return IsSiteMember(site, GetLoggedInProfile());
+        }
 
         public bool IsSiteMember(Site site, Profile profile)
         {
-            SiteMember sitemember = (from sm in dc.SiteMembers
-                                    where sm.Profile == profile
-                                    && sm.Site == site
-                                    select sm).SingleOrDefault();
-            return (sitemember != null);
+
+            return IsSiteMember(site, profile.MembershipID);
         }
 
         public bool IsSiteMember(Site site, Guid id)

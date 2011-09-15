@@ -27,6 +27,7 @@
                 <div class="row-actions">
                     <%= Html.ATAuthLink("Edit", new { siteShortName=item.ShortName, action="Edit" },AssessTrack.Filters.AuthScope.Site,5,10) %>
                     <%= Html.ATAuthLink("Delete", new { siteShortName=item.ShortName, action="Delete" },AssessTrack.Filters.AuthScope.Site,10,10) %>
+
                  </div>
             </td>
             <td>
@@ -40,7 +41,7 @@
 
     <p>
         <%= Html.ATAuthLink("Create New Site", new { Action = "Create" }, AssessTrack.Filters.AuthScope.Application, 9, 10)%><br />
-        <%= Html.ActionLink("Join a site", "Join") %>
+        <%= Html.ActionLink("Join a site", "Index", new { controller = "Home" })%>
     </p>
 
 </asp:Content>

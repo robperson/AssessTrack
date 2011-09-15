@@ -7,7 +7,6 @@
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2>My Sites &amp; Courses:</h2>
-    <p><%= Html.ATAuthLink("Join A Site", new { Action = "Join", controller = "Site" }, AssessTrack.Filters.AuthScope.Application, 1, 10)%></p>
     <ul class="site-sections">
     <% foreach (SiteSection siteSection in Model.SiteSections)
        {%>
@@ -30,5 +29,22 @@
          
     <% }%>
     </ul>
-    <p><%= Html.ATAuthLink("Join A Site", new { Action = "Join", controller = "Site" }, AssessTrack.Filters.AuthScope.Application, 1, 10)%></p>  
+
+    <h2>All Departments</h2>
+    <p>Find your department in the list and click Join.</p>
+    <ul class="department-list">
+    <% foreach (var dept in Model.DepartmentSites)
+       {%>
+        <li>
+            <%= Html.SiteLink(dept.Site,"","") %>
+            <% if (!dept.UserIsMember)
+               {%>
+            <span class="join-site">
+                <%= Html.ActionLink("Join","Join", new { controller = "Site", id = dept.Site.SiteID }) %>
+            </span>
+            <% } %>
+        </li>       
+    <%   } %>
+    </ul>
+    
 </asp:Content>

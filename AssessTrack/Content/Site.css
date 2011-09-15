@@ -390,6 +390,21 @@ li.site-section h3
 {
     border-bottom:1px solid #369;
 }
+
+span.join-site
+{
+    float: right;
+}
+
+ul.department-list li
+{
+    border-bottom: 1px dotted #777;
+}
+
+ul.department-list li:hover
+{
+    background-color: #ccc;
+}
 /* Tables
 ------------------------------------------------*/
 table
@@ -555,6 +570,12 @@ div.code
 {
     width:auto;
     overflow:auto;
+}
+/* FORMS
+---------------------------------------------------- */
+label
+{
+    display:block;
 }
 /* IMAGES
 --------------------------------------------------- */

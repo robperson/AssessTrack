@@ -8,13 +8,21 @@ namespace AssessTrack.Models.Home
     public class HomePageViewModel
     {
         public List<SiteSection> SiteSections = new List<SiteSection>();
+        public List<DepartmentSiteListItem> DepartmentSites = new List<DepartmentSiteListItem>();
 
-        public HomePageViewModel()
+        AssessTrackDataRepository _repo;
+        
+        public HomePageViewModel(AssessTrackDataRepository repo)
         {
-            AssessTrackDataRepository repo = new AssessTrackDataRepository();
-            foreach (Site site in repo.GetUserSites())
+            _repo = repo;
+            foreach (Site site in _repo.GetUserSites())
             {
-                SiteSections.Add(new SiteSection(site));
+                SiteSections.Add(new SiteSection(_repo, site));
+            }
+
+            foreach (var site in _repo.GetAllSites())
+            {
+                DepartmentSites.Add(new DepartmentSiteListItem(_repo,site));
             }
         }
     }

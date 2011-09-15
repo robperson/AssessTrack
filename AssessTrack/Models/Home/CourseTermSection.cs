@@ -11,10 +11,10 @@ namespace AssessTrack.Models.Home
         public CourseTerm CourseTerm;
         public string Grade { get; private set; }
         public bool DisplayGrade { get; private set; }
-
-        public CourseTermSection(CourseTerm ct)
+        AssessTrackDataRepository _repo;
+        public CourseTermSection(AssessTrackDataRepository repo, CourseTerm ct)
         {
-            AssessTrackDataRepository repo = new AssessTrackDataRepository();
+            _repo = repo;
             CourseTerm = ct;
             CourseTermMember member = repo.GetCourseTermMemberByMembershipID(ct,UserHelpers.GetCurrentUserID());
             DisplayGrade = false;

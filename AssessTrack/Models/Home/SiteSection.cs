@@ -9,14 +9,14 @@ namespace AssessTrack.Models.Home
     {
         public Site Site;
         public List<CourseTermSection> CourseTermSections = new List<CourseTermSection>();
-
-        public SiteSection(Site site)
+        AssessTrackDataRepository _repo;
+        public SiteSection(AssessTrackDataRepository repo, Site site)
         {
-            AssessTrackDataRepository repo = new AssessTrackDataRepository();
+            _repo = repo;
             Site = site;
-            foreach (CourseTerm ct in repo.GetUserCourseTerms(site))
+            foreach (CourseTerm ct in _repo.GetUserCourseTerms(site))
             {
-                CourseTermSections.Add(new CourseTermSection(ct));
+                CourseTermSections.Add(new CourseTermSection(_repo, ct));
             }
         }
     }

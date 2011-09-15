@@ -16,7 +16,7 @@ namespace AssessTrack.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                return View(new HomePageViewModel());
+                return View(new HomePageViewModel(dataRepository));
             }
             else
             {

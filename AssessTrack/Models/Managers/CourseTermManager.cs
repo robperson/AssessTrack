@@ -93,7 +93,7 @@ namespace AssessTrack.Models
             var cts = from ct in site.CourseTerms
                       select ct;
             return cts
-                .OrderBy(ct => ct.Term.EndDate)
+                .OrderByDescending(ct => ct.Term.EndDate)
                 .ThenBy(ct => ct.Name)
                 .ToList();
         }

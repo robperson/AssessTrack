@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
 using AssessTrack.Helpers;
+using AssessTrack.Models.SiteViews;
 
 namespace AssessTrack.Models
 {
@@ -134,6 +135,46 @@ namespace AssessTrack.Models
                 DeleteCourseTerm(courseTerm);
             }
             dc.Sites.DeleteOnSubmit(site);
+        }
+
+        // Service methods for Site controller
+        public SiteDetailsViewModel GetSiteDetails(Site site)
+        {
+            SiteDetailsViewModel details = new SiteDetailsViewModel();
+            var courses = GetAllCourseTerms(site);
+            
+            List<CourseTerm> userCTs = new List<CourseTerm>();
+            List<CourseTermListItem> items = new List<CourseTermListItem>();
+                
+            
+            foreach (var course in courses)
+            {
+                CourseTermListItem item = new CourseTermListItem();
+                item.CourseTerm = course;
+                if (IsCourseTermMember(course))
+                {
+                    item.StudentNotEnrolled = false;
+                    userCTs.Add(course);
+                }
+                else
+                {
+                    item.StudentNotEnrolled = true;
+
+                }
+
+                if (course.Term.EndDate >= DateTime.Now)
+                {
+                    items.Add(item);
+                }
+            }
+
+            details.UserCourseOfferings = userCTs;
+            details.AllCourseOfferings = items;
+
+            details.Site = site;
+
+            return details;
+
         }
     }
 }

@@ -110,7 +110,10 @@ pre
     margin-bottom:10px;
     width:auto;
 }
-
+ul 
+{
+    margin-bottom:10px;
+}
 /* VALIDATION
 -----------------------------------------------------------*/
 .error

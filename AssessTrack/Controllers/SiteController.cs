@@ -8,6 +8,7 @@ using AssessTrack.Helpers;
 using AssessTrack.Models;
 using AssessTrack.Filters;
 using AssessTrack.Models.ViewModels;
+using AssessTrack.Models.SiteViews;
 
 namespace AssessTrack.Controllers
 {
@@ -38,7 +39,8 @@ namespace AssessTrack.Controllers
         [ATAuth(AuthScope = AuthScope.Application, MinLevel = 0, MaxLevel = 10)]
         public ActionResult Details(string siteShortName)
         {
-            return View(site);
+            SiteDetailsViewModel details = dataRepository.GetSiteDetails(site);
+            return View(details);
         }
 
         //

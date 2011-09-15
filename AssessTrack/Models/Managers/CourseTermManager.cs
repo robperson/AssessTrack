@@ -57,6 +57,12 @@ namespace AssessTrack.Models
                     select courseterm).SingleOrDefault();
         }
 
+        public bool IsCourseTermMember(CourseTerm courseTerm)
+        {
+            Profile p = GetLoggedInProfile();
+            return IsCourseTermMember(courseTerm, p);
+        }
+
         public bool IsCourseTermMember(CourseTerm courseTerm, Profile profile)
         {
             CourseTermMember ctMember = (from ctm in dc.CourseTermMembers
@@ -86,7 +92,10 @@ namespace AssessTrack.Models
         {
             var cts = from ct in site.CourseTerms
                       select ct;
-            return cts.OrderBy(ct => ct.Term.EndDate).ToList();
+            return cts
+                .OrderBy(ct => ct.Term.EndDate)
+                .ThenBy(ct => ct.Name)
+                .ToList();
         }
 
         public List<CourseTerm> GetUserCourseTerms(Site site)

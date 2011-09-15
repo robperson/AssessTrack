@@ -196,6 +196,8 @@
     <Compile Include="Models\Managers\ProfileManager.cs" />
     <Compile Include="Models\Managers\SiteManager.cs" />
     <Compile Include="Models\SiteMember.cs" />
+    <Compile Include="Models\SiteViews\CourseTermListItem.cs" />
+    <Compile Include="Models\SiteViews\SiteDetailsViewModel.cs" />
     <Compile Include="Models\SubmissionException.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Managers\TagManager.cs" />

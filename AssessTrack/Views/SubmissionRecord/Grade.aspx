@@ -27,7 +27,7 @@
     <h2>Grade Submission</h2>
     <h3><%= Model.SubmissionRecord.Assessment.Name%></h3>
     <p>
-    <%= Membership.GetUser(Model.SubmissionRecord.StudentID).UserName%> submitted this on
+    <%= AssessTrack.Helpers.UserHelpers.GetFullNameForID(Model.SubmissionRecord.StudentID)%> submitted this on
     <%= Model.SubmissionRecord.SubmissionDate.ToString()%>.
     </p>
     <% if (Model.OtherSubmissionRecords.Count > 0)

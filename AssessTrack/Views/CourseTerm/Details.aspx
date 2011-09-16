@@ -8,34 +8,23 @@
 
     <h2><%= Html.Encode(Model.Name) %></h2>
 
-    <fieldset>
-        <legend>About this course</legend>
-        <p>
-            Information:
-            <%= Html.Encode(Model.Information) %>
-        </p>
-        <p>
-            Course:
-            <%= Html.Encode(Model.Course.Name) %>
-        </p>
-        <p>
-            Term:
-            <%= Html.Encode(Model.Term.Name) %>
-        </p>
-        <% if (Model.File != null)
-           { %>
-        <p>
-            Download Syllabus:
-            <%= Html.ActionLink(Model.File.Name, "Download", new {controller="File", id = Model.Syllabus.Value}) %>
-        </p>
-        <%}
-           else
-           { %>
-        <p>
-            No Syllabus!
-        </p>
-        <% } %>
-    </fieldset>
+    <div class="courseterm-information">
+        <%= Model.Information %>
+    </div>
+    <% if (Model.File != null)
+        { %>
+    <p>
+        Download Syllabus:
+        <%= Html.ActionLink(Model.File.Name, "Download", new {controller="File", id = Model.Syllabus.Value}) %>
+    </p>
+    <%}
+        else
+        { %>
+    <p>
+        No Syllabus.
+    </p>
+    <% } %>
+    
     <h3>Links</h3>
     <% Html.RenderPartial("CourseTermMenu"); %>
     

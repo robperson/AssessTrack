@@ -25,12 +25,12 @@ namespace AssessTrack.Models
                 throw new Exception("Only Students have Final Grades.");
             }
 
-            var loadOptions = new DataLoadOptions();
-            loadOptions.LoadWith<AssessmentType>(at => at.Assessments);
-            loadOptions.LoadWith<Assessment>(asmt => asmt.SubmissionRecords);
-            loadOptions.LoadWith<Assessment>(asmt => asmt.Questions);
-            loadOptions.LoadWith<SubmissionRecord>(sr => sr.Responses);
-            dc.LoadOptions = loadOptions;
+            //var loadOptions = new DataLoadOptions();
+            //loadOptions.LoadWith<AssessmentType>(at => at.Assessments);
+            //loadOptions.LoadWith<Assessment>(asmt => asmt.SubmissionRecords);
+            //loadOptions.LoadWith<Assessment>(asmt => asmt.Questions);
+            //loadOptions.LoadWith<SubmissionRecord>(sr => sr.Responses);
+            //dc.LoadOptions = loadOptions;
             double finalgrade = 0.0;
             double coursTermPoints = 0.0;
             double courseTermMaxPoints = 0.0;

@@ -1,6 +1,6 @@
 <%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IEnumerable<AssessTrack.Models.CourseTermMessage>>" %>
 <%@ Import Namespace="AssessTrack.Helpers" %>
-<li>
+
     <h3>Recent Messages</h3>
     <ul>
     <% foreach (var message in Model)
@@ -10,4 +10,4 @@
            </li>
        <%} %>
        </ul>
-</li>
+

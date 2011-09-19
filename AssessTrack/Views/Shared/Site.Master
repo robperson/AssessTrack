@@ -110,13 +110,17 @@
 				    <h2>Reminders</h2>
 				    <ul class="menu">
 				        <% if (ViewData["RecentMessages"] != null)
-                            {
-                                Html.RenderPartial("RecentMessagesList", ViewData["RecentMessages"]);
-                            } %>
+                            {%>
+                            <li>
+                                <% Html.RenderPartial("RecentMessagesList", ViewData["RecentMessages"]); %>
+                                </li>
+                            <%} %>
                             <% if (ViewData["UpcomingAssessments"] != null)
-                            {
-                                Html.RenderPartial("UpcomingAssessmentList", ViewData["UpcomingAssessments"]);
-                            } %>
+                            { %>
+                            <li>
+                               <% Html.RenderPartial("UpcomingAssessmentList", ViewData["UpcomingAssessments"]); %>
+                               </li>
+                           <% } %>
 				    </ul>
 				    <!-- reminders end -->
 			    </div>

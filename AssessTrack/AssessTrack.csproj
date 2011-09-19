@@ -157,6 +157,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AssessTrackModelClasses.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\CourseTermViewModels\CourseTermStudentDetailsViewModel.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\Home\DepartmentSiteListItem.cs" />
     <Compile Include="Models\Invitation.cs" />
@@ -236,6 +237,7 @@
     <Content Include="Views\Assessment\AlreadySubmitted.aspx" />
     <Content Include="Views\Assessment\AssessmentClosed.aspx" />
     <Content Include="Views\Assessment\AssessmentForm.ascx" />
+    <Content Include="Views\CourseTerm\StudentDetails.aspx" />
     <Content Include="Views\Profile\DetailedMemberTable.ascx" />
     <Content Include="Views\Profile\Details.aspx" />
     <Content Include="Views\Profile\Edit.aspx" />

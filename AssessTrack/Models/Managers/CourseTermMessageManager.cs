@@ -34,6 +34,18 @@ namespace AssessTrack.Models
                            select message;
             return messages.OrderByDescending(msg => msg.CreatedDate).Take(5).ToList();
         }
+
+        public List<CourseTermMessage> GetRecentCourseTermMessages(Guid courseTermId)
+        {
+            var messages = from message in dc.CourseTermMessages
+                           from member in dc.CourseTermMembers
+                           where member.MembershipID == UserHelpers.GetCurrentUserID()
+                           && member.CourseTermID == message.CourseTermID
+                           && message.CreatedDate.CompareTo(DateTime.Now.AddDays(-30.0)) >= 0
+                           && message.CourseTermID == courseTermId
+                           select message;
+            return messages.OrderByDescending(msg => msg.CreatedDate).Take(5).ToList();
+        }
     }
 
 

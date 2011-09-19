@@ -7,6 +7,7 @@ using System.Web.Mvc.Ajax;
 using AssessTrack.Models;
 using AssessTrack.Helpers;
 using AssessTrack.Filters;
+using AssessTrack.Models.CourseTermViewModels;
 
 namespace AssessTrack.Controllers
 {
@@ -89,6 +90,27 @@ namespace AssessTrack.Controllers
         [ATAuth(AuthScope = AuthScope.Site, MinLevel = 0, MaxLevel = 10)]
         public ActionResult Details(string siteShortName, string courseTermShortName)
         {
+            Guid id = UserHelpers.GetCurrentUserID();
+            CourseTermMember member = dataRepository.GetCourseTermMemberByMembershipID(courseTerm,id);
+
+            if (member != null)
+            {
+                if (member.AccessLevel == 1) //Student
+                {
+                    CourseTermStudentDetailsViewModel model = new CourseTermStudentDetailsViewModel();
+                    double grade = dataRepository.GetFinalGrade(member);
+                    string gradeText = GradeHelpers.GetFormattedGrade(grade);
+                    model.CurrentGrade = gradeText;
+
+                    model.RecentMessages = dataRepository.GetRecentCourseTermMessages(courseTerm.CourseTermID);
+
+                    model.UpcomingAssessments = dataRepository.GetUpcomingAssessments(courseTerm);
+
+                    model.CourseTerm = courseTerm;
+
+                    return View("StudentDetails", model);
+                }
+            }
             return View(courseTerm);
         }
 

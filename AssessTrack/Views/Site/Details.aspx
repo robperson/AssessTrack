@@ -34,7 +34,7 @@
             <% if (item.StudentNotEnrolled)
                { %>
                 <span class="courseterm-enroll-link">
-                <%= Html.ActionLink("Enroll", "Join", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = item.CourseTerm.ShortName })%>
+                <%= Html.ActionLink("Enroll", "Join", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = item.CourseTerm.ShortName, id = item.CourseTerm.CourseTermID, controller = "CourseTerm" })%>
                 </span>
 
             <% } %>

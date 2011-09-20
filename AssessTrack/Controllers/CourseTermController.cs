@@ -8,6 +8,7 @@ using AssessTrack.Models;
 using AssessTrack.Helpers;
 using AssessTrack.Filters;
 using AssessTrack.Models.CourseTermViewModels;
+using AssessTrack.Models.ReportsAndTools;
 
 namespace AssessTrack.Controllers
 {
@@ -109,6 +110,23 @@ namespace AssessTrack.Controllers
                     model.CourseTerm = courseTerm;
 
                     return View("StudentDetails", model);
+                }
+                else if (member.AccessLevel > 1) //TA or Professor
+                {
+                    CourseTermInstructorDetailsViewModel model = new CourseTermInstructorDetailsViewModel();
+                    model.CourseTerm = courseTerm;
+                    List<CourseTermMember> students = dataRepository.GetStudentsInCourseTerm(courseTerm);
+                    GradeDistribution dist = new GradeDistribution();
+                    foreach (var student in students)
+                    {
+                        dist.AddGrade(student.GetFinalGrade(), student.Profile);
+                    }
+
+                    model.GradeDistribution = dist;
+
+                    model.UngradedAssessments = dataRepository.GetUngradedAssessments(courseTerm);
+
+                    return View("InstructorDetails", model);
                 }
             }
             return View(courseTerm);

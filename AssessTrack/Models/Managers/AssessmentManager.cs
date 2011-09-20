@@ -399,6 +399,23 @@ namespace AssessTrack.Models
 
             return weightedValue;
         }
+
+        public List<Assessment> GetUngradedAssessments(CourseTerm courseTerm)
+        {
+            var assessments = GetAllNonTestBankAssessments(courseTerm);
+            List<Assessment> ungraded = new List<Assessment>();
+            foreach (var assessment in assessments)
+            {
+                List<SubmissionRecord> records = GetMostRecentSubmissions(assessment);
+                if (records.Exists(sub => sub.GradedBy == null))
+                {
+                    ungraded.Add(assessment);
+                }
+            }
+
+            return ungraded;
+
+        }
     }
 
 }

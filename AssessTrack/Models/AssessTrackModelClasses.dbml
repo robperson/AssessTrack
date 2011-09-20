@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CMSData" Class="AssessTrackModelClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CMSData" Class="AssessTrackModelClassesDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=.\sqlexpress;Initial Catalog=CMSData;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ApplicationServices" Provider="System.Data.SqlClient" />
   <Table Name="dbo.AnswerKeys" Member="AnswerKeys">
     <Type Name="AnswerKey">
@@ -350,8 +350,9 @@
     <Parameter Name="questionid" Type="System.Guid" DbType="UniqueIdentifier" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.sp_AddCourseAdmin" Method="sp_AddCourseAdmin">
+  <Function Name="dbo.sp_AddCourseAdmin" Method="sp_AddCourseAdmin" IsComposable="true">
     <Parameter Name="courseid" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="userid" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="object" />
   </Function>
 </Database>

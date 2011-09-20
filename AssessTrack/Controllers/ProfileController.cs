@@ -7,6 +7,8 @@ using System.Web.Mvc.Ajax;
 using AssessTrack.Models;
 using AssessTrack.Filters;
 using AssessTrack.Helpers;
+using AssessTrack.Models.ViewModels;
+using AssessTrack.Models.Home;
 
 namespace AssessTrack.Controllers
 {
@@ -55,14 +57,16 @@ namespace AssessTrack.Controllers
             return View(new ProfileViewModel(Tables));
         }
 
+
         //
         // GET: /Profile/Details/5
 
         public ActionResult Details(Guid id)
         {
             Profile member = dataRepository.GetProfileByID(id);
-
-            return View(member);
+            List<CourseTerm> cTerms = dataRepository.GetOtherUserCourseTerms(0, id);
+            ProfileDetailsViewModel model = new ProfileDetailsViewModel(member, cTerms);
+            return View(model);
         }
 
 

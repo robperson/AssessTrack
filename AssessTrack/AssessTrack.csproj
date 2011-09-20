@@ -212,6 +212,7 @@
     <Compile Include="Models\Term.cs" />
     <Compile Include="Models\Managers\TermManager.cs" />
     <Compile Include="Models\ViewModels\InviteModel.cs" />
+    <Compile Include="Models\ViewModels\ProfileDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\TagEditViewModel.cs" />
     <Compile Include="Models\ViewModels\TagProgramOutcomeRelationship.cs" />
     <Compile Include="Models\ViewModels\TagReviewViewModel.cs" />

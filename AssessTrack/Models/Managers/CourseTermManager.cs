@@ -123,6 +123,15 @@ namespace AssessTrack.Models
                     && ctm.AccessLevel >= minAccessLevel
                     select ct).ToList();
         }
+        public List<CourseTerm> GetOtherUserCourseTerms(int minAccessLevel, Guid id)
+        {
+            return (from ct in dc.CourseTerms
+                    join ctm in dc.CourseTermMembers
+                    on ct.CourseTermID equals ctm.CourseTermID
+                    where ctm.MembershipID == id
+                    && ctm.AccessLevel >= minAccessLevel
+                    select ct).ToList();
+        }
 
         public List<CourseTermMember> GetExcludedUsersInCourseTerm(CourseTerm courseTerm)
         {

@@ -24,12 +24,13 @@ namespace AssessTrack.Models
             {
                 Grade grade = new Grade(assessment, profile);
                 Grades.Add(grade);
-                TotalPoints += grade.Points;
+                
                 if ((grade.SubmissionRecord != null && grade.SubmissionRecord.GradedBy != null) ||
                     (DateTime.Now.CompareTo(assessment.DueDate) > 0 && grade.SubmissionRecord == null)
                     )
                 {
                     MaxPoints += assessment.Weight;
+                    TotalPoints += grade.Points;
                 }
             }
             //if (TotalPoints > 0 && MaxPoints == 0) //if everything is extra credit

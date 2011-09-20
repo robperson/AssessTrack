@@ -274,6 +274,7 @@
     <Content Include="Views\Shared\SiteNotFound.aspx" />
     <Content Include="Views\Shared\TagNotFound.aspx" />
     <Content Include="Views\Shared\TermNotFound.aspx" />
+    <Content Include="Views\Shared\UngradedAssessmentList.ascx" />
     <Content Include="Views\Site\Create.aspx" />
     <Content Include="Views\Site\Delete.aspx" />
     <Content Include="Views\Site\Details.aspx" />

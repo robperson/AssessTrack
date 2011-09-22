@@ -110,7 +110,7 @@ namespace AssessTrack.Controllers
         [ATAuth(AuthScope = AuthScope.CourseTerm,MinLevel=3,MaxLevel=10)]
         public ActionResult Create(string courseTermShortName, string siteShortName)
         {
-            Assessment assessment = new Assessment() { DueDate = DateTime.Now.AddDays(1), CreatedDate = DateTime.Now };
+            Assessment assessment = new Assessment() { AllowMultipleSubmissions = true, DueDate = DateTime.Now.AddDays(1), CreatedDate = DateTime.Now };
             return View(new AssessmentFormViewModel(assessment, dataRepository.GetAssessmentTypesSelectList(courseTerm)));
         } 
 

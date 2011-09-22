@@ -6,11 +6,11 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Code Download Link</h2>
+    <h2>Answer Download Link</h2>
     <p>
     <% if (ViewData["CodeDownloadLink"] != null)
        { %>
-    <a href="<%= ViewData["CodeDownloadLink"] %>">Click here to download the code</a>. The file will be deleted soon.
+    <a href="<%= ViewData["CodeDownloadLink"] %>">Click here to download the answer</a>. The file will be deleted soon.
     <%} else { %>
     This page is no longer valid. You'll have to generate the download link again.
     <%} %>

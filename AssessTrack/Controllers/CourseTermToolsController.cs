@@ -17,6 +17,7 @@ namespace AssessTrack.Controllers
     {
         public SelectList Assessments;
         public List<Answer> Answers;
+        public List<string> AnswerTypes;
         public Assessment Assessment;
     }
     [ATAuth(AuthScope=AuthScope.CourseTerm,MinLevel=5,MaxLevel=10)]
@@ -49,9 +50,10 @@ namespace AssessTrack.Controllers
             if (assessment != null)
             {
                 model.Answers = (from answer in assessment.Answers
-                                 where answer.Type == "code-answer"
+                                 //where answer.Type == "code-answer"
                                  select answer).ToList();
-
+                model.AnswerTypes = (from answer in assessment.Answers
+                                     select answer.Type).ToList();
                 model.Assessment = assessment;
             }
 
@@ -59,10 +61,11 @@ namespace AssessTrack.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult GetCodeAnswerDownloadLink(Guid? AnswerID)
+        public ActionResult GetCodeAnswerDownloadLink(Guid? AnswerID, String AnswerType)
         {
             if (AnswerID == null)
                 return View("AnswerNotFound");
+            
             string tempDir = Environment.GetEnvironmentVariable("TEMP") + "\\assesstrack-code-for-answer" + AnswerID + "\\";
             Directory.CreateDirectory(tempDir);
 
@@ -70,6 +73,8 @@ namespace AssessTrack.Controllers
 
             //Get All responses for the requested answer
             string filenameFormat = "{0}_{1}s_{2}_Question{3}_Answer{4}_{5}.cpp";
+            if(!AnswerType.Equals("code-answer"))
+                filenameFormat = "{0}_{1}s_{2}_Question{3}_Answer{4}_{5}.txt";
             //"{FirstName}_{LastName}s_{AssessmentName}_Question{Number}_Answer{Number}_{SubmissionID}.cpp"
 
             List<Response> responses;

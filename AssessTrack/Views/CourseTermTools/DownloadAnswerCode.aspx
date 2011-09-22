@@ -7,7 +7,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Download Answer Code</h2>
+    <h2>Download Answer</h2>
     <div>
     <% using (Html.BeginForm())
        { %>
@@ -16,7 +16,7 @@
         <%= Html.DropDownList("AssessmentID",Model.Assessments) %>
        </p>
        <p>
-        <input type="submit" value="Show Code Answers for Assessment" />
+        <input type="submit" value="Show Answers for Assessment" />
        </p>
     <% } %>
     </div>
@@ -29,15 +29,19 @@
                 <th>Question and Answer Number</th>
                 <th>Download</th>
             </tr>
-            <% foreach (var answer in Model.Answers)
-               { %>
+            <% for(int i = 0; i < Model.Answers.Count; i++) //foreach (var answer in Model.Answers)
+               {
+                   AssessTrack.Models.Answer answer = Model.Answers[i];
+                   String answerType = Model.AnswerTypes[i];
+                   %>
               <tr>
                 <td>Question #<%= answer.Question.Number%>, Answer #<%= answer.Number%></td>
                 <td>
                     <% using (Html.BeginForm("GetCodeAnswerDownloadLink", "CourseTermTools", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() }))
                        { %>
                        <input type="hidden" value="<%= answer.AnswerID %>" name="AnswerID" />
-                       <input type="submit" value="Download Code for this Answer" />
+                       <input type="hidden" value="<%= answerType %>" name="AnswerType" />
+                       <input type="submit" value="Download this Answer" />
                     <% } %>
                 </td>
               </tr>     

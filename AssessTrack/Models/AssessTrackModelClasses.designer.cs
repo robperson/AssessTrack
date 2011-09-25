@@ -37,9 +37,6 @@ namespace AssessTrack.Models
     partial void InsertAnswer(Answer instance);
     partial void UpdateAnswer(Answer instance);
     partial void DeleteAnswer(Answer instance);
-    partial void InsertAssessment(Assessment instance);
-    partial void UpdateAssessment(Assessment instance);
-    partial void DeleteAssessment(Assessment instance);
     partial void InsertAssessmentType(AssessmentType instance);
     partial void UpdateAssessmentType(AssessmentType instance);
     partial void DeleteAssessmentType(AssessmentType instance);
@@ -49,9 +46,6 @@ namespace AssessTrack.Models
     partial void InsertCourseTermFile(CourseTermFile instance);
     partial void UpdateCourseTermFile(CourseTermFile instance);
     partial void DeleteCourseTermFile(CourseTermFile instance);
-    partial void InsertCourseTermMember(CourseTermMember instance);
-    partial void UpdateCourseTermMember(CourseTermMember instance);
-    partial void DeleteCourseTermMember(CourseTermMember instance);
     partial void InsertCourseTermMessage(CourseTermMessage instance);
     partial void UpdateCourseTermMessage(CourseTermMessage instance);
     partial void DeleteCourseTermMessage(CourseTermMessage instance);
@@ -97,6 +91,12 @@ namespace AssessTrack.Models
     partial void InsertTerm(Term instance);
     partial void UpdateTerm(Term instance);
     partial void DeleteTerm(Term instance);
+    partial void InsertCourseTermMember(CourseTermMember instance);
+    partial void UpdateCourseTermMember(CourseTermMember instance);
+    partial void DeleteCourseTermMember(CourseTermMember instance);
+    partial void InsertAssessment(Assessment instance);
+    partial void UpdateAssessment(Assessment instance);
+    partial void DeleteAssessment(Assessment instance);
     #endregion
 		
 		public AssessTrackModelClassesDataContext() : 
@@ -153,14 +153,6 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Assessment> Assessments
-		{
-			get
-			{
-				return this.GetTable<Assessment>();
-			}
-		}
-		
 		public System.Data.Linq.Table<AssessmentTag> AssessmentTags
 		{
 			get
@@ -190,14 +182,6 @@ namespace AssessTrack.Models
 			get
 			{
 				return this.GetTable<CourseTermFile>();
-			}
-		}
-		
-		public System.Data.Linq.Table<CourseTermMember> CourseTermMembers
-		{
-			get
-			{
-				return this.GetTable<CourseTermMember>();
 			}
 		}
 		
@@ -326,6 +310,22 @@ namespace AssessTrack.Models
 			get
 			{
 				return this.GetTable<Term>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CourseTermMember> CourseTermMembers
+		{
+			get
+			{
+				return this.GetTable<CourseTermMember>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Assessment> Assessments
+		{
+			get
+			{
+				return this.GetTable<Assessment>();
 			}
 		}
 		
@@ -597,9 +597,9 @@ namespace AssessTrack.Models
 		
 		private EntitySet<Response> _Responses;
 		
-		private EntityRef<Assessment> _Assessment;
-		
 		private EntityRef<Question> _Question;
+		
+		private EntityRef<Assessment> _Assessment;
 		
 		private bool serializing;
 		
@@ -844,40 +844,6 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_Answer", Storage="_Assessment", ThisKey="AssessmentID", OtherKey="AssessmentID", IsForeignKey=true)]
-		public Assessment Assessment
-		{
-			get
-			{
-				return this._Assessment.Entity;
-			}
-			set
-			{
-				Assessment previousValue = this._Assessment.Entity;
-				if (((previousValue != value) 
-							|| (this._Assessment.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Assessment.Entity = null;
-						previousValue.Answers.Remove(this);
-					}
-					this._Assessment.Entity = value;
-					if ((value != null))
-					{
-						value.Answers.Add(this);
-						this._AssessmentID = value.AssessmentID;
-					}
-					else
-					{
-						this._AssessmentID = default(System.Guid);
-					}
-					this.SendPropertyChanged("Assessment");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Question_Answer", Storage="_Question", ThisKey="QuestionID", OtherKey="QuestionID", IsForeignKey=true)]
 		public Question Question
 		{
@@ -908,6 +874,40 @@ namespace AssessTrack.Models
 						this._QuestionID = default(System.Guid);
 					}
 					this.SendPropertyChanged("Question");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_Answer", Storage="_Assessment", ThisKey="AssessmentID", OtherKey="AssessmentID", IsForeignKey=true)]
+		public Assessment Assessment
+		{
+			get
+			{
+				return this._Assessment.Entity;
+			}
+			set
+			{
+				Assessment previousValue = this._Assessment.Entity;
+				if (((previousValue != value) 
+							|| (this._Assessment.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Assessment.Entity = null;
+						previousValue.Answers.Remove(this);
+					}
+					this._Assessment.Entity = value;
+					if ((value != null))
+					{
+						value.Answers.Add(this);
+						this._AssessmentID = value.AssessmentID;
+					}
+					else
+					{
+						this._AssessmentID = default(System.Guid);
+					}
+					this.SendPropertyChanged("Assessment");
 				}
 			}
 		}
@@ -960,8 +960,8 @@ namespace AssessTrack.Models
 		{
 			this._AnswerKeys = new EntitySet<AnswerKey>(new Action<AnswerKey>(this.attach_AnswerKeys), new Action<AnswerKey>(this.detach_AnswerKeys));
 			this._Responses = new EntitySet<Response>(new Action<Response>(this.attach_Responses), new Action<Response>(this.detach_Responses));
-			this._Assessment = default(EntityRef<Assessment>);
 			this._Question = default(EntityRef<Question>);
+			this._Assessment = default(EntityRef<Assessment>);
 			OnCreated();
 		}
 		
@@ -1032,591 +1032,6 @@ namespace AssessTrack.Models
 					this._AnswerID = value;
 				}
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Assessments")]
-	[global::System.Runtime.Serialization.DataContractAttribute()]
-	public partial class Assessment : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _AssessmentID;
-		
-		private string _Name;
-		
-		private System.DateTime _DueDate;
-		
-		private bool _IsExtraCredit;
-		
-		private System.Guid _AssessmentTypeID;
-		
-		private string _Data;
-		
-		private System.DateTime _CreatedDate;
-		
-		private bool _IsVisible;
-		
-		private bool _IsOpen;
-		
-		private bool _IsGradable;
-		
-		private bool _AllowMultipleSubmissions;
-		
-		private System.Guid _CourseTermID;
-		
-		private EntitySet<Answer> _Answers;
-		
-		private EntitySet<Question> _Questions;
-		
-		private EntitySet<SubmissionException> _SubmissionExceptions;
-		
-		private EntitySet<SubmissionRecord> _SubmissionRecords;
-		
-		private EntityRef<AssessmentType> _AssessmentType;
-		
-		private EntityRef<CourseTerm> _CourseTerm;
-		
-		private bool serializing;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnAssessmentIDChanging(System.Guid value);
-    partial void OnAssessmentIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnDueDateChanging(System.DateTime value);
-    partial void OnDueDateChanged();
-    partial void OnIsExtraCreditChanging(bool value);
-    partial void OnIsExtraCreditChanged();
-    partial void OnAssessmentTypeIDChanging(System.Guid value);
-    partial void OnAssessmentTypeIDChanged();
-    partial void OnDataChanging(string value);
-    partial void OnDataChanged();
-    partial void OnCreatedDateChanging(System.DateTime value);
-    partial void OnCreatedDateChanged();
-    partial void OnIsVisibleChanging(bool value);
-    partial void OnIsVisibleChanged();
-    partial void OnIsOpenChanging(bool value);
-    partial void OnIsOpenChanged();
-    partial void OnIsGradableChanging(bool value);
-    partial void OnIsGradableChanged();
-    partial void OnAllowMultipleSubmissionsChanging(bool value);
-    partial void OnAllowMultipleSubmissionsChanged();
-    partial void OnCourseTermIDChanging(System.Guid value);
-    partial void OnCourseTermIDChanged();
-    #endregion
-		
-		public Assessment()
-		{
-			this.Initialize();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AssessmentID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-		public System.Guid AssessmentID
-		{
-			get
-			{
-				return this._AssessmentID;
-			}
-			set
-			{
-				if ((this._AssessmentID != value))
-				{
-					this.OnAssessmentIDChanging(value);
-					this.SendPropertyChanging();
-					this._AssessmentID = value;
-					this.SendPropertyChanged("AssessmentID");
-					this.OnAssessmentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DueDate", DbType="DateTime NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-		public System.DateTime DueDate
-		{
-			get
-			{
-				return this._DueDate;
-			}
-			set
-			{
-				if ((this._DueDate != value))
-				{
-					this.OnDueDateChanging(value);
-					this.SendPropertyChanging();
-					this._DueDate = value;
-					this.SendPropertyChanged("DueDate");
-					this.OnDueDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsExtraCredit", DbType="Bit NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-		public bool IsExtraCredit
-		{
-			get
-			{
-				return this._IsExtraCredit;
-			}
-			set
-			{
-				if ((this._IsExtraCredit != value))
-				{
-					this.OnIsExtraCreditChanging(value);
-					this.SendPropertyChanging();
-					this._IsExtraCredit = value;
-					this.SendPropertyChanged("IsExtraCredit");
-					this.OnIsExtraCreditChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AssessmentTypeID", DbType="UniqueIdentifier NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
-		public System.Guid AssessmentTypeID
-		{
-			get
-			{
-				return this._AssessmentTypeID;
-			}
-			set
-			{
-				if ((this._AssessmentTypeID != value))
-				{
-					if (this._AssessmentType.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAssessmentTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._AssessmentTypeID = value;
-					this.SendPropertyChanged("AssessmentTypeID");
-					this.OnAssessmentTypeIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data", DbType="Text NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
-		public string Data
-		{
-			get
-			{
-				return this._Data;
-			}
-			set
-			{
-				if ((this._Data != value))
-				{
-					this.OnDataChanging(value);
-					this.SendPropertyChanging();
-					this._Data = value;
-					this.SendPropertyChanged("Data");
-					this.OnDataChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedDate", DbType="DateTime NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
-		public System.DateTime CreatedDate
-		{
-			get
-			{
-				return this._CreatedDate;
-			}
-			set
-			{
-				if ((this._CreatedDate != value))
-				{
-					this.OnCreatedDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreatedDate = value;
-					this.SendPropertyChanged("CreatedDate");
-					this.OnCreatedDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsVisible", DbType="Bit NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
-		public bool IsVisible
-		{
-			get
-			{
-				return this._IsVisible;
-			}
-			set
-			{
-				if ((this._IsVisible != value))
-				{
-					this.OnIsVisibleChanging(value);
-					this.SendPropertyChanging();
-					this._IsVisible = value;
-					this.SendPropertyChanged("IsVisible");
-					this.OnIsVisibleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsOpen", DbType="Bit NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
-		public bool IsOpen
-		{
-			get
-			{
-				return this._IsOpen;
-			}
-			set
-			{
-				if ((this._IsOpen != value))
-				{
-					this.OnIsOpenChanging(value);
-					this.SendPropertyChanging();
-					this._IsOpen = value;
-					this.SendPropertyChanged("IsOpen");
-					this.OnIsOpenChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsGradable", DbType="Bit NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
-		public bool IsGradable
-		{
-			get
-			{
-				return this._IsGradable;
-			}
-			set
-			{
-				if ((this._IsGradable != value))
-				{
-					this.OnIsGradableChanging(value);
-					this.SendPropertyChanging();
-					this._IsGradable = value;
-					this.SendPropertyChanged("IsGradable");
-					this.OnIsGradableChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AllowMultipleSubmissions", DbType="Bit NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
-		public bool AllowMultipleSubmissions
-		{
-			get
-			{
-				return this._AllowMultipleSubmissions;
-			}
-			set
-			{
-				if ((this._AllowMultipleSubmissions != value))
-				{
-					this.OnAllowMultipleSubmissionsChanging(value);
-					this.SendPropertyChanging();
-					this._AllowMultipleSubmissions = value;
-					this.SendPropertyChanged("AllowMultipleSubmissions");
-					this.OnAllowMultipleSubmissionsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseTermID", DbType="UniqueIdentifier NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
-		public System.Guid CourseTermID
-		{
-			get
-			{
-				return this._CourseTermID;
-			}
-			set
-			{
-				if ((this._CourseTermID != value))
-				{
-					if (this._CourseTerm.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCourseTermIDChanging(value);
-					this.SendPropertyChanging();
-					this._CourseTermID = value;
-					this.SendPropertyChanged("CourseTermID");
-					this.OnCourseTermIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_Answer", Storage="_Answers", ThisKey="AssessmentID", OtherKey="AssessmentID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13, EmitDefaultValue=false)]
-		public EntitySet<Answer> Answers
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._Answers.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._Answers;
-			}
-			set
-			{
-				this._Answers.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_Question", Storage="_Questions", ThisKey="AssessmentID", OtherKey="AssessmentID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=14, EmitDefaultValue=false)]
-		public EntitySet<Question> Questions
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._Questions.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._Questions;
-			}
-			set
-			{
-				this._Questions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_SubmissionException", Storage="_SubmissionExceptions", ThisKey="AssessmentID", OtherKey="AssessmentID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=15, EmitDefaultValue=false)]
-		public EntitySet<SubmissionException> SubmissionExceptions
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._SubmissionExceptions.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._SubmissionExceptions;
-			}
-			set
-			{
-				this._SubmissionExceptions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_SubmissionRecord", Storage="_SubmissionRecords", ThisKey="AssessmentID", OtherKey="AssessmentID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=16, EmitDefaultValue=false)]
-		public EntitySet<SubmissionRecord> SubmissionRecords
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._SubmissionRecords.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._SubmissionRecords;
-			}
-			set
-			{
-				this._SubmissionRecords.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AssessmentType_Assessment", Storage="_AssessmentType", ThisKey="AssessmentTypeID", OtherKey="AssessmentTypeID", IsForeignKey=true)]
-		public AssessmentType AssessmentType
-		{
-			get
-			{
-				return this._AssessmentType.Entity;
-			}
-			set
-			{
-				AssessmentType previousValue = this._AssessmentType.Entity;
-				if (((previousValue != value) 
-							|| (this._AssessmentType.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._AssessmentType.Entity = null;
-						previousValue.Assessments.Remove(this);
-					}
-					this._AssessmentType.Entity = value;
-					if ((value != null))
-					{
-						value.Assessments.Add(this);
-						this._AssessmentTypeID = value.AssessmentTypeID;
-					}
-					else
-					{
-						this._AssessmentTypeID = default(System.Guid);
-					}
-					this.SendPropertyChanged("AssessmentType");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_Assessment", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
-		public CourseTerm CourseTerm
-		{
-			get
-			{
-				return this._CourseTerm.Entity;
-			}
-			set
-			{
-				CourseTerm previousValue = this._CourseTerm.Entity;
-				if (((previousValue != value) 
-							|| (this._CourseTerm.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._CourseTerm.Entity = null;
-						previousValue.Assessments.Remove(this);
-					}
-					this._CourseTerm.Entity = value;
-					if ((value != null))
-					{
-						value.Assessments.Add(this);
-						this._CourseTermID = value.CourseTermID;
-					}
-					else
-					{
-						this._CourseTermID = default(System.Guid);
-					}
-					this.SendPropertyChanged("CourseTerm");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Answers(Answer entity)
-		{
-			this.SendPropertyChanging();
-			entity.Assessment = this;
-		}
-		
-		private void detach_Answers(Answer entity)
-		{
-			this.SendPropertyChanging();
-			entity.Assessment = null;
-		}
-		
-		private void attach_Questions(Question entity)
-		{
-			this.SendPropertyChanging();
-			entity.Assessment = this;
-		}
-		
-		private void detach_Questions(Question entity)
-		{
-			this.SendPropertyChanging();
-			entity.Assessment = null;
-		}
-		
-		private void attach_SubmissionExceptions(SubmissionException entity)
-		{
-			this.SendPropertyChanging();
-			entity.Assessment = this;
-		}
-		
-		private void detach_SubmissionExceptions(SubmissionException entity)
-		{
-			this.SendPropertyChanging();
-			entity.Assessment = null;
-		}
-		
-		private void attach_SubmissionRecords(SubmissionRecord entity)
-		{
-			this.SendPropertyChanging();
-			entity.Assessment = this;
-		}
-		
-		private void detach_SubmissionRecords(SubmissionRecord entity)
-		{
-			this.SendPropertyChanging();
-			entity.Assessment = null;
-		}
-		
-		private void Initialize()
-		{
-			this._Answers = new EntitySet<Answer>(new Action<Answer>(this.attach_Answers), new Action<Answer>(this.detach_Answers));
-			this._Questions = new EntitySet<Question>(new Action<Question>(this.attach_Questions), new Action<Question>(this.detach_Questions));
-			this._SubmissionExceptions = new EntitySet<SubmissionException>(new Action<SubmissionException>(this.attach_SubmissionExceptions), new Action<SubmissionException>(this.detach_SubmissionExceptions));
-			this._SubmissionRecords = new EntitySet<SubmissionRecord>(new Action<SubmissionRecord>(this.attach_SubmissionRecords), new Action<SubmissionRecord>(this.detach_SubmissionRecords));
-			this._AssessmentType = default(EntityRef<AssessmentType>);
-			this._CourseTerm = default(EntityRef<CourseTerm>);
-			OnCreated();
-		}
-		
-		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnDeserializing(StreamingContext context)
-		{
-			this.Initialize();
-		}
-		
-		[global::System.Runtime.Serialization.OnSerializingAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnSerializing(StreamingContext context)
-		{
-			this.serializing = true;
-		}
-		
-		[global::System.Runtime.Serialization.OnSerializedAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnSerialized(StreamingContext context)
-		{
-			this.serializing = false;
 		}
 	}
 	
@@ -2410,264 +1825,6 @@ namespace AssessTrack.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CourseTermMembers")]
-	[global::System.Runtime.Serialization.DataContractAttribute()]
-	public partial class CourseTermMember : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _CourseTermMemberID;
-		
-		private System.Guid _CourseTermID;
-		
-		private System.Guid _MembershipID;
-		
-		private byte _AccessLevel;
-		
-		private string _AccessCode;
-		
-		private EntityRef<CourseTerm> _CourseTerm;
-		
-		private EntityRef<Profile> _Profile;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnCourseTermMemberIDChanging(System.Guid value);
-    partial void OnCourseTermMemberIDChanged();
-    partial void OnCourseTermIDChanging(System.Guid value);
-    partial void OnCourseTermIDChanged();
-    partial void OnMembershipIDChanging(System.Guid value);
-    partial void OnMembershipIDChanged();
-    partial void OnAccessLevelChanging(byte value);
-    partial void OnAccessLevelChanged();
-    partial void OnAccessCodeChanging(string value);
-    partial void OnAccessCodeChanged();
-    #endregion
-		
-		public CourseTermMember()
-		{
-			this.Initialize();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseTermMemberID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-		public System.Guid CourseTermMemberID
-		{
-			get
-			{
-				return this._CourseTermMemberID;
-			}
-			set
-			{
-				if ((this._CourseTermMemberID != value))
-				{
-					this.OnCourseTermMemberIDChanging(value);
-					this.SendPropertyChanging();
-					this._CourseTermMemberID = value;
-					this.SendPropertyChanged("CourseTermMemberID");
-					this.OnCourseTermMemberIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseTermID", DbType="UniqueIdentifier NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public System.Guid CourseTermID
-		{
-			get
-			{
-				return this._CourseTermID;
-			}
-			set
-			{
-				if ((this._CourseTermID != value))
-				{
-					if (this._CourseTerm.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCourseTermIDChanging(value);
-					this.SendPropertyChanging();
-					this._CourseTermID = value;
-					this.SendPropertyChanged("CourseTermID");
-					this.OnCourseTermIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MembershipID", DbType="UniqueIdentifier NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-		public System.Guid MembershipID
-		{
-			get
-			{
-				return this._MembershipID;
-			}
-			set
-			{
-				if ((this._MembershipID != value))
-				{
-					if (this._Profile.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMembershipIDChanging(value);
-					this.SendPropertyChanging();
-					this._MembershipID = value;
-					this.SendPropertyChanged("MembershipID");
-					this.OnMembershipIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccessLevel", DbType="TinyInt NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-		public byte AccessLevel
-		{
-			get
-			{
-				return this._AccessLevel;
-			}
-			set
-			{
-				if ((this._AccessLevel != value))
-				{
-					this.OnAccessLevelChanging(value);
-					this.SendPropertyChanging();
-					this._AccessLevel = value;
-					this.SendPropertyChanged("AccessLevel");
-					this.OnAccessLevelChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccessCode", DbType="VarChar(10)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
-		public string AccessCode
-		{
-			get
-			{
-				return this._AccessCode;
-			}
-			set
-			{
-				if ((this._AccessCode != value))
-				{
-					this.OnAccessCodeChanging(value);
-					this.SendPropertyChanging();
-					this._AccessCode = value;
-					this.SendPropertyChanged("AccessCode");
-					this.OnAccessCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_CourseTermMember", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
-		public CourseTerm CourseTerm
-		{
-			get
-			{
-				return this._CourseTerm.Entity;
-			}
-			set
-			{
-				CourseTerm previousValue = this._CourseTerm.Entity;
-				if (((previousValue != value) 
-							|| (this._CourseTerm.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._CourseTerm.Entity = null;
-						previousValue.CourseTermMembers.Remove(this);
-					}
-					this._CourseTerm.Entity = value;
-					if ((value != null))
-					{
-						value.CourseTermMembers.Add(this);
-						this._CourseTermID = value.CourseTermID;
-					}
-					else
-					{
-						this._CourseTermID = default(System.Guid);
-					}
-					this.SendPropertyChanged("CourseTerm");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_CourseTermMember", Storage="_Profile", ThisKey="MembershipID", OtherKey="MembershipID", IsForeignKey=true)]
-		public Profile Profile
-		{
-			get
-			{
-				return this._Profile.Entity;
-			}
-			set
-			{
-				Profile previousValue = this._Profile.Entity;
-				if (((previousValue != value) 
-							|| (this._Profile.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Profile.Entity = null;
-						previousValue.CourseTermMembers.Remove(this);
-					}
-					this._Profile.Entity = value;
-					if ((value != null))
-					{
-						value.CourseTermMembers.Add(this);
-						this._MembershipID = value.MembershipID;
-					}
-					else
-					{
-						this._MembershipID = default(System.Guid);
-					}
-					this.SendPropertyChanged("Profile");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void Initialize()
-		{
-			this._CourseTerm = default(EntityRef<CourseTerm>);
-			this._Profile = default(EntityRef<Profile>);
-			OnCreated();
-		}
-		
-		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnDeserializing(StreamingContext context)
-		{
-			this.Initialize();
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CourseTermMessages")]
 	[global::System.Runtime.Serialization.DataContractAttribute()]
 	public partial class CourseTermMessage : INotifyPropertyChanging, INotifyPropertyChanged
@@ -2980,13 +2137,9 @@ namespace AssessTrack.Models
 		
 		private System.Nullable<byte> _State;
 		
-		private EntitySet<Assessment> _Assessments;
-		
 		private EntitySet<AssessmentType> _AssessmentTypes;
 		
 		private EntitySet<CourseTermFile> _CourseTermFiles;
-		
-		private EntitySet<CourseTermMember> _CourseTermMembers;
 		
 		private EntitySet<CourseTermMessage> _CourseTermMessages;
 		
@@ -2995,6 +2148,10 @@ namespace AssessTrack.Models
 		private EntitySet<SubmissionException> _SubmissionExceptions;
 		
 		private EntitySet<Tag> _Tags;
+		
+		private EntitySet<CourseTermMember> _CourseTermMembers;
+		
+		private EntitySet<Assessment> _Assessments;
 		
 		private EntityRef<Course> _Course;
 		
@@ -3286,27 +2443,8 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_Assessment", Storage="_Assessments", ThisKey="CourseTermID", OtherKey="CourseTermID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12, EmitDefaultValue=false)]
-		public EntitySet<Assessment> Assessments
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._Assessments.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._Assessments;
-			}
-			set
-			{
-				this._Assessments.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_AssessmentType", Storage="_AssessmentTypes", ThisKey="CourseTermID", OtherKey="CourseTermID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12, EmitDefaultValue=false)]
 		public EntitySet<AssessmentType> AssessmentTypes
 		{
 			get
@@ -3325,7 +2463,7 @@ namespace AssessTrack.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_CourseTermFile", Storage="_CourseTermFiles", ThisKey="CourseTermID", OtherKey="CourseTermID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=14, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13, EmitDefaultValue=false)]
 		public EntitySet<CourseTermFile> CourseTermFiles
 		{
 			get
@@ -3343,27 +2481,8 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_CourseTermMember", Storage="_CourseTermMembers", ThisKey="CourseTermID", OtherKey="CourseTermID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=15, EmitDefaultValue=false)]
-		public EntitySet<CourseTermMember> CourseTermMembers
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._CourseTermMembers.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._CourseTermMembers;
-			}
-			set
-			{
-				this._CourseTermMembers.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_CourseTermMessage", Storage="_CourseTermMessages", ThisKey="CourseTermID", OtherKey="CourseTermID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=16, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=14, EmitDefaultValue=false)]
 		public EntitySet<CourseTermMessage> CourseTermMessages
 		{
 			get
@@ -3382,7 +2501,7 @@ namespace AssessTrack.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_Invitation", Storage="_Invitations", ThisKey="CourseTermID", OtherKey="CourseTermID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=17, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=15, EmitDefaultValue=false)]
 		public EntitySet<Invitation> Invitations
 		{
 			get
@@ -3401,7 +2520,7 @@ namespace AssessTrack.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_SubmissionException", Storage="_SubmissionExceptions", ThisKey="CourseTermID", OtherKey="CourseTermID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=18, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=16, EmitDefaultValue=false)]
 		public EntitySet<SubmissionException> SubmissionExceptions
 		{
 			get
@@ -3420,7 +2539,7 @@ namespace AssessTrack.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_Tag", Storage="_Tags", ThisKey="CourseTermID", OtherKey="CourseTermID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=19, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=17, EmitDefaultValue=false)]
 		public EntitySet<Tag> Tags
 		{
 			get
@@ -3435,6 +2554,44 @@ namespace AssessTrack.Models
 			set
 			{
 				this._Tags.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_CourseTermMember", Storage="_CourseTermMembers", ThisKey="CourseTermID", OtherKey="CourseTermID")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=18, EmitDefaultValue=false)]
+		public EntitySet<CourseTermMember> CourseTermMembers
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._CourseTermMembers.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._CourseTermMembers;
+			}
+			set
+			{
+				this._CourseTermMembers.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_Assessment", Storage="_Assessments", ThisKey="CourseTermID", OtherKey="CourseTermID")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=19, EmitDefaultValue=false)]
+		public EntitySet<Assessment> Assessments
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._Assessments.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._Assessments;
+			}
+			set
+			{
+				this._Assessments.Assign(value);
 			}
 		}
 		
@@ -3594,18 +2751,6 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		private void attach_Assessments(Assessment entity)
-		{
-			this.SendPropertyChanging();
-			entity.CourseTerm = this;
-		}
-		
-		private void detach_Assessments(Assessment entity)
-		{
-			this.SendPropertyChanging();
-			entity.CourseTerm = null;
-		}
-		
 		private void attach_AssessmentTypes(AssessmentType entity)
 		{
 			this.SendPropertyChanging();
@@ -3625,18 +2770,6 @@ namespace AssessTrack.Models
 		}
 		
 		private void detach_CourseTermFiles(CourseTermFile entity)
-		{
-			this.SendPropertyChanging();
-			entity.CourseTerm = null;
-		}
-		
-		private void attach_CourseTermMembers(CourseTermMember entity)
-		{
-			this.SendPropertyChanging();
-			entity.CourseTerm = this;
-		}
-		
-		private void detach_CourseTermMembers(CourseTermMember entity)
 		{
 			this.SendPropertyChanging();
 			entity.CourseTerm = null;
@@ -3690,16 +2823,40 @@ namespace AssessTrack.Models
 			entity.CourseTerm = null;
 		}
 		
+		private void attach_CourseTermMembers(CourseTermMember entity)
+		{
+			this.SendPropertyChanging();
+			entity.CourseTerm = this;
+		}
+		
+		private void detach_CourseTermMembers(CourseTermMember entity)
+		{
+			this.SendPropertyChanging();
+			entity.CourseTerm = null;
+		}
+		
+		private void attach_Assessments(Assessment entity)
+		{
+			this.SendPropertyChanging();
+			entity.CourseTerm = this;
+		}
+		
+		private void detach_Assessments(Assessment entity)
+		{
+			this.SendPropertyChanging();
+			entity.CourseTerm = null;
+		}
+		
 		private void Initialize()
 		{
-			this._Assessments = new EntitySet<Assessment>(new Action<Assessment>(this.attach_Assessments), new Action<Assessment>(this.detach_Assessments));
 			this._AssessmentTypes = new EntitySet<AssessmentType>(new Action<AssessmentType>(this.attach_AssessmentTypes), new Action<AssessmentType>(this.detach_AssessmentTypes));
 			this._CourseTermFiles = new EntitySet<CourseTermFile>(new Action<CourseTermFile>(this.attach_CourseTermFiles), new Action<CourseTermFile>(this.detach_CourseTermFiles));
-			this._CourseTermMembers = new EntitySet<CourseTermMember>(new Action<CourseTermMember>(this.attach_CourseTermMembers), new Action<CourseTermMember>(this.detach_CourseTermMembers));
 			this._CourseTermMessages = new EntitySet<CourseTermMessage>(new Action<CourseTermMessage>(this.attach_CourseTermMessages), new Action<CourseTermMessage>(this.detach_CourseTermMessages));
 			this._Invitations = new EntitySet<Invitation>(new Action<Invitation>(this.attach_Invitations), new Action<Invitation>(this.detach_Invitations));
 			this._SubmissionExceptions = new EntitySet<SubmissionException>(new Action<SubmissionException>(this.attach_SubmissionExceptions), new Action<SubmissionException>(this.detach_SubmissionExceptions));
 			this._Tags = new EntitySet<Tag>(new Action<Tag>(this.attach_Tags), new Action<Tag>(this.detach_Tags));
+			this._CourseTermMembers = new EntitySet<CourseTermMember>(new Action<CourseTermMember>(this.attach_CourseTermMembers), new Action<CourseTermMember>(this.detach_CourseTermMembers));
+			this._Assessments = new EntitySet<Assessment>(new Action<Assessment>(this.attach_Assessments), new Action<Assessment>(this.detach_Assessments));
 			this._Course = default(EntityRef<Course>);
 			this._File = default(EntityRef<File>);
 			this._Site = default(EntityRef<Site>);
@@ -4649,8 +3806,6 @@ namespace AssessTrack.Models
 		
 		private string _Major;
 		
-		private EntitySet<CourseTermMember> _CourseTermMembers;
-		
 		private EntitySet<CourseTermMessage> _CourseTermMessages;
 		
 		private EntitySet<File> _Files;
@@ -4662,6 +3817,8 @@ namespace AssessTrack.Models
 		private EntitySet<SubmissionRecord> _SubmissionRecords;
 		
 		private EntitySet<Tag> _Tags;
+		
+		private EntitySet<CourseTermMember> _CourseTermMembers;
 		
 		private bool serializing;
 		
@@ -4814,27 +3971,8 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_CourseTermMember", Storage="_CourseTermMembers", ThisKey="MembershipID", OtherKey="MembershipID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7, EmitDefaultValue=false)]
-		public EntitySet<CourseTermMember> CourseTermMembers
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._CourseTermMembers.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._CourseTermMembers;
-			}
-			set
-			{
-				this._CourseTermMembers.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_CourseTermMessage", Storage="_CourseTermMessages", ThisKey="MembershipID", OtherKey="CreatedBy")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7, EmitDefaultValue=false)]
 		public EntitySet<CourseTermMessage> CourseTermMessages
 		{
 			get
@@ -4853,7 +3991,7 @@ namespace AssessTrack.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_File", Storage="_Files", ThisKey="MembershipID", OtherKey="OwnerID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8, EmitDefaultValue=false)]
 		public EntitySet<File> Files
 		{
 			get
@@ -4872,7 +4010,7 @@ namespace AssessTrack.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_SiteMember", Storage="_SiteMembers", ThisKey="MembershipID", OtherKey="MembershipID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9, EmitDefaultValue=false)]
 		public EntitySet<SiteMember> SiteMembers
 		{
 			get
@@ -4891,7 +4029,7 @@ namespace AssessTrack.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_SubmissionException", Storage="_SubmissionExceptions", ThisKey="MembershipID", OtherKey="StudentID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10, EmitDefaultValue=false)]
 		public EntitySet<SubmissionException> SubmissionExceptions
 		{
 			get
@@ -4910,7 +4048,7 @@ namespace AssessTrack.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_SubmissionRecord", Storage="_SubmissionRecords", ThisKey="MembershipID", OtherKey="StudentID")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11, EmitDefaultValue=false)]
 		public EntitySet<SubmissionRecord> SubmissionRecords
 		{
 			get
@@ -4929,7 +4067,7 @@ namespace AssessTrack.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_Tag", Storage="_Tags", ThisKey="MembershipID", OtherKey="CreatedBy")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13, EmitDefaultValue=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12, EmitDefaultValue=false)]
 		public EntitySet<Tag> Tags
 		{
 			get
@@ -4944,6 +4082,25 @@ namespace AssessTrack.Models
 			set
 			{
 				this._Tags.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_CourseTermMember", Storage="_CourseTermMembers", ThisKey="MembershipID", OtherKey="MembershipID")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13, EmitDefaultValue=false)]
+		public EntitySet<CourseTermMember> CourseTermMembers
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._CourseTermMembers.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._CourseTermMembers;
+			}
+			set
+			{
+				this._CourseTermMembers.Assign(value);
 			}
 		}
 		
@@ -4965,18 +4122,6 @@ namespace AssessTrack.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_CourseTermMembers(CourseTermMember entity)
-		{
-			this.SendPropertyChanging();
-			entity.Profile = this;
-		}
-		
-		private void detach_CourseTermMembers(CourseTermMember entity)
-		{
-			this.SendPropertyChanging();
-			entity.Profile = null;
 		}
 		
 		private void attach_CourseTermMessages(CourseTermMessage entity)
@@ -5051,15 +4196,27 @@ namespace AssessTrack.Models
 			entity.Profile = null;
 		}
 		
+		private void attach_CourseTermMembers(CourseTermMember entity)
+		{
+			this.SendPropertyChanging();
+			entity.Profile = this;
+		}
+		
+		private void detach_CourseTermMembers(CourseTermMember entity)
+		{
+			this.SendPropertyChanging();
+			entity.Profile = null;
+		}
+		
 		private void Initialize()
 		{
-			this._CourseTermMembers = new EntitySet<CourseTermMember>(new Action<CourseTermMember>(this.attach_CourseTermMembers), new Action<CourseTermMember>(this.detach_CourseTermMembers));
 			this._CourseTermMessages = new EntitySet<CourseTermMessage>(new Action<CourseTermMessage>(this.attach_CourseTermMessages), new Action<CourseTermMessage>(this.detach_CourseTermMessages));
 			this._Files = new EntitySet<File>(new Action<File>(this.attach_Files), new Action<File>(this.detach_Files));
 			this._SiteMembers = new EntitySet<SiteMember>(new Action<SiteMember>(this.attach_SiteMembers), new Action<SiteMember>(this.detach_SiteMembers));
 			this._SubmissionExceptions = new EntitySet<SubmissionException>(new Action<SubmissionException>(this.attach_SubmissionExceptions), new Action<SubmissionException>(this.detach_SubmissionExceptions));
 			this._SubmissionRecords = new EntitySet<SubmissionRecord>(new Action<SubmissionRecord>(this.attach_SubmissionRecords), new Action<SubmissionRecord>(this.detach_SubmissionRecords));
 			this._Tags = new EntitySet<Tag>(new Action<Tag>(this.attach_Tags), new Action<Tag>(this.detach_Tags));
+			this._CourseTermMembers = new EntitySet<CourseTermMember>(new Action<CourseTermMember>(this.attach_CourseTermMembers), new Action<CourseTermMember>(this.detach_CourseTermMembers));
 			OnCreated();
 		}
 		
@@ -6304,11 +5461,11 @@ namespace AssessTrack.Models
 		
 		private System.Guid _CourseTermID;
 		
-		private EntityRef<Assessment> _Assessment;
-		
 		private EntityRef<CourseTerm> _CourseTerm;
 		
 		private EntityRef<Profile> _Profile;
+		
+		private EntityRef<Assessment> _Assessment;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -6448,40 +5605,6 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_SubmissionException", Storage="_Assessment", ThisKey="AssessmentID", OtherKey="AssessmentID", IsForeignKey=true)]
-		public Assessment Assessment
-		{
-			get
-			{
-				return this._Assessment.Entity;
-			}
-			set
-			{
-				Assessment previousValue = this._Assessment.Entity;
-				if (((previousValue != value) 
-							|| (this._Assessment.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Assessment.Entity = null;
-						previousValue.SubmissionExceptions.Remove(this);
-					}
-					this._Assessment.Entity = value;
-					if ((value != null))
-					{
-						value.SubmissionExceptions.Add(this);
-						this._AssessmentID = value.AssessmentID;
-					}
-					else
-					{
-						this._AssessmentID = default(System.Guid);
-					}
-					this.SendPropertyChanged("Assessment");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_SubmissionException", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
 		public CourseTerm CourseTerm
 		{
@@ -6550,6 +5673,40 @@ namespace AssessTrack.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_SubmissionException", Storage="_Assessment", ThisKey="AssessmentID", OtherKey="AssessmentID", IsForeignKey=true)]
+		public Assessment Assessment
+		{
+			get
+			{
+				return this._Assessment.Entity;
+			}
+			set
+			{
+				Assessment previousValue = this._Assessment.Entity;
+				if (((previousValue != value) 
+							|| (this._Assessment.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Assessment.Entity = null;
+						previousValue.SubmissionExceptions.Remove(this);
+					}
+					this._Assessment.Entity = value;
+					if ((value != null))
+					{
+						value.SubmissionExceptions.Add(this);
+						this._AssessmentID = value.AssessmentID;
+					}
+					else
+					{
+						this._AssessmentID = default(System.Guid);
+					}
+					this.SendPropertyChanged("Assessment");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -6572,9 +5729,9 @@ namespace AssessTrack.Models
 		
 		private void Initialize()
 		{
-			this._Assessment = default(EntityRef<Assessment>);
 			this._CourseTerm = default(EntityRef<CourseTerm>);
 			this._Profile = default(EntityRef<Profile>);
+			this._Assessment = default(EntityRef<Assessment>);
 			OnCreated();
 		}
 		
@@ -6609,9 +5766,9 @@ namespace AssessTrack.Models
 		
 		private EntitySet<Response> _Responses;
 		
-		private EntityRef<Assessment> _Assessment;
-		
 		private EntityRef<Profile> _Profile;
+		
+		private EntityRef<Assessment> _Assessment;
 		
 		private bool serializing;
 		
@@ -6814,40 +5971,6 @@ namespace AssessTrack.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_SubmissionRecord", Storage="_Assessment", ThisKey="AssessmentID", OtherKey="AssessmentID", IsForeignKey=true)]
-		public Assessment Assessment
-		{
-			get
-			{
-				return this._Assessment.Entity;
-			}
-			set
-			{
-				Assessment previousValue = this._Assessment.Entity;
-				if (((previousValue != value) 
-							|| (this._Assessment.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Assessment.Entity = null;
-						previousValue.SubmissionRecords.Remove(this);
-					}
-					this._Assessment.Entity = value;
-					if ((value != null))
-					{
-						value.SubmissionRecords.Add(this);
-						this._AssessmentID = value.AssessmentID;
-					}
-					else
-					{
-						this._AssessmentID = default(System.Guid);
-					}
-					this.SendPropertyChanged("Assessment");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_SubmissionRecord", Storage="_Profile", ThisKey="StudentID", OtherKey="MembershipID", IsForeignKey=true)]
 		public Profile Profile
 		{
@@ -6878,6 +6001,40 @@ namespace AssessTrack.Models
 						this._StudentID = default(System.Guid);
 					}
 					this.SendPropertyChanged("Profile");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_SubmissionRecord", Storage="_Assessment", ThisKey="AssessmentID", OtherKey="AssessmentID", IsForeignKey=true)]
+		public Assessment Assessment
+		{
+			get
+			{
+				return this._Assessment.Entity;
+			}
+			set
+			{
+				Assessment previousValue = this._Assessment.Entity;
+				if (((previousValue != value) 
+							|| (this._Assessment.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Assessment.Entity = null;
+						previousValue.SubmissionRecords.Remove(this);
+					}
+					this._Assessment.Entity = value;
+					if ((value != null))
+					{
+						value.SubmissionRecords.Add(this);
+						this._AssessmentID = value.AssessmentID;
+					}
+					else
+					{
+						this._AssessmentID = default(System.Guid);
+					}
+					this.SendPropertyChanged("Assessment");
 				}
 			}
 		}
@@ -6917,8 +6074,8 @@ namespace AssessTrack.Models
 		private void Initialize()
 		{
 			this._Responses = new EntitySet<Response>(new Action<Response>(this.attach_Responses), new Action<Response>(this.detach_Responses));
-			this._Assessment = default(EntityRef<Assessment>);
 			this._Profile = default(EntityRef<Profile>);
+			this._Assessment = default(EntityRef<Assessment>);
 			OnCreated();
 		}
 		
@@ -7777,6 +6934,899 @@ namespace AssessTrack.Models
 		{
 			this._CourseTerms = new EntitySet<CourseTerm>(new Action<CourseTerm>(this.attach_CourseTerms), new Action<CourseTerm>(this.detach_CourseTerms));
 			this._Site = default(EntityRef<Site>);
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerializing(StreamingContext context)
+		{
+			this.serializing = true;
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializedAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerialized(StreamingContext context)
+		{
+			this.serializing = false;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CourseTermMembers")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class CourseTermMember : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _CourseTermMemberID;
+		
+		private System.Guid _CourseTermID;
+		
+		private System.Guid _MembershipID;
+		
+		private byte _AccessLevel;
+		
+		private string _AccessCode;
+		
+		private System.Nullable<int> _Section;
+		
+		private EntityRef<CourseTerm> _CourseTerm;
+		
+		private EntityRef<Profile> _Profile;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCourseTermMemberIDChanging(System.Guid value);
+    partial void OnCourseTermMemberIDChanged();
+    partial void OnCourseTermIDChanging(System.Guid value);
+    partial void OnCourseTermIDChanged();
+    partial void OnMembershipIDChanging(System.Guid value);
+    partial void OnMembershipIDChanged();
+    partial void OnAccessLevelChanging(byte value);
+    partial void OnAccessLevelChanged();
+    partial void OnAccessCodeChanging(string value);
+    partial void OnAccessCodeChanged();
+    partial void OnSectionChanging(System.Nullable<int> value);
+    partial void OnSectionChanged();
+    #endregion
+		
+		public CourseTermMember()
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseTermMemberID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public System.Guid CourseTermMemberID
+		{
+			get
+			{
+				return this._CourseTermMemberID;
+			}
+			set
+			{
+				if ((this._CourseTermMemberID != value))
+				{
+					this.OnCourseTermMemberIDChanging(value);
+					this.SendPropertyChanging();
+					this._CourseTermMemberID = value;
+					this.SendPropertyChanged("CourseTermMemberID");
+					this.OnCourseTermMemberIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseTermID", DbType="UniqueIdentifier NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public System.Guid CourseTermID
+		{
+			get
+			{
+				return this._CourseTermID;
+			}
+			set
+			{
+				if ((this._CourseTermID != value))
+				{
+					if (this._CourseTerm.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCourseTermIDChanging(value);
+					this.SendPropertyChanging();
+					this._CourseTermID = value;
+					this.SendPropertyChanged("CourseTermID");
+					this.OnCourseTermIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MembershipID", DbType="UniqueIdentifier NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public System.Guid MembershipID
+		{
+			get
+			{
+				return this._MembershipID;
+			}
+			set
+			{
+				if ((this._MembershipID != value))
+				{
+					if (this._Profile.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMembershipIDChanging(value);
+					this.SendPropertyChanging();
+					this._MembershipID = value;
+					this.SendPropertyChanged("MembershipID");
+					this.OnMembershipIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccessLevel", DbType="TinyInt NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public byte AccessLevel
+		{
+			get
+			{
+				return this._AccessLevel;
+			}
+			set
+			{
+				if ((this._AccessLevel != value))
+				{
+					this.OnAccessLevelChanging(value);
+					this.SendPropertyChanging();
+					this._AccessLevel = value;
+					this.SendPropertyChanged("AccessLevel");
+					this.OnAccessLevelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccessCode", DbType="VarChar(10)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public string AccessCode
+		{
+			get
+			{
+				return this._AccessCode;
+			}
+			set
+			{
+				if ((this._AccessCode != value))
+				{
+					this.OnAccessCodeChanging(value);
+					this.SendPropertyChanging();
+					this._AccessCode = value;
+					this.SendPropertyChanged("AccessCode");
+					this.OnAccessCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Section", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public System.Nullable<int> Section
+		{
+			get
+			{
+				return this._Section;
+			}
+			set
+			{
+				if ((this._Section != value))
+				{
+					this.OnSectionChanging(value);
+					this.SendPropertyChanging();
+					this._Section = value;
+					this.SendPropertyChanged("Section");
+					this.OnSectionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_CourseTermMember", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
+		public CourseTerm CourseTerm
+		{
+			get
+			{
+				return this._CourseTerm.Entity;
+			}
+			set
+			{
+				CourseTerm previousValue = this._CourseTerm.Entity;
+				if (((previousValue != value) 
+							|| (this._CourseTerm.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CourseTerm.Entity = null;
+						previousValue.CourseTermMembers.Remove(this);
+					}
+					this._CourseTerm.Entity = value;
+					if ((value != null))
+					{
+						value.CourseTermMembers.Add(this);
+						this._CourseTermID = value.CourseTermID;
+					}
+					else
+					{
+						this._CourseTermID = default(System.Guid);
+					}
+					this.SendPropertyChanged("CourseTerm");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Profile_CourseTermMember", Storage="_Profile", ThisKey="MembershipID", OtherKey="MembershipID", IsForeignKey=true)]
+		public Profile Profile
+		{
+			get
+			{
+				return this._Profile.Entity;
+			}
+			set
+			{
+				Profile previousValue = this._Profile.Entity;
+				if (((previousValue != value) 
+							|| (this._Profile.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Profile.Entity = null;
+						previousValue.CourseTermMembers.Remove(this);
+					}
+					this._Profile.Entity = value;
+					if ((value != null))
+					{
+						value.CourseTermMembers.Add(this);
+						this._MembershipID = value.MembershipID;
+					}
+					else
+					{
+						this._MembershipID = default(System.Guid);
+					}
+					this.SendPropertyChanged("Profile");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void Initialize()
+		{
+			this._CourseTerm = default(EntityRef<CourseTerm>);
+			this._Profile = default(EntityRef<Profile>);
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Assessments")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class Assessment : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _AssessmentID;
+		
+		private string _Name;
+		
+		private System.DateTime _DueDate;
+		
+		private bool _IsExtraCredit;
+		
+		private System.Guid _AssessmentTypeID;
+		
+		private string _Data;
+		
+		private System.DateTime _CreatedDate;
+		
+		private bool _IsVisible;
+		
+		private bool _IsOpen;
+		
+		private bool _IsGradable;
+		
+		private bool _AllowMultipleSubmissions;
+		
+		private System.Guid _CourseTermID;
+		
+		private System.Nullable<int> _Section;
+		
+		private EntitySet<Answer> _Answers;
+		
+		private EntitySet<Question> _Questions;
+		
+		private EntitySet<SubmissionException> _SubmissionExceptions;
+		
+		private EntitySet<SubmissionRecord> _SubmissionRecords;
+		
+		private EntityRef<AssessmentType> _AssessmentType;
+		
+		private EntityRef<CourseTerm> _CourseTerm;
+		
+		private bool serializing;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAssessmentIDChanging(System.Guid value);
+    partial void OnAssessmentIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnDueDateChanging(System.DateTime value);
+    partial void OnDueDateChanged();
+    partial void OnIsExtraCreditChanging(bool value);
+    partial void OnIsExtraCreditChanged();
+    partial void OnAssessmentTypeIDChanging(System.Guid value);
+    partial void OnAssessmentTypeIDChanged();
+    partial void OnDataChanging(string value);
+    partial void OnDataChanged();
+    partial void OnCreatedDateChanging(System.DateTime value);
+    partial void OnCreatedDateChanged();
+    partial void OnIsVisibleChanging(bool value);
+    partial void OnIsVisibleChanged();
+    partial void OnIsOpenChanging(bool value);
+    partial void OnIsOpenChanged();
+    partial void OnIsGradableChanging(bool value);
+    partial void OnIsGradableChanged();
+    partial void OnAllowMultipleSubmissionsChanging(bool value);
+    partial void OnAllowMultipleSubmissionsChanged();
+    partial void OnCourseTermIDChanging(System.Guid value);
+    partial void OnCourseTermIDChanged();
+    partial void OnSectionChanging(System.Nullable<int> value);
+    partial void OnSectionChanged();
+    #endregion
+		
+		public Assessment()
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AssessmentID", AutoSync=AutoSync.OnInsert, DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public System.Guid AssessmentID
+		{
+			get
+			{
+				return this._AssessmentID;
+			}
+			set
+			{
+				if ((this._AssessmentID != value))
+				{
+					this.OnAssessmentIDChanging(value);
+					this.SendPropertyChanging();
+					this._AssessmentID = value;
+					this.SendPropertyChanged("AssessmentID");
+					this.OnAssessmentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DueDate", DbType="DateTime NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public System.DateTime DueDate
+		{
+			get
+			{
+				return this._DueDate;
+			}
+			set
+			{
+				if ((this._DueDate != value))
+				{
+					this.OnDueDateChanging(value);
+					this.SendPropertyChanging();
+					this._DueDate = value;
+					this.SendPropertyChanged("DueDate");
+					this.OnDueDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsExtraCredit", DbType="Bit NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public bool IsExtraCredit
+		{
+			get
+			{
+				return this._IsExtraCredit;
+			}
+			set
+			{
+				if ((this._IsExtraCredit != value))
+				{
+					this.OnIsExtraCreditChanging(value);
+					this.SendPropertyChanging();
+					this._IsExtraCredit = value;
+					this.SendPropertyChanged("IsExtraCredit");
+					this.OnIsExtraCreditChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AssessmentTypeID", DbType="UniqueIdentifier NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public System.Guid AssessmentTypeID
+		{
+			get
+			{
+				return this._AssessmentTypeID;
+			}
+			set
+			{
+				if ((this._AssessmentTypeID != value))
+				{
+					if (this._AssessmentType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAssessmentTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._AssessmentTypeID = value;
+					this.SendPropertyChanged("AssessmentTypeID");
+					this.OnAssessmentTypeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data", DbType="Text NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public string Data
+		{
+			get
+			{
+				return this._Data;
+			}
+			set
+			{
+				if ((this._Data != value))
+				{
+					this.OnDataChanging(value);
+					this.SendPropertyChanging();
+					this._Data = value;
+					this.SendPropertyChanged("Data");
+					this.OnDataChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedDate", DbType="DateTime NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public System.DateTime CreatedDate
+		{
+			get
+			{
+				return this._CreatedDate;
+			}
+			set
+			{
+				if ((this._CreatedDate != value))
+				{
+					this.OnCreatedDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedDate = value;
+					this.SendPropertyChanged("CreatedDate");
+					this.OnCreatedDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsVisible", DbType="Bit NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		public bool IsVisible
+		{
+			get
+			{
+				return this._IsVisible;
+			}
+			set
+			{
+				if ((this._IsVisible != value))
+				{
+					this.OnIsVisibleChanging(value);
+					this.SendPropertyChanging();
+					this._IsVisible = value;
+					this.SendPropertyChanged("IsVisible");
+					this.OnIsVisibleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsOpen", DbType="Bit NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+		public bool IsOpen
+		{
+			get
+			{
+				return this._IsOpen;
+			}
+			set
+			{
+				if ((this._IsOpen != value))
+				{
+					this.OnIsOpenChanging(value);
+					this.SendPropertyChanging();
+					this._IsOpen = value;
+					this.SendPropertyChanged("IsOpen");
+					this.OnIsOpenChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsGradable", DbType="Bit NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		public bool IsGradable
+		{
+			get
+			{
+				return this._IsGradable;
+			}
+			set
+			{
+				if ((this._IsGradable != value))
+				{
+					this.OnIsGradableChanging(value);
+					this.SendPropertyChanging();
+					this._IsGradable = value;
+					this.SendPropertyChanged("IsGradable");
+					this.OnIsGradableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AllowMultipleSubmissions", DbType="Bit NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+		public bool AllowMultipleSubmissions
+		{
+			get
+			{
+				return this._AllowMultipleSubmissions;
+			}
+			set
+			{
+				if ((this._AllowMultipleSubmissions != value))
+				{
+					this.OnAllowMultipleSubmissionsChanging(value);
+					this.SendPropertyChanging();
+					this._AllowMultipleSubmissions = value;
+					this.SendPropertyChanged("AllowMultipleSubmissions");
+					this.OnAllowMultipleSubmissionsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseTermID", DbType="UniqueIdentifier NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+		public System.Guid CourseTermID
+		{
+			get
+			{
+				return this._CourseTermID;
+			}
+			set
+			{
+				if ((this._CourseTermID != value))
+				{
+					if (this._CourseTerm.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCourseTermIDChanging(value);
+					this.SendPropertyChanging();
+					this._CourseTermID = value;
+					this.SendPropertyChanged("CourseTermID");
+					this.OnCourseTermIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Section", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13)]
+		public System.Nullable<int> Section
+		{
+			get
+			{
+				return this._Section;
+			}
+			set
+			{
+				if ((this._Section != value))
+				{
+					this.OnSectionChanging(value);
+					this.SendPropertyChanging();
+					this._Section = value;
+					this.SendPropertyChanged("Section");
+					this.OnSectionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_Answer", Storage="_Answers", ThisKey="AssessmentID", OtherKey="AssessmentID")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=14, EmitDefaultValue=false)]
+		public EntitySet<Answer> Answers
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._Answers.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._Answers;
+			}
+			set
+			{
+				this._Answers.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_Question", Storage="_Questions", ThisKey="AssessmentID", OtherKey="AssessmentID")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=15, EmitDefaultValue=false)]
+		public EntitySet<Question> Questions
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._Questions.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._Questions;
+			}
+			set
+			{
+				this._Questions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_SubmissionException", Storage="_SubmissionExceptions", ThisKey="AssessmentID", OtherKey="AssessmentID")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=16, EmitDefaultValue=false)]
+		public EntitySet<SubmissionException> SubmissionExceptions
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._SubmissionExceptions.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._SubmissionExceptions;
+			}
+			set
+			{
+				this._SubmissionExceptions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assessment_SubmissionRecord", Storage="_SubmissionRecords", ThisKey="AssessmentID", OtherKey="AssessmentID")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=17, EmitDefaultValue=false)]
+		public EntitySet<SubmissionRecord> SubmissionRecords
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._SubmissionRecords.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._SubmissionRecords;
+			}
+			set
+			{
+				this._SubmissionRecords.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AssessmentType_Assessment", Storage="_AssessmentType", ThisKey="AssessmentTypeID", OtherKey="AssessmentTypeID", IsForeignKey=true)]
+		public AssessmentType AssessmentType
+		{
+			get
+			{
+				return this._AssessmentType.Entity;
+			}
+			set
+			{
+				AssessmentType previousValue = this._AssessmentType.Entity;
+				if (((previousValue != value) 
+							|| (this._AssessmentType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._AssessmentType.Entity = null;
+						previousValue.Assessments.Remove(this);
+					}
+					this._AssessmentType.Entity = value;
+					if ((value != null))
+					{
+						value.Assessments.Add(this);
+						this._AssessmentTypeID = value.AssessmentTypeID;
+					}
+					else
+					{
+						this._AssessmentTypeID = default(System.Guid);
+					}
+					this.SendPropertyChanged("AssessmentType");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CourseTerm_Assessment", Storage="_CourseTerm", ThisKey="CourseTermID", OtherKey="CourseTermID", IsForeignKey=true)]
+		public CourseTerm CourseTerm
+		{
+			get
+			{
+				return this._CourseTerm.Entity;
+			}
+			set
+			{
+				CourseTerm previousValue = this._CourseTerm.Entity;
+				if (((previousValue != value) 
+							|| (this._CourseTerm.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CourseTerm.Entity = null;
+						previousValue.Assessments.Remove(this);
+					}
+					this._CourseTerm.Entity = value;
+					if ((value != null))
+					{
+						value.Assessments.Add(this);
+						this._CourseTermID = value.CourseTermID;
+					}
+					else
+					{
+						this._CourseTermID = default(System.Guid);
+					}
+					this.SendPropertyChanged("CourseTerm");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Answers(Answer entity)
+		{
+			this.SendPropertyChanging();
+			entity.Assessment = this;
+		}
+		
+		private void detach_Answers(Answer entity)
+		{
+			this.SendPropertyChanging();
+			entity.Assessment = null;
+		}
+		
+		private void attach_Questions(Question entity)
+		{
+			this.SendPropertyChanging();
+			entity.Assessment = this;
+		}
+		
+		private void detach_Questions(Question entity)
+		{
+			this.SendPropertyChanging();
+			entity.Assessment = null;
+		}
+		
+		private void attach_SubmissionExceptions(SubmissionException entity)
+		{
+			this.SendPropertyChanging();
+			entity.Assessment = this;
+		}
+		
+		private void detach_SubmissionExceptions(SubmissionException entity)
+		{
+			this.SendPropertyChanging();
+			entity.Assessment = null;
+		}
+		
+		private void attach_SubmissionRecords(SubmissionRecord entity)
+		{
+			this.SendPropertyChanging();
+			entity.Assessment = this;
+		}
+		
+		private void detach_SubmissionRecords(SubmissionRecord entity)
+		{
+			this.SendPropertyChanging();
+			entity.Assessment = null;
+		}
+		
+		private void Initialize()
+		{
+			this._Answers = new EntitySet<Answer>(new Action<Answer>(this.attach_Answers), new Action<Answer>(this.detach_Answers));
+			this._Questions = new EntitySet<Question>(new Action<Question>(this.attach_Questions), new Action<Question>(this.detach_Questions));
+			this._SubmissionExceptions = new EntitySet<SubmissionException>(new Action<SubmissionException>(this.attach_SubmissionExceptions), new Action<SubmissionException>(this.detach_SubmissionExceptions));
+			this._SubmissionRecords = new EntitySet<SubmissionRecord>(new Action<SubmissionRecord>(this.attach_SubmissionRecords), new Action<SubmissionRecord>(this.detach_SubmissionRecords));
+			this._AssessmentType = default(EntityRef<AssessmentType>);
+			this._CourseTerm = default(EntityRef<CourseTerm>);
 			OnCreated();
 		}
 		

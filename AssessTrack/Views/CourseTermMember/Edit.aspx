@@ -28,6 +28,11 @@
                 <%= Html.ValidationMessage("AccessCode", "*") %>
             </p>
             <p>
+                <label for="Section">Section:</label>
+                <%= Html.TextBox("Section", Model.Section)%>
+                <%= Html.ValidationMessage("Section", "*")%>
+            </p>
+            <p>
                 <input type="submit" value="Save" />
             </p>
         </fieldset>

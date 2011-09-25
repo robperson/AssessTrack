@@ -12,6 +12,9 @@
             <th>
                 Access Level
             </th>
+            <th>
+                Section
+            </th>
         </tr>
 
     <% foreach (var item in Model.Members) { %>
@@ -31,6 +34,9 @@
             </td>
             <td>
                 <%= Html.Encode(item.AccessLevel) %>
+            </td>
+            <td>
+                <%= (item.Section == null)? "N/A" : item.Section.ToString() %>
             </td>
         </tr>
     

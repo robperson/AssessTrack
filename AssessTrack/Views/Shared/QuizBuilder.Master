@@ -58,6 +58,11 @@
                 <%= Html.ValidationMessage("DueDate", "*") %>
             </p>
             <p>
+                <label for="Section">Section (Leave blank for whole class):</label>
+                <%= Html.TextBox("Section", String.Format("{0:g}", Model.Assessment.Section))%>
+                <%= Html.ValidationMessage("Section", "*")%>
+            </p>
+            <p>
                 <label for="IsExtraCredit">Is Extra Credit:</label>
                 <%= Html.CheckBox("IsExtraCredit", Model.Assessment.IsExtraCredit) %>
                 <%= Html.ValidationMessage("IsExtraCredit", "*") %>

@@ -77,8 +77,8 @@ namespace AssessTrack.Controllers
                 {
                     tables.Add(new AssessmentTableModel("Private Assessments", dataRepository.GetPrivateAssessments(courseTerm),admin));
                 }
-                tables.Add(new AssessmentTableModel("Current Assessments", dataRepository.GetUpcomingAssessments(courseTerm),admin));
-                tables.Add(new AssessmentTableModel("Past Assessments", dataRepository.GetPastDueAssessments(courseTerm),admin));
+                tables.Add(new AssessmentTableModel("Current Assessments", dataRepository.GetUpcomingAssessments(courseTerm, member),admin));
+                tables.Add(new AssessmentTableModel("Past Assessments", dataRepository.GetPastDueAssessments(courseTerm, member),admin));
 
                 if (admin)
                 {

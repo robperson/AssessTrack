@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<AssessTrack.Models.CourseTermViewModels.CourseTermInstructorDetailsViewModel>" %>
-
+<%@ Import Namespace="AssessTrack.Helpers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	<%= Model.CourseTerm.Name %>
 </asp:Content>
@@ -14,6 +14,7 @@
         <%= Model.CourseTerm.Information %>
     </div>
     <p>Current enrollment password: <%= Model.CourseTerm.Password %></p>
+    <p><%= Html.ATAuthLink("Edit this Course Offering", "", "", new { action = "Edit", siteShortName = Html.CurrentSiteShortName(), id = Model.CourseTerm.CourseTermID, courseTermShortName = Model.CourseTerm.ShortName }, AssessTrack.Filters.AuthScope.Site, 5, 10)%></p>
     <h3>Ungraded Assessments</h3>
     <% Html.RenderPartial("UngradedAssessmentList", Model.UngradedAssessments); %>
     <h3>Class Grade Distribution</h3>

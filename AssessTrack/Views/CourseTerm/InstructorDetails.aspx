@@ -13,6 +13,7 @@
     <div class="courseterm-information">
         <%= Model.CourseTerm.Information %>
     </div>
+    <p>Current enrollment password: <%= Model.CourseTerm.Password %></p>
     <h3>Ungraded Assessments</h3>
     <% Html.RenderPartial("UngradedAssessmentList", Model.UngradedAssessments); %>
     <h3>Class Grade Distribution</h3>

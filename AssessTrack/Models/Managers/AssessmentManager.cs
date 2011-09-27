@@ -346,7 +346,7 @@ namespace AssessTrack.Models
                     select asmt);
             if (member.AccessLevel == 1)
             {
-                var filteredAssessments = assessments.Where(a => a.Section == null || (a.Section == member.Section));
+                var filteredAssessments = assessments.Where(a => a.Section == null || (member.Section.HasValue && a.Section.Value == member.Section));
                 return filteredAssessments.OrderByDescending(a => a.DueDate).ToList();
             }
 
@@ -378,8 +378,8 @@ namespace AssessTrack.Models
                 assessments = assessments.Where(a => !a.IsExtraCredit);
             if (filterby != null)
                 assessments = assessments.Where(a => a.AssessmentType == filterby);
-            if (member.AccessLevel == 1)
-                assessments = assessments.Where(a => a.Section == null || (a.Section.Value == member.Section.Value));
+            if (member.AccessLevel == 1 )
+                assessments = assessments.Where(a => a.Section == null || (member.Section.HasValue && a.Section.Value == member.Section.Value));
             return assessments.OrderBy(a => a.Name).ToList();
         }
 
@@ -400,7 +400,7 @@ namespace AssessTrack.Models
 
                                select asmt);
             if (member.AccessLevel == 1)
-                assessments = assessments.Where(a => a.Section == null || (a.Section.Value == member.Section.Value));
+                assessments = assessments.Where(a => a.Section == null || (member.Section.HasValue && a.Section.Value == member.Section.Value));
             //{
             //    var filteredAssessments = assessments.Where(a => a.Section == null || (a.Section.Value == member.Section.Value));
             //    return filteredAssessments.OrderByDescending(a => a.DueDate).ToList();

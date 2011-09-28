@@ -99,7 +99,7 @@ namespace AssessTrack.Controllers
                 if (member.AccessLevel == 1) //Student
                 {
                     CourseTermStudentDetailsViewModel model = new CourseTermStudentDetailsViewModel();
-                    double grade = dataRepository.GetFinalGrade(member);
+                    double grade = member.GetFinalGrade();
                     string gradeText = GradeHelpers.GetFormattedGrade(grade);
                     model.CurrentGrade = gradeText;
 

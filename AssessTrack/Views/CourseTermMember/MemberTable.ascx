@@ -10,7 +10,10 @@
                 Member Name
             </th>
             <th>
-                Access Level
+                Major
+            </th>
+            <th>
+                Section
             </th>
         </tr>
 
@@ -30,7 +33,10 @@
                 </div>
             </td>
             <td>
-                <%= Html.Encode(item.AccessLevel) %>
+                <%= Html.Encode(item.Profile.Major) %>
+            </td>
+            <td>
+                <%= (item.Section == null)? "N/A" : item.Section.ToString() %>
             </td>
         </tr>
     

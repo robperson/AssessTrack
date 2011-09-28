@@ -19,8 +19,8 @@ namespace AssessTrack.Models
             AssessmentType = assessmentType;
             TotalPoints = MaxPoints = 0;
             Grades = new List<Grade>();
-            
-            foreach (Assessment assessment in repo.GetAllNonTestBankAssessments(assessmentType.CourseTerm,includeExtraCredit,assessmentType))
+            CourseTermMember member = repo.GetCourseTermMemberByMembershipID(assessmentType.CourseTerm, profile.MembershipID);
+            foreach (Assessment assessment in repo.GetAllNonTestBankAssessments(assessmentType.CourseTerm,includeExtraCredit,assessmentType,member))
             {
                 Grade grade = new Grade(assessment, profile);
                 Grades.Add(grade);

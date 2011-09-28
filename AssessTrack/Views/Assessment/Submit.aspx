@@ -22,7 +22,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Submit</h2>
+    <h2>Submit <%= Model.Name %></h2>
+    <h3>This is due at <%= Model.DueDate.ToString() %></h3>
     <%  using (Html.BeginForm("Submit", "Assessment", FormMethod.Post, new { enctype = "multipart/form-data" }))
         { %>
            

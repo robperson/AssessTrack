@@ -330,12 +330,27 @@ namespace AssessTrack.Models
 
         public List<Assessment> GetUpcomingAssessments(CourseTerm courseTerm)
         {
-            return (from asmt in courseTerm.Assessments
+            Guid userID = UserHelpers.GetCurrentUserID();
+            CourseTermMember member = GetCourseTermMemberByMembershipID(courseTerm, userID);
+            return GetUpcomingAssessments(courseTerm, member);
+        }
+
+
+        public List<Assessment> GetUpcomingAssessments(CourseTerm courseTerm, CourseTermMember member)
+        {
+            var assessments = (from asmt in courseTerm.Assessments
                     where asmt.DueDate.CompareTo(DateTime.Now) >= 0
                     && asmt.IsVisible
                     && !asmt.AssessmentType.QuestionBank
-                    orderby asmt.DueDate descending
-                    select asmt).ToList();
+                    
+                    select asmt);
+            if (member.AccessLevel == 1)
+            {
+                var filteredAssessments = assessments.Where(a => a.Section == null || (member.Section.HasValue && a.Section.Value == member.Section));
+                return filteredAssessments.OrderByDescending(a => a.DueDate).ToList();
+            }
+
+            return assessments.OrderByDescending(asmt => asmt.DueDate).ToList();
         }
         public List<Assessment> GetAllNonTestBankAssessments(CourseTerm courseTerm)
         {
@@ -349,6 +364,13 @@ namespace AssessTrack.Models
 
         public List<Assessment> GetAllNonTestBankAssessments(CourseTerm courseTerm, bool includeExtraCredit, AssessmentType filterby)
         {
+            Guid userID = UserHelpers.GetCurrentUserID();
+            CourseTermMember member = GetCourseTermMemberByMembershipID(courseTerm, userID);
+            return GetAllNonTestBankAssessments(courseTerm, includeExtraCredit, filterby, member);
+        }
+
+        public List<Assessment> GetAllNonTestBankAssessments(CourseTerm courseTerm, bool includeExtraCredit, AssessmentType filterby, CourseTermMember member)
+        {
             var assessments = from asmt in courseTerm.Assessments
                     where !asmt.AssessmentType.QuestionBank && asmt.IsVisible
                     select asmt;
@@ -356,19 +378,36 @@ namespace AssessTrack.Models
                 assessments = assessments.Where(a => !a.IsExtraCredit);
             if (filterby != null)
                 assessments = assessments.Where(a => a.AssessmentType == filterby);
+            if (member.AccessLevel == 1 )
+                assessments = assessments.Where(a => a.Section == null || (member.Section.HasValue && a.Section.Value == member.Section.Value));
             return assessments.OrderBy(a => a.Name).ToList();
         }
 
         public List<Assessment> GetPastDueAssessments(CourseTerm courseTerm)
         {
-            return (from asmt in courseTerm.Assessments
-                    where asmt.DueDate.CompareTo(DateTime.Now) < 0
-                    && asmt.IsVisible
-                    && !asmt.AssessmentType.QuestionBank
-                    orderby asmt.DueDate descending
-                    select asmt).ToList();
+            Guid userID = UserHelpers.GetCurrentUserID();
+            CourseTermMember member = GetCourseTermMemberByMembershipID(courseTerm, userID);
+            return GetPastDueAssessments(courseTerm, member);
         }
 
+
+        public List<Assessment> GetPastDueAssessments(CourseTerm courseTerm, CourseTermMember member)
+        {
+            var assessments = (from asmt in courseTerm.Assessments
+                               where asmt.DueDate.CompareTo(DateTime.Now) < 0
+                               && asmt.IsVisible
+                               && !asmt.AssessmentType.QuestionBank
+
+                               select asmt);
+            if (member.AccessLevel == 1)
+                assessments = assessments.Where(a => a.Section == null || (member.Section.HasValue && a.Section.Value == member.Section.Value));
+            //{
+            //    var filteredAssessments = assessments.Where(a => a.Section == null || (a.Section.Value == member.Section.Value));
+            //    return filteredAssessments.OrderByDescending(a => a.DueDate).ToList();
+            //}
+
+            return assessments.OrderByDescending(asmt => asmt.DueDate).ToList();
+        }
         public List<Assessment> GetQuestionBankAssessments(CourseTerm courseTerm)
         {
             return (from asmt in courseTerm.Assessments

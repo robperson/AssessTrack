@@ -69,7 +69,7 @@ namespace AssessTrack.Helpers
                     if (!System.IO.File.Exists(exe))
                     {
                         response.Comment = string.Format(failMsg, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString(), compilerOutput);
-                        record.Comments += string.Format(failMsg, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString(), compilerOutput);
+                        //record.Comments += string.Format(failMsg, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString(), compilerOutput);
                         continue;
                     }
 
@@ -110,13 +110,13 @@ namespace AssessTrack.Helpers
                     {
                         userProgram.Kill();
                         response.Comment = string.Format(longrunMsg, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString());
-                        record.Comments += string.Format(longrunMsg, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString());
+                        //record.Comments += string.Format(longrunMsg, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString());
                         continue;
                     }
                     //Get output and set comments
                     string output = userProgram.StandardOutput.ReadToEnd();
                     response.Comment = string.Format(successMessage, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString(), output);
-                    record.Comments += string.Format(successMessage, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString(),output);
+                    //record.Comments += string.Format(successMessage, response.Answer.Question.Number, response.Answer.Number, DateTime.Now.ToString(),output);
                 }
             }
 

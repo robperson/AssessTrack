@@ -321,6 +321,8 @@ namespace AssessTrack.Controllers
                     record.Assessment = assessment;
                     //Run the autograder
                     dataRepository.GradeSubmission(record);
+                    //Compile any code answers
+                    record.CompileCodeQuestions();
                     
                     dataRepository.SaveSubmissionRecord(record);
                     string message = "Your answers were submitted successfully! " +

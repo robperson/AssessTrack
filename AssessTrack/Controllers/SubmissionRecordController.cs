@@ -109,6 +109,7 @@ namespace AssessTrack.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateSubmission(Guid AssessmentID, Guid MembershipID, double Score, DateTime SubmissionDate)
         {
+            Guid id;
             try
             {
                 Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, AssessmentID);
@@ -134,6 +135,7 @@ namespace AssessTrack.Controllers
                 }
 
                 dataRepository.Save();
+                id = record.SubmissionRecordID;
             }
             catch (Exception)
             {
@@ -146,7 +148,7 @@ namespace AssessTrack.Controllers
                 return View(model);
             }
             FlashMessageHelper.AddMessage("Score added successfully!");
-            return RedirectToRoute(new { siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName, action = "Index", controller = "SubmissionRecord" });
+            return RedirectToRoute(new { siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName, action = "Grade", controller = "SubmissionRecord", id = id });
         }
 
         public ActionResult Grade(string siteShortName, string courseTermShortName, Guid id)

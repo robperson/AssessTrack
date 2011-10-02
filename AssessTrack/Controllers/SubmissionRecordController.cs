@@ -216,20 +216,7 @@ namespace AssessTrack.Controllers
             try
             {
                 Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, id);
-                foreach (SubmissionRecord record in assessment.SubmissionRecords)
-                {
-                    foreach (Models.Response response in record.Responses)
-                    {
-                        foreach (AnswerKey key in response.Answer.AnswerKeys)
-                        {
-                            if (key.Value.ToLower().Replace("\r", "") == response.ResponseText.ToLower().Replace("\r", ""))
-                            {
-                                response.Score = key.Weight;
-                                break;
-                            }
-                        }
-                    }
-                }
+                dataRepository.GradeAllResponses(assessment);
                 dataRepository.Save();
                 FlashMessageHelper.AddMessage(assessment.Name + "'s submissions were graded successfully.");
             }

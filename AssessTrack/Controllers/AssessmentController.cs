@@ -319,11 +319,17 @@ namespace AssessTrack.Controllers
                         
                     }
                     record.Assessment = assessment;
+                    //Run the autograder
+                    dataRepository.GradeSubmission(record);
+                    
                     dataRepository.SaveSubmissionRecord(record);
                     string message = "Your answers were submitted successfully! " +
                         "Your Comfirmation Number is \"" + record.SubmissionRecordID + 
                         "\". Keep this number for you records!";
                     FlashMessageHelper.AddMessage(message);
+
+                    
+
                     transaction.Complete();
                     return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
                 }

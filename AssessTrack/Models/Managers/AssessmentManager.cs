@@ -18,6 +18,40 @@ namespace AssessTrack.Models
 {
     public partial class AssessTrackDataRepository
     {
+        /// <summary>
+        /// Grade all responses for assessment
+        /// </summary>
+        /// <param name="id"></param>
+        public void GradeAllResponses(Guid id)
+        {
+            Assessment assessment = GetAssessmentByID(id);
+            GradeAllResponses(assessment);
+        }
+
+
+        public void GradeAllResponses(Assessment assessment)
+        {
+            foreach (SubmissionRecord record in assessment.SubmissionRecords)
+            {
+                GradeSubmission(record);
+            }
+        }
+
+        public void GradeSubmission(SubmissionRecord record)
+        {
+            foreach (Models.Response response in record.Responses)
+            {
+                foreach (AnswerKey key in response.Answer.AnswerKeys)
+                {
+                    if (key.Value.ToLower().Replace("\r", "") == response.ResponseText.ToLower().Replace("\r", ""))
+                    {
+                        response.Score = key.Weight;
+                        break;
+                    }
+                }
+            }
+        }
+
         public Question GetQuestionByID(Guid id)
         {
             return dc.Questions.SingleOrDefault(q => q.QuestionID == id);

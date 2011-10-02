@@ -66,7 +66,13 @@ namespace AssessTrack.Models
                               && assessment.SubmissionRecords.Where(sub => sub.StudentID == member.MembershipID).Count() == 0
                               && assessment.DueDate.CompareTo(DateTime.Now) > 0
                               && assessment.IsVisible && !assessment.AssessmentType.QuestionBank
+                              && (
+                                    assessment.Section == null
+                                    || (member.Section.HasValue && assessment.Section.Value == member.Section)
+                                )
                               select assessment;
+
+            
 
             return assessments.ToList();
         }
@@ -405,7 +411,7 @@ namespace AssessTrack.Models
 
         public List<Assessment> GetAllNonTestBankAssessments(CourseTerm courseTerm, bool includeExtraCredit, AssessmentType filterby, CourseTermMember member)
         {
-            var assessments = from asmt in courseTerm.Assessments
+            var assessments = from asmt in (courseTerm != null)? courseTerm.Assessments.AsQueryable() : dc.Assessments.AsQueryable()
                     where !asmt.AssessmentType.QuestionBank && asmt.IsVisible
                     select asmt;
             if (!includeExtraCredit)

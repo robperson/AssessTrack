@@ -325,6 +325,10 @@ namespace AssessTrack.Controllers
                     record.CompileCodeQuestions();
                     
                     dataRepository.SaveSubmissionRecord(record);
+
+                    //Compile any code answers after record is saved and has an id
+                    record.CompileCodeQuestions();
+
                     string message = "Your answers were submitted successfully! " +
                         "Your Comfirmation Number is \"" + record.SubmissionRecordID + 
                         "\". Keep this number for you records!";

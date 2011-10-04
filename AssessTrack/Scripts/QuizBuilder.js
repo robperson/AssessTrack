@@ -303,7 +303,7 @@
         $(".add-key").live("click", addKey);
         $(".delete-key").live("click", deleteKey);
         $("#hide-qb-menu").click(function () {
-            $(".toolbox").toggle(1000);
+            $(".toolbox,.import-menu").toggle(1000);
         });
 
 

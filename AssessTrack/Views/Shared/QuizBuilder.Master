@@ -19,13 +19,15 @@
 
 <asp:Content ID="qbExtra" ContentPlaceHolderID="ExtraContent" runat="server">
     <div id="quiz-builder-menu" >
-        <span id="hide-qb-menu">[Hide/Show Toolbox]</span>
+        <span id="hide-qb-menu">[Hide/Show Toolbox &amp; Import]</span>
         
 	        <ul class="toolbox">
+            <h3>Toolbox</h3>
 			   <%= Html.PrintQBMenu() %>
 		    </ul>
 	        <div class="clear"></div>
 	        <div class="import-menu">
+            <h3>Import Questions</h3>
 	            <p>
 	                <label for="CourseTermList">Course Offering</label>
 	                <select id="CourseTermList" name="CourseTermList">

@@ -11,6 +11,16 @@ body.qb-body .page
     {
         border:1px dotted #777;
     }
+    .import-menu
+    {
+        border:1px dotted #777;
+        margin-bottom:5px;
+    }
+    .assessment-attributes
+    {
+        border:1px dotted #777;
+        margin-bottom:5px;
+    }
     
     body.qb-body .delete-item 
     { 
@@ -37,6 +47,8 @@ body.qb-body .page
 		display:block;
 		border-right:1px solid #777;
 		z-index:100;
+		overflow:visible;
+		
 		
 	}
 	body.qb-body ,html,#dfrm
@@ -91,7 +103,7 @@ body.qb-body .page
 	{ 
 	    border:2px solid #369;
 	    padding:0px;
-	    margin:0 0 10px 0;
+	    margin:10px 0 10px 0;
 	    background: #C2D6EB;
 	    }
 	body.qb-body #questions .question h2
@@ -122,7 +134,7 @@ body.qb-body .page
 	    border:1px solid #777;
 	    background:#eee;
 	    padding:5px;
-	    margin:0 0 10px 0;
+	    margin:10px 0 10px 0;
 	    display:block;
 	    }
 	

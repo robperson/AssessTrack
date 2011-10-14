@@ -151,6 +151,8 @@ namespace AssessTrack.Controllers
             return RedirectToRoute(new { siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName, action = "Grade", controller = "SubmissionRecord", id = id });
         }
 
+        
+
         public ActionResult Grade(string siteShortName, string courseTermShortName, Guid id)
         {
             SubmissionRecord submission = dataRepository.GetSubmissionRecordByID(id);

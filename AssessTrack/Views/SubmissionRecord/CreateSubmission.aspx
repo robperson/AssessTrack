@@ -31,7 +31,10 @@
                 <%= Html.TextBox("Score","0.0") %>%
             </p>
             <p>
-                <input type="submit" value="Create Submission" />
+                <input type="submit" value="Create Submission" name="CreateSubmission"/>
+            </p>
+            <p>
+                <input type="submit" value="Create Submission And Enter Scores" name="CreateSubmission2"/>
             </p>
         <%} %>
     </div>

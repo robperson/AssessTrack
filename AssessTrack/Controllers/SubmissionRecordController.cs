@@ -107,7 +107,7 @@ namespace AssessTrack.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult CreateSubmission(Guid AssessmentID, Guid MembershipID, double Score, DateTime SubmissionDate)
+        public ActionResult CreateSubmission(Guid AssessmentID, Guid MembershipID, double Score, DateTime SubmissionDate, string CreateSubmission2)
         {
             Guid id;
             try
@@ -148,7 +148,14 @@ namespace AssessTrack.Controllers
                 return View(model);
             }
             FlashMessageHelper.AddMessage("Score added successfully!");
-            return RedirectToRoute(new { siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName, action = "Grade", controller = "SubmissionRecord", id = id });
+            if (CreateSubmission2 != null)
+            {
+                return RedirectToRoute(new { siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName, action = "Grade", controller = "SubmissionRecord", id = id });
+            }
+            else
+            {
+                return RedirectToRoute(new { siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName, action = "Index", controller = "SubmissionRecord", id = AssessmentID });
+            }
         }
 
         

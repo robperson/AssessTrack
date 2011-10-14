@@ -13,6 +13,18 @@
     <div class="courseterm-information">
         <%= Model.CourseTerm.Information %>
     </div>
+    <% if (Model.CourseTerm.File != null)
+        { %>
+    <p>
+        Download Syllabus:
+        <%= Html.ActionLink(Model.CourseTerm.File.Name, "Download", new {controller="File", id = Model.CourseTerm.Syllabus.Value}) %>
+    </p>
+    <%}
+        else
+        { %>
+    <p>
+        No Syllabus Uploaded.
+    </p>
     <h3>Your current grade is: <%= Model.CurrentGrade %></h3>
     <% Html.RenderPartial("RecentMessagesList", Model.RecentMessages); %>
     <% Html.RenderPartial("UpcomingAssessmentList", Model.UpcomingAssessments); %>

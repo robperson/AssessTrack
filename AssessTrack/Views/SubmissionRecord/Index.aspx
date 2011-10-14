@@ -30,6 +30,7 @@
     
     <div>
         <%= Html.ActionLink("Create A Submission", "CreateSubmission", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
+        <%= Html.ActionLink("Create Bulk Submission", "CreateBulkSubmission", new { siteShortName = Html.CurrentSiteShortName(), courseTermShortName = Html.CurrentCourseTermShortName() })%>
     </div>
     <table>
         <tr>

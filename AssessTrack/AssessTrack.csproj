@@ -282,6 +282,7 @@
     <Content Include="Views\Site\Edit.aspx" />
     <Content Include="Views\Site\Index.aspx" />
     <Content Include="Views\Site\Join.aspx" />
+    <Content Include="Views\SubmissionRecord\CreateBulkSubmission.aspx" />
     <Content Include="Views\SubmissionRecord\Grade.aspx" />
     <Content Include="Views\SubmissionRecord\Index.aspx" />
     <Content Include="Views\SubmissionRecord\SubmissionNotFound.aspx" />

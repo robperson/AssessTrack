@@ -25,11 +25,13 @@ namespace AssessTrack.Controllers
     {
         public SelectList Students;
         public SelectList Assessments;
+        public List<Profile> StudentsProfiles;
 
         public CreateSubmissionViewModel(List<Profile> students, List<Assessment> assessments)
         {
             Students = new SelectList(students, "MembershipID", "FullName");
             Assessments = new SelectList(assessments, "AssessmentID", "Name");
+            StudentsProfiles = students;
         }
     }
 
@@ -156,6 +158,66 @@ namespace AssessTrack.Controllers
             {
                 return RedirectToRoute(new { siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName, action = "Index", controller = "SubmissionRecord", id = AssessmentID });
             }
+        }
+
+
+        //
+        // Create new SubmissionRecord with grade
+        public ActionResult CreateBulkSubmission()
+        {
+            List<Profile> students = dataRepository.GetStudentProfiles(courseTerm);
+            List<Assessment> assessments = dataRepository.GetAllNonTestBankAssessments(courseTerm);
+
+            CreateSubmissionViewModel model = new CreateSubmissionViewModel(students, assessments);
+
+            return View(model);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateBulkSubmission(Guid AssessmentID, Guid[] StudentIDs, double Score, DateTime SubmissionDate)
+        {
+            try
+            {
+                Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, AssessmentID);
+                if (assessment == null)
+                {
+                    return View("AssessmentNotFound");
+                }
+                foreach (var studentID in StudentIDs)
+                {
+                    SubmissionRecord record = new SubmissionRecord();
+                    assessment.SubmissionRecords.Add(record);
+                    record.GradedBy = UserHelpers.GetCurrentUserID();
+                    record.GradedOn = DateTime.Now;
+                    record.StudentID = studentID;
+                    record.SubmissionDate = SubmissionDate;
+
+                    foreach (var answer in assessment.Answers)
+                    {
+                        AssessTrack.Models.Response response = new Response();
+                        response.Score = (Score / 100.0) * answer.Weight;
+                        response.AnswerID = answer.AnswerID;
+                        response.ResponseText = "n/a";
+                        record.Responses.Add(response);
+                    }
+
+                    dataRepository.Save();
+                }
+                
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("_FORM", "An error occurred while creating the submission.");
+                List<Profile> students = dataRepository.GetStudentProfiles(courseTerm);
+                List<Assessment> assessments = dataRepository.GetAllNonTestBankAssessments(courseTerm);
+
+                CreateSubmissionViewModel model = new CreateSubmissionViewModel(students, assessments);
+
+                return View(model);
+            }
+            FlashMessageHelper.AddMessage("Scores added successfully!");
+            return RedirectToRoute(new { siteShortName = site.ShortName, courseTermShortName = courseTerm.ShortName, action = "Index", controller = "SubmissionRecord", id = AssessmentID });
+            
         }
 
         

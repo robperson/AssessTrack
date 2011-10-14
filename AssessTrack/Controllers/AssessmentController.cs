@@ -231,7 +231,7 @@ namespace AssessTrack.Controllers
             Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, id);
             if (assessment == null || !assessment.IsVisible)
                 return View("AssessmentNotFound");
-            if (!assessment.AllowMultipleSubmissions && dataRepository.HasUserSubmittedAssessment(assessment))
+            if (!assessment.AllowMultipleSubmissions && dataRepository.HasUserSubmittedAssessment(assessment) && !AssessmentHelpers.StudentHasExtension(assessment, UserHelpers.GetCurrentUserID())) //Exceptions allow students to submit multiple times
             {
                 return View("AlreadySubmitted");
             }
@@ -256,7 +256,7 @@ namespace AssessTrack.Controllers
             Assessment assessment = dataRepository.GetAssessmentByID(courseTerm, id);
             if (assessment == null || !assessment.IsVisible)
                 return View("AssessmentNotFound");
-            if (!assessment.AllowMultipleSubmissions && dataRepository.HasUserSubmittedAssessment(assessment))
+            if (!assessment.AllowMultipleSubmissions && dataRepository.HasUserSubmittedAssessment(assessment) && !AssessmentHelpers.StudentHasExtension(assessment, UserHelpers.GetCurrentUserID())) //Exceptions allow students to submit multiple times
             {
                 return View("AlreadySubmitted");
             }

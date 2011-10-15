@@ -18,13 +18,16 @@ namespace AssessTrack.Controllers
     {
         public Assessment Assessment;
         public SelectList AssessmentTypes;
-        public AssessmentFormViewModel(Assessment assessment, SelectList assessmentTypes, string data)
+        public SelectList Assessments;
+        public AssessmentFormViewModel(Assessment assessment, SelectList assessmentTypes, string data, SelectList assessments)
         {
             Assessment = assessment;
             AssessmentTypes = assessmentTypes;
             DesignerData = data;
+            Assessments = assessments;
         }
-        public AssessmentFormViewModel(Assessment assessment, SelectList assessmentTypes): this(assessment, assessmentTypes, "")
+        public AssessmentFormViewModel(Assessment assessment, SelectList assessmentTypes, SelectList assessments)
+            : this(assessment, assessmentTypes, "", assessments)
         {
         }
         public string DesignerData;
@@ -111,7 +114,8 @@ namespace AssessTrack.Controllers
         public ActionResult Create(string courseTermShortName, string siteShortName)
         {
             Assessment assessment = new Assessment() { AllowMultipleSubmissions = true, DueDate = DateTime.Now.AddDays(1), CreatedDate = DateTime.Now };
-            return View(new AssessmentFormViewModel(assessment, dataRepository.GetAssessmentTypesSelectList(courseTerm)));
+            SelectList assessments = new SelectList(dataRepository.GetAllNonTestBankAssessments(courseTerm), "AssessmentID", "Name", assessment.PrereqAssessmentID);
+            return View(new AssessmentFormViewModel(assessment, dataRepository.GetAssessmentTypesSelectList(courseTerm), assessments));
         } 
 
         //
@@ -149,8 +153,8 @@ namespace AssessTrack.Controllers
 
             }
             string data = DesignerHelper.LoadAssessment(newAssessment.Data);
-            
-            return View(new AssessmentFormViewModel(newAssessment, dataRepository.GetAssessmentTypesSelectList(courseTerm, newAssessment.AssessmentTypeID),data));
+            SelectList assessments = new SelectList(dataRepository.GetAllNonTestBankAssessments(courseTerm), "AssessmentID", "Name", newAssessment.PrereqAssessmentID);
+            return View(new AssessmentFormViewModel(newAssessment, dataRepository.GetAssessmentTypesSelectList(courseTerm, newAssessment.AssessmentTypeID),data, assessments));
                 
         }
 
@@ -183,7 +187,8 @@ namespace AssessTrack.Controllers
             string data = DesignerHelper.LoadAssessment(assessment.Data);
             // Convert ampersand to appropriate html entity
             data = data.Replace("&", "&amp;");
-            return View(new AssessmentFormViewModel(assessment,dataRepository.GetAssessmentTypesSelectList(courseTerm,assessment.AssessmentTypeID), data));
+            SelectList assessments = new SelectList(dataRepository.GetAllNonTestBankAssessments(courseTerm),"AssessmentID", "Name", assessment.PrereqAssessmentID);
+            return View(new AssessmentFormViewModel(assessment,dataRepository.GetAssessmentTypesSelectList(courseTerm,assessment.AssessmentTypeID), data, assessments));
         }
 
         //
@@ -223,7 +228,8 @@ namespace AssessTrack.Controllers
             }
             string data = DesignerHelper.LoadAssessment(assessment.Data);
             data = data.Replace("&", "&amp;");
-            return View(new AssessmentFormViewModel(assessment, dataRepository.GetAssessmentTypesSelectList(courseTerm, assessment.AssessmentTypeID), data));
+            SelectList assessments = new SelectList(dataRepository.GetAllNonTestBankAssessments(courseTerm), "AssessmentID", "Name", assessment.PrereqAssessmentID);
+            return View(new AssessmentFormViewModel(assessment, dataRepository.GetAssessmentTypesSelectList(courseTerm, assessment.AssessmentTypeID), data, assessments));
         }
         [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 1, MaxLevel = 1)]
         public ActionResult Submit(string courseTermShortName, string siteShortName, Guid id)
@@ -245,6 +251,23 @@ namespace AssessTrack.Controllers
             if (!assessment.IsOpen)
             {
                 return View("AssessmentClosed");
+            }
+
+            //check prereq
+            if (assessment.PreReq != null)
+            {
+                if (!dataRepository.HasUserSubmittedAssessment(assessment.PreReq))
+                {
+                    return View("PreReqNotSatisfied", assessment);
+                }
+                else
+                {
+                    Grade g = new Grade(assessment.PreReq, dataRepository.GetLoggedInProfile());
+                    if (assessment.PrereqMinScorePct != null && g.Percentage < assessment.PrereqMinScorePct.Value)
+                    {
+                        return View("PreReqNotSatisfied", assessment);
+                    }
+                }
             }
             return View(assessment);
         }
@@ -270,6 +293,22 @@ namespace AssessTrack.Controllers
             if (!assessment.IsOpen)
             {
                 return View("AssessmentClosed");
+            }
+            //check prereq
+            if (assessment.PreReq != null)
+            {
+                if (!dataRepository.HasUserSubmittedAssessment(assessment.PreReq))
+                {
+                    return View("PreReqNotSatisfied", assessment);
+                }
+                else
+                {
+                    Grade g = new Grade(assessment.PreReq, dataRepository.GetLoggedInProfile());
+                    if (assessment.PrereqMinScorePct != null && g.Percentage < assessment.PrereqMinScorePct.Value)
+                    {
+                        return View("PreReqNotSatisfied", assessment);
+                    }
+                }
             }
             try
             {

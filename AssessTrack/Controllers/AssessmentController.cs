@@ -231,6 +231,7 @@ namespace AssessTrack.Controllers
             SelectList assessments = new SelectList(dataRepository.GetAllNonTestBankAssessments(courseTerm), "AssessmentID", "Name", assessment.PrereqAssessmentID);
             return View(new AssessmentFormViewModel(assessment, dataRepository.GetAssessmentTypesSelectList(courseTerm, assessment.AssessmentTypeID), data, assessments));
         }
+
         [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 1, MaxLevel = 1)]
         public ActionResult Submit(string courseTermShortName, string siteShortName, Guid id)
         {
@@ -360,9 +361,8 @@ namespace AssessTrack.Controllers
                     record.Assessment = assessment;
                     //Run the autograder
                     dataRepository.GradeSubmission(record);
-                    //Compile any code answers
-                    record.CompileCodeQuestions();
                     
+                    //Need to save the submission before compiling the code questions
                     dataRepository.SaveSubmissionRecord(record);
 
                     //Compile any code answers after record is saved and has an id
@@ -379,9 +379,9 @@ namespace AssessTrack.Controllers
                     return RedirectToAction("Index", new { siteShortName = siteShortName, courseTermShortName = courseTermShortName });
                 }
             }
-            catch
+            catch (Exception e)
             {
-                FlashMessageHelper.AddMessage("An error occurred while submitting your answers :'(");
+                FlashMessageHelper.AddMessage("An error occurred while submitting your answers. <br/> Message: " + e.Message );
                 return View(assessment);
             }
         }

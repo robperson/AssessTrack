@@ -20,7 +20,7 @@ using AssessTrack.Backup;
 
 namespace AssessTrack.Models
 {
-    [Bind(Include="AllowMultipleSubmissions,Name,DueDate,IsExtraCredit,AssessmentTypeID,Data,CreatedDate,IsVisible,IsOpen,IsGradable,Section")]
+    [Bind(Include = "AllowMultipleSubmissions,Name,DueDate,IsExtraCredit,AssessmentTypeID,Data,CreatedDate,IsVisible,IsOpen,IsGradable,Section,PrereqMinScorePct,PrereqAssessmentID")]
     public partial class Assessment: IBackupItem, ITaggable
     {
         public bool IsValid

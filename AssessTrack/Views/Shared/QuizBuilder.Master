@@ -79,7 +79,16 @@
                 <%= Html.DropDownList("AssessmentTypeID", Model.AssessmentTypes) %>
                 <%= Html.ValidationMessage("AssessmentTypeID", "*") %>
             </p>
-            
+            <p>
+                <label for="PrereqAssessmentID">Prerequisite Assessment</label>
+                <%= Html.DropDownList("PrereqAssessmentID",Model.Assessments,"None") %>
+                <%= Html.ValidationMessage("PrereqAssessmentID", "*") %>
+            </p>
+            <p>
+                <label for="PrereqMinScorePct">Prerequisite Assessment Min Score:</label>
+                <%= Html.TextBox("PrereqMinScorePct", Model.Assessment.PrereqMinScorePct)%>
+                <%= Html.ValidationMessage("PrereqMinScorePct", "*")%>
+            </p>
             <p>
                 <label for="CreatedDate">Created Date:</label>
                 <%= Html.TextBox("CreatedDate", String.Format("{0:g}", Model.Assessment.CreatedDate))%>

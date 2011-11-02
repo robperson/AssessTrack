@@ -72,9 +72,9 @@ namespace AssessTrack.Controllers
             string contentDir = Server.MapPath("/Content/CodeDownloads/");
 
             //Get All responses for the requested answer
-            string filenameFormat = "{0}_{1}s_{2}_Question{3}_Answer{4}_{5}.cpp";
+            string filenameFormat = "{0}_{1}s_Answer.cpp";
             if(!AnswerType.Equals("code-answer"))
-                filenameFormat = "{0}_{1}s_{2}_Question{3}_Answer{4}_{5}.txt";
+                filenameFormat = "{0}_{1}s_Answer.txt";
             //"{FirstName}_{LastName}s_{AssessmentName}_Question{Number}_Answer{Number}_{SubmissionID}.cpp"
 
             List<Response> responses;
@@ -95,11 +95,7 @@ namespace AssessTrack.Controllers
             {
                 string filename = string.Format(filenameFormat,
                     response.SubmissionRecord.Profile.FirstName,
-                    response.SubmissionRecord.Profile.LastName,
-                    response.SubmissionRecord.Assessment.Name,
-                    response.Answer.Question.Number,
-                    response.Answer.Number,
-                    response.SubmissionRecordID);
+                    response.SubmissionRecord.Profile.LastName);
                 StreamWriter writer = System.IO.File.CreateText(tempDir + filename);
                 writer.Write(response.ResponseText);
                 writer.Close();
@@ -114,7 +110,7 @@ namespace AssessTrack.Controllers
                 // To permit the zip to be unpacked by built-in extractor in WinXP and Server2003, and other older code,
                 // you need to do one of the following: Specify UseZip64.Off, or set the Size.
                 // If the file may be bigger than 4GB, or you do not need WinXP built-in compatibility, you do not need either.
-                   zipStream.UseZip64 = UseZip64.Off;
+                    zipStream.UseZip64 = UseZip64.Off;
                 //   newEntry.Size = the file size;
 
                 zipStream.PutNextEntry(newEntry);
@@ -128,6 +124,70 @@ namespace AssessTrack.Controllers
                 }
                 zipStream.CloseEntry();
             }
+            zipStream.IsStreamOwner = true;	// Makes the Close also Close the underlying stream
+            zipStream.Close();
+
+            return RedirectToRoute(new { controller = "CourseTermTools", action = "ShowCodeDownloadLink", courseTermShortName = courseTerm.ShortName, siteShortName = site.ShortName, link = "/Content/CodeDownloads/" + zipFileName });
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult GetAllAnswerDownloadLink(Guid? AnswerID, String AnswerType, String fileExtension)
+        {
+            if (AnswerID == null)
+                return View("AnswerNotFound");
+
+            string tempDir = Environment.GetEnvironmentVariable("TEMP") + "\\assesstrack-code-for-answer" + AnswerID + "\\";
+            Directory.CreateDirectory(tempDir);
+
+            string contentDir = Server.MapPath("/Content/CodeDownloads/");
+
+            //Get All responses for the requested answer
+            //"{FirstName}_{LastName}s_{AssessmentName}_Question{Number}_Answer{Number}_{SubmissionID}.cpp"
+
+            List<Response> responses;
+            FullResponseList responselist = new FullResponseList();
+            responses = responselist.GetFullResponseList(AnswerID);
+
+            if (responses.Count == 0)
+            {
+                return View("NoResponses");
+            }
+            string zipFileName = responses[0].Answer.Assessment.Name + "_Question" + responses[0].Answer.Question.Number + "_Answer" + responses[0].Answer.Number + "_Answers.zip";
+            FileStream fsOut = System.IO.File.Create(contentDir + zipFileName);
+            ZipOutputStream zipStream = new ZipOutputStream(fsOut);
+
+            zipStream.SetLevel(3); //0-9, 9 being the highest level of compression
+            string filename = "AllAnswers." + fileExtension;
+            StreamWriter writer = System.IO.File.CreateText(tempDir + filename);
+            foreach (var response in responses)
+            {
+                writer.WriteLine(response.SubmissionRecord.Profile.FirstName + " " + response.SubmissionRecord.Profile.LastName);
+                writer.WriteLine(response.ResponseText + "\n");
+            }
+
+            string entryName = ZipEntry.CleanName(filename); // Removes drive from name and fixes slash direction
+            ZipEntry newEntry = new ZipEntry(entryName);
+            newEntry.DateTime = DateTime.Now;
+
+            // Specifying the AESKeySize triggers AES encryption. Allowable values are 0 (off), 128 or 256.
+            //   newEntry.AESKeySize = 256;
+
+            // To permit the zip to be unpacked by built-in extractor in WinXP and Server2003, and other older code,
+            // you need to do one of the following: Specify UseZip64.Off, or set the Size.
+            // If the file may be bigger than 4GB, or you do not need WinXP built-in compatibility, you do not need either.
+            zipStream.UseZip64 = UseZip64.Off;
+            //   newEntry.Size = the file size;
+
+            zipStream.PutNextEntry(newEntry);
+
+            // Zip the file in buffered chunks
+            // the "using" will close the stream even if an exception occurs
+            byte[] buffer = new byte[4096];
+            using (FileStream streamReader = System.IO.File.OpenRead(tempDir + filename))
+            {
+                StreamUtils.Copy(streamReader, zipStream, buffer);
+            }
+            zipStream.CloseEntry();
 
             zipStream.IsStreamOwner = true;	// Makes the Close also Close the underlying stream
             zipStream.Close();

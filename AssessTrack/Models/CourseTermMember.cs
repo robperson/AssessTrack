@@ -64,6 +64,36 @@ namespace AssessTrack.Models
             return 0.0;
         }
 
+        public double GetGradeByDate(bool includeExtraCredit, DateTime date)
+        {
+            if (this.AccessLevel != 1)
+            {
+                throw new Exception("Only Students have Final Grades.");
+            }
+
+            double finalgrade = 0.0;
+            double coursTermPoints = 0.0;
+            double courseTermMaxPoints = 0.0;
+            AssessTrackDataRepository repo = new AssessTrackDataRepository();
+            foreach (AssessmentType asmtType in this.CourseTerm.AssessmentTypes.Where(type => !type.QuestionBank))
+            {
+
+                GradeSection section = new GradeSection(asmtType, this.Profile, repo, includeExtraCredit, date);
+                if (section.Weight > 0)
+                {
+                    coursTermPoints += ((section.TotalPoints / section.MaxPoints) * asmtType.Weight);
+                    courseTermMaxPoints += section.Weight;
+                }
+            }
+            finalgrade = ((coursTermPoints / courseTermMaxPoints) * 100);
+            if (finalgrade >= 0)
+            {
+                return finalgrade;
+            }
+            return 0.0;
+        }
+
+
         public string FullName
         {
             get { return UserHelpers.GetFullNameForID(MembershipID); }

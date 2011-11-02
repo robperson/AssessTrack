@@ -19,6 +19,7 @@ namespace AssessTrack.Controllers
         public double FinalGrade;
         public string FinalLetterGrade;
         public double TotalWeight;
+        public String chartUrl;
         public PerformanceReportModel(List<GradeSection> sections, Profile profile)
         {
             GradeSections = sections;
@@ -27,6 +28,18 @@ namespace AssessTrack.Controllers
 
         public Profile NextStudent;
         public Profile PreviousStudent;
+    }
+
+    public class GradeSnapshotModel
+    {
+        public StudentGradeDistribution gradeDist;
+        public Profile profile;
+
+        public GradeSnapshotModel(StudentGradeDistribution g, Profile p)
+        {
+            gradeDist = g;
+            profile = p;
+        }
     }
 
     public class StudentsReportModel
@@ -317,6 +330,23 @@ namespace AssessTrack.Controllers
             CourseTermMember member = dataRepository.GetCourseTermMemberByMembershipID(courseTerm, id);
             model.FinalGrade = member.GetFinalGrade();
             model.FinalLetterGrade = member.GetFinalLetterGrade();
+
+            //student performance report
+            DateTime now = DateTime.Now;
+            DateTime snapshot = courseTerm.Term.StartDate.AddDays(21);
+            Double grade;
+            StudentGradeDistribution gd = new StudentGradeDistribution();
+            while (snapshot.CompareTo(now) < 0)
+            {
+                grade = member.GetGradeByDate(true, snapshot);
+                gd.AddGrade(grade, snapshot);
+                snapshot = snapshot.AddDays(7);
+            }
+            if (gd != null)
+            {
+                model.chartUrl = GetChartUrl(gd);
+            }
+
             List<CourseTermMember> students = dataRepository.GetStudentsInCourseTerm(courseTerm);
             int currentStudentIndex = students.IndexOf(member);
             if (currentStudentIndex > 0)
@@ -340,6 +370,74 @@ namespace AssessTrack.Controllers
             return View(model);
 
         }
+
+        private String GetChartUrl(StudentGradeDistribution gd)
+        {
+            StringBuilder labels = new StringBuilder();
+            StringBuilder labelPos = new StringBuilder();
+            int count = 0;
+            String tempDate;
+            foreach (var date in gd.dates)
+            {
+                tempDate = date.ToShortDateString();
+                tempDate = tempDate.Substring(0, tempDate.LastIndexOf("/"));
+                labels.Append(tempDate).Append("|");
+                labelPos.Append(count).Append(",");
+                count++;
+            }
+            labelPos = labelPos.Remove(labelPos.Length-1,1);//.Substring(0, labelPos.Length - 1);
+            labels = labels.Remove(labels.Length - 1, 1);// Substring(0, labels.Length - 1);
+            StringBuilder grades = new StringBuilder();
+            foreach (var grade in gd.grades)
+            {
+                grades.Append(grade).Append(",");
+            }
+            grades = grades.Remove(grades.Length - 1, 1);// Substring(0, grades.Length - 1);
+            StringBuilder chartUrl = new StringBuilder("http://chart.apis.google.com/chart");
+            chartUrl.Append("?chxl=1:|").Append(labels);
+            chartUrl.Append("&chxp=1,").Append(labelPos);
+            chartUrl.Append("&chxr=0,0,100|1,0,").Append(count - 1);
+            chartUrl.Append("&chxs=1,676767,11.5,0,lt,676767");
+            chartUrl.Append("&chxt=y,x");
+            chartUrl.Append("&chs=800x400");
+            chartUrl.Append("&cht=lc");
+            chartUrl.Append("&chco=C2D6EB");
+            //chartUrl.Append("&chd=s:tjcfc");
+            chartUrl.Append("&chd=t:").Append(grades);
+            chartUrl.Append("&chdl=Grade");
+            chartUrl.Append("&chdlp=t");
+            chartUrl.Append("&chg=14.3,-1,1,1");
+            chartUrl.Append("&chls=4,4,0");
+            chartUrl.Append("&chm=B,C5D4B5BB,0,0,0");
+            chartUrl.Append("&chtt=Grade+Summary");
+            return chartUrl.ToString();
+        }
+
+        [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 0, MaxLevel = 10)]
+        public ActionResult GradeSnapshot(string courseTermShortName, string siteShortName, Guid id /*ProfileID*/)
+        {
+            Profile profile = dataRepository.GetProfileByID(id);
+            if (profile == null)
+                return View("ProfileNotFound");
+            if (!AuthHelper.IsCurrentStudentOrUserIsAdmin(courseTerm, id))
+            {
+                return View("NotAuthorized");
+            }
+            CourseTermMember member = dataRepository.GetCourseTermMemberByMembershipID(courseTerm, id);
+            DateTime now = DateTime.Now;
+            DateTime snapshot = courseTerm.Term.StartDate.AddDays(14);
+            Double grade;
+            StudentGradeDistribution gd = new StudentGradeDistribution();
+            while (snapshot.CompareTo(now) < 0)
+            {
+                grade = member.GetGradeByDate(true, snapshot);
+                gd.AddGrade(grade, snapshot);
+                snapshot = snapshot.AddDays(7);
+            }
+            GradeSnapshotModel model = new GradeSnapshotModel(gd, profile);
+            return View(model);
+        }
+
 
         [ATAuth(AuthScope = AuthScope.CourseTerm, MinLevel = 5, MaxLevel = 10)]
         public ActionResult FinalGrades(string courseTermShortName, string siteShortName)

@@ -47,7 +47,7 @@
            chartUrl += "&chtt=Grade+Summary";*/
         %>
     <div id="gradeChart">
-        <img src="<%= Model.chartUrl %>" width="800" height="400" alt="Grade Summary" />
+        <img src="<%= Model.chartUrl %>" width="600" height="300" alt="Grade Summary" />
     </div>
     
     <%--<table>

@@ -399,7 +399,7 @@ namespace AssessTrack.Controllers
             chartUrl.Append("&chxr=0,0,100|1,0,").Append(count - 1);
             chartUrl.Append("&chxs=1,676767,11.5,0,lt,676767");
             chartUrl.Append("&chxt=y,x");
-            chartUrl.Append("&chs=800x400");
+            chartUrl.Append("&chs=600x300");
             chartUrl.Append("&cht=lc");
             chartUrl.Append("&chco=C2D6EB");
             //chartUrl.Append("&chd=s:tjcfc");
